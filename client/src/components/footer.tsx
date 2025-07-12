@@ -27,7 +27,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-8">
           <div>
-            <GroovyLogo className="h-8 w-8" />
+            
             <p className="text-slate-300 text-sm mt-4">
               Enterprise AI governance platform for complete security, compliance, and control.
             </p>
