@@ -120,10 +120,6 @@ export function ArchitectureFlow() {
             <div className="mt-8 flex justify-center">
               <div className="grid grid-cols-3 gap-8 text-center">
                 <div>
-                  <div className="text-3xl font-bold text-white mb-1">&lt;200ms</div>
-                  <div className="text-sm text-slate-400">Processing Time</div>
-                </div>
-                <div>
                   <div className="text-3xl font-bold text-white mb-1">100%</div>
                   <div className="text-sm text-slate-400">Audit Coverage</div>
                 </div>

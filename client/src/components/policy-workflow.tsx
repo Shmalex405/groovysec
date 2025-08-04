@@ -73,12 +73,9 @@ export function PolicyWorkflow() {
             })}
           </div>
           
-          <div className="mt-8 text-center">
-            <div className="inline-flex items-center px-6 py-3 bg-green-600/10 rounded-full text-green-600 font-semibold">
-              <Clock className="w-4 h-4 mr-2" />
-              Average processing time: &lt;200ms
-            </div>
-          </div>
+      
+            
+          
         </div>
       </div>
     </section>

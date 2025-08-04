@@ -35,17 +35,15 @@ export function HeroSection() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              <Button 
-                size="lg"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold transition-all transform hover:scale-105"
-              >
-                <Play className="w-5 h-5 mr-2" />
-                Watch Demo
-              </Button>
+              
               <Button 
                 variant="outline"
                 size="lg"
                 className="border-white/30 text-[#F08C00] hover:bg-white/10 hover:text-white px-8 py-4 text-lg font-semibold"
+                onClick={() => {
+                  const el = document.getElementById('demo');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
               >
                 <Calendar className="w-5 h-5 mr-2" />
                 Schedule Consultation

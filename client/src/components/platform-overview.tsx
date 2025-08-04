@@ -16,10 +16,10 @@ export function PlatformOverview() {
     {
       icon: Network,
       title: "Seamless Integration",
-      description: "Deploy across your existing technology stack without disruption. Native integrations with popular enterprise tools and platforms.",
+      description: "Deploy to give access to your existing technology stack to internally query information. Native integrations with popular enterprise tools and platforms.",
       benefits: [
         "Jira, Confluence, GitHub",
-        "All major AI model APIs",
+        "Sharepoint, Googledrive, and more",
         "Enterprise SSO support"
       ],
       color: "green"
