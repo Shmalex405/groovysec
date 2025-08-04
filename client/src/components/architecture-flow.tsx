@@ -117,18 +117,7 @@ export function ArchitectureFlow() {
             </div>
             
             {/* Stats */}
-            <div className="mt-8 flex justify-center">
-              <div className="grid grid-cols-3 gap-8 text-center">
-                <div>
-                  <div className="text-3xl font-bold text-white mb-1">100%</div>
-                  <div className="text-sm text-slate-400">Audit Coverage</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-white mb-1">Zero</div>
-                  <div className="text-sm text-slate-400">Data Leakage</div>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>

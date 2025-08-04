@@ -5,7 +5,7 @@ export function SecurityCompliance() {
     {
       icon: Lock,
       title: "Data Isolation",
-      description: "Your sensitive data never leaves your environment. Complete data isolation ensures regulatory compliance."
+      description: "Your Whiteout AI data is stored where you want it. AWS S3 or a Local-Lan gives complete data isolation to ensure regulatory compliance."
     },
     {
       icon: Tag,
@@ -15,7 +15,7 @@ export function SecurityCompliance() {
     {
       icon: Eye,
       title: "Complete Audit Trail",
-      description: "Every AI interaction is logged with full context for compliance reporting and risk assessment."
+      description: "Every Whiteout AI interaction is logged with full context for compliance reporting and risk assessment."
     }
   ];
 
@@ -32,7 +32,7 @@ export function SecurityCompliance() {
     },
     {
       icon: Key,
-      title: "Enterprise SSO Integration",
+      title: "Soon to support Enterprise SSO Integration",
       status: "active"
     },
     {
