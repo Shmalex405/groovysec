@@ -75,13 +75,7 @@ export function LeadCapture() {
     }
   };
 
-  const aiOptions = [
-    { value: "openai", label: "OpenAI" },
-    { value: "claude", label: "Claude" },
-    { value: "google", label: "Google AI" },
-    { value: "other", label: "Other" }
-  ];
-
+  
   return (
     <section id="demo" className="py-20 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -182,6 +176,10 @@ export function LeadCapture() {
                     <SelectValue placeholder="Select company size" />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="1-50">1-50 employees</SelectItem>
+                    <SelectItem value="50-100">50-100 employees</SelectItem>
+                    <SelectItem value="100-500">100-500 employees</SelectItem>
+                    <SelectItem value="500-1000">500-1000 employees</SelectItem>
                     <SelectItem value="1000-5000">1,000-5,000 employees</SelectItem>
                     <SelectItem value="5000-10000">5,000-10,000 employees</SelectItem>
                     <SelectItem value="10000+">10,000+ employees</SelectItem>
@@ -190,30 +188,7 @@ export function LeadCapture() {
               </div>
             </div>
             
-            <div>
-              <Label className="text-sm font-medium text-slate-900 mb-3 block">
-                Current AI Usage
-              </Label>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {aiOptions.map((option) => (
-                  <div key={option.value} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={option.value}
-                      checked={formData.aiUsage.includes(option.value)}
-                      onCheckedChange={(checked) => 
-                        handleCheckboxChange(option.value, checked as boolean)
-                      }
-                    />
-                    <Label 
-                      htmlFor={option.value} 
-                      className="text-sm text-slate-600 cursor-pointer"
-                    >
-                      {option.label}
-                    </Label>
-                  </div>
-                ))}
-              </div>
-            </div>
+            
             
             <div>
               <Label htmlFor="useCase" className="text-sm font-medium text-slate-900">
