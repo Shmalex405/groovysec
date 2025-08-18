@@ -3,7 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -18,24 +24,24 @@ export function LeadCapture() {
     role: "",
     companySize: "",
     aiUsage: [] as string[],
-    useCase: ""
+    useCase: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleCheckboxChange = (value: string, checked: boolean) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      aiUsage: checked 
+      aiUsage: checked
         ? [...prev.aiUsage, value]
-        : prev.aiUsage.filter(item => item !== value)
+        : prev.aiUsage.filter((item) => item !== value),
     }));
   };
 
@@ -45,13 +51,14 @@ export function LeadCapture() {
 
     try {
       const response = await apiRequest("POST", "/api/leads", formData);
-      
+
       if (response.ok) {
         toast({
           title: "Demo Request Submitted",
-          description: "Thank you for your interest! We'll contact you within 24 hours to schedule your personalized demo.",
+          description:
+            "Redirecting you to schedule your demo...",
         });
-        
+
         // Reset form
         setFormData({
           firstName: "",
@@ -61,8 +68,16 @@ export function LeadCapture() {
           role: "",
           companySize: "",
           aiUsage: [],
-          useCase: ""
+          useCase: "",
         });
+
+        // Delay before redirect to Calendly
+        setTimeout(() => {
+          const calendlyUrl = `https://calendly.com/sec-groovy/30min?name=${encodeURIComponent(
+            `${formData.firstName} ${formData.lastName}`
+          )}&email=${encodeURIComponent(formData.email)}`;
+          window.open(calendlyUrl, "_blank");
+        }, 1500);
       }
     } catch (error) {
       toast({
@@ -75,7 +90,6 @@ export function LeadCapture() {
     }
   };
 
-  
   return (
     <section id="demo" className="py-20 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -87,7 +101,7 @@ export function LeadCapture() {
             Schedule a personalized demo and see how Whiteout AI can transform your enterprise AI governance.
           </p>
         </div>
-        
+
         <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-slate-200">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
@@ -118,7 +132,7 @@ export function LeadCapture() {
                 />
               </div>
             </div>
-            
+
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <Label htmlFor="email" className="text-sm font-medium text-slate-900">
@@ -147,7 +161,7 @@ export function LeadCapture() {
                 />
               </div>
             </div>
-            
+
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <Label htmlFor="role" className="text-sm font-medium text-slate-900">
@@ -187,9 +201,7 @@ export function LeadCapture() {
                 </Select>
               </div>
             </div>
-            
-            
-            
+
             <div>
               <Label htmlFor="useCase" className="text-sm font-medium text-slate-900">
                 Primary Use Case
@@ -203,7 +215,7 @@ export function LeadCapture() {
                 rows={3}
               />
             </div>
-            
+
             <div className="text-center">
               <Button
                 type="submit"
