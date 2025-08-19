@@ -1,5 +1,7 @@
-import * as nodemailer from "nodemailer";
+import { Resend } from "resend";
 import { FastifyInstance } from "fastify";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export function registerContactRoute(server: FastifyInstance) {
   server.post("/api/contact", async (req, reply) => {
@@ -23,17 +25,9 @@ export function registerContactRoute(server: FastifyInstance) {
       currentAIUsage: string[];
     };
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail", // or use SMTP
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    const mailOptions = {
-      from: `"GroovySec Contact" <${process.env.EMAIL_USER}>`,
-      to: "alex@groovysec.com, joel@groovysec.com",// or wherever you want to receive form responses
+    const { data, error } = await resend.emails.send({
+      from: "Whiteout AI <alex@groovysec.com>", // ✅ This domain must be verified in Resend
+      to: ["alex@groovysec.com", "joel@groovysec.com"],
       subject: "New Demo Request - Whiteout AI",
       text: `
 New Contact Request
@@ -46,11 +40,14 @@ Company Size: ${companySize}
 Current AI Usage: ${currentAIUsage.join(", ")}
 Primary Use Case:
 ${useCase}
-      `,
-    };
+      `.trim(),
+    });
 
-    await transporter.sendMail(mailOptions);
+    if (error) {
+      console.error("❌ Email error:", error);
+      return reply.status(500).send({ success: false, error });
+    }
 
-    return reply.send({ success: true });
+    return reply.send({ success: true, data });
   });
 }
