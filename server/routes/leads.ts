@@ -28,12 +28,14 @@ router.post("/", async (req, res) => {
     companySize,
     aiUsage,
     useCase,
-  }: LeadRequest = req.body;
+  } = (req.body || {}) as LeadRequest;
 
   try {
-    const fullName = `${firstName} ${lastName}`;
-    const aiUsageText = aiUsage?.length ? aiUsage.join(", ") : "None provided";
-    const useCaseText = useCase || "None provided";
+    const fullName = `${(firstName || "").trim()} ${(lastName || "").trim()}`.trim();
+    const aiUsageText = Array.isArray(aiUsage) && aiUsage.length
+      ? aiUsage.join(", ")
+      : "None provided";
+    const useCaseText = (useCase || "None provided").trim();
 
     const message = `
 New Lead Submitted from groovysec.com 🚀
@@ -48,8 +50,9 @@ New Lead Submitted from groovysec.com 🚀
     `;
 
     const emailResponse = await resend.emails.send({
-      from: "GroovySec <noreply@groovysec.com>", // use verified subdomain
-      to: ["sec.groovy@gmail.com"],                    // recipient inbox
+      // Using verified ROOT domain so it works immediately.
+      from: "GroovySec <noreply@groovysec.com>",
+      to: ["sec.groovy@gmail.com"],
       subject: "🚨 New Demo Request from GroovySec",
       text: message,
       html: `
@@ -62,7 +65,7 @@ New Lead Submitted from groovysec.com 🚀
         <p><strong>AI Usage Areas:</strong> ${aiUsageText}</p>
         <p><strong>Use Case:</strong> ${useCaseText}</p>
       `,
-      replyTo: email, // so you can reply directly to the lead from Gmail
+      replyTo: email, // replies from Gmail go straight to the lead
     });
 
     console.log("✅ Email sent:", emailResponse);
