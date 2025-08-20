@@ -50,7 +50,7 @@ export function LeadCapture() {
     setIsSubmitting(true);
 
     try {
-      const response = await apiRequest("POST", "/api/leads", formData);
+      const response = await apiRequest("POST", "/leads", formData);
 
       if (response.ok) {
         toast({
