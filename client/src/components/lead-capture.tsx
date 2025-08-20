@@ -10,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
@@ -21,8 +20,8 @@ export function LeadCapture() {
     lastName: "",
     email: "",
     company: "",
-    role: "",
-    companySize: "",
+    role: "",            // schema expects: "cto" | "ciso" | "architect" | "security" | "compliance" | "other"
+    companySize: "",     // schema expects values like "1-50", "50-100", ...
     aiUsage: [] as string[],
     useCase: "",
   });
@@ -30,19 +29,7 @@ export function LeadCapture() {
   const { toast } = useToast();
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
-  const handleCheckboxChange = (value: string, checked: boolean) => {
-    setFormData((prev) => ({
-      ...prev,
-      aiUsage: checked
-        ? [...prev.aiUsage, value]
-        : prev.aiUsage.filter((item) => item !== value),
-    }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -50,16 +37,23 @@ export function LeadCapture() {
     setIsSubmitting(true);
 
     try {
-      const response = await apiRequest("POST", "/leads", formData);
+      // Build a schema-safe payload (fallbacks if user didn’t pick)
+      const payload = {
+        ...formData,
+        role: formData.role || "other",
+        companySize: formData.companySize || "1-50",
+        aiUsage: Array.isArray(formData.aiUsage) ? formData.aiUsage : [],
+      };
 
-      if (response.ok) {
+      const res = await apiRequest("POST", "/leads", payload);
+
+      if (res.ok) {
         toast({
           title: "Demo Request Submitted",
-          description:
-            "Redirecting you to schedule your demo...",
+          description: "Redirecting you to schedule your demo...",
         });
 
-        // Reset form
+        // Reset AFTER successful submission
         setFormData({
           firstName: "",
           lastName: "",
@@ -71,20 +65,22 @@ export function LeadCapture() {
           useCase: "",
         });
 
-        // Delay before redirect to Calendly
         setTimeout(() => {
           const calendlyUrl = `https://calendly.com/sec-groovy/30min?name=${encodeURIComponent(
-            `${formData.firstName} ${formData.lastName}`
-          )}&email=${encodeURIComponent(formData.email)}`;
+            `${payload.firstName} ${payload.lastName}`
+          )}&email=${encodeURIComponent(payload.email)}`;
           window.open(calendlyUrl, "_blank");
-        }, 1500);
+        }, 1200);
       }
-    } catch (error) {
+    } catch (err: any) {
+      const message =
+        typeof err?.message === "string" ? err.message : "Please try again or contact us directly.";
       toast({
         title: "Submission Failed",
-        description: "Please try again or contact us directly.",
+        description: message, // shows e.g. "400: { ... }" from server
         variant: "destructive",
       });
+      console.error("Lead submit error:", err);
     } finally {
       setIsSubmitting(false);
     }
@@ -167,7 +163,11 @@ export function LeadCapture() {
                 <Label htmlFor="role" className="text-sm font-medium text-slate-900">
                   Your Role *
                 </Label>
-                <Select value={formData.role} onValueChange={(value) => handleInputChange("role", value)}>
+                <Select
+                  value={formData.role}
+                  onValueChange={(value) => handleInputChange("role", value)}
+                  required
+                >
                   <SelectTrigger className="mt-1">
                     <SelectValue placeholder="Select your role" />
                   </SelectTrigger>
@@ -185,7 +185,11 @@ export function LeadCapture() {
                 <Label htmlFor="companySize" className="text-sm font-medium text-slate-900">
                   Company Size *
                 </Label>
-                <Select value={formData.companySize} onValueChange={(value) => handleInputChange("companySize", value)}>
+                <Select
+                  value={formData.companySize}
+                  onValueChange={(value) => handleInputChange("companySize", value)}
+                  required
+                >
                   <SelectTrigger className="mt-1">
                     <SelectValue placeholder="Select company size" />
                   </SelectTrigger>
