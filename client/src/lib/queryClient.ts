@@ -3,6 +3,15 @@ import { QueryClient, QueryFunction } from "@tanstack/react-query";
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 
+// Avoid accidental /api/api when caller passes "/api/..."
+function normalizePath(path: string) {
+  let p = path.startsWith("/") ? path : `/${path}`;
+  if (API_BASE_URL.endsWith("/api") && p.startsWith("/api/")) {
+    p = p.replace(/^\/api/, "");
+  }
+  return p;
+}
+
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     const text = (await res.text()) || res.statusText;
@@ -15,15 +24,14 @@ export async function apiRequest(
   url: string,
   data?: unknown
 ): Promise<Response> {
-  const fullUrl = url.startsWith("http")
-    ? url
-    : `${API_BASE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+  const path = normalizePath(url);
+  const fullUrl = url.startsWith("http") ? url : `${API_BASE_URL}${path}`;
 
   const res = await fetch(fullUrl, {
     method,
     headers: data ? { "Content-Type": "application/json" } : {},
     body: data ? JSON.stringify(data) : undefined,
-    credentials: "include",
+    // no credentials to keep CORS simple
   });
 
   await throwIfResNotOk(res);
@@ -32,27 +40,28 @@ export async function apiRequest(
 
 type UnauthorizedBehavior = "returnNull" | "throw";
 
-export const getQueryFn: <T>(options: {
-  on401: UnauthorizedBehavior;
-}) => QueryFunction<T> =
-  ({ on401: unauthorizedBehavior }) =>
-  async ({ queryKey }) => {
-    const url = queryKey.join("/");
-    const fullUrl = url.startsWith("http")
-      ? url
-      : `${API_BASE_URL}/${url}`;
+/**
+ * Generic query function factory.
+ * Returns null on 401 if on401 === "returnNull", otherwise throws.
+ */
+export function getQueryFn<T>({ on401 }: { on401: UnauthorizedBehavior }): QueryFunction<T | null> {
+  return async ({ queryKey }) => {
+    const joined = `/${queryKey.join("/")}`;
+    const path = normalizePath(joined);
+    const fullUrl = `${API_BASE_URL}${path}`;
 
     const res = await fetch(fullUrl, {
-      credentials: "include",
+      // no credentials to keep CORS simple
     });
 
-    if (unauthorizedBehavior === "returnNull" && res.status === 401) {
+    if (on401 === "returnNull" && res.status === 401) {
       return null;
     }
 
     await throwIfResNotOk(res);
-    return await res.json();
+    return (await res.json()) as T;
   };
+}
 
 export const queryClient = new QueryClient({
   defaultOptions: {
