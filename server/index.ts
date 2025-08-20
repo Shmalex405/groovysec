@@ -1,12 +1,34 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 console.log("Loaded DATABASE_URL:", process.env.DATABASE_URL);
+
 import express, { type Request, Response, NextFunction } from "express";
+import cors from "cors"; // 👈 added CORS import
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import leadsRouter from "./routes/leads";
 
 const app = express();
+
+// 🔹 Enable CORS before routes
+app.use(
+  cors({
+    origin: [
+      "https://groovysec.com",
+      "https://www.groovysec.com",
+    ],
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// 🔹 Handle preflight OPTIONS requests
+app.options("*", cors());
+
+// ✅ Healthcheck endpoint (fast and simple)
+app.get("/healthz", (_req, res) => {
+  res.status(200).json({ status: "ok", uptime: process.uptime() });
+});
 
 // Middleware to parse request bodies
 app.use(express.json());
@@ -75,6 +97,7 @@ app.use((req, res, next) => {
     },
     () => {
       log(`🚀 Server running on port ${port}`);
+      log(`✅ Healthcheck available at /healthz`);
     }
   );
 })();
