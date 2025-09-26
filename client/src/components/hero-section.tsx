@@ -18,11 +18,11 @@ export function HeroSection() {
           <div className="text-white">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-600/20 text-blue-400 border border-blue-500/30 mb-6">
               <Shield className="w-4 h-4 mr-2" />
-              <span className="text-sm font-medium">Enterprise AI Governance Platform</span>
+              <span className="text-sm font-medium">Whiteout AI</span>
             </div>
             
             <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              All-in-One
+              The All-in-One
               <span className="block bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
                 AI Governance
               </span>
@@ -30,6 +30,7 @@ export function HeroSection() {
             </h1>
             
             <p className="text-xl text-slate-300 mb-8 leading-relaxed">
+              Groovy Security Builds Whiteout AI. 
               Monitor, control, and audit how generative AI is used across your workforce. 
               Policy-first approach with complete data isolation and regulatory compliance.
             </p>
@@ -59,7 +60,7 @@ export function HeroSection() {
           <div className="relative">
             <div className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-slate-700">
               <div className="text-center mb-6">
-                <h3 className="text-white text-xl font-semibold mb-2">Dual-Path Architecture</h3>
+                <h3 className="text-white text-xl font-semibold mb-2">Whiteout AI's Dual-Path Architecture</h3>
                 <p className="text-slate-300 text-sm">Your Data Stays With You</p>
               </div>
               
