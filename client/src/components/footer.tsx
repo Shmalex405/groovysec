@@ -1,10 +1,9 @@
-import { GroovyLogo } from "./groovy-logo";
 import React from "react";
 
 type LinkItem = {
   label: string;
   href: string;
-  external?: boolean; // open in new tab if true
+  external?: boolean;
 };
 
 const footerLinks: Record<string, LinkItem[]> = {
@@ -15,7 +14,6 @@ const footerLinks: Record<string, LinkItem[]> = {
     { label: "Pricing", href: "#" },
   ],
   Resources: [
-    // 👉 points directly to your PDF in /public/docs
     { label: "Documentation", href: "/docs/GroovySecurity-Documentation.pdf", external: true },
     { label: "Security Whitepaper", href: "#" },
     { label: "Compliance Guide", href: "#" },
@@ -34,8 +32,8 @@ export function Footer() {
     <footer className="bg-slate-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-8">
+          {/* Removed GroovyLogo */}
           <div>
-            <GroovyLogo />
             <p className="text-slate-300 text-sm mt-4">
               Enterprise AI governance platform for complete security, compliance, and control.
             </p>
