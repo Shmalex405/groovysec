@@ -14,7 +14,7 @@ const footerLinks: Record<string, LinkItem[]> = {
     { label: "Pricing", href: "#" },
   ],
   Resources: [
-    { label: "Documentation", href: "/docs/GroovySecurity-Documentation.pdf", external: true },
+    { label: "Documentation", href: "/GroovySecurity-Documentation.pdf", external: true },
     { label: "Security Whitepaper", href: "#" },
     { label: "Compliance Guide", href: "#" },
     { label: "Support", href: "#" },
