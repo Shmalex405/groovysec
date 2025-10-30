@@ -62,6 +62,8 @@ export function Footer() {
 
         <div className="border-t border-slate-700 mt-8 pt-8 text-center text-sm text-slate-400">
           <p>&copy; 2025 Groovy Security. All rights reserved.</p>
+          <p>&copy; 3001 Slate Ridge Cir. St. George, Utah 84790.</p>
+          <p>&copy; +1(435-668-3526).</p>
         </div>
       </div>
     </footer>
