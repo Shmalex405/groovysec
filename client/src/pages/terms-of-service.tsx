@@ -3,11 +3,16 @@ import React from "react";
 export default function TermsOfService() {
   return (
     <main className="min-h-screen bg-slate-900 text-slate-100 px-6 py-20">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-blue-400">
-          Terms of Service
-        </h1>
+      <div className="max-w-4xl mx-auto text-center mb-12">
+        <img
+          src="/transparent_logo.png"
+          alt="Groovy Security Logo"
+          className="mx-auto w-32 h-32 mb-6 opacity-90 hover:opacity-100 transition-opacity duration-300"
+        />
+        <h1 className="text-4xl font-bold text-blue-400">Terms of Service</h1>
+      </div>
 
+      <div className="max-w-4xl mx-auto">
         <p className="text-slate-300 mb-6">
           Welcome to Groovy Security. By accessing or using our website and
           services (the “Service”), you agree to be bound by these Terms of
@@ -15,7 +20,7 @@ export default function TermsOfService() {
           Service.
         </p>
 
-        <section className="space-y-8">
+        <section className="space-y-8 text-left">
           <div>
             <h2 className="text-2xl font-semibold text-blue-300 mb-2">
               Use of the Service
@@ -107,7 +112,7 @@ export default function TermsOfService() {
           </div>
         </section>
 
-        <p className="text-slate-500 text-sm mt-12">
+        <p className="text-slate-500 text-sm mt-12 text-center">
           Last updated: November 2025
         </p>
       </div>
