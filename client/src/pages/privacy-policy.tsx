@@ -102,7 +102,7 @@ export default function PrivacyPolicy() {
           <p className="text-slate-300 mb-3">
             We host customer data on Amazon Web Services (AWS) in either{" "}
             <span className="font-medium">
-              EU-West-1 (Ireland) or US-West-1 (California)
+              EU-West-1 (Ireland) or US-West-2 (Oregon)
             </span>{" "}
             depending on the organization’s primary region.
           </p>
