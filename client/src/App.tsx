@@ -5,13 +5,15 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import NotFound from "@/pages/not-found";
-import TermsOfService from "@/pages/terms-of-service"; // ✅ new import
+import TermsOfService from "@/pages/terms-of-service";
+import PrivacyPolicy from "@/pages/privacy-policy"; // ✅ new
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/terms-of-service" component={TermsOfService} /> {/* ✅ new route */}
+      <Route path="/terms-of-service" component={TermsOfService} />
+      <Route path="/privacy-policy" component={PrivacyPolicy} /> {/* ✅ new */}
       <Route component={NotFound} />
     </Switch>
   );

@@ -22,7 +22,7 @@ const footerLinks: Record<string, LinkItem[]> = {
   Company: [
     { label: "About", href: "#" },
     { label: "Careers", href: "#" },
-    { label: "Privacy Policy", href: "/PrivacyPolicy_GroovySec.pdf", external: true },
+    { label: "Privacy Policy", href: "/privacy-policy" },          // ✅ now a page
     { label: "Terms of Service", href: "/terms-of-service" },
   ],
 };
@@ -32,10 +32,10 @@ export function Footer() {
     <footer className="bg-slate-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-8">
-          {/* Removed GroovyLogo */}
           <div>
             <p className="text-slate-300 text-sm mt-4">
-              Enterprise AI governance platform for complete security, compliance, and control.
+              Enterprise AI governance platform for complete security,
+              compliance, and control.
             </p>
           </div>
 
