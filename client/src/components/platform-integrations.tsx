@@ -37,7 +37,7 @@ export function PlatformIntegrations() {
   const aiModels = [
     {
       name: "OpenAI",
-      description: "GPT-4, GPT-3.5"
+      description: "GPT"
     },
     {
       name: "Anthropic",
@@ -45,11 +45,11 @@ export function PlatformIntegrations() {
     },
     {
       name: "Google",
-      description: "Gemini, PaLM"
+      description: "Gemini"
     },
     {
       name: "Custom Models",
-      description: "Private & Fine-tuned"
+      description: "Mistral, LLava"
     }
   ];
 

@@ -5,13 +5,13 @@ export function PolicyWorkflow() {
     {
       icon: User,
       title: "1. User Request",
-      description: "Employee submits AI query through integrated platform",
+      description: "User submits AI prompt",
       color: "blue"
     },
     {
       icon: Search,
       title: "2. Policy Check",
-      description: "Request analyzed against custom security policies",
+      description: "Request analyzed against organizations security policies",
       color: "orange"
     },
     {
@@ -23,7 +23,7 @@ export function PolicyWorkflow() {
     {
       icon: CheckCircle,
       title: "4. Secure Response",
-      description: "AI response delivered with full audit trail",
+      description: "If no policy violation, AI prompt sent with full audit trail",
       color: "blue"
     }
   ];

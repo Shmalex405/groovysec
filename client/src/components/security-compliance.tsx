@@ -5,7 +5,7 @@ export function SecurityCompliance() {
     {
       icon: Lock,
       title: "Data Isolation",
-      description: "Your Whiteout AI data is stored where you want it. AWS S3 or a Local-Lan gives complete data isolation to ensure regulatory compliance."
+      description: "Your Whiteout AI data is stored where you want it. Client hosted or Groovy Security hosted AWS."
     },
     {
       icon: Tag,

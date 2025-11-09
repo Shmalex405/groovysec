@@ -27,7 +27,7 @@ export function ArchitectureFlow() {
                   </div>
                 </div>
                 <h3 className="text-white font-semibold mb-2">User</h3>
-                <p className="text-slate-300 text-sm">Submits AI prompt via Whiteout platform</p>
+                <p className="text-slate-300 text-sm">Submits AI prompt via Whiteout platform or on their favorite AI platform</p>
               </div>
               
               {/* Arrow 1 */}
@@ -87,7 +87,7 @@ export function ArchitectureFlow() {
                 <ul className="text-slate-300 text-sm space-y-1">
                   <li>• No sensitive data detected</li>
                   <li>• Complies with all policies</li>
-                  <li>• Routed to external AI models</li>
+                  <li>• Allowed to external AI models</li>
                 </ul>
               </div>
               
@@ -97,8 +97,8 @@ export function ArchitectureFlow() {
                   <h4 className="text-blue-400 font-semibold">Internal Only</h4>
                 </div>
                 <ul className="text-slate-300 text-sm space-y-1">
-                  <li>• Contains sensitive data</li>
-                  <li>• Requires isolation</li>
+                  <li>• Sensitive data prompts</li>
+                  <li>• Completely isolated</li>
                   <li>• Processed internally</li>
                 </ul>
               </div>
@@ -111,7 +111,7 @@ export function ArchitectureFlow() {
                 <ul className="text-slate-300 text-sm space-y-1">
                   <li>• Violates company policies</li>
                   <li>• Potential security risk</li>
-                  <li>• Request blocked</li>
+                  <li>• Prompt blocked</li>
                 </ul>
               </div>
             </div>
