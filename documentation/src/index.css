@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 84% 4.9%;
+  --primary: 207 90% 54%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222 47% 11%;
+  --border: 214 32% 91%;
+}
+
+.dark {
+  --background: 222 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222 47% 11%;
+  --card-foreground: 210 40% 98%;
+  --primary: 207 90% 54%;
+  --primary-foreground: 222 47% 11%;
+  --secondary: 217 32% 17%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217 32% 17%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 217 32% 17%;
+  --accent-foreground: 210 40% 98%;
+  --border: 217 32% 17%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
+}
+
+/* Prose styling for markdown */
+.prose {
+  @apply max-w-none;
+}
+
+.prose h1 {
+  @apply text-3xl font-bold mb-6 pb-2 border-b border-border;
+}
+
+.prose h2 {
+  @apply text-2xl font-semibold mt-10 mb-4 pb-2 border-b border-border;
+}
+
+.prose h3 {
+  @apply text-xl font-semibold mt-8 mb-3;
+}
+
+.prose h4 {
+  @apply text-lg font-medium mt-6 mb-2;
+}
+
+.prose p {
+  @apply mb-4 leading-7;
+}
+
+.prose ul, .prose ol {
+  @apply mb-4 pl-6;
+}
+
+.prose li {
+  @apply mb-2;
+}
+
+.prose table {
+  @apply w-full mb-6 border-collapse;
+}
+
+.prose th {
+  @apply bg-muted px-4 py-2 text-left font-semibold border border-border;
+}
+
+.prose td {
+  @apply px-4 py-2 border border-border;
+}
+
+.prose code:not(pre code) {
+  @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono;
+}
+
+.prose pre {
+  @apply bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto mb-4;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 text-sm;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-primary pl-4 italic my-4 text-muted-foreground;
+}
+
+.prose a {
+  @apply text-primary hover:underline;
+}
+
+.prose hr {
+  @apply my-8 border-border;
+}
+
+/* Code syntax highlighting */
+.hljs {
+  @apply bg-slate-900;
+}
+
+/* Sidebar active state */
+.sidebar-link-active {
+  @apply bg-primary/10 text-primary border-l-2 border-primary;
+}
+
+/* Smooth transitions */
+.transition-sidebar {
+  @apply transition-all duration-200 ease-in-out;
+}
