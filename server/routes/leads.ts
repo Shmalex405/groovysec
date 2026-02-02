@@ -81,7 +81,7 @@ New Lead Submitted from groovysec.com 🚀
 
       const emailResponse = await resend.emails.send({
         from: "GroovySec <noreply@groovysec.com>", // verified sender
-        to: ["sec.groovy@gmail.com"],
+        to: ["alex@groovysec.com"],
         subject: "🚨 New Demo Request from GroovySec",
         text: message, // plain text fallback
         html: `

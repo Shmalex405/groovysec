@@ -66,10 +66,8 @@ export function LeadCapture() {
         });
 
         setTimeout(() => {
-          const calendlyUrl = `https://calendly.com/sec-groovy/30min?name=${encodeURIComponent(
-            `${payload.firstName} ${payload.lastName}`
-          )}&email=${encodeURIComponent(payload.email)}`;
-          window.open(calendlyUrl, "_blank");
+          const bookingUrl = `https://calendar.app.google/YtmkmpRJNZaap1y56`;
+          window.open(bookingUrl, "_blank");
         }, 1200);
       }
     } catch (err: any) {
