@@ -7,6 +7,9 @@ import Home from "@/pages/home";
 import NotFound from "@/pages/not-found";
 import TermsOfService from "@/pages/terms-of-service";
 import PrivacyPolicy from "@/pages/privacy-policy"; // ✅ new
+import Government from "@/pages/government";
+import AcademicIntegrity from "@/pages/academic-integrity";
+import SecurityWhitepaper from "@/pages/security-whitepaper";
 
 function Router() {
   return (
@@ -14,6 +17,9 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/terms-of-service" component={TermsOfService} />
       <Route path="/privacy-policy" component={PrivacyPolicy} /> {/* ✅ new */}
+      <Route path="/government" component={Government} />
+      <Route path="/academic-integrity" component={AcademicIntegrity} />
+      <Route path="/security-whitepaper" component={SecurityWhitepaper} />
       <Route component={NotFound} />
     </Switch>
   );

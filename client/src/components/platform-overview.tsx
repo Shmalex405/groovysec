@@ -5,9 +5,9 @@ export function PlatformOverview() {
     {
       icon: Shield,
       title: "Policy-First Security",
-      description: "Every AI interaction is verified against your custom policies before execution. Complete data isolation ensures sensitive information never leaves your environment.",
+      description: "Every AI interaction is verified against your organization's policies before execution. Complete data isolation ensures sensitive information never leaves your environment.",
       benefits: [
-        "Custom policy enforcement",
+        "Tailored policy enforcement",
         "Real-time compliance monitoring",
         "Automated audit trails"
       ],

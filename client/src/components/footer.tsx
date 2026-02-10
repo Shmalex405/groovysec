@@ -15,7 +15,9 @@ const footerLinks: Record<string, LinkItem[]> = {
   ],
   Resources: [
     { label: "Documentation", href: "/docs", external: false },
-    { label: "Security Whitepaper", href: "#" },
+    { label: "Security Whitepaper", href: "/security-whitepaper" },
+    { label: "Government & Public Sector", href: "/government" },
+    { label: "Academic Integrity", href: "/academic-integrity" },
     { label: "Compliance Guide", href: "#" },
     { label: "Support", href: "#" },
   ],
