@@ -10,7 +10,7 @@ const footerLinks: Record<string, LinkItem[]> = {
   Product: [
     { label: "Platform Overview", href: "#" },
     { label: "Security Features", href: "#" },
-    { label: "Integrations", href: "#" },
+    { label: "Integrations", href: "/docs", external: false },
     { label: "Pricing", href: "#" },
   ],
   Resources: [
@@ -63,7 +63,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-slate-700 mt-8 pt-8 text-center text-sm text-slate-400 space-y-1">
-          <p>&copy; 2025 Groovy Security. All rights reserved.</p>
+          <p>&copy; 2026 Groovy Security. All rights reserved.</p>
 
         </div>
       </div>
