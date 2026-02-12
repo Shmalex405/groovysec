@@ -90,7 +90,7 @@ Before you begin, ensure you have:
 | **Tenant ID** | From Step 1 |
 | **Client ID** | From Step 1 |
 | **Client Secret** | From Step 3 |
-| **SharePoint URL** | `https://your-company.sharepoint.com` |
+| **Site URL** | `https://your-company.sharepoint.com/sites/YourSite` |
 
 5. Click **Save & Test Connection**
 

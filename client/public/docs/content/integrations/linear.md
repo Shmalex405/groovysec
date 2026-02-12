@@ -56,19 +56,11 @@ Select the following scopes:
 
 | Field | Value |
 |-------|-------|
-| **Client ID** | From Step 1 |
-| **Client Secret** | From Step 1 |
+| **API Key** | The Linear API key (see below) |
 
-5. Click **Authorize with Linear**
-6. Approve access in the Linear authorization screen
+5. Click **Save & Test Connection**
 
----
-
-## Alternative: Personal API Key Setup
-
-For simpler setup (single user access):
-
-### Step 1: Generate API Key
+### Generating a Linear API Key
 
 1. Go to [Linear Settings](https://linear.app/settings) > **API** > **Personal API keys**
 2. Click **Create key**
@@ -79,15 +71,7 @@ For simpler setup (single user access):
 | **Label** | `Whiteout AI Integration` |
 | **Scopes** | Read (issues, comments, projects) |
 
-4. Copy the generated key
-
-### Step 2: Configure in Whiteout AI
-
-1. Select **API Key** authentication method
-2. Enter the API key
-3. Click **Save & Test Connection**
-
-**Note:** Personal API keys have access limited to the creating user's visible content.
+4. Copy the generated key and enter it in the Whiteout AI configuration above
 
 ---
 

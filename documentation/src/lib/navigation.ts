@@ -47,4 +47,25 @@ export const navigation: NavSection[] = [
       { title: 'Generic SAML', href: '/admin-guides/sso-providers/generic-saml' },
     ],
   },
+  {
+    title: 'SOC/SIEM Destinations',
+    items: [
+      { title: 'Webhook', href: '/admin-guides/soc-destinations/webhook' },
+      { title: 'Splunk HEC', href: '/admin-guides/soc-destinations/splunk-hec' },
+      { title: 'Azure Sentinel', href: '/admin-guides/soc-destinations/azure-sentinel' },
+      { title: 'Elasticsearch', href: '/admin-guides/soc-destinations/elasticsearch' },
+      { title: 'IBM QRadar', href: '/admin-guides/soc-destinations/ibm-qradar' },
+      { title: 'AWS S3', href: '/admin-guides/soc-destinations/aws-s3' },
+    ],
+  },
+  {
+    title: 'MDM Providers',
+    items: [
+      { title: 'Microsoft Intune', href: '/admin-guides/mdm-providers/microsoft-intune' },
+      { title: 'Jamf', href: '/admin-guides/mdm-providers/jamf' },
+      { title: 'VMware Workspace ONE', href: '/admin-guides/mdm-providers/vmware-workspace-one' },
+      { title: 'Kandji', href: '/admin-guides/mdm-providers/kandji' },
+      { title: 'Mosyle', href: '/admin-guides/mdm-providers/mosyle' },
+    ],
+  },
 ];

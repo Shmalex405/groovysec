@@ -68,33 +68,17 @@ Configure the app's default permissions:
 
 | Field | Value |
 |-------|-------|
-| **Client ID** | From Step 2 |
-| **Client Secret** | From Step 2 |
+| **Personal Access Token** | The token from Step 1 below |
 
-5. Click **Authorize with Asana**
-6. Approve access in the Asana authorization screen
+5. Click **Save & Test Connection**
 
----
-
-## Alternative: Personal Access Token
-
-For simpler setup:
-
-### Step 1: Generate Personal Access Token
+### Generating a Personal Access Token
 
 1. Go to [Asana Developer Console](https://app.asana.com/0/my-apps)
 2. Click **Create New Personal Access Token**
 3. Enter a description: `Whiteout AI Integration`
 4. Click **Create Token**
-5. Copy the generated token
-
-### Step 2: Configure in Whiteout AI
-
-1. Select **Personal Access Token** method
-2. Enter the token
-3. Click **Save & Test Connection**
-
-**Note:** Personal tokens provide access to all content the creating user can see.
+5. Copy the generated token and enter it in the Whiteout AI configuration above
 
 ---
 

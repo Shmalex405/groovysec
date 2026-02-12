@@ -91,7 +91,6 @@ For real-time monitoring:
 | Field | Value |
 |-------|-------|
 | **Bot Token** | The `xoxb-...` token from Step 4 |
-| **Signing Secret** | From **Basic Information** > **App Credentials** |
 
 5. Click **Save & Test Connection**
 

@@ -14,4 +14,7 @@ export default defineConfig({
     outDir: '../client/public/docs',
     emptyOutDir: true,
   },
+  optimizeDeps: {
+    include: ['remark-gfm', 'mdast-util-gfm', 'micromark-extension-gfm'],
+  },
 });

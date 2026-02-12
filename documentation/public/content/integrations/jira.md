@@ -27,65 +27,33 @@ Before you begin, ensure you have:
 
 ---
 
-## Jira Cloud Setup (OAuth 2.0)
+## Jira Cloud Setup
 
-### Step 1: Create an OAuth App in Atlassian
+### Step 1: Note Your Atlassian Site URL
 
-1. Go to [Atlassian Developer Console](https://developer.atlassian.com/console/myapps/)
-2. Click **Create** > **OAuth 2.0 integration**
-3. Enter app details:
+Your Jira Cloud site URL is typically `https://your-domain.atlassian.net`.
 
-| Field | Value |
-|-------|-------|
-| **Name** | `Whiteout AI Jira Integration` |
-| **Description** | `Governance integration for Whiteout AI` |
+### Step 2: Generate an API Token
 
-### Step 2: Configure Permissions
+1. Go to [Atlassian Account Settings](https://id.atlassian.com/manage-profile/security/api-tokens)
+2. Click **Create API token**
+3. Enter a label: `Whiteout AI Integration`
+4. Click **Create**
+5. Copy the generated API token — it will only be shown once
 
-1. In your app, go to **Permissions**
-2. Click **Add** next to **Jira API**
-3. Add the following scopes:
-
-| Scope | Purpose |
-|-------|---------|
-| `read:jira-work` | Read issues, projects, and work data |
-| `read:jira-user` | Read user information |
-| `read:servicedesk-request` | Read service desk requests (if using JSM) |
-
-4. Click **Save changes**
-
-### Step 3: Configure Authorization
-
-1. Go to **Authorization**
-2. Click **Add** next to **OAuth 2.0 (3LO)**
-3. Enter callback URL:
-   ```
-   https://your-whiteout-instance.com/api/integrations/jira/callback
-   ```
-4. Click **Save changes**
-
-### Step 4: Get Credentials
-
-1. Go to **Settings** in your app
-2. Copy:
-   - **Client ID**
-   - **Client Secret**
-
-### Step 5: Configure Whiteout AI
+### Step 3: Configure Whiteout AI
 
 1. In Whiteout AI, go to **Settings** > **Data Integrations**
 2. Find **Jira** and click **Connect**
-3. Select **Jira Cloud**
-4. Enter:
+3. Enter:
 
 | Field | Value |
 |-------|-------|
-| **Client ID** | From Step 4 |
-| **Client Secret** | From Step 4 |
-| **Atlassian Site** | `your-domain.atlassian.net` |
+| **Base URL** | `https://your-domain.atlassian.net` |
+| **Email** | Your Atlassian account email |
+| **API Token** | The API token from Step 2 |
 
-5. Click **Authorize**
-6. Approve access in the Atlassian authorization screen
+4. Click **Save & Test Connection**
 
 ---
 
@@ -136,8 +104,8 @@ Before you begin, ensure you have:
 | Field | Value |
 |-------|-------|
 | **Base URL** | `https://jira.your-company.com` |
-| **Username** | `whiteout-service` |
-| **Access Token/Password** | From Step 3 |
+| **Email** | Service account email |
+| **API Token** | Access Token from Step 3 |
 
 4. Click **Save & Test Connection**
 

@@ -29,53 +29,21 @@ Choose the appropriate method based on your Confluence deployment:
 
 ---
 
-## Confluence Cloud Setup (OAuth 2.0)
+## Confluence Cloud Setup
 
-### Step 1: Create an OAuth App in Atlassian
+### Step 1: Note Your Atlassian Site URL
 
-1. Go to [Atlassian Developer Console](https://developer.atlassian.com/console/myapps/)
-2. Click **Create** > **OAuth 2.0 integration**
-3. Enter app details:
+Your Confluence Cloud site URL is typically `https://your-domain.atlassian.net`.
 
-| Field | Value |
-|-------|-------|
-| **Name** | `Whiteout AI Integration` |
-| **Description** | `Governance integration for Whiteout AI` |
+### Step 2: Generate an API Token
 
-### Step 2: Configure Permissions
+1. Go to [Atlassian Account Settings](https://id.atlassian.com/manage-profile/security/api-tokens)
+2. Click **Create API token**
+3. Enter a label: `Whiteout AI Integration`
+4. Click **Create**
+5. Copy the generated API token — it will only be shown once
 
-1. In your new app, go to **Permissions**
-2. Click **Add** next to **Confluence API**
-3. Select the following scopes:
-
-| Scope | Purpose |
-|-------|---------|
-| `read:confluence-content.all` | Read all Confluence content |
-| `read:confluence-content.summary` | Read content summaries |
-| `read:confluence-space.summary` | Read space information |
-| `read:confluence-user` | Read user information |
-| `read:confluence-groups` | Read group memberships |
-
-4. Click **Save changes**
-
-### Step 3: Configure Authorization
-
-1. Go to **Authorization** in your app settings
-2. Click **Add** next to **OAuth 2.0 (3LO)**
-3. Enter the callback URL:
-   ```
-   https://your-whiteout-instance.com/api/integrations/confluence/callback
-   ```
-4. Click **Save changes**
-
-### Step 4: Get Credentials
-
-1. Navigate to **Settings** in your app
-2. Copy the following values:
-   - **Client ID**
-   - **Client Secret** (click to reveal)
-
-### Step 5: Configure Whiteout AI
+### Step 3: Configure Whiteout AI
 
 1. Log in to Whiteout AI as an administrator
 2. Navigate to **Settings** > **Data Integrations**
@@ -85,13 +53,11 @@ Choose the appropriate method based on your Confluence deployment:
 
 | Field | Value |
 |-------|-------|
-| **Client ID** | From Step 4 |
-| **Client Secret** | From Step 4 |
-| **Atlassian Site** | `your-domain.atlassian.net` |
+| **Base URL** | `https://your-domain.atlassian.net` |
+| **Email** | Your Atlassian account email |
+| **API Token** | The API token from Step 2 |
 
-6. Click **Authorize**
-7. You'll be redirected to Atlassian to approve access
-8. Select the Confluence site to connect and click **Accept**
+6. Click **Save & Test Connection**
 
 ---
 
@@ -142,8 +108,8 @@ Choose the appropriate method based on your Confluence deployment:
 | Field | Value |
 |-------|-------|
 | **Base URL** | `https://confluence.your-company.com` |
-| **Username** | `whiteout-service` |
-| **Password/API Token** | API Token (Cloud) or Password (Server) |
+| **Email** | Service account email |
+| **API Token** | API Token from Step 3 |
 
 4. Click **Save & Test Connection**
 

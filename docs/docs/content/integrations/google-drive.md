@@ -100,15 +100,15 @@ https://www.googleapis.com/auth/admin.directory.group.readonly
 1. Log in to Whiteout AI as an administrator
 2. Navigate to **Settings** > **Data Integrations**
 3. Find **Google Drive** and click **Connect**
-4. Upload the JSON key file from Step 4
-5. Enter:
+4. Enter:
 
 | Field | Value |
 |-------|-------|
-| **Domain** | `your-company.com` |
-| **Admin Email** | A super admin email for impersonation |
+| **Client ID** | OAuth Client ID from Google Cloud Console |
+| **Client Secret** | OAuth Client Secret from Google Cloud Console |
+| **Refresh Token** | Obtained after completing the OAuth authorization flow |
 
-6. Click **Save & Test Connection**
+5. Click **Save & Test Connection**
 
 ---
 

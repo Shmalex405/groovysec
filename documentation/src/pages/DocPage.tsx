@@ -20,7 +20,7 @@ export function DocPage() {
     async function loadContent() {
       setLoading(true);
       try {
-        const response = await fetch(`/content/${docPath}.md`);
+        const response = await fetch(`${import.meta.env.BASE_URL}content/${docPath}.md`);
         if (response.ok) {
           const text = await response.text();
           setContent(text);

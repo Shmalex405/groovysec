@@ -39,6 +39,27 @@ Configure identity providers for secure authentication:
 - **Generic OIDC** - Any OIDC-compliant provider
 - **Generic SAML** - Any SAML 2.0 provider (Beta)
 
+### SOC/SIEM Destinations
+
+Stream audit events to your security operations center:
+
+- **Webhook** - Forward events to any HTTP endpoint
+- **Splunk HEC** - HTTP Event Collector integration
+- **Azure Sentinel** - Microsoft Sentinel log ingestion
+- **Elasticsearch** - Full-text search and Kibana dashboards
+- **IBM QRadar** - Syslog-based SIEM integration
+- **AWS S3** - Batch export for archival and data lakes
+
+### MDM Providers
+
+Deploy and manage Whiteout AI across your device fleet:
+
+- **Microsoft Intune** - Windows and cross-platform MDM
+- **Jamf** - Apple device management
+- **VMware Workspace ONE** - Cross-platform UEM
+- **Kandji** - Apple device management
+- **Mosyle** - Apple device management
+
 ## Prerequisites
 
 1. **Admin Access**: You must have administrator privileges in Whiteout AI
@@ -69,7 +90,7 @@ If you encounter issues during setup, please contact support@groovysec.com or re
 // Function to load additional docs dynamically
 export async function loadDoc(path: string): Promise<string | null> {
   try {
-    const response = await fetch(`/content/${path}.md`);
+    const response = await fetch(`${import.meta.env.BASE_URL}content/${path}.md`);
     if (response.ok) {
       return await response.text();
     }

@@ -7,7 +7,9 @@ import {
   Github,
   MessageSquare,
   FileText,
-  Database
+  Database,
+  Radio,
+  Monitor
 } from 'lucide-react';
 
 const quickLinks = [
@@ -24,6 +26,20 @@ const quickLinks = [
     href: '/admin-guides/sso-providers/okta',
     icon: Shield,
     color: 'text-groovy-green',
+  },
+  {
+    title: 'SOC/SIEM Destinations',
+    description: 'Stream audit events to Splunk, Sentinel, Elasticsearch, and more',
+    href: '/admin-guides/soc-destinations/webhook',
+    icon: Radio,
+    color: 'text-orange-500',
+  },
+  {
+    title: 'MDM Providers',
+    description: 'Deploy and manage Whiteout AI via Intune, Jamf, Kandji, and more',
+    href: '/admin-guides/mdm-providers/microsoft-intune',
+    icon: Monitor,
+    color: 'text-purple-500',
   },
 ];
 
@@ -51,7 +67,7 @@ export function HomePage() {
       </div>
 
       {/* Quick Links */}
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid sm:grid-cols-2 gap-6">
         {quickLinks.map((link) => (
           <Link
             key={link.href}
