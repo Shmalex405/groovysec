@@ -1,3 +1,5 @@
+import { Link } from "wouter";
+
 interface GroovyLogoProps {
   className?: string;
   showText?: boolean;
@@ -5,7 +7,7 @@ interface GroovyLogoProps {
 
 export function GroovyLogo({ className = "h-8 w-8", showText = true }: GroovyLogoProps) {
   return (
-    <div className="flex items-center">
+    <Link href="/" className="flex items-center">
       <img
         src="/transparent_logo.png"
         alt="Groovy Logo"
@@ -18,6 +20,6 @@ export function GroovyLogo({ className = "h-8 w-8", showText = true }: GroovyLog
           className="ml-3 h-6 md:h-8 object-contain"
         />
       )}
-    </div>
+    </Link>
   );
 }

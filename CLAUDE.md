@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Groovy Security - AI governance platform marketing website and lead capture system. Full-stack TypeScript monorepo with Express backend and React frontend.
+Groovy Security - Cybersecurity company with two products: **Whiteout AI** (AI governance platform) and **Maestro** (AI-driven penetration testing). Full-stack TypeScript monorepo with Express backend and React frontend.
 
 ## Commands
 
@@ -22,6 +22,9 @@ npm run db:push          # Push Drizzle schema to PostgreSQL
 
 # Type checking
 npm run check            # Run TypeScript compiler
+
+# Deploy (Claude Code skill)
+/deploy                  # Build docs, verify output, check CNAME
 ```
 
 ## Architecture
@@ -30,6 +33,20 @@ npm run check            # Run TypeScript compiler
 - `client/` - React frontend (Vite)
 - `server/` - Express backend
 - `shared/` - Shared types and Drizzle schema
+
+### Route Structure
+| Route | Page | File |
+|-------|------|------|
+| `/` | Company landing | `client/src/pages/company-home.tsx` |
+| `/whiteout-ai` | Whiteout AI product | `client/src/pages/whiteout-ai.tsx` |
+| `/maestro` | Maestro product | `client/src/pages/maestro.tsx` |
+| `/about` | About / Founders | `client/src/pages/about.tsx` |
+| `/demo` | Request Demo form | `client/src/pages/demo.tsx` |
+| `/whiteout-ai/government` | Government sector | `client/src/pages/whiteout-ai/government.tsx` |
+| `/whiteout-ai/academic-integrity` | Academic integrity | `client/src/pages/whiteout-ai/academic-integrity.tsx` |
+| `/whiteout-ai/security-whitepaper` | Security whitepaper | `client/src/pages/whiteout-ai/security-whitepaper.tsx` |
+| `/terms-of-service` | Terms of Service | `client/src/pages/terms-of-service.tsx` |
+| `/privacy-policy` | Privacy Policy | `client/src/pages/privacy-policy.tsx` |
 
 ### Path Aliases
 - `@/*` → `client/src/*`

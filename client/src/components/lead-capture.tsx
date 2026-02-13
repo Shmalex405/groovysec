@@ -89,10 +89,10 @@ export function LeadCapture() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-slate-900 mb-4">
-            Ready to Secure Your AI Strategy?
+            Request a Demo
           </h2>
           <p className="text-xl text-slate-600">
-            Schedule a personalized demo and see how Whiteout AI can transform your enterprise AI governance.
+            Schedule a personalized demo and see how Groovy Security's products can help your organization.
           </p>
         </div>
 

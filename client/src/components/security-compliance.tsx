@@ -1,4 +1,9 @@
 import { Lock, Tag, Eye, Shield, UserCheck, Key, Clock } from "lucide-react";
+import {
+  ScrollReveal,
+  StaggerChildren,
+  StaggerItem,
+} from "@/components/motion";
 
 export function SecurityCompliance() {
   const securityFeatures = [
@@ -45,28 +50,30 @@ export function SecurityCompliance() {
   return (
     <section id="security" className="py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-slate-900 mb-4">
-            Enterprise-Grade Security
-          </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Built with security-first architecture to meet the strictest enterprise and regulatory requirements.
-          </p>
-        </div>
-        
+        <ScrollReveal>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">
+              Enterprise-Grade Security
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              Built with security-first architecture to meet the strictest enterprise and regulatory requirements.
+            </p>
+          </div>
+        </ScrollReveal>
+
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <div className="space-y-8">
-              {securityFeatures.map((feature, index) => {
-                const Icon = feature.icon;
-                const colorClasses = [
-                  "bg-blue-600/10 text-blue-600",
-                  "bg-green-600/10 text-green-600",
-                  "bg-orange-600/10 text-orange-600"
-                ];
-                
-                return (
-                  <div key={index} className="flex items-start">
+          <StaggerChildren className="space-y-8">
+            {securityFeatures.map((feature, index) => {
+              const Icon = feature.icon;
+              const colorClasses = [
+                "bg-blue-600/10 text-blue-600",
+                "bg-green-600/10 text-green-600",
+                "bg-orange-600/10 text-orange-600"
+              ];
+
+              return (
+                <StaggerItem key={index}>
+                  <div className="flex items-start">
                     <div className={`w-12 h-12 ${colorClasses[index]} rounded-full flex items-center justify-center mr-4 flex-shrink-0`}>
                       <Icon className="w-6 h-6" />
                     </div>
@@ -75,29 +82,31 @@ export function SecurityCompliance() {
                       <p className="text-slate-600">{feature.description}</p>
                     </div>
                   </div>
-                );
-              })}
-            </div>
-          </div>
-          
-          <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-slate-200">
-            <h3 className="text-2xl font-bold text-slate-900 mb-6 text-center">Security Features</h3>
-            <div className="space-y-4">
-              {securityChecks.map((check, index) => {
-                const Icon = check.icon;
-                
-                return (
-                  <div key={index} className="flex items-center justify-between p-4 bg-white rounded-lg border border-slate-100">
-                    <div className="flex items-center">
-                      <Icon className="w-5 h-5 text-blue-600 mr-3" />
-                      <span className="font-medium text-slate-900">{check.title}</span>
+                </StaggerItem>
+              );
+            })}
+          </StaggerChildren>
+
+          <ScrollReveal direction="right">
+            <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-slate-200">
+              <h3 className="text-2xl font-bold text-slate-900 mb-6 text-center">Security Features</h3>
+              <div className="space-y-4">
+                {securityChecks.map((check, index) => {
+                  const Icon = check.icon;
+
+                  return (
+                    <div key={index} className="flex items-center justify-between p-4 bg-white rounded-lg border border-slate-100">
+                      <div className="flex items-center">
+                        <Icon className="w-5 h-5 text-blue-600 mr-3" />
+                        <span className="font-medium text-slate-900">{check.title}</span>
+                      </div>
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                     </div>
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
