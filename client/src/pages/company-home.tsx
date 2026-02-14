@@ -3,13 +3,10 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import {
-  Shield,
-  Target,
   ArrowRight,
   CheckCircle,
   Calendar,
   Award,
-  Lock,
 } from "lucide-react";
 import {
   PageTransition,
@@ -90,10 +87,7 @@ export default function CompanyHome() {
               {/* Whiteout AI Card */}
               <StaggerItem>
                 <div className="p-8 bg-white rounded-2xl border border-slate-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <div className="w-16 h-16 bg-blue-600/10 rounded-full flex items-center justify-center mb-6">
-                    <Shield className="w-8 h-8 text-blue-600" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-3">Whiteout AI</h3>
+                  <h3 className="text-3xl font-bold text-slate-900 mb-3">Whiteout AI</h3>
                   <p className="text-slate-600 mb-6">
                     Enterprise AI governance platform that intercepts, evaluates, and enforces
                     compliance policies on every AI interaction — before sensitive data ever
@@ -123,10 +117,7 @@ export default function CompanyHome() {
               {/* Maestro Card */}
               <StaggerItem>
                 <div className="p-8 bg-white rounded-2xl border border-slate-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <div className="w-16 h-16 bg-orange-600/10 rounded-full flex items-center justify-center mb-6">
-                    <Target className="w-8 h-8 text-orange-600" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-3">Maestro</h3>
+                  <h3 className="text-3xl font-bold text-slate-900 mb-3">Maestro</h3>
                   <p className="text-slate-600 mb-6">
                     AI-driven automated penetration testing platform that deploys 7 specialized
                     agents to find vulnerabilities and validate them through real red team-style
@@ -172,7 +163,7 @@ export default function CompanyHome() {
               </div>
             </ScrollReveal>
 
-            <StaggerChildren className="grid md:grid-cols-3 gap-8">
+            <StaggerChildren className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               <StaggerItem>
                 <div className="text-center p-8 bg-white rounded-2xl border border-slate-200">
                   <div className="w-14 h-14 bg-blue-600/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -192,17 +183,6 @@ export default function CompanyHome() {
                   <h3 className="text-lg font-bold text-slate-900 mb-2">Enterprise-Grade</h3>
                   <p className="text-sm text-slate-600">
                     Built for organizations that require the highest security and compliance standards.
-                  </p>
-                </div>
-              </StaggerItem>
-              <StaggerItem>
-                <div className="text-center p-8 bg-white rounded-2xl border border-slate-200">
-                  <div className="w-14 h-14 bg-orange-600/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Lock className="w-7 h-7 text-orange-600" />
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-2">SOC 2 In Progress</h3>
-                  <p className="text-sm text-slate-600">
-                    Pursuing SOC 2 Type II certification to meet rigorous trust requirements.
                   </p>
                 </div>
               </StaggerItem>
