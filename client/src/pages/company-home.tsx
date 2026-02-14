@@ -130,8 +130,8 @@ export default function CompanyHome() {
                     {[
                       "Red team exploitation that tests and validates every finding",
                       "7 AI agents covering the full pentest lifecycle end-to-end",
-                      "Local, cloud, or air-gapped deployment modes",
-                      "Integrates with Jira, SharePoint, email & N8N",
+                      "Locally deployed — all data and vulnerability info stays on your network",
+                      "Integrates with Jira, SharePoint & email",
                     ].map((item) => (
                       <li key={item} className="flex items-start text-sm text-slate-600">
                         <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />

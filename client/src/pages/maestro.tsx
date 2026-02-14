@@ -16,8 +16,6 @@ import {
   ClipboardList,
   RefreshCw,
   Server,
-  Cloud,
-  Lock,
 } from "lucide-react";
 import {
   PageTransition,
@@ -34,7 +32,7 @@ export default function Maestro() {
     { value: "7", label: "AI Agents" },
     { value: "Kali", label: "Linux Powered" },
     { value: "Auto", label: "Report Generation" },
-    { value: "3", label: "Deploy Modes" },
+    { value: "Local", label: "Deployment" },
   ];
 
   const agents = [
@@ -114,28 +112,6 @@ export default function Maestro() {
     { name: "Jira", description: "Create tickets for findings automatically" },
     { name: "SharePoint", description: "Publish reports to document libraries" },
     { name: "Email", description: "Stakeholder notifications and summaries" },
-    { name: "N8N", description: "Workflow automation and custom pipelines" },
-  ];
-
-  const deploymentModes = [
-    {
-      icon: Server,
-      title: "Local",
-      description: "Run Maestro entirely on your own infrastructure. Full control, no data leaves your network. Ideal for air-gapped environments and organizations with strict data residency requirements.",
-      color: "blue",
-    },
-    {
-      icon: Cloud,
-      title: "Cloud",
-      description: "Managed cloud deployment with secure multi-tenant infrastructure. Quick setup, automatic updates, and zero infrastructure overhead for your team.",
-      color: "green",
-    },
-    {
-      icon: Lock,
-      title: "Private / Air-Gapped",
-      description: "Fully isolated deployment for classified or highly regulated environments. No internet connectivity required — all agents and tools operate within your secure perimeter.",
-      color: "orange",
-    },
   ];
 
   const colorClasses: Record<string, { bg: string; icon: string }> = {
@@ -311,7 +287,7 @@ export default function Maestro() {
               </div>
             </ScrollReveal>
 
-            <StaggerChildren className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <StaggerChildren className="grid md:grid-cols-3 gap-6">
               {integrations.map((integration, index) => (
                 <StaggerItem key={index}>
                   <div className="p-6 bg-white rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300 text-center">
@@ -324,38 +300,44 @@ export default function Maestro() {
           </div>
         </section>
 
-        {/* Deployment Modes */}
+        {/* Local Deployment */}
         <section className="py-20 bg-slate-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
-              <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-slate-900 mb-4">
-                  Deployment Modes
-                </h2>
-                <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                  Deploy Maestro in the way that matches your security requirements and
-                  infrastructure constraints.
-                </p>
+              <div className="max-w-4xl mx-auto">
+                <div className="p-10 bg-white rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="flex flex-col md:flex-row md:items-center gap-8">
+                    <div className="flex-shrink-0">
+                      <div className="w-20 h-20 bg-blue-600/10 rounded-full flex items-center justify-center">
+                        <Server className="w-10 h-10 text-blue-600" />
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-3xl font-bold text-slate-900 mb-4">
+                        Locally Deployed. Fully Secure.
+                      </h2>
+                      <p className="text-lg text-slate-600 leading-relaxed mb-4">
+                        Maestro runs entirely on your own infrastructure — no data, vulnerability findings, or
+                        exploitation results ever leave your network. All 7 agents operate locally, giving you
+                        full control over sensitive security data and meeting the strictest data residency requirements.
+                      </p>
+                      <ul className="space-y-2">
+                        {[
+                          "All pentest data stays on your network — nothing leaves your perimeter",
+                          "Full control over vulnerability and exploitation findings",
+                          "Meets strict data residency and compliance requirements",
+                        ].map((item) => (
+                          <li key={item} className="flex items-start text-sm text-slate-600">
+                            <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
             </ScrollReveal>
-
-            <StaggerChildren className="grid md:grid-cols-3 gap-8">
-              {deploymentModes.map((mode, index) => {
-                const Icon = mode.icon;
-                const colors = colorClasses[mode.color];
-                return (
-                  <StaggerItem key={index}>
-                    <div className="p-8 bg-white rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                      <div className={`w-16 h-16 ${colors.bg} rounded-full flex items-center justify-center mb-6`}>
-                        <Icon className={`w-8 h-8 ${colors.icon}`} />
-                      </div>
-                      <h3 className="text-2xl font-bold text-slate-900 mb-4">{mode.title}</h3>
-                      <p className="text-slate-600 leading-relaxed">{mode.description}</p>
-                    </div>
-                  </StaggerItem>
-                );
-              })}
-            </StaggerChildren>
           </div>
         </section>
 
