@@ -7,6 +7,7 @@ import {
   CheckCircle,
   Calendar,
   Award,
+  MapPin,
 } from "lucide-react";
 import {
   PageTransition,
@@ -159,14 +160,14 @@ export default function CompanyHome() {
                   Built by Security Professionals
                 </h2>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                  Groovy Security was founded by cybersecurity professionals who saw the
-                  critical gaps in AI governance and security testing firsthand — and built
-                  the products to close them.
+                  Based in Utah, Groovy Security was founded by cybersecurity professionals
+                  who saw the critical gaps in AI governance and security testing firsthand
+                  — and built the products to close them.
                 </p>
               </div>
             </ScrollReveal>
 
-            <StaggerChildren className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <StaggerChildren className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               <StaggerItem>
                 <div className="text-center p-8 bg-white rounded-2xl border border-slate-200">
                   <div className="w-14 h-14 bg-blue-600/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -175,6 +176,17 @@ export default function CompanyHome() {
                   <h3 className="text-lg font-bold text-slate-900 mb-2">Founded 2025</h3>
                   <p className="text-sm text-slate-600">
                     Purpose-built from day one to solve AI-era security challenges.
+                  </p>
+                </div>
+              </StaggerItem>
+              <StaggerItem>
+                <div className="text-center p-8 bg-white rounded-2xl border border-slate-200">
+                  <div className="w-14 h-14 bg-orange-600/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <MapPin className="w-7 h-7 text-orange-600" />
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 mb-2">Utah-Based</h3>
+                  <p className="text-sm text-slate-600">
+                    Headquartered in the heart of Silicon Slopes.
                   </p>
                 </div>
               </StaggerItem>
