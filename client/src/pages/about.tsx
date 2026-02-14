@@ -68,8 +68,8 @@ export default function About() {
                   <p className="text-slate-600 leading-relaxed">
                     Cybersecurity professional who founded Groovy Security in March
                     2025, driven by firsthand experience with the industry's critical AI
-                    security gaps and a vision to become a leader in AI governance and
-                    broader cybersecurity innovation.
+                    security gaps and a vision for Groovy Security to be a leader in AI
+                    governance and broader cybersecurity innovation.
                   </p>
                 </div>
               </StaggerItem>
@@ -83,7 +83,7 @@ export default function About() {
                     className="w-32 h-32 rounded-full object-cover mx-auto mb-6 border-4 border-green-100"
                   />
                   <h3 className="text-2xl font-bold text-slate-900 mb-1">Joel Flowers</h3>
-                  <p className="text-green-600 font-medium mb-4">COO</p>
+                  <p className="text-green-600 font-medium mb-4">COO & Co-Founder</p>
                   <p className="text-slate-600 leading-relaxed">
                     Master's in Information Security with over 25 years of business
                     administration and teaching experience, bringing deep operational
