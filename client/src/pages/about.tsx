@@ -54,7 +54,7 @@ export default function About() {
               </div>
             </ScrollReveal>
 
-            <StaggerChildren className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <StaggerChildren className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {/* Alex Flowers */}
               <StaggerItem>
                 <div className="p-8 bg-white rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300">
@@ -66,8 +66,7 @@ export default function About() {
                   <h3 className="text-2xl font-bold text-slate-900 mb-1">Alex Flowers</h3>
                   <p className="text-blue-600 font-medium mb-4">CEO & Founder</p>
                   <p className="text-slate-600 leading-relaxed">
-                    Cybersecurity professional with a Master's in Information Cybersecurity
-                    from the National College of Ireland. Founded Groovy Security in March
+                    Cybersecurity professional who founded Groovy Security in March
                     2025, driven by firsthand experience with the industry's critical AI
                     security gaps and a vision to become a leader in AI governance and
                     broader cybersecurity innovation.
@@ -89,6 +88,24 @@ export default function About() {
                     Master's in Information Security with over 25 years of business
                     administration and teaching experience, bringing deep operational
                     expertise to Groovy Security's mission.
+                  </p>
+                </div>
+              </StaggerItem>
+              {/* Hanna Savchuk */}
+              <StaggerItem>
+                <div className="p-8 bg-white rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300">
+                  <img
+                    src="/hanna-savchuk.jpeg"
+                    alt="Hanna Savchuk"
+                    className="w-32 h-32 rounded-full object-cover mx-auto mb-6 border-4 border-orange-100" style={{ objectPosition: "50% 25%" }}
+                  />
+                  <h3 className="text-2xl font-bold text-slate-900 mb-1">Hanna Savchuk</h3>
+                  <p className="text-orange-600 font-medium mb-4">CMO</p>
+                  <p className="text-slate-600 leading-relaxed">
+                    Marketing and communications professional with a strong background in
+                    brand strategy, digital marketing, and go-to-market execution. Brings
+                    a data-driven approach to building Groovy Security's market presence
+                    and driving growth across enterprise cybersecurity audiences.
                   </p>
                 </div>
               </StaggerItem>
