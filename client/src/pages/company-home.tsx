@@ -87,6 +87,7 @@ export default function CompanyHome() {
               {/* Whiteout AI Card */}
               <StaggerItem>
                 <div className="p-8 bg-white rounded-2xl border border-slate-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <img src="/transparent_logo.png" alt="Whiteout AI" className="w-14 h-14 mb-4" />
                   <h3 className="text-3xl font-bold text-slate-900 mb-3">Whiteout AI</h3>
                   <p className="text-slate-600 mb-6">
                     Enterprise AI governance platform that intercepts, evaluates, and enforces
@@ -95,10 +96,11 @@ export default function CompanyHome() {
                   </p>
                   <ul className="space-y-2 mb-8">
                     {[
-                      "Real-time prompt interception across browser, desktop & mobile",
+                      "Real-time prompt interception across browser & desktop",
                       "65+ pre-built compliance policies (HIPAA, GDPR, FERPA, SOX)",
                       "LLM-powered contextual evaluation — not keyword matching",
                       "Complete audit trail with SIEM/SOC integration",
+                      "Complete isolated internal chat models for data sensitive prompts",
                     ].map((item) => (
                       <li key={item} className="flex items-start text-sm text-slate-600">
                         <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
@@ -117,6 +119,7 @@ export default function CompanyHome() {
               {/* Maestro Card */}
               <StaggerItem>
                 <div className="p-8 bg-white rounded-2xl border border-slate-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <img src="/transparent_logo.png" alt="Maestro" className="w-14 h-14 mb-4 grayscale opacity-70" />
                   <h3 className="text-3xl font-bold text-slate-900 mb-3">Maestro</h3>
                   <p className="text-slate-600 mb-6">
                     AI-driven automated penetration testing platform that deploys 7 specialized
