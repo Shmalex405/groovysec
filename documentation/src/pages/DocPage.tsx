@@ -130,16 +130,23 @@ export function DocPage() {
               if (finalHref.endsWith('.md')) {
                 finalHref = finalHref.replace('.md', '').replace('./', '/admin-guides/');
               }
+              if (isExternal) {
+                return (
+                  <a
+                    href={finalHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    {...props}
+                  >
+                    {children}
+                    <ExternalLink size={12} className="inline ml-1" />
+                  </a>
+                );
+              }
               return (
-                <a
-                  href={finalHref}
-                  target={isExternal ? '_blank' : undefined}
-                  rel={isExternal ? 'noopener noreferrer' : undefined}
-                  {...props}
-                >
+                <Link to={finalHref} {...props}>
                   {children}
-                  {isExternal && <ExternalLink size={12} className="inline ml-1" />}
-                </a>
+                </Link>
               );
             },
           }}
