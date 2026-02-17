@@ -28,12 +28,19 @@ export function Layout({ children, darkMode, setDarkMode }: LayoutProps) {
           </button>
 
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 mr-6">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-groovy-blue to-groovy-green flex items-center justify-center">
-              <span className="text-white font-bold text-sm">W</span>
-            </div>
-            <span className="font-semibold text-lg hidden sm:inline-block">
-              Whiteout AI Docs
+          <Link to="/" className="flex items-center mr-6">
+            <img
+              src={`${import.meta.env.BASE_URL}transparent_logo.png`}
+              alt="Groovy Security"
+              className="h-8 w-8"
+            />
+            <img
+              src={`${import.meta.env.BASE_URL}textonly_nobuffer.png`}
+              alt="Groovy Security"
+              className="ml-2 h-5 object-contain hidden sm:inline-block"
+            />
+            <span className="ml-2 text-sm font-medium text-muted-foreground hidden sm:inline-block">
+              Docs
             </span>
           </Link>
 
