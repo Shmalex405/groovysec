@@ -626,7 +626,12 @@ export default function SecurityWhitepaper() {
                         BLOCKED
                       </span>
                       <p className="text-slate-600 italic">
-                        "John Smith was diagnosed with diabetes"
+                        "Summarize the treatment plan for patient John A. Murphy,
+                        DOB 03/12/1974, MRN 4583921. He was diagnosed with Type 2
+                        Diabetes last month, his most recent HbA1c was 8.9%, and
+                        he has been prescribed Metformin 1000mg twice daily. His
+                        follow-up appointment is scheduled for March 3rd at St.
+                        Vincent's Hospital."
                       </p>
                     </div>
                     <div className="flex items-start">
@@ -634,15 +639,16 @@ export default function SecurityWhitepaper() {
                         ALLOWED
                       </span>
                       <p className="text-slate-600 italic">
-                        "How many patients were diagnosed with diabetes this
-                        month?"
+                        "Will you please give me a template for a discharge
+                        summary that I could reuse for multiple patients?"
                       </p>
                     </div>
                   </div>
                   <p className="text-xs text-slate-500 mt-3">
                     Pattern matching flags both. Whiteout AI understands the first
-                    reveals individual patient data while the second requests
-                    aggregate statistics.
+                    contains real patient identifiers and protected health
+                    information while the second is a generic template request
+                    with no sensitive data.
                   </p>
                 </div>
 
