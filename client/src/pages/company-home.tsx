@@ -123,14 +123,15 @@ export default function CompanyHome() {
                   <img src="/transparent_logo.png" alt="Maestro" className="w-14 h-14 mb-4 grayscale opacity-70" />
                   <h3 className="text-3xl font-bold text-slate-900 mb-3">Maestro</h3>
                   <p className="text-slate-600 mb-6">
-                    AI-driven automated penetration testing platform that deploys 7 specialized
+                    AI-driven automated penetration testing platform that deploys 12 specialized
                     agents to find vulnerabilities and validate them through real red team-style
                     exploitation — proving actual impact, not just scanner output.
                   </p>
                   <ul className="space-y-2 mb-8">
                     {[
                       "Red team exploitation that tests and validates every finding",
-                      "7 AI agents covering the full pentest lifecycle end-to-end",
+                      "12 AI agents with 108 tools covering the full pentest lifecycle",
+                      "108-test assessment matrix for consistent, deterministic coverage",
                       "Locally deployed — all data and vulnerability info stays on your network",
                       "Integrates with Jira, SharePoint & email",
                     ].map((item) => (

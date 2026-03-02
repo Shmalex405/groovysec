@@ -13,9 +13,13 @@ import {
   Scan,
   ArrowRight,
   Zap,
-  ClipboardList,
-  RefreshCw,
   Server,
+  Network,
+  Scale,
+  Code,
+  KeyRound,
+  Layers,
+  SplitSquareVertical,
 } from "lucide-react";
 import {
   PageTransition,
@@ -29,10 +33,10 @@ import {
 
 export default function Maestro() {
   const stats = [
-    { value: "7", label: "AI Agents" },
+    { value: "12", label: "AI Agents" },
+    { value: "108", label: "MCP Tools" },
+    { value: "108", label: "Test Matrix" },
     { value: "Kali", label: "Linux Powered" },
-    { value: "Auto", label: "Report Generation" },
-    { value: "Local", label: "Deployment" },
   ];
 
   const agents = [
@@ -78,6 +82,36 @@ export default function Maestro() {
       description: "Continuous security scanning and compliance checks that monitor for new exposures and configuration drift over time.",
       color: "blue",
     },
+    {
+      icon: Network,
+      title: "API Security Agent",
+      description: "GraphQL introspection, REST API fuzzing, JWT analysis, IDOR testing, WebSocket security, and rate-limit validation.",
+      color: "green",
+    },
+    {
+      icon: Server,
+      title: "Infra Security Agent",
+      description: "SSL/TLS analysis, DNS security and DNSSEC validation, subdomain takeover detection, cloud metadata testing, and S3 bucket security checks.",
+      color: "orange",
+    },
+    {
+      icon: Scale,
+      title: "Compliance Agent",
+      description: "Automated mapping to OWASP Top 10, NIST 800-53, PCI-DSS, and CWE standards with CVSS v3.1 scoring for every finding.",
+      color: "blue",
+    },
+    {
+      icon: Code,
+      title: "Code-Intel Agent",
+      description: "Source code analysis that maps entry points, traces data flows, analyzes defenses, and generates attack surfaces from your codebase.",
+      color: "green",
+    },
+    {
+      icon: KeyRound,
+      title: "Auth Agent",
+      description: "Session establishment, OTP handling, token extraction, and multi-auth-type support including OAuth2, bearer, API key, and basic auth.",
+      color: "orange",
+    },
   ];
 
   const features = [
@@ -87,24 +121,29 @@ export default function Maestro() {
       description: "Most tools stop at detection. Maestro goes further — testing and validating every finding through controlled exploitation to prove real-world impact. You get confirmed, exploitable vulnerabilities, not a list of theoretical risks.",
     },
     {
+      icon: Layers,
+      title: "108-Test Assessment Matrix",
+      description: "Structured 10-phase assessment framework ensuring consistent, deterministic coverage across every engagement. Every test documented as PASS, FAIL, SKIPPED, or N/A.",
+    },
+    {
+      icon: SplitSquareVertical,
+      title: "Dual-Track DAST + SAST",
+      description: "Parallel dynamic and static analysis with cross-validation. Static findings enriched with source code context and validated against live endpoints.",
+    },
+    {
       icon: Zap,
       title: "Autonomous Testing",
       description: "Deploy agents and let them work autonomously — Maestro coordinates the full pentest lifecycle from reconnaissance through exploitation to reporting.",
     },
     {
-      icon: ClipboardList,
-      title: "Findings Management",
-      description: "Centralized findings dashboard with severity ratings, exploitation evidence, and remediation tracking across all assessments.",
-    },
-    {
       icon: FileText,
       title: "Report Generation",
-      description: "Automated professional reports with executive summaries, technical breakdowns, exploitation proof, and prioritized remediation steps — ready for stakeholders.",
+      description: "Evidence-based reporting in HTML, PDF, and Markdown with executive summaries, technical breakdowns, complete reproduction steps, and prioritized remediation guidance — ready for stakeholders.",
     },
     {
-      icon: RefreshCw,
-      title: "Continuous Assessment",
-      description: "Schedule recurring assessments to catch new vulnerabilities as your infrastructure evolves — not just point-in-time snapshots.",
+      icon: Code,
+      title: "Code Intelligence",
+      description: "Entry point mapping, data flow tracing, and attack surface generation from source code. SAST findings enriched with git history, file paths, and commit context.",
     },
   ];
 
@@ -112,6 +151,7 @@ export default function Maestro() {
     { name: "Jira", description: "Create tickets for findings automatically" },
     { name: "SharePoint", description: "Publish reports to document libraries" },
     { name: "Email", description: "Stakeholder notifications and summaries" },
+    { name: "Cycode", description: "Import static analysis findings for dynamic validation" },
   ];
 
   const colorClasses: Record<string, { bg: string; icon: string }> = {
@@ -151,7 +191,7 @@ export default function Maestro() {
 
                   <HeroLine>
                     <p className="text-xl text-slate-300 mb-8 leading-relaxed">
-                      Maestro deploys 7 specialized AI agents to autonomously discover
+                      Maestro deploys 12 specialized AI agents to autonomously discover
                       vulnerabilities and validate them through real red team-style
                       exploitation — proving impact with actual attack paths, not just
                       scanner output. Continuous assessments at a fraction of the time
@@ -203,12 +243,12 @@ export default function Maestro() {
             <ScrollReveal>
               <div className="text-center mb-16">
                 <h2 className="text-4xl font-bold text-slate-900 mb-4">
-                  7 Specialized AI Agents
+                  12 Specialized AI Agents
                 </h2>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto">
                   Each agent is purpose-built for a specific phase of the penetration
-                  testing lifecycle — from initial discovery through red team exploitation
-                  and validated reporting.
+                  testing lifecycle — from reconnaissance and code intelligence through
+                  red team exploitation, compliance mapping, and validated reporting.
                 </p>
               </div>
             </ScrollReveal>
@@ -255,6 +295,7 @@ export default function Maestro() {
                   "text-blue-400",
                   "text-green-400",
                   "text-orange-400",
+                  "text-blue-400",
                 ];
                 return (
                   <StaggerItem key={index}>
@@ -287,7 +328,7 @@ export default function Maestro() {
               </div>
             </ScrollReveal>
 
-            <StaggerChildren className="grid md:grid-cols-3 gap-6">
+            <StaggerChildren className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {integrations.map((integration, index) => (
                 <StaggerItem key={index}>
                   <div className="p-6 bg-white rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300 text-center">
@@ -318,13 +359,14 @@ export default function Maestro() {
                       </h2>
                       <p className="text-lg text-slate-600 leading-relaxed mb-4">
                         Maestro runs entirely on your own infrastructure — no data, vulnerability findings, or
-                        exploitation results ever leave your network. All 7 agents operate locally, giving you
+                        exploitation results ever leave your network. All 12 agents operate locally, giving you
                         full control over sensitive security data and meeting the strictest data residency requirements.
                       </p>
                       <ul className="space-y-2">
                         {[
                           "All pentest data stays on your network — nothing leaves your perimeter",
                           "Full control over vulnerability and exploitation findings",
+                          "Self-hosted option for complete data isolation",
                           "Meets strict data residency and compliance requirements",
                         ].map((item) => (
                           <li key={item} className="flex items-start text-sm text-slate-600">
