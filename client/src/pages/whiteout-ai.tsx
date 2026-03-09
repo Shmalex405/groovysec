@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/hero-section";
 import { PlatformOverview } from "@/components/platform-overview";
 import { ArchitectureFlow } from "@/components/architecture-flow";
 import { PolicyWorkflow } from "@/components/policy-workflow";
+import { InterceptorPlatforms } from "@/components/guard-platforms";
 import { PlatformIntegrations } from "@/components/platform-integrations";
 import { SecurityCompliance } from "@/components/security-compliance";
 import { Footer } from "@/components/footer";
@@ -24,6 +25,7 @@ export default function WhiteoutAI() {
         <HeroSection />
         <VideoSection />
         <PlatformOverview />
+        <InterceptorPlatforms />
         <ArchitectureFlow />
         <PolicyWorkflow />
         <PlatformIntegrations />

@@ -33,9 +33,9 @@ import {
 
 export default function Maestro() {
   const stats = [
-    { value: "12", label: "AI Agents" },
-    { value: "108", label: "MCP Tools" },
-    { value: "108", label: "Test Matrix" },
+    { value: "13", label: "AI Agents" },
+    { value: "112", label: "MCP Tools" },
+    { value: "116", label: "Test Matrix" },
     { value: "Kali", label: "Linux Powered" },
   ];
 
@@ -112,6 +112,12 @@ export default function Maestro() {
       description: "Session establishment, OTP handling, token extraction, and multi-auth-type support including OAuth2, bearer, API key, and basic auth.",
       color: "orange",
     },
+    {
+      icon: Layers,
+      title: "Chain Analysis Agent",
+      description: "Multi-step attack chain hypothesis and validation — linking individual findings into compound exploit paths with severity recalculation and defense-in-depth analysis.",
+      color: "blue",
+    },
   ];
 
   const features = [
@@ -122,8 +128,8 @@ export default function Maestro() {
     },
     {
       icon: Layers,
-      title: "108-Test Assessment Matrix",
-      description: "Structured 10-phase assessment framework ensuring consistent, deterministic coverage across every engagement. Every test documented as PASS, FAIL, SKIPPED, or N/A.",
+      title: "116-Test Assessment Matrix",
+      description: "Structured assessment framework with 73 DAST tests, 24 SAST tests, 11 cross-validation tests, and 8 chain analysis tests — ensuring consistent, deterministic coverage across every engagement.",
     },
     {
       icon: SplitSquareVertical,
@@ -152,6 +158,7 @@ export default function Maestro() {
     { name: "SharePoint", description: "Publish reports to document libraries" },
     { name: "Email", description: "Stakeholder notifications and summaries" },
     { name: "Cycode", description: "Import static analysis findings for dynamic validation" },
+    { name: "N8N", description: "Workflow automation and orchestration" },
   ];
 
   const colorClasses: Record<string, { bg: string; icon: string }> = {
@@ -191,7 +198,7 @@ export default function Maestro() {
 
                   <HeroLine>
                     <p className="text-xl text-slate-300 mb-8 leading-relaxed">
-                      Maestro deploys 12 specialized AI agents to autonomously discover
+                      Maestro deploys 13 specialized AI agents to autonomously discover
                       vulnerabilities and validate them through real red team-style
                       exploitation — proving impact with actual attack paths, not just
                       scanner output. Continuous assessments at a fraction of the time
@@ -243,12 +250,12 @@ export default function Maestro() {
             <ScrollReveal>
               <div className="text-center mb-16">
                 <h2 className="text-4xl font-bold text-slate-900 mb-4">
-                  12 Specialized AI Agents
+                  13 Specialized AI Agents
                 </h2>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto">
                   Each agent is purpose-built for a specific phase of the penetration
                   testing lifecycle — from reconnaissance and code intelligence through
-                  red team exploitation, compliance mapping, and validated reporting.
+                  red team exploitation, attack chain analysis, compliance mapping, and validated reporting.
                 </p>
               </div>
             </ScrollReveal>
@@ -328,7 +335,7 @@ export default function Maestro() {
               </div>
             </ScrollReveal>
 
-            <StaggerChildren className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <StaggerChildren className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
               {integrations.map((integration, index) => (
                 <StaggerItem key={index}>
                   <div className="p-6 bg-white rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300 text-center">
@@ -359,7 +366,7 @@ export default function Maestro() {
                       </h2>
                       <p className="text-lg text-slate-600 leading-relaxed mb-4">
                         Maestro runs entirely on your own infrastructure — no data, vulnerability findings, or
-                        exploitation results ever leave your network. All 12 agents operate locally, giving you
+                        exploitation results ever leave your network. All 13 agents operate locally, giving you
                         full control over sensitive security data and meeting the strictest data residency requirements.
                       </p>
                       <ul className="space-y-2">

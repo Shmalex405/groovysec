@@ -1,4 +1,4 @@
-import { FileText, GitBranch, FolderOpen, Cloud, HardDrive } from "lucide-react";
+import { FileText, GitBranch, FolderOpen, Cloud, HardDrive, MessageSquare, BookOpen, Users, LayoutList, CheckSquare, ListTodo, Mail } from "lucide-react";
 import {
   ScrollReveal,
   StaggerChildren,
@@ -36,25 +36,83 @@ export function PlatformIntegrations() {
       name: "Google Drive",
       description: "Cloud storage",
       color: "green"
+    },
+    {
+      icon: MessageSquare,
+      name: "Slack",
+      description: "Team messaging",
+      color: "purple"
+    },
+    {
+      icon: BookOpen,
+      name: "Notion",
+      description: "Knowledge base",
+      color: "gray"
+    },
+    {
+      icon: Users,
+      name: "Teams",
+      description: "Collaboration",
+      color: "blue"
+    },
+    {
+      icon: LayoutList,
+      name: "Linear",
+      description: "Issue tracking",
+      color: "purple"
+    },
+    {
+      icon: CheckSquare,
+      name: "Trello",
+      description: "Task boards",
+      color: "blue"
+    },
+    {
+      icon: ListTodo,
+      name: "Asana",
+      description: "Work management",
+      color: "green"
+    },
+    {
+      icon: Mail,
+      name: "Gmail / Outlook",
+      description: "Email integration",
+      color: "blue"
     }
   ];
 
   const aiModels = [
     {
       name: "OpenAI",
-      description: "GPT"
+      description: "ChatGPT, Platform"
     },
     {
       name: "Anthropic",
-      description: "Claude"
+      description: "Claude, Console"
     },
     {
       name: "Google",
-      description: "Gemini"
+      description: "Gemini, AI Studio"
     },
     {
-      name: "Custom Models",
-      description: "Mistral, LLava"
+      name: "Microsoft",
+      description: "Copilot, M365 Suite"
+    },
+    {
+      name: "xAI",
+      description: "Grok"
+    },
+    {
+      name: "DeepSeek",
+      description: "Chat"
+    },
+    {
+      name: "Perplexity",
+      description: "AI Search"
+    },
+    {
+      name: "Self-Hosted",
+      description: "Ollama, Local LLMs"
     }
   ];
 
@@ -79,7 +137,7 @@ export function PlatformIntegrations() {
           </div>
         </ScrollReveal>
 
-        <StaggerChildren className="grid md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
+        <StaggerChildren className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
           {integrations.map((integration, index) => {
             const Icon = integration.icon;
             const colorClass = colorClasses[integration.color as keyof typeof colorClasses];
@@ -101,17 +159,9 @@ export function PlatformIntegrations() {
         </StaggerChildren>
 
         <ScrollReveal>
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center px-6 py-3 bg-blue-600/10 rounded-full border border-blue-500/30">
-              <span className="text-blue-600 font-medium">More integrations coming soon</span>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        <ScrollReveal>
           <div className="text-center mb-12">
             <h3 className="text-2xl font-bold text-slate-900 mb-6">Supported AI Models</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
               {aiModels.map((model, index) => (
                 <div key={index} className="p-4 bg-slate-50 rounded-lg border border-slate-200">
                   <div className="font-semibold text-slate-900">{model.name}</div>
