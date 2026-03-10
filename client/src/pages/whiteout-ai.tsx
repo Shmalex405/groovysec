@@ -7,6 +7,7 @@ import { PolicyWorkflow } from "@/components/policy-workflow";
 import { InterceptorPlatforms } from "@/components/guard-platforms";
 import { PlatformIntegrations } from "@/components/platform-integrations";
 import { SecurityCompliance } from "@/components/security-compliance";
+import { ComplianceFrameworks } from "@/components/compliance-frameworks";
 import { Footer } from "@/components/footer";
 import { VideoSection } from "@/components/video-section";
 import { ArrowRight, Building2, GraduationCap, BookOpen } from "lucide-react";
@@ -24,6 +25,7 @@ export default function WhiteoutAI() {
         <Navigation />
         <HeroSection />
         <VideoSection />
+        <ComplianceFrameworks />
         <PlatformOverview />
         <InterceptorPlatforms />
         <ArchitectureFlow />

@@ -17,6 +17,7 @@ import {
   StaggerChildren,
   StaggerItem,
 } from "@/components/motion";
+import { ComplianceFrameworksCompact } from "@/components/compliance-frameworks";
 
 export default function CompanyHome() {
   return (
@@ -151,6 +152,8 @@ export default function CompanyHome() {
             </StaggerChildren>
           </div>
         </section>
+
+        <ComplianceFrameworksCompact />
 
         {/* Company Overview */}
         <section className="py-20 bg-slate-50">
