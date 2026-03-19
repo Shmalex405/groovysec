@@ -157,7 +157,7 @@ export default function Maestro() {
     { name: "Jira", description: "Create tickets for findings automatically" },
     { name: "SharePoint", description: "Publish reports to document libraries" },
     { name: "Email", description: "Stakeholder notifications and summaries" },
-    { name: "Cycode", description: "Import static analysis findings for dynamic validation" },
+    { name: "ASPM", description: "Import static analysis findings for dynamic validation" },
     { name: "N8N", description: "Workflow automation and orchestration" },
   ];
 
@@ -348,47 +348,6 @@ export default function Maestro() {
           </div>
         </section>
 
-        {/* Local Deployment */}
-        <section className="py-20 bg-slate-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <ScrollReveal>
-              <div className="max-w-4xl mx-auto">
-                <div className="p-10 bg-white rounded-2xl border border-slate-200 shadow-sm">
-                  <div className="flex flex-col md:flex-row md:items-center gap-8">
-                    <div className="flex-shrink-0">
-                      <div className="w-20 h-20 bg-blue-600/10 rounded-full flex items-center justify-center">
-                        <Server className="w-10 h-10 text-blue-600" />
-                      </div>
-                    </div>
-                    <div>
-                      <h2 className="text-3xl font-bold text-slate-900 mb-4">
-                        Locally Deployed. Fully Secure.
-                      </h2>
-                      <p className="text-lg text-slate-600 leading-relaxed mb-4">
-                        Maestro runs entirely on your own infrastructure — no data, vulnerability findings, or
-                        exploitation results ever leave your network. All 13 agents operate locally, giving you
-                        full control over sensitive security data and meeting the strictest data residency requirements.
-                      </p>
-                      <ul className="space-y-2">
-                        {[
-                          "All pentest data stays on your network — nothing leaves your perimeter",
-                          "Full control over vulnerability and exploitation findings",
-                          "Self-hosted option for complete data isolation",
-                          "Meets strict data residency and compliance requirements",
-                        ].map((item) => (
-                          <li key={item} className="flex items-start text-sm text-slate-600">
-                            <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
 
         <Footer />
       </div>
