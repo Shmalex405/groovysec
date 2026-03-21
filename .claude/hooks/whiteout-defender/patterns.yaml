@@ -1,0 +1,36 @@
+# Whiteout AI - Minimal Pattern Set (embedded fallback)
+instructionOverridePatterns:
+  - pattern: '(?i)\\bignore\\s+(all\\s+)?(previous|prior)\\s+(instructions?|prompts?|rules?)'
+    reason: "Attempts to ignore previous instructions"
+    severity: high
+  - pattern: '(?i)\\b(new|updated)\\s+system\\s+prompt\\b'
+    reason: "New system prompt injection"
+    severity: high
+
+rolePlayingPatterns:
+  - pattern: '(?i)\\byou\\s+are\\s+(now\\s+)?DAN\\b'
+    reason: "DAN jailbreak attempt"
+    severity: high
+  - pattern: '(?i)\\bjailbreak(ed)?\\s+(mode|prompt)'
+    reason: "Jailbreak attempt"
+    severity: high
+
+encodingPatterns:
+  - pattern: '(?i)\\bexecute\\s+(the\\s+)?decoded'
+    reason: "Decoded content execution"
+    severity: high
+
+contextManipulationPatterns:
+  - pattern: '(?i)\\b(anthropic|openai)\\s+(says?|requires?|demands?)'
+    reason: "False authority invocation"
+    severity: high
+
+dataExfiltrationPatterns:
+  - pattern: '(?i)\\b(send|exfiltrate|forward)\\s+.*(secret|token|key|credential|password)'
+    reason: "Data exfiltration attempt"
+    severity: critical
+
+policyBypassPatterns:
+  - pattern: '(?i)\\b(disable|bypass)\\s+(the\\s+)?(whiteout|governance|compliance)'
+    reason: "Governance bypass attempt"
+    severity: critical
