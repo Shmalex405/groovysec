@@ -15,6 +15,7 @@ import NotFound from "@/pages/not-found";
 import TermsOfService from "@/pages/terms-of-service";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import Demo from "@/pages/demo";
+import Download from "@/pages/download";
 
 function Router() {
   return (
@@ -22,6 +23,7 @@ function Router() {
       <Switch>
         <Route path="/" component={CompanyHome} />
         <Route path="/demo" component={Demo} />
+        <Route path="/download" component={Download} />
         <Route path="/whiteout-ai" component={WhiteoutAI} />
         <Route path="/maestro" component={Maestro} />
         <Route path="/about" component={About} />

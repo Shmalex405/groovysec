@@ -11,6 +11,7 @@ const footerLinks: Record<string, LinkItem[]> = {
   Products: [
     { label: "Whiteout AI", href: "/whiteout-ai" },
     { label: "Maestro", href: "/maestro" },
+    { label: "Downloads", href: "/download" },
     { label: "Documentation", href: "/docs", external: false },
   ],
   Resources: [
