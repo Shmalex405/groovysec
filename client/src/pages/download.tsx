@@ -105,14 +105,14 @@ const DOWNLOADS = {
     stores: {
       vscode: {
         label: "VS Code Marketplace",
-        url: "vscode:extension/groovysecurity.whiteout-ai",
-        webUrl: "https://marketplace.visualstudio.com/items?itemName=groovysecurity.whiteout-ai",
-        available: false, // placeholder
+        url: "vscode:extension/groovysecurity.whiteout-ai-governance",
+        webUrl: "https://marketplace.visualstudio.com/items?itemName=groovysecurity.whiteout-ai-governance",
+        available: true,
       },
       jetbrains: {
         label: "JetBrains Marketplace",
-        url: "#",
-        available: false,
+        url: "https://plugins.jetbrains.com/plugin/com.groovysecurity.whiteout",
+        available: true,
       },
     },
   },
