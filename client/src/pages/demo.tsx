@@ -1,12 +1,13 @@
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { LeadCapture } from "@/components/lead-capture";
+import { AuroraBackground } from "@/components/ui/aurora-background";
 import { PageTransition, ScrollReveal } from "@/components/motion";
 
 export default function Demo() {
   return (
     <PageTransition>
-      <div className="min-h-screen bg-white">
+      <AuroraBackground variant="mixed" className="min-h-screen bg-slate-950">
         <Navigation />
         <div className="pt-16">
           <ScrollReveal>
@@ -14,7 +15,7 @@ export default function Demo() {
           </ScrollReveal>
         </div>
         <Footer />
-      </div>
+      </AuroraBackground>
     </PageTransition>
   );
 }

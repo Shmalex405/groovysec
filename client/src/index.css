@@ -70,7 +70,94 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-slate-950 text-foreground;
+  }
+
+  /* Gradient Button @property declarations */
+  @property --pos-x {
+    syntax: '<percentage>';
+    initial-value: 11.14%;
+    inherits: false;
+  }
+  @property --pos-y {
+    syntax: '<percentage>';
+    initial-value: 140%;
+    inherits: false;
+  }
+  @property --spread-x {
+    syntax: '<percentage>';
+    initial-value: 150%;
+    inherits: false;
+  }
+  @property --spread-y {
+    syntax: '<percentage>';
+    initial-value: 180.06%;
+    inherits: false;
+  }
+  @property --color-1 {
+    syntax: '<color>';
+    initial-value: #000;
+    inherits: false;
+  }
+  @property --color-2 {
+    syntax: '<color>';
+    initial-value: #08012c;
+    inherits: false;
+  }
+  @property --color-3 {
+    syntax: '<color>';
+    initial-value: #4e1e40;
+    inherits: false;
+  }
+  @property --color-4 {
+    syntax: '<color>';
+    initial-value: #70464e;
+    inherits: false;
+  }
+  @property --color-5 {
+    syntax: '<color>';
+    initial-value: #88394c;
+    inherits: false;
+  }
+  @property --border-angle {
+    syntax: '<angle>';
+    initial-value: 20deg;
+    inherits: true;
+  }
+  @property --border-color-1 {
+    syntax: '<color>';
+    initial-value: hsla(340, 75%, 60%, 0.2);
+    inherits: true;
+  }
+  @property --border-color-2 {
+    syntax: '<color>';
+    initial-value: hsla(340, 75%, 40%, 0.75);
+    inherits: true;
+  }
+  @property --stop-1 {
+    syntax: '<percentage>';
+    initial-value: 37.35%;
+    inherits: false;
+  }
+  @property --stop-2 {
+    syntax: '<percentage>';
+    initial-value: 61.36%;
+    inherits: false;
+  }
+  @property --stop-3 {
+    syntax: '<percentage>';
+    initial-value: 78.42%;
+    inherits: false;
+  }
+  @property --stop-4 {
+    syntax: '<percentage>';
+    initial-value: 89.52%;
+    inherits: false;
+  }
+  @property --stop-5 {
+    syntax: '<percentage>';
+    initial-value: 100%;
+    inherits: false;
   }
 }
 
@@ -96,6 +183,257 @@
   
   .hero-gradient {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  }
+}
+
+/* Gradient Button Styles */
+@layer components {
+  .gradient-button {
+    @apply relative appearance-none cursor-pointer;
+    background: radial-gradient(
+      var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y),
+      var(--color-1) var(--stop-1),
+      var(--color-2) var(--stop-2),
+      var(--color-3) var(--stop-3),
+      var(--color-4) var(--stop-4),
+      var(--color-5) var(--stop-5)
+    );
+    transition:
+      --pos-x 0.5s, --pos-y 0.5s,
+      --spread-x 0.5s, --spread-y 0.5s,
+      --color-1 0.5s, --color-2 0.5s, --color-3 0.5s, --color-4 0.5s, --color-5 0.5s,
+      --border-angle 0.5s, --border-color-1 0.5s, --border-color-2 0.5s,
+      --stop-1 0.5s, --stop-2 0.5s, --stop-3 0.5s, --stop-4 0.5s, --stop-5 0.5s;
+  }
+
+  .gradient-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(var(--border-angle), var(--border-color-1), var(--border-color-2));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+  }
+
+  /* Default: Groovy green */
+  .gradient-button {
+    --color-1: #000;
+    --color-2: #0a1f0a;
+    --color-3: #1b4d1e;
+    --color-4: #2e7d32;
+    --color-5: #1b5e20;
+    --border-color-1: hsla(125, 40%, 45%, 0.2);
+    --border-color-2: hsla(125, 50%, 35%, 0.7);
+  }
+
+  .gradient-button:hover {
+    --pos-x: 0%;
+    --pos-y: 91.51%;
+    --spread-x: 120.24%;
+    --spread-y: 103.18%;
+    --color-1: #4CAF50;
+    --color-2: #2e7d32;
+    --color-3: #1b5e20;
+    --color-4: #0a2e0c;
+    --color-5: #000;
+    --border-angle: 190deg;
+    --border-color-1: hsla(125, 50%, 80%, 0.1);
+    --border-color-2: hsla(125, 50%, 70%, 0.6);
+    --stop-1: 0%;
+    --stop-2: 8.8%;
+    --stop-3: 21.44%;
+    --stop-4: 71.34%;
+    --stop-5: 85.76%;
+  }
+
+  /* Variant: cyan/lime */
+  .gradient-button-variant {
+    --color-1: #000022;
+    --color-2: #1f3f6d;
+    --color-3: #469396;
+    --color-4: #f1ffa5;
+    --border-angle: 200deg;
+    --border-color-1: hsla(320, 75%, 90%, 0.6);
+    --border-color-2: hsla(320, 50%, 90%, 0.15);
+  }
+  .gradient-button-variant:hover {
+    --pos-x: 0%;
+    --pos-y: 95.51%;
+    --spread-x: 110.24%;
+    --spread-y: 110.2%;
+    --color-1: #000020;
+    --color-2: #f1ffa5;
+    --color-3: #469396;
+    --color-4: #1f3f6d;
+    --color-5: #000;
+    --stop-1: 0%;
+    --stop-2: 10%;
+    --stop-3: 35.44%;
+    --stop-4: 71.34%;
+    --stop-5: 90.76%;
+    --border-angle: 210deg;
+    --border-color-1: hsla(320, 75%, 90%, 0.2);
+    --border-color-2: hsla(320, 50%, 90%, 0.75);
+  }
+
+  /* Blue: Whiteout AI brand (blue → cyan → emerald) */
+  @keyframes btn-color-shift {
+    0%, 100% {
+      --color-2: #0a2a5e;
+      --color-3: #1e5a8a;
+      --color-4: #2a8a7a;
+      --color-5: #1a6055;
+      --border-color-1: hsla(200, 75%, 60%, 0.25);
+      --border-color-2: hsla(170, 75%, 50%, 0.7);
+    }
+    33% {
+      --color-2: #0a4a2e;
+      --color-3: #2e7d32;
+      --color-4: #1b5e20;
+      --color-5: #0a3d1a;
+      --border-color-1: hsla(130, 60%, 50%, 0.25);
+      --border-color-2: hsla(130, 60%, 40%, 0.7);
+    }
+    66% {
+      --color-2: #5c2d0e;
+      --color-3: #8a4a1e;
+      --color-4: #c77800;
+      --color-5: #4a2a08;
+      --border-color-1: hsla(30, 80%, 55%, 0.25);
+      --border-color-2: hsla(30, 80%, 45%, 0.7);
+    }
+  }
+
+  .gradient-button-blue {
+    --color-1: #000a1a;
+    --color-2: #0a2a5e;
+    --color-3: #1e5a8a;
+    --color-4: #2a8a7a;
+    --color-5: #1a6055;
+    --border-angle: 20deg;
+    --border-color-1: hsla(200, 75%, 60%, 0.25);
+    --border-color-2: hsla(170, 75%, 50%, 0.7);
+  }
+
+  .gradient-button-blue.btn-animate-colors {
+    animation: btn-color-shift 8s ease-in-out infinite;
+  }
+  .gradient-button-blue:hover {
+    --pos-x: 0%;
+    --pos-y: 88%;
+    --spread-x: 130%;
+    --spread-y: 110%;
+    --color-1: #3b82f6;
+    --color-2: #22d3ee;
+    --color-3: #10b981;
+    --color-4: #0a3d5c;
+    --color-5: #000;
+    --border-angle: 190deg;
+    --border-color-1: hsla(200, 80%, 90%, 0.15);
+    --border-color-2: hsla(170, 75%, 80%, 0.65);
+    --stop-1: 0%;
+    --stop-2: 12%;
+    --stop-3: 28%;
+    --stop-4: 68%;
+    --stop-5: 88%;
+  }
+
+  /* Orange: Maestro brand (orange → red → amber) */
+  .gradient-button-orange {
+    --color-1: #1a0800;
+    --color-2: #5c1a0a;
+    --color-3: #8a3a1e;
+    --color-4: #a85a20;
+    --color-5: #6b3510;
+    --border-angle: 20deg;
+    --border-color-1: hsla(25, 80%, 55%, 0.25);
+    --border-color-2: hsla(15, 85%, 50%, 0.7);
+  }
+  .gradient-button-orange:hover {
+    --pos-x: 0%;
+    --pos-y: 88%;
+    --spread-x: 125%;
+    --spread-y: 108%;
+    --color-1: #f97316;
+    --color-2: #ef4444;
+    --color-3: #f59e0b;
+    --color-4: #5c1a0a;
+    --color-5: #0a0a0a;
+    --border-angle: 190deg;
+    --border-color-1: hsla(25, 85%, 90%, 0.15);
+    --border-color-2: hsla(15, 80%, 75%, 0.65);
+    --stop-1: 0%;
+    --stop-2: 10%;
+    --stop-3: 25%;
+    --stop-4: 65%;
+    --stop-5: 85%;
+  }
+
+  /* Purple: Browser Extension */
+  .gradient-button-purple {
+    --color-1: #0a0520;
+    --color-2: #2e1065;
+    --color-3: #5b21b6;
+    --color-4: #7c3aed;
+    --color-5: #4c1d95;
+    --border-angle: 20deg;
+    --border-color-1: hsla(270, 70%, 60%, 0.25);
+    --border-color-2: hsla(270, 70%, 50%, 0.7);
+  }
+  .gradient-button-purple:hover {
+    --pos-x: 0%;
+    --pos-y: 88%;
+    --spread-x: 125%;
+    --spread-y: 108%;
+    --color-1: #7c3aed;
+    --color-2: #a855f7;
+    --color-3: #8b5cf6;
+    --color-4: #2e1065;
+    --color-5: #0a0520;
+    --border-angle: 190deg;
+    --border-color-1: hsla(270, 75%, 90%, 0.15);
+    --border-color-2: hsla(270, 70%, 75%, 0.65);
+    --stop-1: 0%;
+    --stop-2: 10%;
+    --stop-3: 25%;
+    --stop-4: 65%;
+    --stop-5: 85%;
+  }
+
+  /* White: clean premium (used for primary CTAs) */
+  .gradient-button-white {
+    --color-1: #e8e8e8;
+    --color-2: #c8c8c8;
+    --color-3: #a0a0a0;
+    --color-4: #888888;
+    --color-5: #707070;
+    --border-angle: 20deg;
+    --border-color-1: hsla(0, 0%, 100%, 0.4);
+    --border-color-2: hsla(0, 0%, 80%, 0.6);
+    color: #0a0a0a;
+  }
+  .gradient-button-white:hover {
+    --pos-x: 0%;
+    --pos-y: 90%;
+    --spread-x: 130%;
+    --spread-y: 115%;
+    --color-1: #ffffff;
+    --color-2: #f0f0f0;
+    --color-3: #d4d4d4;
+    --color-4: #a0a0a0;
+    --color-5: #888888;
+    --border-angle: 190deg;
+    --border-color-1: hsla(0, 0%, 100%, 0.2);
+    --border-color-2: hsla(0, 0%, 100%, 0.8);
+    --stop-1: 0%;
+    --stop-2: 15%;
+    --stop-3: 35%;
+    --stop-4: 72%;
+    --stop-5: 90%;
   }
 }
 

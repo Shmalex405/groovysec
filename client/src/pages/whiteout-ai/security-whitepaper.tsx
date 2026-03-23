@@ -2,6 +2,9 @@ import { Link } from "wouter";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
+import { GradientButton } from "@/components/ui/gradient-button";
+import { GradientText } from "@/components/ui/gradient-text";
+import { AuroraBackground } from "@/components/ui/aurora-background";
 import {
   Shield,
   CheckCircle,
@@ -73,10 +76,10 @@ export default function SecurityWhitepaper() {
   ];
 
   const capabilities = [
-    "Preventive Control \u2014 Sensitive data is blocked before it reaches external AI services",
-    "Contextual Understanding \u2014 AI-powered analysis understands natural language context",
-    "User Education \u2014 Clear feedback on policy violations creates a learning loop",
-    "Zero Productivity Impact \u2014 Compliant prompts proceed with imperceptible latency",
+    "Preventive Control — Sensitive data is blocked before it reaches external AI services",
+    "Contextual Understanding — AI-powered analysis understands natural language context",
+    "User Education — Clear feedback on policy violations creates a learning loop",
+    "Zero Productivity Impact — Compliant prompts proceed with imperceptible latency",
   ];
 
   const howItWorks = [
@@ -144,7 +147,7 @@ export default function SecurityWhitepaper() {
       title: "Authentication & Access Control",
       items: [
         "Industry-standard token-based auth with rotation",
-        "SSO/SAML 2.0 \u2014 Okta, Azure AD, OneLogin, Ping Identity",
+        "SSO/SAML 2.0 — Okta, Azure AD, OneLogin, Ping Identity",
         "Device binding for enhanced session security",
         "Role-based access control with organization scoping",
       ],
@@ -164,7 +167,7 @@ export default function SecurityWhitepaper() {
       title: "Audit & Compliance",
       items: [
         "Immutable audit trail for every AI interaction",
-        "Structured event logging \u2014 sensitive data never logged",
+        "Structured event logging — sensitive data never logged",
         "Real-time SIEM webhook delivery (Splunk, Sentinel, Elastic)",
         "Exportable compliance reports (PDF/CSV)",
       ],
@@ -198,7 +201,7 @@ export default function SecurityWhitepaper() {
       icon: Layers,
       title: "Hybrid",
       description:
-        "Backend in the cloud, compliance evaluation on-premise. Prompts are evaluated locally \u2014 only metadata is sent to the cloud for management.",
+        "Backend in the cloud, compliance evaluation on-premise. Prompts are evaluated locally — only metadata is sent to the cloud for management.",
     },
   ];
 
@@ -265,7 +268,7 @@ export default function SecurityWhitepaper() {
       name: "GDPR",
       full: "General Data Protection Regulation",
       items: [
-        "Data minimization \u2014 block personal data from external processing",
+        "Data minimization — block personal data from external processing",
         "Purpose limitation with logged justification",
         "Accountability through audit trails",
         "Data subject rights support",
@@ -302,19 +305,18 @@ export default function SecurityWhitepaper() {
   ];
 
   const colorClasses: Record<string, { bg: string; icon: string }> = {
-    blue: { bg: "bg-blue-600/10", icon: "text-blue-600" },
-    green: { bg: "bg-green-600/10", icon: "text-green-600" },
-    orange: { bg: "bg-orange-600/10", icon: "text-orange-600" },
+    blue: { bg: "bg-blue-500/10", icon: "text-blue-400" },
+    green: { bg: "bg-emerald-500/10", icon: "text-emerald-400" },
+    orange: { bg: "bg-orange-500/10", icon: "text-orange-400" },
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <AuroraBackground variant="bluegreen" className="min-h-screen bg-slate-950">
       <Navigation />
 
       <PageTransition>
         {/* === HERO === */}
-        <section className="pt-24 pb-16 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-green-500/10"></div>
+        <section className="pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="text-white">
@@ -331,7 +333,7 @@ export default function SecurityWhitepaper() {
                   <HeroLine>
                     <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                       Enterprise AI
-                      <span className="block bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
+                      <span className="block bg-gradient-to-r from-blue-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">
                         Security &amp; Compliance
                       </span>
                       Whitepaper
@@ -350,27 +352,20 @@ export default function SecurityWhitepaper() {
                 <ScrollReveal delay={0.5}>
                   <div className="flex flex-col sm:flex-row gap-4 mb-8">
                     <Link href={demoHref}>
-                      <Button
-                        size="lg"
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold"
-                      >
+                      <GradientButton variant="blue">
                         Schedule a Consultation
                         <ArrowRight className="w-5 h-5 ml-2" />
-                      </Button>
+                      </GradientButton>
                     </Link>
                     <a
                       href="/WHITEOUT_AI_WHITEPAPER.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Button
-                        variant="outline"
-                        size="lg"
-                        className="border-white/30 text-[#F08C00] hover:bg-white/10 hover:text-white px-8 py-4 text-lg font-semibold w-full"
-                      >
+                      <GradientButton variant="default">
                         <Download className="w-5 h-5 mr-2" />
                         Download PDF
-                      </Button>
+                      </GradientButton>
                     </a>
                   </div>
 
@@ -400,14 +395,14 @@ export default function SecurityWhitepaper() {
         </section>
 
         {/* === THE CHALLENGE === */}
-        <section className="py-20 bg-white">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-slate-900 mb-4">
+                <h2 className="text-4xl font-bold text-white mb-4">
                   The Enterprise AI Governance Challenge
                 </h2>
-                <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
                   Generative AI creates a new category of risk: conversational data
                   exfiltration. Employees share sensitive context in natural language
                   that traditional security tools cannot detect.
@@ -422,19 +417,14 @@ export default function SecurityWhitepaper() {
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="p-6 bg-white/50 backdrop-blur-sm rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300"
+                      className="p-6 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300"
                     >
                       <div className="flex items-center mb-3">
-                        <div
-                          className={`w-12 h-12 ${colors.bg} rounded-full flex items-center justify-center mr-4`}
-                        >
-                          <Icon className={`w-6 h-6 ${colors.icon}`} />
-                        </div>
-                        <h3 className="text-lg font-bold text-slate-900">
+                        <h3 className="text-lg font-bold text-white">
                           {challenge.title}
                         </h3>
                       </div>
-                      <p className="text-slate-600">{challenge.description}</p>
+                      <p className="text-slate-400">{challenge.description}</p>
                     </div>
                   </StaggerItem>
                 );
@@ -483,8 +473,7 @@ export default function SecurityWhitepaper() {
         </section>
 
         {/* === THE WHITEOUT AI APPROACH === */}
-        <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-green-500/5"></div>
+        <section className="py-20 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
@@ -502,7 +491,7 @@ export default function SecurityWhitepaper() {
                 <div className="space-y-4">
                   {capabilities.map((item, index) => (
                     <div key={index} className="flex items-start">
-                      <CheckCircle className="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-0.5" />
+                      <CheckCircle className="w-5 h-5 text-emerald-400 mr-3 flex-shrink-0 mt-0.5" />
                       <span className="text-slate-300">{item}</span>
                     </div>
                   ))}
@@ -518,7 +507,7 @@ export default function SecurityWhitepaper() {
                     {howItWorks.map((step, index) => (
                       <div
                         key={index}
-                        className="flex items-center p-3 bg-blue-600/10 rounded-lg border border-blue-500/20"
+                        className="flex items-center p-3 bg-blue-500/10 rounded-lg border border-blue-500/20"
                       >
                         <div className="w-8 h-8 bg-blue-600/30 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
                           <span className="text-blue-300 font-bold text-sm">
@@ -530,7 +519,7 @@ export default function SecurityWhitepaper() {
                     ))}
                   </div>
                   <div className="mt-6 text-center">
-                    <div className="text-green-400 font-semibold text-sm flex items-center justify-center">
+                    <div className="text-emerald-400 font-semibold text-sm flex items-center justify-center">
                       <CheckCircle className="w-4 h-4 mr-2" />
                       Original submission proceeds only if compliant
                     </div>
@@ -542,14 +531,14 @@ export default function SecurityWhitepaper() {
         </section>
 
         {/* === MULTI-SURFACE COVERAGE === */}
-        <section className="py-20 bg-white">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-slate-900 mb-4">
+                <h2 className="text-4xl font-bold text-white mb-4">
                   Multi-Surface Coverage
                 </h2>
-                <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
                   Unified policy enforcement across every AI touchpoint in your
                   organization.
                 </p>
@@ -563,17 +552,12 @@ export default function SecurityWhitepaper() {
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="p-6 bg-white/50 backdrop-blur-sm rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 text-center"
+                      className="p-6 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 hover:-translate-y-1 text-center"
                     >
-                      <div
-                        className={`w-14 h-14 ${colors.bg} rounded-full flex items-center justify-center mx-auto mb-4`}
-                      >
-                        <Icon className={`w-7 h-7 ${colors.icon}`} />
-                      </div>
-                      <h3 className="text-lg font-bold text-slate-900 mb-2">
+                      <h3 className="text-lg font-bold text-white mb-2">
                         {surface.title}
                       </h3>
-                      <p className="text-sm text-slate-600">
+                      <p className="text-sm text-slate-400">
                         {surface.description}
                       </p>
                     </div>
@@ -590,7 +574,7 @@ export default function SecurityWhitepaper() {
                 {monitoredPlatforms.map((platform, index) => (
                   <span
                     key={index}
-                    className="px-4 py-2 bg-slate-100 text-slate-700 rounded-full text-sm font-medium border border-slate-200"
+                    className="px-4 py-2 bg-white/[0.03] text-slate-300 rounded-full text-sm font-medium border border-white/[0.08]"
                   >
                     {platform}
                   </span>
@@ -601,23 +585,23 @@ export default function SecurityWhitepaper() {
         </section>
 
         {/* === INTELLIGENT POLICY ENGINE === */}
-        <section className="py-20 bg-slate-50">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-start">
               <div>
                 <ScrollReveal>
-                  <h2 className="text-4xl font-bold text-slate-900 mb-6">
+                  <h2 className="text-4xl font-bold text-white mb-6">
                     Intelligent Policy Engine
                   </h2>
-                  <p className="text-lg text-slate-600 mb-6 leading-relaxed">
+                  <p className="text-lg text-slate-400 mb-6 leading-relaxed">
                     Unlike traditional DLP that relies on pattern matching, the
                     Compliance Engine uses AI-powered analysis to understand the
                     semantic meaning and context of every prompt.
                   </p>
                 </ScrollReveal>
 
-                <div className="bg-white rounded-xl p-6 border border-slate-200 mb-6">
-                  <h4 className="font-semibold text-slate-900 mb-3">
+                <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-6 mb-6">
+                  <h4 className="font-semibold text-white mb-3">
                     Context Matters
                   </h4>
                   <div className="space-y-3 text-sm">
@@ -625,7 +609,7 @@ export default function SecurityWhitepaper() {
                       <span className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-medium mr-3 mt-0.5 flex-shrink-0">
                         BLOCKED
                       </span>
-                      <p className="text-slate-600 italic">
+                      <p className="text-slate-400 italic">
                         "Summarize the treatment plan for patient John A. Murphy,
                         DOB 03/12/1974, MRN 4583921. He was diagnosed with Type 2
                         Diabetes last month, his most recent HbA1c was 8.9%, and
@@ -638,7 +622,7 @@ export default function SecurityWhitepaper() {
                       <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium mr-3 mt-0.5 flex-shrink-0">
                         ALLOWED
                       </span>
-                      <p className="text-slate-600 italic">
+                      <p className="text-slate-400 italic">
                         "Will you please give me a template for a discharge
                         summary that I could reuse for multiple patients?"
                       </p>
@@ -660,8 +644,8 @@ export default function SecurityWhitepaper() {
                     "Supports both cloud and on-premise LLM evaluation",
                   ].map((item, index) => (
                     <div key={index} className="flex items-start">
-                      <CheckCircle className="w-5 h-5 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-600">{item}</span>
+                      <CheckCircle className="w-5 h-5 text-emerald-400 mr-3 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-400">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -669,7 +653,7 @@ export default function SecurityWhitepaper() {
 
               <div>
                 <ScrollReveal>
-                  <h3 className="text-xl font-bold text-slate-900 mb-6">
+                  <h3 className="text-xl font-bold text-white mb-6">
                     Policy Categories
                   </h3>
                 </ScrollReveal>
@@ -677,12 +661,12 @@ export default function SecurityWhitepaper() {
                   {policyCategories.map((cat, index) => (
                     <div
                       key={index}
-                      className="p-4 bg-white rounded-xl border border-slate-200 hover:shadow-md transition-all duration-300 text-center"
+                      className="p-4 bg-white/[0.03] rounded-xl border border-white/[0.06] hover:shadow-lg hover:shadow-black/20 transition-all duration-300 text-center"
                     >
-                      <div className="text-2xl font-bold text-blue-600">
+                      <div className="text-2xl font-bold text-blue-400">
                         {cat.count}
                       </div>
-                      <div className="text-sm font-semibold text-slate-900 mt-1">
+                      <div className="text-sm font-semibold text-white mt-1">
                         {cat.name}
                       </div>
                       <div className="text-xs text-slate-500 mt-1">
@@ -692,7 +676,7 @@ export default function SecurityWhitepaper() {
                   ))}
                 </div>
                 <div className="mt-4 text-center text-sm text-slate-500">
-                  <span className="font-semibold text-slate-700">65</span> total
+                  <span className="font-semibold text-slate-300">65</span> total
                   policies across all categories
                 </div>
               </div>
@@ -701,8 +685,7 @@ export default function SecurityWhitepaper() {
         </section>
 
         {/* === ENTERPRISE SECURITY === */}
-        <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-green-500/5"></div>
+        <section className="py-20 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <ScrollReveal>
               <div className="text-center mb-16">
@@ -730,18 +713,13 @@ export default function SecurityWhitepaper() {
                     <div
                       className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border border-slate-700"
                     >
-                      <div className="flex items-center mb-4">
-                        <Icon
-                          className={`w-6 h-6 ${colorList[index]} mr-3`}
-                        />
-                        <h3 className="text-lg font-bold text-white">
+                      <h3 className="text-lg font-bold text-white mb-4">
                           {feature.title}
-                        </h3>
-                      </div>
+                      </h3>
                       <ul className="space-y-2">
                         {feature.items.map((item, i) => (
                           <li key={i} className="flex items-start text-sm">
-                            <CheckCircle className="w-4 h-4 text-green-400 mr-2 flex-shrink-0 mt-0.5" />
+                            <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0 mt-0.5" />
                             <span className="text-slate-300">{item}</span>
                           </li>
                         ))}
@@ -755,14 +733,14 @@ export default function SecurityWhitepaper() {
         </section>
 
         {/* === DEPLOYMENT FLEXIBILITY === */}
-        <section className="py-20 bg-white">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-slate-900 mb-4">
+                <h2 className="text-4xl font-bold text-white mb-4">
                   Deployment Flexibility
                 </h2>
-                <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
                   Deploy Whiteout AI in the model that matches your organization's
                   security requirements.
                 </p>
@@ -773,25 +751,20 @@ export default function SecurityWhitepaper() {
               {deploymentModels.map((model, index) => {
                 const Icon = model.icon;
                 const colorList = [
-                  { bg: "bg-blue-600/10", text: "text-blue-600" },
-                  { bg: "bg-green-600/10", text: "text-green-600" },
-                  { bg: "bg-orange-600/10", text: "text-orange-600" },
+                  { bg: "bg-blue-500/10", text: "text-blue-400" },
+                  { bg: "bg-emerald-500/10", text: "text-emerald-400" },
+                  { bg: "bg-orange-500/10", text: "text-orange-400" },
                 ];
                 const colors = colorList[index];
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="p-8 bg-white/50 backdrop-blur-sm rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                      className="p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 hover:-translate-y-1"
                     >
-                      <div
-                        className={`w-16 h-16 ${colors.bg} rounded-full flex items-center justify-center mb-6`}
-                      >
-                        <Icon className={`w-8 h-8 ${colors.text}`} />
-                      </div>
-                      <h3 className="text-2xl font-bold text-slate-900 mb-4">
+                      <h3 className="text-2xl font-bold text-white mb-4">
                         {model.title}
                       </h3>
-                      <p className="text-slate-600 leading-relaxed">
+                      <p className="text-slate-400 leading-relaxed">
                         {model.description}
                       </p>
                     </div>
@@ -803,14 +776,14 @@ export default function SecurityWhitepaper() {
         </section>
 
         {/* === ENTERPRISE USE CASES === */}
-        <section className="py-20 bg-slate-50">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-slate-900 mb-4">
+                <h2 className="text-4xl font-bold text-white mb-4">
                   Enterprise Use Cases
                 </h2>
-                <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
                   Whiteout AI adapts to the specific compliance requirements of any
                   industry.
                 </p>
@@ -821,36 +794,31 @@ export default function SecurityWhitepaper() {
               {useCases.map((useCase, index) => {
                 const Icon = useCase.icon;
                 const colorList = [
-                  "bg-blue-600/10 text-blue-600",
-                  "bg-green-600/10 text-green-600",
-                  "bg-orange-600/10 text-orange-600",
-                  "bg-blue-600/10 text-blue-600",
+                  "bg-blue-500/10 text-blue-400",
+                  "bg-emerald-500/10 text-emerald-400",
+                  "bg-orange-500/10 text-orange-400",
+                  "bg-blue-500/10 text-blue-400",
                 ];
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="p-8 bg-white/50 backdrop-blur-sm rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300"
+                      className="p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300"
                     >
                       <div className="flex items-center mb-3">
-                        <div
-                          className={`w-12 h-12 ${colorList[index]} rounded-full flex items-center justify-center mr-4`}
-                        >
-                          <Icon className="w-6 h-6" />
-                        </div>
-                        <h3 className="text-lg font-bold text-slate-900">
+                        <h3 className="text-lg font-bold text-white">
                           {useCase.title}
                         </h3>
                       </div>
-                      <p className="text-sm text-slate-600 mb-4">
+                      <p className="text-sm text-slate-400 mb-4">
                         {useCase.description}
                       </p>
                       <ul className="space-y-2">
                         {useCase.items.map((item, i) => (
                           <li
                             key={i}
-                            className="flex items-start text-sm text-slate-600"
+                            className="flex items-start text-sm text-slate-400"
                           >
-                            <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                            <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0 mt-0.5" />
                             {item}
                           </li>
                         ))}
@@ -864,8 +832,7 @@ export default function SecurityWhitepaper() {
         </section>
 
         {/* === REGULATORY COMPLIANCE === */}
-        <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-green-500/5"></div>
+        <section className="py-20 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <ScrollReveal>
               <div className="text-center mb-16">
@@ -891,7 +858,7 @@ export default function SecurityWhitepaper() {
                     <ul className="space-y-2">
                       {reg.items.map((item, i) => (
                         <li key={i} className="flex items-start text-sm">
-                          <CheckCircle className="w-3 h-3 text-green-400 mr-2 flex-shrink-0 mt-1" />
+                          <CheckCircle className="w-3 h-3 text-emerald-400 mr-2 flex-shrink-0 mt-1" />
                           <span className="text-slate-300">{item}</span>
                         </li>
                       ))}
@@ -904,14 +871,14 @@ export default function SecurityWhitepaper() {
         </section>
 
         {/* === INTEGRATION ECOSYSTEM === */}
-        <section className="py-20 bg-white">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-8">
-                <h2 className="text-4xl font-bold text-slate-900 mb-4">
+                <h2 className="text-4xl font-bold text-white mb-4">
                   Integration Ecosystem
                 </h2>
-                <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
                   Whiteout AI connects to your existing productivity tools, enabling
                   AI assistants to safely access organizational data through
                   authenticated, audited channels.
@@ -923,7 +890,7 @@ export default function SecurityWhitepaper() {
               {integrations.map((name, index) => (
                 <span
                   key={index}
-                  className="px-6 py-3 bg-slate-100 text-slate-700 rounded-full text-sm font-medium border border-slate-200"
+                  className="px-6 py-3 bg-white/[0.03] text-slate-300 rounded-full text-sm font-medium border border-white/[0.08]"
                 >
                   {name}
                 </span>
@@ -941,8 +908,7 @@ export default function SecurityWhitepaper() {
 
         {/* === CTA === */}
         <ScrollReveal>
-          <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-green-500/10"></div>
+          <section className="py-20 relative overflow-hidden">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
               <h2 className="text-4xl font-bold text-white mb-6">
                 Ready to Govern AI with Confidence?
@@ -953,13 +919,10 @@ export default function SecurityWhitepaper() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href={demoHref}>
-                  <Button
-                    size="lg"
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold"
-                  >
+                  <GradientButton variant="blue">
                     Schedule a Consultation
                     <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
+                  </GradientButton>
                 </Link>
               </div>
               <p className="text-sm text-slate-400 mt-6">
@@ -971,6 +934,6 @@ export default function SecurityWhitepaper() {
       </PageTransition>
 
       <Footer />
-    </div>
+    </AuroraBackground>
   );
 }

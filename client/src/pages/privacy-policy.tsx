@@ -4,7 +4,7 @@ import { PageTransition } from "@/components/motion";
 export default function PrivacyPolicy() {
   return (
     <PageTransition>
-    <main className="min-h-screen bg-slate-900 text-slate-100 px-6 py-20">
+    <main className="min-h-screen bg-slate-950 text-slate-100 px-6 py-20">
       {/* Header + logo */}
       <div className="max-w-4xl mx-auto text-center mb-12">
         <img

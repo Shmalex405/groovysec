@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
+import { AuroraBackground } from "@/components/ui/aurora-background";
 import {
   PageTransition,
   ScrollReveal,
@@ -22,6 +23,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { GradientButton } from "@/components/ui/gradient-button";
 
 // ── Download configuration ──────────────────────────────────────────────
 // CloudFront CDN base for all update artifacts
@@ -163,37 +165,37 @@ function detectBrowser(): string {
 const colorMap: Record<string, { bg: string; text: string; iconBg: string; border: string; hoverBorder: string }> = {
   blue: {
     bg: "bg-blue-600",
-    text: "text-blue-600",
-    iconBg: "bg-blue-600/10",
-    border: "border-blue-200",
+    text: "text-blue-400",
+    iconBg: "bg-blue-500/10",
+    border: "border-blue-500/20",
     hoverBorder: "hover:border-blue-400",
   },
   green: {
-    bg: "bg-green-600",
-    text: "text-green-600",
-    iconBg: "bg-green-600/10",
-    border: "border-green-200",
-    hoverBorder: "hover:border-green-400",
+    bg: "bg-emerald-600",
+    text: "text-emerald-400",
+    iconBg: "bg-emerald-500/10",
+    border: "border-emerald-500/20",
+    hoverBorder: "hover:border-emerald-400",
   },
   purple: {
     bg: "bg-purple-600",
-    text: "text-purple-600",
-    iconBg: "bg-purple-600/10",
-    border: "border-purple-200",
+    text: "text-purple-400",
+    iconBg: "bg-purple-500/10",
+    border: "border-purple-500/20",
     hoverBorder: "hover:border-purple-400",
   },
   orange: {
     bg: "bg-orange-600",
-    text: "text-orange-600",
-    iconBg: "bg-orange-600/10",
-    border: "border-orange-200",
+    text: "text-orange-400",
+    iconBg: "bg-orange-500/10",
+    border: "border-orange-500/20",
     hoverBorder: "hover:border-orange-400",
   },
   slate: {
     bg: "bg-slate-800",
-    text: "text-slate-800",
-    iconBg: "bg-slate-800/10",
-    border: "border-slate-300",
+    text: "text-slate-300",
+    iconBg: "bg-slate-500/10",
+    border: "border-white/[0.08]",
     hoverBorder: "hover:border-slate-500",
   },
 };
@@ -219,23 +221,11 @@ export default function DownloadPage() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-white">
+      <AuroraBackground variant="bluegreen" className="min-h-screen bg-slate-950">
         <Navigation />
 
         {/* Hero */}
-        <section className="pt-28 pb-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 relative overflow-hidden">
-          {/* Background pattern */}
-          <div className="absolute inset-0 opacity-5">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-                backgroundSize: "40px 40px",
-              }}
-            />
-          </div>
-
+        <section className="pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <HeroTextReveal>
               <HeroLine>
@@ -306,11 +296,7 @@ export default function DownloadPage() {
 
               {/* Bundled installer CTA */}
               <div className="bg-gradient-to-r from-blue-600/20 to-green-600/20 border border-blue-500/30 rounded-2xl p-6 max-w-2xl">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Package className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
+                <div>
                     <h3 className="text-lg font-semibold text-white mb-1">
                       Install Everything at Once
                     </h3>
@@ -327,15 +313,14 @@ export default function DownloadPage() {
                       }
                       className="inline-flex"
                     >
-                      <Button className="bg-white text-slate-900 hover:bg-slate-100 font-semibold px-6">
+                      <GradientButton variant="blue">
                         <Download className="w-4 h-4 mr-2" />
                         Download Bundled Setup
-                        <span className="ml-2 text-xs text-slate-500">
+                        <span className="ml-2 text-xs opacity-75">
                           {isMac ? ".dmg" : ".exe"}
                         </span>
-                      </Button>
+                      </GradientButton>
                     </a>
-                  </div>
                 </div>
               </div>
             </ScrollReveal>
@@ -343,14 +328,14 @@ export default function DownloadPage() {
         </section>
 
         {/* Individual Downloads */}
-        <section className="py-20 bg-white">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-slate-900 mb-4">
+                <h2 className="text-3xl font-bold text-white mb-4">
                   Individual Downloads
                 </h2>
-                <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
                   Prefer to install components separately? Download each one individually below.
                 </p>
               </div>
@@ -390,11 +375,11 @@ export default function DownloadPage() {
         </section>
 
         {/* Requirements */}
-        <section className="py-16 bg-slate-50">
+        <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-10">
-                <h2 className="text-2xl font-bold text-slate-900 mb-3">
+                <h2 className="text-2xl font-bold text-white mb-3">
                   System Requirements
                 </h2>
               </div>
@@ -402,12 +387,12 @@ export default function DownloadPage() {
 
             <StaggerChildren className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               <StaggerItem>
-                <div className="bg-white rounded-xl p-6 border border-slate-200">
+                <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl p-6 border border-white/[0.08]">
                   <div className="flex items-center gap-3 mb-4">
-                    <Apple className="w-5 h-5 text-slate-700" />
-                    <h3 className="font-semibold text-slate-900">macOS</h3>
+                    <Apple className="w-5 h-5 text-slate-300" />
+                    <h3 className="font-semibold text-white">macOS</h3>
                   </div>
-                  <ul className="space-y-2 text-sm text-slate-600">
+                  <ul className="space-y-2 text-sm text-slate-400">
                     <li>macOS 12 (Monterey) or later</li>
                     <li>Apple Silicon (M1+) or Intel processor</li>
                     <li>4 GB RAM minimum</li>
@@ -416,12 +401,12 @@ export default function DownloadPage() {
                 </div>
               </StaggerItem>
               <StaggerItem>
-                <div className="bg-white rounded-xl p-6 border border-slate-200">
+                <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl p-6 border border-white/[0.08]">
                   <div className="flex items-center gap-3 mb-4">
-                    <Monitor className="w-5 h-5 text-slate-700" />
-                    <h3 className="font-semibold text-slate-900">Windows</h3>
+                    <Monitor className="w-5 h-5 text-slate-300" />
+                    <h3 className="font-semibold text-white">Windows</h3>
                   </div>
-                  <ul className="space-y-2 text-sm text-slate-600">
+                  <ul className="space-y-2 text-sm text-slate-400">
                     <li>Windows 10 (64-bit) or later</li>
                     <li>x64 processor</li>
                     <li>4 GB RAM minimum</li>
@@ -434,26 +419,26 @@ export default function DownloadPage() {
         </section>
 
         {/* Help CTA */}
-        <section className="py-16 bg-white">
+        <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <ScrollReveal>
-              <h2 className="text-2xl font-bold text-slate-900 mb-3">
+              <h2 className="text-2xl font-bold text-white mb-3">
                 Need Help Getting Set Up?
               </h2>
-              <p className="text-slate-600 mb-6 max-w-lg mx-auto">
+              <p className="text-slate-400 mb-6 max-w-lg mx-auto">
                 Our documentation covers installation, configuration, and troubleshooting
                 for all platforms.
               </p>
               <div className="flex justify-center gap-4">
                 <a href="/docs">
-                  <Button variant="outline" className="border-slate-300">
+                  <GradientButton variant="default">
                     View Documentation
-                  </Button>
+                  </GradientButton>
                 </a>
                 <a href="mailto:support@groovysec.com">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                  <GradientButton variant="blue">
                     Contact Support
-                  </Button>
+                  </GradientButton>
                 </a>
               </div>
             </ScrollReveal>
@@ -461,7 +446,7 @@ export default function DownloadPage() {
         </section>
 
         <Footer />
-      </div>
+      </AuroraBackground>
     </PageTransition>
   );
 }
@@ -490,25 +475,18 @@ function DesktopDownloadCard({
 
   return (
     <div
-      className={`bg-white rounded-2xl border ${colors.border} ${colors.hoverBorder} p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1`}
+      className={`bg-white/[0.03] backdrop-blur-xl rounded-2xl border ${colors.border} ${colors.hoverBorder} p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-black/20 hover:-translate-y-1`}
     >
-      <div className="flex items-start gap-4">
-        <div
-          className={`w-12 h-12 ${colors.iconBg} rounded-xl flex items-center justify-center flex-shrink-0`}
-        >
-          <Icon className={`w-6 h-6 ${colors.text}`} />
-        </div>
-        <div className="flex-1">
-          <h3 className="text-lg font-bold text-slate-900 mb-1">{product.name}</h3>
-          <p className="text-sm text-slate-600 mb-4">{product.description}</p>
+      <div>
+          <h3 className="text-lg font-bold text-white mb-1">{product.name}</h3>
+          <p className="text-sm text-slate-400 mb-4">{product.description}</p>
           <a href={download.url}>
-            <Button className={`${colors.bg} text-white hover:opacity-90`}>
+            <GradientButton variant={product.color === "orange" ? "orange" : product.color === "green" ? "default" : "blue"}>
               <Download className="w-4 h-4 mr-2" />
               Download for {download.label}
               <span className="ml-2 text-xs opacity-75">{download.ext}</span>
-            </Button>
+            </GradientButton>
           </a>
-        </div>
       </div>
     </div>
   );
@@ -530,17 +508,11 @@ function ExtensionCard({
 
   return (
     <div
-      className={`bg-white rounded-2xl border ${colors.border} ${colors.hoverBorder} p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1`}
+      className={`bg-white/[0.03] backdrop-blur-xl rounded-2xl border ${colors.border} ${colors.hoverBorder} p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-black/20 hover:-translate-y-1`}
     >
-      <div className="flex items-start gap-4">
-        <div
-          className={`w-12 h-12 ${colors.iconBg} rounded-xl flex items-center justify-center flex-shrink-0`}
-        >
-          <Icon className={`w-6 h-6 ${colors.text}`} />
-        </div>
-        <div className="flex-1">
-          <h3 className="text-lg font-bold text-slate-900 mb-1">{product.name}</h3>
-          <p className="text-sm text-slate-600 mb-4">{product.description}</p>
+      <div>
+          <h3 className="text-lg font-bold text-white mb-1">{product.name}</h3>
+          <p className="text-sm text-slate-400 mb-4">{product.description}</p>
 
           {/* Primary store button */}
           {primaryStore[1].available ? (
@@ -549,13 +521,13 @@ function ExtensionCard({
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button className={`${colors.bg} text-white hover:opacity-90`}>
+              <GradientButton variant="purple">
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Add to {primaryStore[0].charAt(0).toUpperCase() + primaryStore[0].slice(1)}
-              </Button>
+              </GradientButton>
             </a>
           ) : (
-            <Button disabled className="bg-slate-200 text-slate-500 cursor-not-allowed">
+            <Button disabled className="bg-slate-800 text-slate-500 cursor-not-allowed">
               Coming Soon — {primaryStore[1].label}
             </Button>
           )}
@@ -567,13 +539,12 @@ function ExtensionCard({
               .map(([key, store]) => (
                 <span
                   key={key}
-                  className="text-xs text-slate-400 bg-slate-100 px-2 py-1 rounded"
+                  className="text-xs text-slate-400 bg-white/[0.03] px-2 py-1 rounded"
                 >
                   {store.label} — {store.available ? "Available" : "Coming Soon"}
                 </span>
               ))}
           </div>
-        </div>
       </div>
     </div>
   );
@@ -589,17 +560,11 @@ function IdeExtensionCard({
 
   return (
     <div
-      className={`bg-white rounded-2xl border ${colors.border} ${colors.hoverBorder} p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1`}
+      className={`bg-white/[0.03] backdrop-blur-xl rounded-2xl border ${colors.border} ${colors.hoverBorder} p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-black/20 hover:-translate-y-1`}
     >
-      <div className="flex items-start gap-4">
-        <div
-          className={`w-12 h-12 ${colors.iconBg} rounded-xl flex items-center justify-center flex-shrink-0`}
-        >
-          <Icon className={`w-6 h-6 ${colors.text}`} />
-        </div>
-        <div className="flex-1">
-          <h3 className="text-lg font-bold text-slate-900 mb-1">{product.name}</h3>
-          <p className="text-sm text-slate-600 mb-4">{product.description}</p>
+      <div>
+          <h3 className="text-lg font-bold text-white mb-1">{product.name}</h3>
+          <p className="text-sm text-slate-400 mb-4">{product.description}</p>
 
           {/* VS Code */}
           <div className="space-y-2">
@@ -611,15 +576,15 @@ function IdeExtensionCard({
                     target={store.url.startsWith("http") ? "_blank" : undefined}
                     rel={store.url.startsWith("http") ? "noopener noreferrer" : undefined}
                   >
-                    <Button className={`${colors.bg} text-white hover:opacity-90 w-full justify-start`}>
+                    <GradientButton variant="orange" className="w-full justify-start">
                       <ExternalLink className="w-4 h-4 mr-2" />
                       {store.label}
-                    </Button>
+                    </GradientButton>
                   </a>
                 ) : (
                   <Button
                     disabled
-                    className="bg-slate-200 text-slate-500 cursor-not-allowed w-full justify-start"
+                    className="bg-slate-800 text-slate-500 cursor-not-allowed w-full justify-start"
                   >
                     {store.label} — Coming Soon
                   </Button>
@@ -627,7 +592,6 @@ function IdeExtensionCard({
               </div>
             ))}
           </div>
-        </div>
       </div>
     </div>
   );

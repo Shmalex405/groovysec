@@ -10,6 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { GlassCard } from "@/components/ui/glass-card";
+import { GradientButton } from "@/components/ui/gradient-button";
 import { Calendar, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
@@ -20,8 +22,8 @@ export function LeadCapture() {
     lastName: "",
     email: "",
     company: "",
-    role: "",            // schema expects: "cto" | "ciso" | "architect" | "security" | "compliance" | "other"
-    companySize: "",     // schema expects values like "1-50", "50-100", ...
+    role: "",
+    companySize: "",
     aiUsage: [] as string[],
     useCase: "",
   });
@@ -37,7 +39,6 @@ export function LeadCapture() {
     setIsSubmitting(true);
 
     try {
-      // Build a schema-safe payload (fallbacks if user didn’t pick)
       const payload = {
         ...formData,
         role: formData.role || "other",
@@ -53,7 +54,6 @@ export function LeadCapture() {
           description: "Redirecting you to schedule your demo...",
         });
 
-        // Reset AFTER successful submission
         setFormData({
           firstName: "",
           lastName: "",
@@ -75,7 +75,7 @@ export function LeadCapture() {
         typeof err?.message === "string" ? err.message : "Please try again or contact us directly.";
       toast({
         title: "Submission Failed",
-        description: message, // shows e.g. "400: { ... }" from server
+        description: message,
         variant: "destructive",
       });
       console.error("Lead submit error:", err);
@@ -84,44 +84,44 @@ export function LeadCapture() {
     }
   };
 
+  const inputClasses =
+    "bg-white/[0.03] border-white/[0.08] text-white placeholder:text-slate-600 focus:border-blue-500/40 focus:ring-blue-500/20 transition-colors";
+  const labelClasses = "text-sm font-medium text-slate-300";
+
   return (
-    <section id="demo" className="py-20 bg-white">
+    <section id="demo" className="py-24 bg-slate-950">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-slate-900 mb-4">
+          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
             Request a Demo
           </h2>
-          <p className="text-xl text-slate-600">
+          <p className="text-lg text-slate-400 max-w-xl mx-auto">
             Schedule a personalized demo and see how Groovy Security's products can help your organization.
           </p>
         </div>
 
-        <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-slate-200">
+        <GlassCard className="p-8" hover={false} glowColor="rgba(59,130,246,0.04)">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <Label htmlFor="firstName" className="text-sm font-medium text-slate-900">
-                  First Name *
-                </Label>
+                <Label htmlFor="firstName" className={labelClasses}>First Name *</Label>
                 <Input
                   id="firstName"
                   type="text"
                   value={formData.firstName}
                   onChange={(e) => handleInputChange("firstName", e.target.value)}
-                  className="mt-1"
+                  className={`mt-1.5 ${inputClasses}`}
                   required
                 />
               </div>
               <div>
-                <Label htmlFor="lastName" className="text-sm font-medium text-slate-900">
-                  Last Name *
-                </Label>
+                <Label htmlFor="lastName" className={labelClasses}>Last Name *</Label>
                 <Input
                   id="lastName"
                   type="text"
                   value={formData.lastName}
                   onChange={(e) => handleInputChange("lastName", e.target.value)}
-                  className="mt-1"
+                  className={`mt-1.5 ${inputClasses}`}
                   required
                 />
               </div>
@@ -129,28 +129,24 @@ export function LeadCapture() {
 
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <Label htmlFor="email" className="text-sm font-medium text-slate-900">
-                  Work Email *
-                </Label>
+                <Label htmlFor="email" className={labelClasses}>Work Email *</Label>
                 <Input
                   id="email"
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  className="mt-1"
+                  className={`mt-1.5 ${inputClasses}`}
                   required
                 />
               </div>
               <div>
-                <Label htmlFor="company" className="text-sm font-medium text-slate-900">
-                  Company *
-                </Label>
+                <Label htmlFor="company" className={labelClasses}>Company *</Label>
                 <Input
                   id="company"
                   type="text"
                   value={formData.company}
                   onChange={(e) => handleInputChange("company", e.target.value)}
-                  className="mt-1"
+                  className={`mt-1.5 ${inputClasses}`}
                   required
                 />
               </div>
@@ -158,18 +154,16 @@ export function LeadCapture() {
 
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <Label htmlFor="role" className="text-sm font-medium text-slate-900">
-                  Your Role *
-                </Label>
+                <Label htmlFor="role" className={labelClasses}>Your Role *</Label>
                 <Select
                   value={formData.role}
                   onValueChange={(value) => handleInputChange("role", value)}
                   required
                 >
-                  <SelectTrigger className="mt-1">
+                  <SelectTrigger className={`mt-1.5 ${inputClasses}`}>
                     <SelectValue placeholder="Select your role" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-900 border-white/[0.08]">
                     <SelectItem value="cto">CTO</SelectItem>
                     <SelectItem value="ciso">CISO</SelectItem>
                     <SelectItem value="architect">Enterprise Architect</SelectItem>
@@ -180,18 +174,16 @@ export function LeadCapture() {
                 </Select>
               </div>
               <div>
-                <Label htmlFor="companySize" className="text-sm font-medium text-slate-900">
-                  Company Size *
-                </Label>
+                <Label htmlFor="companySize" className={labelClasses}>Company Size *</Label>
                 <Select
                   value={formData.companySize}
                   onValueChange={(value) => handleInputChange("companySize", value)}
                   required
                 >
-                  <SelectTrigger className="mt-1">
+                  <SelectTrigger className={`mt-1.5 ${inputClasses}`}>
                     <SelectValue placeholder="Select company size" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-900 border-white/[0.08]">
                     <SelectItem value="1-50">1-50 employees</SelectItem>
                     <SelectItem value="50-100">50-100 employees</SelectItem>
                     <SelectItem value="100-500">100-500 employees</SelectItem>
@@ -205,44 +197,42 @@ export function LeadCapture() {
             </div>
 
             <div>
-              <Label htmlFor="useCase" className="text-sm font-medium text-slate-900">
-                Primary Use Case
-              </Label>
+              <Label htmlFor="useCase" className={labelClasses}>Primary Use Case</Label>
               <Textarea
                 id="useCase"
                 value={formData.useCase}
                 onChange={(e) => handleInputChange("useCase", e.target.value)}
                 placeholder="Describe your primary AI use case and security concerns..."
-                className="mt-1"
+                className={`mt-1.5 ${inputClasses}`}
                 rows={3}
               />
             </div>
 
-            <div className="text-center">
-              <Button
+            <div className="text-center pt-2">
+              <GradientButton
                 type="submit"
-                size="lg"
+                variant="blue"
                 disabled={isSubmitting}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-12 py-4 text-lg font-semibold transition-all transform hover:scale-105"
+                className="px-12"
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                     Submitting...
                   </>
                 ) : (
                   <>
-                    <Calendar className="w-5 h-5 mr-2" />
+                    <Calendar className="w-4 h-4 mr-2" />
                     Schedule Demo
                   </>
                 )}
-              </Button>
-              <p className="text-sm text-slate-600 mt-4">
+              </GradientButton>
+              <p className="text-xs text-slate-600 mt-4">
                 By submitting, you agree to our privacy policy and terms of service.
               </p>
             </div>
           </form>
-        </div>
+        </GlassCard>
       </div>
     </section>
   );

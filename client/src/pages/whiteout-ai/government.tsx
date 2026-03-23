@@ -2,6 +2,10 @@ import { Link } from "wouter";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
+import { GradientButton } from "@/components/ui/gradient-button";
+import { GlassCard } from "@/components/ui/glass-card";
+import { GradientText } from "@/components/ui/gradient-text";
+import { AuroraBackground } from "@/components/ui/aurora-background";
 import {
   PageTransition,
   HeroTextReveal,
@@ -140,20 +144,18 @@ export default function Government() {
   ];
 
   const colorClasses: Record<string, { bg: string; icon: string }> = {
-    blue: { bg: "bg-blue-600/10", icon: "text-blue-600" },
-    green: { bg: "bg-green-600/10", icon: "text-green-600" },
-    orange: { bg: "bg-orange-600/10", icon: "text-orange-600" },
+    blue: { bg: "bg-blue-500/10", icon: "text-blue-400" },
+    green: { bg: "bg-emerald-500/10", icon: "text-emerald-400" },
+    orange: { bg: "bg-orange-500/10", icon: "text-orange-400" },
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <AuroraBackground variant="bluegreen" className="min-h-screen bg-slate-950">
       <Navigation />
 
       <PageTransition>
         {/* Hero Section */}
-        <section className="pt-24 pb-16 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-green-500/10"></div>
-
+        <section className="pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="text-white">
@@ -168,7 +170,7 @@ export default function Government() {
                   <HeroLine>
                     <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                       AI Governance
-                      <span className="block bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
+                      <span className="block bg-gradient-to-r from-blue-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">
                         Built for the
                       </span>
                       Public Sector
@@ -188,13 +190,10 @@ export default function Government() {
                 <ScrollReveal delay={0.5}>
                   <div className="flex flex-col sm:flex-row gap-4 mb-8">
                     <Link href={demoHref}>
-                      <Button
-                        size="lg"
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold"
-                      >
+                      <GradientButton variant="blue">
                         <FileText className="w-5 h-5 mr-2" />
                         Schedule a Briefing
-                      </Button>
+                      </GradientButton>
                     </Link>
                   </div>
 
@@ -210,7 +209,7 @@ export default function Government() {
                 {stats.map((stat, index) => (
                   <StaggerItem key={index}>
                     <div
-                      className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border border-slate-700 text-center hover:border-blue-500/50 transition-all duration-300"
+                      className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08] text-center hover:border-blue-500/50 transition-all duration-300"
                     >
                       <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent mb-2">
                         {stat.value}
@@ -225,14 +224,14 @@ export default function Government() {
         </section>
 
         {/* How It Works */}
-        <section className="py-20 bg-white">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-slate-900 mb-4">
+                <h2 className="text-4xl font-bold text-white mb-4">
                   How Whiteout AI Works
                 </h2>
-                <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
                   Whiteout AI intercepts AI interactions across every surface —
                   evaluating each prompt against organizational policies in real time
                   before any data leaves the network.
@@ -248,17 +247,12 @@ export default function Government() {
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="p-6 bg-white/50 backdrop-blur-sm rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 text-center"
+                      className="p-6 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 hover:-translate-y-1 text-center"
                     >
-                      <div
-                        className={`w-14 h-14 ${colors.bg} rounded-full flex items-center justify-center mx-auto mb-4`}
-                      >
-                        <Icon className={`w-7 h-7 ${colors.icon}`} />
-                      </div>
-                      <h3 className="text-lg font-bold text-slate-900 mb-2">
+                      <h3 className="text-lg font-bold text-white mb-2">
                         {surface.title}
                       </h3>
-                      <p className="text-sm text-slate-600">
+                      <p className="text-sm text-slate-400">
                         {surface.description}
                       </p>
                     </div>
@@ -276,7 +270,7 @@ export default function Government() {
                 {monitoredPlatforms.map((platform, index) => (
                   <span
                     key={index}
-                    className="px-4 py-2 bg-slate-100 text-slate-700 rounded-full text-sm font-medium border border-slate-200"
+                    className="px-4 py-2 bg-white/[0.03] text-slate-300 rounded-full text-sm font-medium border border-white/[0.08]"
                   >
                     {platform}
                   </span>
@@ -287,9 +281,7 @@ export default function Government() {
         </section>
 
         {/* Intelligent Policy Engine */}
-        <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-green-500/5"></div>
-
+        <section className="py-20 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
@@ -313,14 +305,14 @@ export default function Government() {
                     "Automatic redaction service generates compliant alternatives",
                   ].map((item, index) => (
                     <div key={index} className="flex items-start">
-                      <CheckCircle className="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-0.5" />
+                      <CheckCircle className="w-5 h-5 text-emerald-400 mr-3 flex-shrink-0 mt-0.5" />
                       <span className="text-slate-300">{item}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-8 border border-slate-700">
+              <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-8 border border-white/[0.08]">
                 <h3 className="text-xl font-semibold text-white mb-6 text-center">
                   Policy Categories
                 </h3>
@@ -345,7 +337,7 @@ export default function Government() {
                   ))}
                 </div>
                 <div className="mt-6 text-center">
-                  <div className="text-green-400 font-semibold text-sm flex items-center justify-center">
+                  <div className="text-emerald-400 font-semibold text-sm flex items-center justify-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
                     99.5% Accuracy — Zero False Negatives in Testing
                   </div>
@@ -356,14 +348,14 @@ export default function Government() {
         </section>
 
         {/* Government Value Proposition */}
-        <section className="py-20 bg-slate-50">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-slate-900 mb-4">
+                <h2 className="text-4xl font-bold text-white mb-4">
                   Built for Government & Public Sector
                 </h2>
-                <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
                   Enterprise-grade security, compliance, and accountability designed
                   to meet the demands of public sector AI governance.
                 </p>
@@ -374,24 +366,19 @@ export default function Government() {
               {complianceFeatures.map((feature, index) => {
                 const Icon = feature.icon;
                 const colorList = [
-                  "bg-blue-600/10 text-blue-600",
-                  "bg-green-600/10 text-green-600",
-                  "bg-orange-600/10 text-orange-600",
-                  "bg-blue-600/10 text-blue-600",
+                  "bg-blue-500/10 text-blue-400",
+                  "bg-emerald-500/10 text-emerald-400",
+                  "bg-orange-500/10 text-orange-400",
+                  "bg-blue-500/10 text-blue-400",
                 ];
 
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="p-8 bg-white/50 backdrop-blur-sm rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300"
+                      className="p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300"
                     >
                       <div className="flex items-center mb-4">
-                        <div
-                          className={`w-12 h-12 ${colorList[index]} rounded-full flex items-center justify-center mr-4`}
-                        >
-                          <Icon className="w-6 h-6" />
-                        </div>
-                        <h3 className="text-xl font-bold text-slate-900">
+                        <h3 className="text-xl font-bold text-white">
                           {feature.title}
                         </h3>
                       </div>
@@ -399,9 +386,9 @@ export default function Government() {
                         {feature.items.map((item, itemIndex) => (
                           <li
                             key={itemIndex}
-                            className="flex items-start text-sm text-slate-600"
+                            className="flex items-start text-sm text-slate-400"
                           >
-                            <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                            <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0 mt-0.5" />
                             {item}
                           </li>
                         ))}
@@ -415,14 +402,14 @@ export default function Government() {
         </section>
 
         {/* Differentiators */}
-        <section className="py-20 bg-white">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-slate-900 mb-4">
+                <h2 className="text-4xl font-bold text-white mb-4">
                   Why Whiteout AI
                 </h2>
-                <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
                   Purpose-built for organizations that need to move fast with AI
                   while maintaining complete control and compliance.
                 </p>
@@ -433,26 +420,21 @@ export default function Government() {
               {differentiators.map((diff, index) => {
                 const Icon = diff.icon;
                 const colorList = [
-                  { bg: "bg-blue-600/10", text: "text-blue-600" },
-                  { bg: "bg-green-600/10", text: "text-green-600" },
-                  { bg: "bg-orange-600/10", text: "text-orange-600" },
+                  { bg: "bg-blue-500/10", text: "text-blue-400" },
+                  { bg: "bg-emerald-500/10", text: "text-emerald-400" },
+                  { bg: "bg-orange-500/10", text: "text-orange-400" },
                 ];
                 const colors = colorList[index];
 
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="p-8 bg-white/50 backdrop-blur-sm rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                      className="p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 hover:-translate-y-1"
                     >
-                      <div
-                        className={`w-16 h-16 ${colors.bg} rounded-full flex items-center justify-center mb-6`}
-                      >
-                        <Icon className={`w-8 h-8 ${colors.text}`} />
-                      </div>
-                      <h3 className="text-2xl font-bold text-slate-900 mb-4">
+                      <h3 className="text-2xl font-bold text-white mb-4">
                         {diff.title}
                       </h3>
-                      <p className="text-slate-600 leading-relaxed">
+                      <p className="text-slate-400 leading-relaxed">
                         {diff.description}
                       </p>
                     </div>
@@ -465,9 +447,7 @@ export default function Government() {
 
         {/* CTA Section */}
         <ScrollReveal>
-          <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-green-500/10"></div>
-
+          <section className="py-20 relative overflow-hidden">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
               <h2 className="text-4xl font-bold text-white mb-6">
                 Ready to Govern AI with Confidence?
@@ -478,13 +458,10 @@ export default function Government() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href={demoHref}>
-                  <Button
-                    size="lg"
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold"
-                  >
+                  <GradientButton variant="blue">
                     Schedule a Briefing
                     <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
+                  </GradientButton>
                 </Link>
               </div>
               <p className="text-sm text-slate-400 mt-6">
@@ -496,6 +473,6 @@ export default function Government() {
       </PageTransition>
 
       <Footer />
-    </div>
+    </AuroraBackground>
   );
 }

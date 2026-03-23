@@ -5,12 +5,14 @@ interface AnimatedCounterProps {
   value: string;
   duration?: number;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export function AnimatedCounter({
   value,
   duration = 1.5,
   className,
+  style,
 }: AnimatedCounterProps) {
   // Extract leading number from the value (e.g. "7" from "7", "65+" from "65+", "99.5%" from "99.5%")
   const match = value.match(/^(\d+\.?\d*)(.*)/);
@@ -24,6 +26,7 @@ export function AnimatedCounter({
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={className}
+        style={style}
       >
         {value}
       </motion.span>
@@ -41,6 +44,7 @@ export function AnimatedCounter({
       hasDecimal={hasDecimal}
       duration={duration}
       className={className}
+      style={style}
     />
   );
 }
@@ -51,12 +55,14 @@ function CounterSpan({
   hasDecimal,
   duration,
   className,
+  style,
 }: {
   target: number;
   suffix: string;
   hasDecimal: boolean;
   duration: number;
   className?: string;
+  style?: React.CSSProperties;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
@@ -72,5 +78,5 @@ function CounterSpan({
     }
   }, [isInView, motionValue, target, duration]);
 
-  return <motion.span ref={ref} className={className}>{display}</motion.span>;
+  return <motion.span ref={ref} className={className} style={style}>{display}</motion.span>;
 }

@@ -1,108 +1,135 @@
 import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
-import { Shield, Calendar, CheckCircle, Cloud, Server } from "lucide-react";
+import { GradientButton } from "@/components/ui/gradient-button";
+import { GradientText } from "@/components/ui/gradient-text";
+import RadialOrbitalTimeline, { type TimelineItem } from "@/components/ui/radial-orbital-timeline";
+import { Shield, Calendar, Globe, Monitor, Code, Cloud, Smartphone } from "lucide-react";
 import {
   HeroTextReveal,
   HeroLine,
   ScrollReveal,
 } from "@/components/motion";
 
+const interceptorData: TimelineItem[] = [
+  {
+    id: 1,
+    icon: Globe,
+    title: "Browser",
+    content: "Intercept prompts and file uploads across 23+ AI platforms before they leave the browser.",
+    category: "ENDPOINT",
+    relatedIds: [2, 3],
+    status: "completed",
+    energy: 95,
+    tags: ["Chrome", "Firefox", "Edge", "Safari"],
+  },
+  {
+    id: 2,
+    icon: Monitor,
+    title: "Desktop",
+    content: "Native keyboard and file-drop interception for desktop AI applications.",
+    category: "ENDPOINT",
+    relatedIds: [1, 3],
+    status: "completed",
+    energy: 90,
+    tags: ["macOS", "Windows", "Linux"],
+  },
+  {
+    id: 3,
+    icon: Code,
+    title: "IDE",
+    content: "Multi-IDE orchestration monitoring Claude Code, GitHub Copilot, and Cursor.",
+    category: "DEV TOOLS",
+    relatedIds: [1, 4],
+    status: "completed",
+    energy: 85,
+    tags: ["VS Code", "Cursor", "Windsurf"],
+  },
+  {
+    id: 4,
+    icon: Cloud,
+    title: "Cloud & Internal",
+    content: "Secure internal AI with dual LLM architecture and MCP tool access control.",
+    category: "CLOUD",
+    relatedIds: [3, 5],
+    status: "completed",
+    energy: 88,
+    tags: ["Electron", "MCP", "API"],
+  },
+  {
+    id: 5,
+    icon: Smartphone,
+    title: "Mobile",
+    content: "Mobile-first AI governance with multi-tier approval and on-device LLM inference.",
+    category: "MOBILE",
+    relatedIds: [1, 4],
+    status: "in-progress",
+    energy: 70,
+    tags: ["iOS", "Android"],
+  },
+];
+
 export function HeroSection() {
   return (
-    <section className="pt-24 pb-12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-green-500/10"></div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="text-white">
+    <section className="pt-32 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
+          <div>
             <HeroTextReveal>
               <HeroLine>
-                <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-600/20 text-blue-400 border border-blue-500/30 mb-6">
-                  <Shield className="w-4 h-4 mr-2" />
-                  <span className="text-sm font-medium">Whiteout AI</span>
+                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-500/[0.08] border border-blue-500/20 text-blue-400 text-sm mb-8">
+                  Whiteout AI
                 </div>
               </HeroLine>
 
               <HeroLine>
-                <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                  The All-in-One
-                  <span className="block bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
-                    AI Governance
+                <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
+                  AI Is Already in
+                  <span className="block">Your Organization.</span>
+                  <span className="block">
+                    <span
+                      className="bg-clip-text text-transparent animate-gradient-flow-fast"
+                      style={{
+                        backgroundImage: "linear-gradient(90deg, #1a5fb4, #2e7d32, #c77800, #2e7d32, #1a5fb4)",
+                        backgroundSize: "300% 100%",
+                      }}
+                    >
+                      Now Secure It.
+                    </span>
                   </span>
-                  Platform
                 </h1>
               </HeroLine>
 
               <HeroLine>
-                <p className="text-xl text-slate-300 mb-8 leading-relaxed">
-                  Groovy Security Builds Whiteout AI.
-                  Monitor, control, and audit how generative AI is used across your workforce.
-                  Policy-first approach with complete data isolation and regulatory compliance.
+                <p className="text-lg text-slate-400 mb-8 leading-relaxed max-w-lg">
+                  Your employees are already using ChatGPT, Copilot, and Claude Code. Whiteout AI gives you full visibility and control — scanning every prompt, enforcing your policies, and preventing sensitive data from ever leaving your organization.
                 </p>
               </HeroLine>
             </HeroTextReveal>
 
             <ScrollReveal delay={0.5}>
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+              <div className="flex flex-col sm:flex-row gap-4 mb-6">
                 <Link href="/demo">
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="border-white/30 text-[#F08C00] hover:bg-white/10 hover:text-white px-8 py-4 text-lg font-semibold"
-                  >
-                    <Calendar className="w-5 h-5 mr-2" />
+                  <GradientButton variant="blue">
+                    <Calendar className="w-4 h-4 mr-2" />
                     Schedule Consultation
-                  </Button>
+                  </GradientButton>
                 </Link>
               </div>
 
-              <div className="text-sm text-slate-400 flex items-center">
-                <CheckCircle className="w-4 h-4 mr-2" />
-                Security certifications in progress • SOC 2 Type II pending
+              <div className="text-sm text-slate-500 flex items-center">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-2 animate-pulse" />
+                Security certifications in progress · SOC 2 Type II pending
               </div>
             </ScrollReveal>
           </div>
 
           <ScrollReveal direction="right" delay={0.3}>
-            <div className="relative">
-              <div className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-slate-700">
-                <div className="text-center mb-6">
-                  <h3 className="text-white text-xl font-semibold mb-2">Whiteout AI's Dual-Path Architecture</h3>
-                  <p className="text-slate-300 text-sm">Your Data Stays With You</p>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-blue-600/20 rounded-lg border border-blue-500/30">
-                    <div className="flex items-center text-white">
-                      <Cloud className="w-5 h-5 mr-3 text-blue-400" />
-                      <span>External AI Models</span>
-                    </div>
-                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  </div>
-
-                  <div className="flex items-center justify-center">
-                    <div className="text-orange-500 text-2xl animate-pulse">
-                      <Shield className="w-8 h-8" />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 bg-green-600/20 rounded-lg border border-green-500/30">
-                    <div className="flex items-center text-white">
-                      <Server className="w-5 h-5 mr-3 text-green-400" />
-                      <span>Internal Secure Model</span>
-                    </div>
-                    <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
-                  </div>
-                </div>
-
-                <div className="mt-6 text-center">
-                  <div className="text-orange-500 font-semibold text-sm flex items-center justify-center">
-                    <CheckCircle className="w-4 h-4 mr-2" />
-                    Policy Verified Before Send
-                  </div>
-                </div>
-              </div>
-            </div>
+            <RadialOrbitalTimeline
+              timelineData={interceptorData}
+              centerImage="/icononly_transparent_nobuffer.png"
+              centerLabel="Whiteout AI"
+              variant="blue"
+              className="scale-[0.85] lg:scale-100 -my-8"
+            />
           </ScrollReveal>
         </div>
       </div>
