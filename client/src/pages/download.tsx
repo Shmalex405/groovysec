@@ -88,7 +88,7 @@ const DOWNLOADS = {
     stores: {
       chrome: {
         label: "Chrome Web Store",
-        url: "https://chromewebstore.google.com/search/Whiteout%20AI",
+        url: "https://chromewebstore.google.com/detail/whiteout-ai/dcbndpnolggjgmclalpdcogigpedlhpn",
         available: true,
       },
       firefox: {
