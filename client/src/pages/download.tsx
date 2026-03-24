@@ -88,7 +88,7 @@ const DOWNLOADS = {
     stores: {
       chrome: {
         label: "Chrome Web Store",
-        url: "https://chromewebstore.google.com",
+        url: "https://chromewebstore.google.com/search/Whiteout%20AI",
         available: true,
       },
       firefox: {
@@ -135,12 +135,12 @@ const DOWNLOADS = {
     platforms: {
       "macos-arm64": {
         label: "macOS (Apple Silicon)",
-        url: `${CDN_BASE}/installer/latest/WhiteoutAI-Bundled-Setup-macos-${VERSIONS.bundledInstaller}.dmg`,
+        url: `${CDN_BASE}/installer/latest/WhiteoutAI-Bundled-Setup-mac-${VERSIONS.bundledInstaller}.dmg`,
         ext: ".dmg",
       },
       "macos-x64": {
         label: "macOS (Intel)",
-        url: `${CDN_BASE}/installer/latest/WhiteoutAI-Bundled-Setup-macos-${VERSIONS.bundledInstaller}.dmg`,
+        url: `${CDN_BASE}/installer/latest/WhiteoutAI-Bundled-Setup-mac-${VERSIONS.bundledInstaller}.dmg`,
         ext: ".dmg",
       },
       "windows-x64": {
