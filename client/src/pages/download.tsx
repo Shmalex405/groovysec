@@ -29,6 +29,15 @@ import { GradientButton } from "@/components/ui/gradient-button";
 // CloudFront CDN base for all update artifacts
 const CDN_BASE = "https://updates.groovysec.com";
 
+// Current versions — update these when new releases are published
+const VERSIONS = {
+  desktop: "2.0.39",
+  interceptor: "1.0.56",
+  desktopGuardWindows: "1.0.36",
+  windowsDesktop: "1.0.84",
+  bundledInstaller: "1.0.0",
+};
+
 const DOWNLOADS = {
   "whiteout-desktop": {
     name: "Whiteout AI",
@@ -38,17 +47,17 @@ const DOWNLOADS = {
     platforms: {
       "macos-arm64": {
         label: "macOS (Apple Silicon)",
-        url: `${CDN_BASE}/latest/WhiteoutAI-macos-arm64-latest.dmg`,
+        url: `${CDN_BASE}/latest/WhiteoutAI-mac-arm64-${VERSIONS.desktop}.dmg`,
         ext: ".dmg",
       },
       "macos-x64": {
         label: "macOS (Intel)",
-        url: `${CDN_BASE}/latest/WhiteoutAI-macos-x64-latest.dmg`,
+        url: `${CDN_BASE}/latest/WhiteoutAI-mac-arm64-${VERSIONS.desktop}.dmg`,
         ext: ".dmg",
       },
       "windows-x64": {
         label: "Windows",
-        url: `${CDN_BASE}/latest/WhiteoutAI-Setup-latest.exe`,
+        url: `${CDN_BASE}/latest/WhiteoutAI-Setup-${VERSIONS.windowsDesktop}.exe`,
         ext: ".exe",
       },
     },
@@ -61,12 +70,12 @@ const DOWNLOADS = {
     platforms: {
       "macos-arm64": {
         label: "macOS",
-        url: `${CDN_BASE}/interceptor/latest/WhiteoutInterceptor-latest.dmg`,
+        url: `${CDN_BASE}/interceptor/Whiteout%20Interceptor-${VERSIONS.interceptor}-arm64.dmg`,
         ext: ".dmg",
       },
       "windows-x64": {
         label: "Windows",
-        url: `${CDN_BASE}/interceptor-windows/latest/Whiteout.DesktopGuard-latest.exe`,
+        url: `${CDN_BASE}/interceptor-windows/latest/Whiteout.DesktopGuard-${VERSIONS.desktopGuardWindows}.exe`,
         ext: ".exe",
       },
     },
@@ -126,17 +135,17 @@ const DOWNLOADS = {
     platforms: {
       "macos-arm64": {
         label: "macOS (Apple Silicon)",
-        url: `${CDN_BASE}/installer/latest/WhiteoutAI-Bundled-Setup-macOS-latest.dmg`,
+        url: `${CDN_BASE}/installer/latest/WhiteoutAI-Bundled-Setup-macos-${VERSIONS.bundledInstaller}.dmg`,
         ext: ".dmg",
       },
       "macos-x64": {
         label: "macOS (Intel)",
-        url: `${CDN_BASE}/installer/latest/WhiteoutAI-Bundled-Setup-macOS-latest.dmg`,
+        url: `${CDN_BASE}/installer/latest/WhiteoutAI-Bundled-Setup-macos-${VERSIONS.bundledInstaller}.dmg`,
         ext: ".dmg",
       },
       "windows-x64": {
         label: "Windows",
-        url: `${CDN_BASE}/installer/latest/WhiteoutAI-Bundled-Setup-Windows-latest.exe`,
+        url: `${CDN_BASE}/installer/latest/WhiteoutAI-Bundled-Setup-Windows-${VERSIONS.bundledInstaller}.exe`,
         ext: ".exe",
       },
     },
@@ -481,7 +490,7 @@ function DesktopDownloadCard({
           <h3 className="text-lg font-bold text-white mb-1">{product.name}</h3>
           <p className="text-sm text-slate-400 mb-4">{product.description}</p>
           <a href={download.url}>
-            <GradientButton variant={product.color === "orange" ? "orange" : product.color === "green" ? "default" : "blue"}>
+            <GradientButton variant={product.color === "green" ? "default" : "blue"}>
               <Download className="w-4 h-4 mr-2" />
               Download for {download.label}
               <span className="ml-2 text-xs opacity-75">{download.ext}</span>

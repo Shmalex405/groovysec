@@ -3,6 +3,7 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { GlassCard } from "@/components/ui/glass-card";
+import { HoloCard } from "@/components/ui/holo-card";
 import { GradientText } from "@/components/ui/gradient-text";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import RadialOrbitalTimeline, { type TimelineItem } from "@/components/ui/radial-orbital-timeline";
@@ -303,10 +304,10 @@ export default function Maestro() {
             <StaggerChildren className="grid md:grid-cols-2 lg:grid-cols-5 gap-3">
               {integrations.map((integration, index) => (
                 <StaggerItem key={index}>
-                  <GlassCard className="p-5 text-center">
+                  <HoloCard className="p-5 text-center" glowColor="rgba(249, 115, 22, 0.3)">
                     <h3 className="text-sm font-bold text-white mb-1">{integration.name}</h3>
                     <p className="text-xs text-slate-500">{integration.description}</p>
-                  </GlassCard>
+                  </HoloCard>
                 </StaggerItem>
               ))}
             </StaggerChildren>
