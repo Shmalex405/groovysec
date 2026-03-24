@@ -145,7 +145,7 @@ const DOWNLOADS = {
       },
       "windows-x64": {
         label: "Windows",
-        url: `${CDN_BASE}/installer/latest/WhiteoutAI-Bundled-Setup-Windows-${VERSIONS.bundledInstaller}.exe`,
+        url: `${CDN_BASE}/installer/latest/Whiteout%20AI%20Bundled%20Setup.exe`,
         ext: ".exe",
       },
     },
