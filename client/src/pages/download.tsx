@@ -33,7 +33,7 @@ const CDN_BASE = "https://updates.groovysec.com";
 const VERSIONS = {
   desktop: "2.0.39",
   interceptor: "1.0.56",
-  desktopGuardWindows: "1.0.36",
+  desktopGuardWindows: "1.0.57",
   windowsDesktop: "1.0.84",
   bundledInstaller: "1.0.0",
 };
@@ -75,7 +75,7 @@ const DOWNLOADS = {
       },
       "windows-x64": {
         label: "Windows",
-        url: `${CDN_BASE}/interceptor-windows/latest/Whiteout.DesktopGuard-${VERSIONS.desktopGuardWindows}.exe`,
+        url: `${CDN_BASE}/interceptor-windows/latest/Whiteout.DesktopGuard-Setup-${VERSIONS.desktopGuardWindows}.exe`,
         ext: ".exe",
       },
     },

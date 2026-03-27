@@ -22,6 +22,7 @@ const footerLinks: Record<string, LinkItem[]> = {
   ],
   Company: [
     { label: "About", href: "/about" },
+    { label: "Partners", href: "/partners" },
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Terms of Service", href: "/terms-of-service" },
   ],
