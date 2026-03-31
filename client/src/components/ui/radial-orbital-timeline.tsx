@@ -274,7 +274,7 @@ export default function RadialOrbitalTimeline({
 
   return (
     <div
-      className={cn("w-full flex flex-col items-center justify-center overflow-hidden", className)}
+      className={cn("w-full flex flex-col items-center justify-center overflow-visible", className)}
       ref={containerRef}
       onClick={handleContainerClick}
     >
@@ -371,7 +371,7 @@ export default function RadialOrbitalTimeline({
 
                 {/* Label — gradient colored */}
                 <div className={cn(
-                  "absolute top-[4.25rem] left-1/2 -translate-x-1/2 whitespace-nowrap text-base font-bold tracking-wide transition-all duration-300 bg-clip-text text-transparent",
+                  "absolute top-[4.25rem] left-1/2 -translate-x-1/2 text-base font-bold tracking-wide transition-all duration-300 bg-clip-text text-transparent max-w-[240px] text-center leading-tight",
                   isExpanded && "scale-110",
                   isExpanded || isHovered ? c.labelGradientHover : c.labelGradient,
                 )}>

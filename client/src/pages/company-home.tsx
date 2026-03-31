@@ -197,15 +197,15 @@ export default function CompanyHome() {
                         <h3 className="text-2xl font-bold text-white">Maestro</h3>
                       </div>
                       <p className="text-orange-100/80 mb-6 leading-relaxed">
-                        AI-driven automated penetration testing platform that deploys 13 specialized
+                        AI-driven automated penetration testing platform that deploys 15 specialized
                         agents to find vulnerabilities and validate them through real red team-style
                         exploitation — proving actual impact, not just scanner output.
                       </p>
                       <ul className="space-y-2.5 mb-8">
                         {[
                           "Red team exploitation that tests and validates every finding",
-                          "13 AI agents with 112 MCP tools covering the full pentest lifecycle",
-                          "116-test assessment matrix for consistent, deterministic coverage",
+                          "15 AI agents with 142 MCP tools covering the full pentest lifecycle",
+                          "147-test assessment matrix for consistent, deterministic coverage",
                           "Locally deployed — all data and vulnerability info stays on your network",
                           "Assess vulnerability findings from other ASPM tools already implemented",
                         ].map((item) => (
@@ -231,15 +231,15 @@ export default function CompanyHome() {
                       <h3 className="text-2xl font-bold text-white">Maestro</h3>
                     </div>
                     <p className="text-slate-400 mb-6 leading-relaxed">
-                      AI-driven automated penetration testing platform that deploys 13 specialized
+                      AI-driven automated penetration testing platform that deploys 15 specialized
                       agents to find vulnerabilities and validate them through real red team-style
                       exploitation — proving actual impact, not just scanner output.
                     </p>
                     <ul className="space-y-2.5 mb-8">
                       {[
                         "Red team exploitation that tests and validates every finding",
-                        "13 AI agents with 112 MCP tools covering the full pentest lifecycle",
-                        "116-test assessment matrix for consistent, deterministic coverage",
+                        "15 AI agents with 142 MCP tools covering the full pentest lifecycle",
+                        "147-test assessment matrix for consistent, deterministic coverage",
                         "Locally deployed — all data and vulnerability info stays on your network",
                         "Assess vulnerability findings from other ASPM tools already implemented",
                       ].map((item) => (
