@@ -26,6 +26,8 @@ import PrivacyPolicy from "@/pages/privacy-policy";
 import Demo from "@/pages/demo";
 import Download from "@/pages/download";
 import Partners from "@/pages/partners";
+import Skills from "@/pages/skills";
+import SkillsSuccess from "@/pages/skills/success";
 
 function Router() {
   return (
@@ -38,6 +40,8 @@ function Router() {
         <Route path="/download" component={Download} />
         <Route path="/whiteout-ai" component={WhiteoutAI} />
         <Route path="/maestro" component={Maestro} />
+        <Route path="/skills" component={Skills} />
+        <Route path="/skills/success" component={SkillsSuccess} />
         <Route path="/about" component={About} />
         <Route path="/whiteout-ai/government" component={WhiteoutGovernment} />
         <Route path="/whiteout-ai/academic-integrity" component={WhiteoutAcademicIntegrity} />

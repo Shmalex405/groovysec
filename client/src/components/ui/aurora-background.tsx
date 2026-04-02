@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 interface AuroraBackgroundProps {
   children: React.ReactNode;
   className?: string;
-  variant?: "blue" | "orange" | "mixed" | "bluegreen";
+  variant?: "blue" | "orange" | "mixed" | "bluegreen" | "green";
 }
 
 export function AuroraBackground({
@@ -35,6 +35,12 @@ export function AuroraBackground({
       "from-[#2e7d32]/35 via-[#1b5e20]/20 to-transparent",
       "from-[#1565c0]/30 via-[#2e7d32]/15 to-transparent",
       "from-[#0d4a8a]/25 via-[#1b5e20]/15 to-transparent",
+    ],
+    green: [
+      "from-[#2e7d32]/40 via-[#1b5e20]/25 to-transparent",
+      "from-[#10b981]/30 via-[#059669]/20 to-transparent",
+      "from-[#2e7d32]/30 via-[#10b981]/15 to-transparent",
+      "from-[#059669]/25 via-[#1b5e20]/15 to-transparent",
     ],
   };
 

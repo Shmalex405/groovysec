@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Groovy Security - Cybersecurity company with two products: **Whiteout AI** (AI governance platform) and **Maestro** (AI-driven penetration testing). Full-stack TypeScript monorepo with Express backend and React frontend.
+Groovy Security - Cybersecurity company with three products: **Whiteout AI** (AI governance platform), **Maestro** (AI-driven penetration testing), and **Secure AI Skills** (100 enterprise-grade security skills for OpenClaw). Full-stack TypeScript monorepo with Express backend and React frontend.
 
 ## Commands
 
@@ -46,6 +46,8 @@ npm run check            # Run TypeScript compiler
 | `/whiteout-ai/academic-integrity` | Academic integrity | `client/src/pages/whiteout-ai/academic-integrity.tsx` |
 | `/whiteout-ai/security-whitepaper` | Security whitepaper | `client/src/pages/whiteout-ai/security-whitepaper.tsx` |
 | `/terms-of-service` | Terms of Service | `client/src/pages/terms-of-service.tsx` |
+| `/skills` | Secure AI Skills product | `client/src/pages/skills.tsx` |
+| `/skills/success` | Post-purchase success | `client/src/pages/skills/success.tsx` |
 | `/privacy-policy` | Privacy Policy | `client/src/pages/privacy-policy.tsx` |
 
 ### Path Aliases

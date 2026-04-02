@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { GradientButton } from "@/components/ui/gradient-button";
-import { Menu, X, ChevronDown, Shield, Target } from "lucide-react";
+import { Menu, X, ChevronDown, Shield, Target, Sparkles } from "lucide-react";
 import { GroovyLogo } from "./groovy-logo";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -56,7 +56,7 @@ export function Navigation() {
               <button
                 onClick={() => setIsProductsOpen(!isProductsOpen)}
                 className={`flex items-center gap-1 px-4 py-2 rounded-lg transition-all duration-300 text-sm font-medium ${
-                  location.startsWith("/whiteout-ai") || location === "/maestro"
+                  location.startsWith("/whiteout-ai") || location === "/maestro" || location.startsWith("/skills")
                     ? "text-white bg-white/[0.06]"
                     : "text-slate-400 hover:text-white hover:bg-white/[0.04]"
                 }`}
@@ -110,6 +110,28 @@ export function Navigation() {
                           </span>
                           <span className="block text-xs text-slate-500 mt-0.5">
                             AI-Driven Penetration Testing
+                          </span>
+                        </div>
+                      </Link>
+                      <Link
+                        href="/skills"
+                        onClick={() => setIsProductsOpen(false)}
+                        className="flex items-start gap-3 px-3 py-3 rounded-lg hover:bg-white/[0.06] transition-colors group"
+                      >
+                        <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <img src="/icon_green.png" alt="Secure AI Skills" className="w-7 h-7 object-contain" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-white text-sm group-hover:text-emerald-400 transition-colors">
+                              Secure AI Skills
+                            </span>
+                            <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 rounded">
+                              NEW
+                            </span>
+                          </div>
+                          <span className="block text-xs text-slate-500 mt-0.5">
+                            111 Secure AI Skills
                           </span>
                         </div>
                       </Link>
@@ -194,6 +216,14 @@ export function Navigation() {
                         >
                           <Target className="w-4 h-4" />
                           Maestro
+                        </Link>
+                        <Link
+                          href="/skills"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="flex items-center gap-2 px-3 py-2.5 text-slate-400 hover:text-emerald-400 rounded-lg transition-colors text-sm"
+                        >
+                          <Sparkles className="w-4 h-4" />
+                          Secure AI Skills
                         </Link>
                       </motion.div>
                     )}
