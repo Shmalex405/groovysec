@@ -38,10 +38,10 @@ export default function SecurityWhitepaper() {
   const demoHref = "/demo";
 
   const stats = [
-    { value: "65+", label: "Pre-Built Policies" },
-    { value: "99.5%", label: "Compliance Accuracy" },
-    { value: "9", label: "Regulatory Categories" },
-    { value: "Sub-second", label: "Policy Evaluation" },
+    { value: "131", label: "Built-in Policies" },
+    { value: "13+", label: "AI Platforms Covered" },
+    { value: "9", label: "Compliance Domains" },
+    { value: "99.5%", label: "Detection Accuracy" },
   ];
 
   const challenges = [
@@ -94,26 +94,38 @@ export default function SecurityWhitepaper() {
     {
       icon: Globe,
       title: "Browser Extension",
-      description: "Chrome, Firefox, Edge, and Safari",
+      description: "Chrome, Firefox, Edge, Safari — ChatGPT, Claude, Gemini, Copilot, Perplexity, +8 more",
       color: "blue",
     },
     {
       icon: Monitor,
       title: "Desktop Guard",
-      description: "macOS & Windows native apps",
+      description: "Native AI desktop apps — file drop scanning, attach interception",
       color: "green",
     },
     {
-      icon: Server,
-      title: "Internal Secure AI",
-      description: "Isolated, compliant AI workspace",
+      icon: Layers,
+      title: "IDE Extensions",
+      description: "VS Code, Cursor, Windsurf, JetBrains — Claude Code, Copilot, Codex monitoring",
       color: "orange",
     },
     {
-      icon: Layers,
-      title: "Developer Tools",
-      description: "MCP protocol integration",
+      icon: Brain,
+      title: "MCP Governance",
+      description: "Controls which external tools AI agents can access (GitHub, Google Drive, Jira, etc.)",
       color: "blue",
+    },
+    {
+      icon: Server,
+      title: "Secure Internal AI",
+      description: "Compliance-checked AI for sensitive queries — data never leaves the org",
+      color: "green",
+    },
+    {
+      icon: Cloud,
+      title: "Infrastructure Agents",
+      description: "EKS, EC2, ECS, Lambda — AI API call tracking without client deployment",
+      color: "orange",
     },
   ];
 
@@ -132,13 +144,13 @@ export default function SecurityWhitepaper() {
   const policyCategories = [
     { name: "PHI", count: 10, desc: "Protected Health Information" },
     { name: "PII", count: 12, desc: "Personally Identifiable Info" },
+    { name: "GDPR", count: 14, desc: "GDPR, LGPD, UK GDPR" },
     { name: "Code/IP", count: 8, desc: "Source Code & Trade Secrets" },
-    { name: "Legal", count: 6, desc: "Attorney-Client Privilege" },
-    { name: "Confidential", count: 8, desc: "Business-Sensitive Data" },
-    { name: "Finance", count: 4, desc: "Financial Data & Earnings" },
-    { name: "GDPR", count: 7, desc: "EU Data Protection" },
-    { name: "Security", count: 7, desc: "Infrastructure & Credentials" },
-    { name: "Education", count: 3, desc: "FERPA & Research Data" },
+    { name: "Finance", count: 15, desc: "SOX, SEC, GLB" },
+    { name: "Legal", count: 14, desc: "Attorney-Client, Work Product" },
+    { name: "Security", count: 18, desc: "NIST, ISO 27001" },
+    { name: "Confidential", count: 8, desc: "Trade Secrets, NDA" },
+    { name: "Education", count: 32, desc: "FERPA" },
   ];
 
   const securityFeatures = [
@@ -371,7 +383,7 @@ export default function SecurityWhitepaper() {
 
                   <div className="text-sm text-slate-400 flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    Whiteout AI by Groovy Security — Version 2.0 | February 2026
+                    Whiteout AI by Groovy Security — Version 3.0 | April 2026
                   </div>
                 </ScrollReveal>
               </div>
@@ -545,7 +557,7 @@ export default function SecurityWhitepaper() {
               </div>
             </ScrollReveal>
 
-            <StaggerChildren className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <StaggerChildren className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {coverageSurfaces.map((surface, index) => {
                 const Icon = surface.icon;
                 const colors = colorClasses[surface.color];
@@ -638,7 +650,7 @@ export default function SecurityWhitepaper() {
 
                 <div className="space-y-3">
                   {[
-                    "65 pre-built policies across 9 regulatory categories",
+                    "131 built-in policies across 9 compliance domains",
                     "Request custom policies tailored to your organization\u2019s specific rules",
                     "Group-based assignment for departmental compliance",
                     "Supports both cloud and on-premise LLM evaluation",
@@ -676,8 +688,8 @@ export default function SecurityWhitepaper() {
                   ))}
                 </div>
                 <div className="mt-4 text-center text-sm text-slate-500">
-                  <span className="font-semibold text-slate-300">65</span> total
-                  policies across all categories
+                  <span className="font-semibold text-slate-300">131</span> total
+                  policies across all domains
                 </div>
               </div>
             </div>
