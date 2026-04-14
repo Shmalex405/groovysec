@@ -33,6 +33,7 @@ import {
   StaggerChildren,
   StaggerItem,
 } from "@/components/motion";
+import { SecurityCompliance } from "@/components/security-compliance";
 
 export default function SecurityWhitepaper() {
   const demoHref = "/demo";
@@ -196,28 +197,7 @@ export default function SecurityWhitepaper() {
     },
   ];
 
-  const deploymentModels = [
-    {
-      icon: Cloud,
-      title: "Cloud",
-      description:
-        "Standard deployment with cloud-hosted backend and managed infrastructure. Desktop apps distributed as native installers, extension published to browser stores.",
-    },
-    {
-      icon: Server,
-      title: "On-Premise",
-      description:
-        "Full on-premise deployment for highly regulated industries. All components run within your infrastructure using standard container orchestration.",
-    },
-    {
-      icon: Layers,
-      title: "Hybrid",
-      description:
-        "Backend in the cloud, compliance evaluation on-premise. Prompts are evaluated locally — only metadata is sent to the cloud for management.",
-    },
-  ];
-
-  const useCases = [
+const useCases = [
     {
       icon: Building2,
       title: "Healthcare: HIPAA Compliance",
@@ -745,47 +725,7 @@ export default function SecurityWhitepaper() {
         </section>
 
         {/* === DEPLOYMENT FLEXIBILITY === */}
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <ScrollReveal>
-              <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
-                  Deployment Flexibility
-                </h2>
-                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-                  Deploy Whiteout AI in the model that matches your organization's
-                  security requirements.
-                </p>
-              </div>
-            </ScrollReveal>
-
-            <StaggerChildren className="grid md:grid-cols-3 gap-8">
-              {deploymentModels.map((model, index) => {
-                const Icon = model.icon;
-                const colorList = [
-                  { bg: "bg-blue-500/10", text: "text-blue-400" },
-                  { bg: "bg-emerald-500/10", text: "text-emerald-400" },
-                  { bg: "bg-orange-500/10", text: "text-orange-400" },
-                ];
-                const colors = colorList[index];
-                return (
-                  <StaggerItem key={index}>
-                    <div
-                      className="p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 hover:-translate-y-1"
-                    >
-                      <h3 className="text-2xl font-bold text-white mb-4">
-                        {model.title}
-                      </h3>
-                      <p className="text-slate-400 leading-relaxed">
-                        {model.description}
-                      </p>
-                    </div>
-                  </StaggerItem>
-                );
-              })}
-            </StaggerChildren>
-          </div>
-        </section>
+        <SecurityCompliance />
 
         {/* === ENTERPRISE USE CASES === */}
         <section className="py-20">

@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { GradientButton } from "@/components/ui/gradient-button";
@@ -16,20 +17,75 @@ import {
   BookOpen,
   Terminal,
   ArrowRight,
+  Lock,
 } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
 const INVITE_URL = "https://bufnwjyzqigmivzqy3fpu5ei5m0bfrft.lambda-url.us-west-2.on.aws/";
 
+function hasValidSession(): boolean {
+  if (typeof window === "undefined") return false;
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get("session_id");
+  // Stripe Checkout Session IDs start with cs_live_ or cs_test_
+  return Boolean(sessionId && /^cs_(live|test)_[A-Za-z0-9]+$/.test(sessionId));
+}
+
 export default function SkillsSuccess() {
   const [copied, setCopied] = useState(false);
+  const verified = hasValidSession();
 
   const handleCopy = () => {
     navigator.clipboard.writeText(INVITE_URL);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  if (!verified) {
+    return (
+      <PageTransition>
+        <AuroraBackground variant="green" className="min-h-screen bg-slate-950">
+          <Navigation />
+          <section className="pt-32 pb-20 min-h-[80vh] flex items-center">
+            <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+              <ScrollReveal>
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-amber-500/15 border border-amber-500/25 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Lock className="w-10 h-10 text-amber-400" />
+                  </div>
+                  <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
+                    Purchase{" "}
+                    <GradientText from="from-amber-400" to="to-orange-300">
+                      Required
+                    </GradientText>
+                  </h1>
+                  <p className="text-lg text-slate-400 max-w-xl mx-auto mb-8">
+                    This page is only accessible after completing your purchase. If you've just paid and landed here, please reach out to support — otherwise, head back to the Skills page to get started.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Link href="/skills">
+                      <GradientButton variant="default" className="rounded-xl">
+                        View Skills &amp; Purchase
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </GradientButton>
+                    </Link>
+                  </div>
+                  <p className="text-sm text-slate-500 mt-6">
+                    Already paid? Contact{" "}
+                    <a href="mailto:support@groovysec.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                      support@groovysec.com
+                    </a>
+                  </p>
+                </div>
+              </ScrollReveal>
+            </div>
+          </section>
+          <Footer />
+        </AuroraBackground>
+      </PageTransition>
+    );
+  }
 
   return (
     <PageTransition>
