@@ -37,15 +37,10 @@ export default function CompanyHome() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <HeroTextReveal>
               <HeroLine>
-                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-slate-400 text-sm mb-8">
-                  Enterprise Cybersecurity for the AI Era
-                </div>
-              </HeroLine>
-              <HeroLine>
                 <h1
                   className="text-5xl lg:text-8xl font-bold mb-6 leading-[1.1] tracking-tight bg-clip-text text-transparent animate-gradient-flow"
                   style={{
-                    backgroundImage: "linear-gradient(90deg, #ffffff, #e2e8f0, #1a5fb4, #2e7d32, #c77800, #e2e8f0, #ffffff)",
+                    backgroundImage: "linear-gradient(90deg, #ffffff, #1a5fb4, #ffffff)",
                     backgroundSize: "300% 100%",
                   }}
                 >
@@ -56,7 +51,9 @@ export default function CompanyHome() {
               </HeroLine>
               <HeroLine>
                 <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-                  Groovy Security gives enterprises the tools to govern AI usage, prevent data leakage, and automate security testing — purpose-built for a world where AI is both the innovator and the risk.
+                  Groovy Security gives enterprises the tools to govern AI usage, prevent data leakage, and automate security testing
+                  <br />
+                  purpose-built for a world where AI is both the innovator and the risk.
                 </p>
               </HeroLine>
             </HeroTextReveal>

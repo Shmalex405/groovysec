@@ -615,8 +615,9 @@ const useCases = [
                         ALLOWED
                       </span>
                       <p className="text-slate-400 italic">
-                        "Will you please give me a template for a discharge
-                        summary that I could reuse for multiple patients?"
+                        "I have a paitent that i am needing help with building
+                        a treatment plan summary, help me build a reuseable
+                        template for me to use."
                       </p>
                     </div>
                   </div>
