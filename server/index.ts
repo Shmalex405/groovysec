@@ -7,6 +7,7 @@ import cors from "cors";
 import { registerRoutes } from "./routes";        // GET /api/leads + createServer
 import { setupVite, serveStatic, log } from "./vite";
 import leadsRouter from "./routes/leads";        // ✅ POST /api/leads lives here
+import skillAccessRouter from "./routes/skill-access"; // ✅ POST /api/skill-access
 
 const app = express();
 
@@ -55,6 +56,7 @@ app.use((req, res, next) => {
 
 /** ✅ Mount the ONLY POST /api/leads route */
 app.use("/api/leads", leadsRouter);
+app.use("/api/skill-access", skillAccessRouter);
 
 (async () => {
   /** Register remaining routes (GET /api/leads) and get the server */

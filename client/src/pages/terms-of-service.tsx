@@ -75,6 +75,54 @@ export default function TermsOfService() {
 
           <div>
             <h2 className="text-2xl font-semibold text-blue-300 mb-2">
+              Secure AI Skills — No Guarantee
+            </h2>
+            <p className="text-slate-300 mb-3">
+              The Groovy Secure AI Skills library (the “Skills”) is provided on
+              an “as is” and “as available” basis. While the Skills are designed,
+              audited, and maintained with security best practices in mind —
+              including review against the OWASP Agentic Security Initiative Top
+              10 — Groovy Security makes <strong>no guarantee, warranty, or
+              representation</strong> that the Skills will:
+            </p>
+            <ul className="list-disc list-inside text-slate-300 space-y-1 mb-3">
+              <li>
+                detect, prevent, or mitigate every security vulnerability,
+                prompt injection, data exfiltration attempt, or other attack
+                vector;
+              </li>
+              <li>
+                meet any specific compliance, regulatory, certification, or
+                audit standard for your particular use case, environment, or
+                jurisdiction;
+              </li>
+              <li>
+                operate without errors, interruptions, false positives, false
+                negatives, or unexpected behavior when integrated into your AI
+                agents, infrastructure, or workflows;
+              </li>
+              <li>
+                remain compatible with future versions of third-party AI models,
+                runtimes, frameworks, or platforms; or
+              </li>
+              <li>
+                produce any specific business, security, or financial outcome.
+              </li>
+            </ul>
+            <p className="text-slate-300">
+              You are solely responsible for evaluating the Skills, validating
+              their suitability for your environment, and maintaining your own
+              independent security controls, testing, monitoring, and human
+              oversight. Use of the Skills does not create any fiduciary,
+              advisory, or guarantor relationship between you and Groovy
+              Security. To the maximum extent permitted by law, Groovy Security
+              shall not be liable for any damages, losses, or claims arising
+              from your use of, reliance on, or inability to use the Skills.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-semibold text-blue-300 mb-2">
               Limitation of Liability
             </h2>
             <p className="text-slate-300">

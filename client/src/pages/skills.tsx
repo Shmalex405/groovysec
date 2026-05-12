@@ -293,7 +293,7 @@ export default function Skills() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button onClick={() => setShowPurchaseModal(true)}>
                     <GradientButton variant="default" className="min-w-0 px-8 py-4 text-base rounded-xl btn-animate-colors">
-                      Get Lifetime Access
+                      Request Access
                     </GradientButton>
                   </button>
                   <a href="#skill-library">
@@ -303,7 +303,7 @@ export default function Skills() {
                   </a>
                 </div>
                 <div className="mt-6 text-sm text-slate-500 text-center">
-                  One-time purchase &middot; Lifetime access &middot; No subscription
+                  Reviewed by Groovy Security &middot; Lifetime access &middot; No subscription
                 </div>
               </ScrollReveal>
             </div>
@@ -560,11 +560,11 @@ export default function Skills() {
                 </p>
                 <button onClick={() => setShowPurchaseModal(true)}>
                   <GradientButton variant="default" className="min-w-0 px-10 py-4 text-lg rounded-xl btn-animate-colors">
-                    Purchase Now <ArrowRight className="w-5 h-5 ml-2" />
+                    Request Access <ArrowRight className="w-5 h-5 ml-2" />
                   </GradientButton>
                 </button>
                 <p className="text-xs text-slate-600 mt-4">
-                  Secure checkout powered by Stripe
+                  Reviewed and provisioned by Groovy Security
                 </p>
               </GlassCard>
             </ScrollReveal>
