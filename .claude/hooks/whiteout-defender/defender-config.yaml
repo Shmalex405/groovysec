@@ -1,5 +1,0 @@
-# Whiteout AI - Backend connection config for policy compliance
-# Written by VS Code extension. Do not commit to version control.
-backend_url: "https://api.whiteout.groovysec.com"
-auth_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMDY0OTJhMS04MTU0LTRkMDItYjQ3YS1jZDJkOWZiNzA3N2UiLCJlbWFpbCI6ImFsZXhAZ3Jvb3Z5c2VjLmNvbSIsInJvbGUiOiJhZG1pbiIsImdyb3VwX2lkIjpudWxsLCJpc3MiOiJ3aGl0ZW91dC5haSIsImlhdCI6MTc3NzQxODM0MCwiZXhwIjoxNzc3NDE5MjQwLCJ0eXAiOiJhY2Nlc3MifQ.La7pAMnpO33_KOzzJzqiVGl86auhiTJ-uhH9Yy1qv64"
-group_id: "674d190b-8cf3-4242-92c7-5a5e651225c5"

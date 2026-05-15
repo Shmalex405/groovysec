@@ -1,0 +1,6 @@
+# Auth tokens for backend policy compliance — never commit
+defender-config.yaml
+
+# Python bytecode cache (regenerated on every hook invocation)
+__pycache__/
+*.pyc
