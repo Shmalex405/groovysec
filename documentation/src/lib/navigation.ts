@@ -17,6 +17,26 @@ export const navigation: NavSection[] = [
     ],
   },
   {
+    title: 'Whiteout AI Connector',
+    items: [
+      { title: 'Overview', href: '/admin-guides/whiteout-ai-connector/overview' },
+      { title: 'Google Drive', href: '/admin-guides/whiteout-ai-connector/google-drive' },
+      { title: 'SharePoint', href: '/admin-guides/whiteout-ai-connector/sharepoint' },
+      { title: 'OneDrive', href: '/admin-guides/whiteout-ai-connector/onedrive' },
+      { title: 'Dropbox', href: '/admin-guides/whiteout-ai-connector/dropbox' },
+      { title: 'Box', href: '/admin-guides/whiteout-ai-connector/box' },
+      { title: 'Confluence', href: '/admin-guides/whiteout-ai-connector/confluence' },
+      { title: 'Notion', href: '/admin-guides/whiteout-ai-connector/notion' },
+      { title: 'Gmail', href: '/admin-guides/whiteout-ai-connector/gmail' },
+      { title: 'Slack', href: '/admin-guides/whiteout-ai-connector/slack' },
+      { title: 'GitHub', href: '/admin-guides/whiteout-ai-connector/github' },
+      { title: 'Jira', href: '/admin-guides/whiteout-ai-connector/jira' },
+      { title: 'Linear', href: '/admin-guides/whiteout-ai-connector/linear' },
+      { title: 'Asana', href: '/admin-guides/whiteout-ai-connector/asana' },
+      { title: 'Trello', href: '/admin-guides/whiteout-ai-connector/trello' },
+    ],
+  },
+  {
     title: 'Data Integrations',
     items: [
       { title: 'GitHub', href: '/admin-guides/integrations/github' },
