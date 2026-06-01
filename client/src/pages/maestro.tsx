@@ -147,10 +147,9 @@ export default function Maestro() {
                   <HeroLine>
                     <p className="text-lg text-slate-400 mb-8 leading-relaxed max-w-lg">
                       Maestro deploys 15 specialized AI agents to autonomously discover
-                      vulnerabilities across web apps, APIs, cloud infrastructure, and
-                      Kubernetes — then validates them through real red team-style
-                      exploitation. Every finding comes with proof of impact, not just
-                      scanner output.
+                      vulnerabilities across web apps, APIs, and your cloud — then
+                      validates them through real red team-style exploitation. Every
+                      finding comes with proof of impact, not just scanner output.
                     </p>
                   </HeroLine>
                 </HeroTextReveal>
