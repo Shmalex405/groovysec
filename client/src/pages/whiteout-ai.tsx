@@ -10,7 +10,6 @@ import { Footer } from "@/components/footer";
 import {
   FullLlmEngine,
   EnforcementSurfaces,
-  CloudAiGovernance,
   EnterpriseIdentity,
 } from "@/components/whiteout-differentiators";
 import { GlassCard } from "@/components/ui/glass-card";
@@ -41,7 +40,6 @@ export default function WhiteoutAI() {
         <EnforcementSurfaces />
         <PlatformIntegrations />
         <SecurityCompliance />
-        <CloudAiGovernance />
         <PlatformOverview />
         <EnterpriseIdentity />
 

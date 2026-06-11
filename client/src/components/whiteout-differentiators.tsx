@@ -6,11 +6,8 @@ import {
   Globe,
   Monitor,
   Code,
-  Braces,
   Server,
-  Boxes,
   Workflow,
-  Cloud,
   KeyRound,
   Fingerprint,
   Smartphone,
@@ -146,27 +143,15 @@ export function EnforcementSurfaces() {
     },
     {
       icon: Code,
-      title: "VS Code Extension",
+      title: "IDE Extension",
       mode: "Enforce",
-      description: "Pre-send gates for Claude Code, Cursor, and GitHub Copilot inside the editor.",
-    },
-    {
-      icon: Braces,
-      title: "JetBrains Plugin",
-      mode: "Audit",
-      description: "Full audit visibility into AI assistant usage across the JetBrains IDE family.",
+      description: "Pre-send gates for AI coding assistants — Claude Code, Cursor, and GitHub Copilot — right inside the editor.",
     },
     {
       icon: Server,
       title: "Infrastructure Agent",
       mode: "Enforce",
-      description: "Monitor or enforce AI API calls from Kubernetes, EC2, ECS, and Lambda workloads — no client deployment needed.",
-    },
-    {
-      icon: Boxes,
-      title: "Python SDK & Lambda Layer",
-      mode: "In-Process",
-      description: "In-process policy evaluation for your own applications — block before the API call ever leaves your code.",
+      description: "Monitor or enforce AI API calls from Kubernetes, EC2, ECS, and Lambda workloads — with a Python SDK and Lambda layer for in-process blocking in your own applications.",
     },
     {
       icon: Workflow,
@@ -185,17 +170,16 @@ export function EnforcementSurfaces() {
               Whiteout AI Interceptor
             </div>
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
-              One Policy Engine. Seven Enforcement Surfaces.
+              One Policy Engine. Five Enforcement Surfaces.
             </h2>
             <p className="text-lg text-slate-400 max-w-2xl mx-auto">
               Policy enforcement everywhere your workforce uses AI — browser,
-              desktop, IDE, cloud, and mobile — with each surface labeled by
-              exactly what it does.
+              desktop, IDE, and cloud — from a single policy engine.
             </p>
           </div>
         </ScrollReveal>
 
-        <StaggerChildren className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <StaggerChildren className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {surfaces.map((surface) => {
             const Icon = surface.icon;
             return (
@@ -215,68 +199,6 @@ export function EnforcementSurfaces() {
               </StaggerItem>
             );
           })}
-          <StaggerItem>
-            <div className="h-full p-6 bg-blue-500/[0.04] backdrop-blur-xl rounded-2xl border border-blue-500/20 flex flex-col justify-center text-center">
-              <Smartphone className="w-5 h-5 text-blue-400 mx-auto mb-3" />
-              <h3 className="text-sm font-bold text-white mb-2">Mobile via MDM</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Device-level AI app visibility on iOS and Android through Intune and Jamf.
-              </p>
-            </div>
-          </StaggerItem>
-        </StaggerChildren>
-      </div>
-    </section>
-  );
-}
-
-/* ── Cloud AI governance ────────────────────────────────────────────── */
-
-export function CloudAiGovernance() {
-  return (
-    <section className="py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
-              Governance That Reaches Your Cloud AI
-            </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              AI risk isn't just employees in browsers — it's the agents and
-              models you run in production. Whiteout governs those too.
-            </p>
-          </div>
-        </ScrollReveal>
-
-        <StaggerChildren className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-          <StaggerItem>
-            <div className="h-full p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:border-blue-500/30 transition-all duration-300">
-              <div className="w-10 h-10 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center mb-4">
-                <Cloud className="w-5 h-5 text-blue-400" />
-              </div>
-              <h3 className="text-lg font-bold text-white mb-3">AWS Bedrock Guardrails</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                Whiteout policies compile directly into AWS Bedrock Guardrails and
-                publish cross-account to your Bedrock agents. The same rules that
-                govern your employees' browsers govern your production AI — one
-                policy library, enforced everywhere.
-              </p>
-            </div>
-          </StaggerItem>
-          <StaggerItem>
-            <div className="h-full p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:border-blue-500/30 transition-all duration-300">
-              <div className="w-10 h-10 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center mb-4">
-                <Link2 className="w-5 h-5 text-blue-400" />
-              </div>
-              <h3 className="text-lg font-bold text-white mb-3">MCP Traffic Governance</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                AI agents increasingly act through MCP tools. Whiteout governs the
-                tool calls flowing from clients like Claude Desktop and Cursor —
-                controlling what agents can reach and logging every call for
-                audit.
-              </p>
-            </div>
-          </StaggerItem>
         </StaggerChildren>
       </div>
     </section>

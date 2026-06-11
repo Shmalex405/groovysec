@@ -139,11 +139,11 @@ export default function CompanyHome() {
 
             <ScrollReveal delay={0.4}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-                <Link href="/whiteout-ai">
+                <a href="#products">
                   <GradientButton variant="blue">
                     Explore Products
                   </GradientButton>
-                </Link>
+                </a>
                 <Link href="/demo">
                   <GradientButton variant="default">
                     Request Demo
@@ -171,7 +171,7 @@ export default function CompanyHome() {
         </section>
 
         {/* Product Cards */}
-        <section className="py-24">
+        <section id="products" className="py-24 scroll-mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
