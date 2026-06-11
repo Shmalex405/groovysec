@@ -179,11 +179,14 @@ export function EnforcementSurfaces() {
           </div>
         </ScrollReveal>
 
-        <StaggerChildren className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <StaggerChildren className="flex flex-wrap justify-center gap-4">
           {surfaces.map((surface) => {
             const Icon = surface.icon;
             return (
-              <StaggerItem key={surface.title}>
+              <StaggerItem
+                key={surface.title}
+                className="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]"
+              >
                 <div className="h-full p-6 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:border-blue-500/30 transition-all duration-300">
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-9 h-9 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center">
