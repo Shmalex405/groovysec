@@ -196,9 +196,9 @@ export function SecurityCompliance() {
                 <div className="text-[10px] font-mono tracking-widest text-amber-400/70 mb-1.5">LAN-HOSTED</div>
                 <div className="text-sm font-bold text-white mb-1">For the Extremely Regulated</div>
                 <p className="text-xs text-slate-500">
-                  When the rules say nothing leaves the building, nothing leaves the
-                  building. Fully air-gapped on-premises operation with local GPU
-                  inference — built for defense, government, and classified networks.
+                  For environments where nothing leaves the building. Fully air-gapped
+                  on-premises operation with local GPU inference — built for defense,
+                  government, and classified networks.
                 </p>
               </div>
             </div>
