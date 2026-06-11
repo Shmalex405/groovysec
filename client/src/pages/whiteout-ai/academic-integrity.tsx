@@ -30,13 +30,18 @@ import {
   StaggerChildren,
   StaggerItem,
 } from "@/components/motion";
+import { usePageMeta } from "@/lib/use-page-meta";
 
 export default function AcademicIntegrity() {
+  usePageMeta(
+    "Whiteout AI for Academic Integrity",
+    "AI governance for education — intercept academic integrity violations in real time while preserving AI as a learning resource. 99.21% accuracy on 1,007 education benchmark prompts, built for FERPA."
+  );
   const demoHref = "/demo";
 
   const stats = [
-    { value: "100%", label: "Education Policy Accuracy" },
-    { value: "65+", label: "Pre-Built Policies" },
+    { value: "99.21%", label: "Education Benchmark Accuracy" },
+    { value: "60+", label: "Pre-Built Policies" },
     { value: "<320ms", label: "Evaluation Latency (P95)" },
     { value: "24/7", label: "Continuous Monitoring" },
   ];
@@ -120,7 +125,7 @@ export default function AcademicIntegrity() {
       icon: Brain,
       title: "Semantic Understanding",
       description:
-        "LLM-based evaluation understands academic intent, not just keywords. It distinguishes between \"write my essay\" and \"explain essay structure\" — catching true integrity violations while enabling genuine learning. 100% accuracy on Education policy tests.",
+        "LLM-based evaluation understands academic intent, not just keywords. It distinguishes between \"write my essay\" and \"explain essay structure\" — catching true integrity violations while enabling genuine learning. 99.21% accuracy across 1,007 education benchmark prompts.",
     },
     {
       icon: Users,
@@ -183,7 +188,7 @@ export default function AcademicIntegrity() {
                   </HeroLine>
 
                   <HeroLine>
-                    <p className="text-xl text-slate-300 mb-8 leading-relaxed">
+                    <p className="text-lg text-slate-300 mb-8 leading-relaxed">
                       As students and faculty rapidly adopt generative AI, Whiteout AI
                       gives institutions the tools to uphold academic integrity —
                       intercepting policy violations before they happen while
@@ -204,8 +209,8 @@ export default function AcademicIntegrity() {
 
                   <div className="text-sm text-slate-400 flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    FERPA compliant · Trusted by educational institutions · SOC 2
-                    Type II in progress
+                    Built for FERPA · SOC 2 Type II in progress · NVIDIA Inception
+                    member
                   </div>
                 </ScrollReveal>
               </div>
@@ -215,7 +220,7 @@ export default function AcademicIntegrity() {
                 {stats.map((stat, index) => (
                   <StaggerItem key={index}>
                     <div
-                      className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border border-slate-700 text-center hover:border-blue-500/50 transition-all duration-300"
+                      className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08] text-center hover:border-blue-500/50 transition-all duration-300"
                     >
                       <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent mb-2">
                         {stat.value}
@@ -230,14 +235,14 @@ export default function AcademicIntegrity() {
         </section>
 
         {/* How It Works */}
-        <section className="py-20">
+        <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
                   How Whiteout AI Works
                 </h2>
-                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
                   Whiteout AI intercepts AI interactions across every surface —
                   evaluating each prompt against your institution's academic
                   integrity policies in real time before any content is generated.
@@ -287,12 +292,12 @@ export default function AcademicIntegrity() {
         </section>
 
         {/* Context-Aware Academic Integrity */}
-        <section className="py-20 relative overflow-hidden">
+        <section className="py-24 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <ScrollReveal>
-                  <h2 className="text-4xl font-bold text-white mb-6">
+                  <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
                     Context-Aware Academic Integrity
                   </h2>
                 </ScrollReveal>
@@ -319,7 +324,7 @@ export default function AcademicIntegrity() {
                 </div>
               </div>
 
-              <div className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-8 border border-slate-700">
+              <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-8 border border-white/[0.08]">
                 <h3 className="text-xl font-semibold text-white mb-6 text-center">
                   Academic Integrity Policies
                 </h3>
@@ -346,7 +351,7 @@ export default function AcademicIntegrity() {
                 <div className="mt-6 text-center">
                   <div className="text-emerald-400 font-semibold text-sm flex items-center justify-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    100% Education Category Accuracy — Zero False Negatives
+                    99.21% Accuracy on 1,007 Education Benchmark Prompts
                   </div>
                 </div>
               </div>
@@ -355,14 +360,14 @@ export default function AcademicIntegrity() {
         </section>
 
         {/* Built for Education Institutions */}
-        <section className="py-20">
+        <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
                   Built for Education Institutions
                 </h2>
-                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
                   Comprehensive AI governance designed to maintain academic standards
                   while embracing the educational benefits of AI technology.
                 </p>
@@ -409,14 +414,14 @@ export default function AcademicIntegrity() {
         </section>
 
         {/* Differentiators */}
-        <section className="py-20">
+        <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
                   Why Whiteout AI for Education
                 </h2>
-                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
                   Purpose-built for institutions that want to embrace AI responsibly
                   while maintaining the academic standards that define educational
                   excellence.
@@ -455,12 +460,12 @@ export default function AcademicIntegrity() {
 
         {/* CTA Section */}
         <ScrollReveal>
-          <section className="py-20 relative overflow-hidden">
+          <section className="py-24 relative overflow-hidden">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-              <h2 className="text-4xl font-bold text-white mb-6">
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
                 Ready to Protect Academic Integrity?
               </h2>
-              <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+              <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
                 See how Whiteout AI can help your institution embrace AI responsibly
                 while maintaining the academic standards your students, faculty, and
                 community expect.

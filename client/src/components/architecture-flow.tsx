@@ -164,7 +164,7 @@ export function ArchitectureFlow() {
             {/* Semantic callout */}
             <div className="mt-10 mb-8 text-center">
               <div className="inline-block bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl px-8 py-5">
-                <span className="text-lg font-bold bg-clip-text text-transparent animate-gradient-flow-fast" style={{ backgroundImage: "linear-gradient(90deg, #1a5fb4, #2e7d32, #c77800, #2e7d32, #1a5fb4)", backgroundSize: "300% 100%" }}>
+                <span className="text-lg font-bold text-gradient-brand animate-gradient-flow-fast">
                   No Regex. Pure Semantic.
                 </span>
                 <p className="text-sm text-slate-400 mt-2 max-w-lg">

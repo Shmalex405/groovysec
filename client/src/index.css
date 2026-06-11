@@ -180,6 +180,24 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  /* Brand tri-color text gradient — pair with animate-gradient-flow(-fast) */
+  .text-gradient-brand {
+    background-image: linear-gradient(90deg, #1a5fb4, #2e7d32, #c77800, #2e7d32, #1a5fb4);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Hero variant: white with a brand-color sweep */
+  .text-gradient-hero {
+    background-image: linear-gradient(90deg, #ffffff, #e2e8f0, #1a5fb4, #2e7d32, #c77800, #e2e8f0, #ffffff);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
   
   .hero-gradient {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
@@ -487,4 +505,18 @@ html {
 
 .backdrop-blur-lg {
   backdrop-filter: blur(16px);
+}
+
+/* Respect users who opt out of motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

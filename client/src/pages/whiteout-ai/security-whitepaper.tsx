@@ -34,15 +34,20 @@ import {
   StaggerItem,
 } from "@/components/motion";
 import { SecurityCompliance } from "@/components/security-compliance";
+import { usePageMeta } from "@/lib/use-page-meta";
 
 export default function SecurityWhitepaper() {
+  usePageMeta(
+    "Whiteout AI Security Whitepaper",
+    "How Whiteout AI enables safe enterprise adoption of generative AI — 60+ policies across 9 compliance domains, 99.19% accuracy on a 15,915-prompt public benchmark, and security-first architecture."
+  );
   const demoHref = "/demo";
 
   const stats = [
-    { value: "131", label: "Built-in Policies" },
-    { value: "13+", label: "AI Platforms Covered" },
+    { value: "60+", label: "Built-in Policies" },
+    { value: "23+", label: "AI Platforms Covered" },
     { value: "9", label: "Compliance Domains" },
-    { value: "99.5%", label: "Detection Accuracy" },
+    { value: "99.19%", label: "Benchmark Accuracy" },
   ];
 
   const challenges = [
@@ -95,7 +100,7 @@ export default function SecurityWhitepaper() {
     {
       icon: Globe,
       title: "Browser Extension",
-      description: "Chrome, Firefox, Edge, Safari — ChatGPT, Claude, Gemini, Copilot, Perplexity, +8 more",
+      description: "Chrome, Firefox, Edge, Safari — ChatGPT, Claude, Gemini, Copilot, Perplexity, and 23+ AI platforms",
       color: "blue",
     },
     {
@@ -139,19 +144,19 @@ export default function SecurityWhitepaper() {
     "Mistral",
     "Grok",
     "DeepSeek",
-    "10+ more",
+    "15+ more",
   ];
 
   const policyCategories = [
-    { name: "PHI", count: 10, desc: "Protected Health Information" },
-    { name: "PII", count: 12, desc: "Personally Identifiable Info" },
-    { name: "GDPR", count: 14, desc: "GDPR, LGPD, UK GDPR" },
-    { name: "Code/IP", count: 8, desc: "Source Code & Trade Secrets" },
-    { name: "Finance", count: 15, desc: "SOX, SEC, GLB" },
-    { name: "Legal", count: 14, desc: "Attorney-Client, Work Product" },
-    { name: "Security", count: 18, desc: "NIST, ISO 27001" },
-    { name: "Confidential", count: 8, desc: "Trade Secrets, NDA" },
-    { name: "Education", count: 32, desc: "FERPA" },
+    { name: "PHI", count: 5, desc: "Protected Health Information" },
+    { name: "PII", count: 5, desc: "Personally Identifiable Info" },
+    { name: "GDPR", count: 7, desc: "GDPR, LGPD, UK GDPR" },
+    { name: "Code/IP", count: 4, desc: "Source Code & Trade Secrets" },
+    { name: "Finance", count: 7, desc: "SOX, SEC, GLB" },
+    { name: "Legal", count: 8, desc: "Attorney-Client, Work Product" },
+    { name: "Security", count: 7, desc: "NIST, ISO 27001" },
+    { name: "Confidential", count: 5, desc: "Trade Secrets, NDA" },
+    { name: "Education", count: 12, desc: "FERPA" },
   ];
 
   const securityFeatures = [
@@ -333,7 +338,7 @@ const useCases = [
                   </HeroLine>
 
                   <HeroLine>
-                    <p className="text-xl text-slate-300 mb-8 leading-relaxed">
+                    <p className="text-lg text-slate-300 mb-8 leading-relaxed">
                       A comprehensive overview of how Whiteout AI enables
                       organizations to safely adopt generative AI tools while
                       enforcing compliance, data security, and auditability.
@@ -363,7 +368,7 @@ const useCases = [
 
                   <div className="text-sm text-slate-400 flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    Whiteout AI by Groovy Security — Version 3.0 | April 2026
+                    Whiteout AI by Groovy Security — Version 3.1 | June 2026
                   </div>
                 </ScrollReveal>
               </div>
@@ -372,7 +377,7 @@ const useCases = [
                 {stats.map((stat, index) => (
                   <StaggerItem key={index}>
                     <div
-                      className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border border-slate-700 text-center hover:border-blue-500/50 transition-all duration-300"
+                      className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08] text-center hover:border-blue-500/50 transition-all duration-300"
                     >
                       <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent mb-2">
                         {stat.value}
@@ -387,14 +392,14 @@ const useCases = [
         </section>
 
         {/* === THE CHALLENGE === */}
-        <section className="py-20">
+        <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
                   The Enterprise AI Governance Challenge
                 </h2>
-                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
                   Generative AI creates a new category of risk: conversational data
                   exfiltration. Employees share sensitive context in natural language
                   that traditional security tools cannot detect.
@@ -441,7 +446,7 @@ const useCases = [
                     </p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-green-400 mb-2">
+                    <h4 className="font-semibold text-emerald-400 mb-2">
                       CASB Creates Crisis
                     </h4>
                     <p className="text-slate-300">
@@ -465,12 +470,12 @@ const useCases = [
         </section>
 
         {/* === THE WHITEOUT AI APPROACH === */}
-        <section className="py-20 relative overflow-hidden">
+        <section className="py-24 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <ScrollReveal>
-                  <h2 className="text-4xl font-bold text-white mb-6">
+                  <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
                     Intelligent Interception with Contextual Compliance
                   </h2>
                   <p className="text-lg text-slate-300 mb-6 leading-relaxed">
@@ -491,7 +496,7 @@ const useCases = [
               </div>
 
               <ScrollReveal>
-                <div className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-8 border border-slate-700">
+                <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-8 border border-white/[0.08]">
                   <h3 className="text-xl font-semibold text-white mb-6 text-center">
                     How It Works
                   </h3>
@@ -523,14 +528,14 @@ const useCases = [
         </section>
 
         {/* === MULTI-SURFACE COVERAGE === */}
-        <section className="py-20">
+        <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
                   Multi-Surface Coverage
                 </h2>
-                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
                   Unified policy enforcement across every AI touchpoint in your
                   organization.
                 </p>
@@ -577,12 +582,12 @@ const useCases = [
         </section>
 
         {/* === INTELLIGENT POLICY ENGINE === */}
-        <section className="py-20">
+        <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-start">
               <div>
                 <ScrollReveal>
-                  <h2 className="text-4xl font-bold text-white mb-6">
+                  <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
                     Intelligent Policy Engine
                   </h2>
                   <p className="text-lg text-slate-400 mb-6 leading-relaxed">
@@ -598,7 +603,7 @@ const useCases = [
                   </h4>
                   <div className="space-y-3 text-sm">
                     <div className="flex items-start">
-                      <span className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-medium mr-3 mt-0.5 flex-shrink-0">
+                      <span className="px-2 py-1 bg-red-500/10 text-red-400 border border-red-500/20 rounded text-xs font-medium mr-3 mt-0.5 flex-shrink-0">
                         BLOCKED
                       </span>
                       <p className="text-slate-400 italic">
@@ -611,13 +616,12 @@ const useCases = [
                       </p>
                     </div>
                     <div className="flex items-start">
-                      <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium mr-3 mt-0.5 flex-shrink-0">
+                      <span className="px-2 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded text-xs font-medium mr-3 mt-0.5 flex-shrink-0">
                         ALLOWED
                       </span>
                       <p className="text-slate-400 italic">
-                        "I have a paitent that i am needing help with building
-                        a treatment plan summary, help me build a reuseable
-                        template for me to use."
+                        "I have a patient I need help with — help me build a
+                        reusable treatment plan summary template I can use."
                       </p>
                     </div>
                   </div>
@@ -631,10 +635,11 @@ const useCases = [
 
                 <div className="space-y-3">
                   {[
-                    "131 built-in policies across 9 compliance domains",
+                    "60+ built-in policies across 9 compliance domains",
+                    "99.19% accuracy across a 15,915-prompt public benchmark",
                     "Request custom policies tailored to your organization\u2019s specific rules",
                     "Group-based assignment for departmental compliance",
-                    "Supports both cloud and on-premise LLM evaluation",
+                    "Supports both cloud and self-hosted LLM evaluation",
                   ].map((item, index) => (
                     <div key={index} className="flex items-start">
                       <CheckCircle className="w-5 h-5 text-emerald-400 mr-3 flex-shrink-0 mt-0.5" />
@@ -669,8 +674,8 @@ const useCases = [
                   ))}
                 </div>
                 <div className="mt-4 text-center text-sm text-slate-500">
-                  <span className="font-semibold text-slate-300">131</span> total
-                  policies across all domains
+                  <span className="font-semibold text-slate-300">60</span> expert-curated
+                  policies across all domains — extendable with custom policies
                 </div>
               </div>
             </div>
@@ -678,14 +683,14 @@ const useCases = [
         </section>
 
         {/* === ENTERPRISE SECURITY === */}
-        <section className="py-20 relative overflow-hidden">
+        <section className="py-24 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
                   Enterprise-Grade Security Architecture
                 </h2>
-                <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+                <p className="text-lg text-slate-300 max-w-3xl mx-auto">
                   Built with security-first architecture to meet the strictest
                   enterprise and regulatory requirements.
                 </p>
@@ -697,14 +702,14 @@ const useCases = [
                 const Icon = feature.icon;
                 const colorList = [
                   "text-blue-400",
-                  "text-green-400",
+                  "text-emerald-400",
                   "text-orange-400",
                   "text-blue-400",
                 ];
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border border-slate-700"
+                      className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08]"
                     >
                       <h3 className="text-lg font-bold text-white mb-4">
                           {feature.title}
@@ -729,14 +734,14 @@ const useCases = [
         <SecurityCompliance />
 
         {/* === ENTERPRISE USE CASES === */}
-        <section className="py-20">
+        <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
                   Enterprise Use Cases
                 </h2>
-                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
                   Whiteout AI adapts to the specific compliance requirements of any
                   industry.
                 </p>
@@ -785,14 +790,14 @@ const useCases = [
         </section>
 
         {/* === REGULATORY COMPLIANCE === */}
-        <section className="py-20 relative overflow-hidden">
+        <section className="py-24 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
                   Regulatory Compliance
                 </h2>
-                <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+                <p className="text-lg text-slate-300 max-w-3xl mx-auto">
                   Purpose-built policy enforcement for major regulatory frameworks.
                 </p>
               </div>
@@ -802,7 +807,7 @@ const useCases = [
               {regulations.map((reg, index) => (
                 <StaggerItem key={index}>
                   <div
-                    className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border border-slate-700"
+                    className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08]"
                   >
                     <div className="text-2xl font-bold text-blue-400 mb-1">
                       {reg.name}
@@ -824,14 +829,14 @@ const useCases = [
         </section>
 
         {/* === INTEGRATION ECOSYSTEM === */}
-        <section className="py-20">
+        <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-8">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
                   Integration Ecosystem
                 </h2>
-                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
                   Whiteout AI connects to your existing productivity tools, enabling
                   AI assistants to safely access organizational data through
                   authenticated, audited channels.
@@ -861,12 +866,12 @@ const useCases = [
 
         {/* === CTA === */}
         <ScrollReveal>
-          <section className="py-20 relative overflow-hidden">
+          <section className="py-24 relative overflow-hidden">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-              <h2 className="text-4xl font-bold text-white mb-6">
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
                 Ready to Govern AI with Confidence?
               </h2>
-              <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+              <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
                 See how Whiteout AI can help your organization adopt AI safely while
                 maintaining full compliance and data protection.
               </p>

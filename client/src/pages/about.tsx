@@ -1,14 +1,12 @@
 import { Link } from "wouter";
-import { useRef, useCallback } from "react";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { GlassCard } from "@/components/ui/glass-card";
-import { GradientText } from "@/components/ui/gradient-text";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { RevealCard } from "@/components/ui/reveal-card";
-import { cn } from "@/lib/utils";
-import { ArrowRight, Shield, Lightbulb } from "lucide-react";
+import { HoloCard } from "@/components/ui/holo-card";
+import { ArrowRight } from "lucide-react";
 import {
   PageTransition,
   HeroTextReveal,
@@ -17,72 +15,34 @@ import {
   StaggerChildren,
   StaggerItem,
 } from "@/components/motion";
+import { usePageMeta } from "@/lib/use-page-meta";
 
-/* ── Holographic Card ── */
-function HoloCard({
-  children,
-  className,
-  glowColor,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  glowColor: string;
-}) {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!cardRef.current) return;
-    const { left, top, width, height } = cardRef.current.getBoundingClientRect();
-    const x = (e.clientX - left) / width;
-    const y = (e.clientY - top) / height;
-    const rotateX = (y - 0.5) * -12;
-    const rotateY = (x - 0.5) * 12;
-
-    cardRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-    cardRef.current.style.setProperty("--glow-x", `${x * 100}%`);
-    cardRef.current.style.setProperty("--glow-y", `${y * 100}%`);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    if (!cardRef.current) return;
-    cardRef.current.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
-  }, []);
-
-  return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className={cn(
-        "relative rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl overflow-hidden transition-transform duration-300 ease-out",
-        className
-      )}
-      style={{ transformStyle: "preserve-3d" }}
-    >
-      {/* Glow that follows cursor */}
-      <div
-        className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background: `radial-gradient(400px circle at var(--glow-x, 50%) var(--glow-y, 50%), ${glowColor}, transparent 60%)`,
-        }}
-      />
-      {/* Holographic shimmer border */}
-      <div
-        className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background: `radial-gradient(300px circle at var(--glow-x, 50%) var(--glow-y, 50%), ${glowColor.replace("0.15", "0.5")}, transparent 60%)`,
-          mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-          maskComposite: "exclude",
-          WebkitMaskComposite: "xor",
-          padding: "1.5px",
-        }}
-      />
-      <div className="relative z-10">{children}</div>
-    </div>
-  );
-}
+// Single source for mission/vision copy — rendered on both the card front and
+// its reveal overlay so the two can never drift apart.
+const MISSION_VISION = [
+  {
+    title: "Our Mission",
+    body: "To give every organization the tools to adopt AI safely and test their defenses continuously — without compromising on security, compliance, or operational speed.",
+    accentColor: "#1a5fb4",
+    accentDark: "#060e1f",
+    glowColor: "rgba(26, 95, 180, 0.15)",
+    overlayTextClass: "text-blue-100/80",
+  },
+  {
+    title: "Our Vision",
+    body: "A world where organizations can fully leverage AI's potential without risking data exposure, regulatory violations, or security breaches — where security enables innovation instead of blocking it.",
+    accentColor: "#2e7d32",
+    accentDark: "#061206",
+    glowColor: "rgba(46, 125, 50, 0.15)",
+    overlayTextClass: "text-emerald-100/80",
+  },
+];
 
 export default function About() {
+  usePageMeta(
+    "About",
+    "Groovy Security was founded in 2025 by cybersecurity professionals to close the critical gaps in AI governance and security testing — with offices in Utah and Ireland."
+  );
   return (
     <PageTransition>
       <AuroraBackground variant="mixed" className="min-h-screen bg-slate-950">
@@ -93,13 +53,7 @@ export default function About() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <HeroTextReveal>
               <HeroLine>
-                <h1
-                  className="text-5xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight bg-clip-text text-transparent animate-gradient-flow"
-                  style={{
-                    backgroundImage: "linear-gradient(90deg, #ffffff, #e2e8f0, #1a5fb4, #2e7d32, #c77800, #e2e8f0, #ffffff)",
-                    backgroundSize: "300% 100%",
-                  }}
-                >
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight text-gradient-hero animate-gradient-flow">
                   Built by Security
                   <br />
                   Professionals
@@ -187,56 +141,25 @@ export default function About() {
         <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <StaggerChildren className="grid md:grid-cols-2 gap-6">
-              <StaggerItem>
-                <RevealCard
-                  accentColor="#1a5fb4"
-                  accentDark="#060e1f"
-                  overlay={
-                    <div className="p-8 h-full">
-                      <h3 className="text-xl font-bold text-white mb-4">Our Mission</h3>
-                      <p className="text-blue-100/80 leading-relaxed">
-                        To give every organization the tools to adopt AI safely and test their
-                        defenses continuously — without compromising on security, compliance,
-                        or operational speed.
-                      </p>
-                    </div>
-                  }
-                >
-                  <HoloCard className="p-8 h-full" glowColor="rgba(26, 95, 180, 0.15)">
-                    <h3 className="text-xl font-bold text-white mb-4">Our Mission</h3>
-                    <p className="text-slate-400 leading-relaxed">
-                      To give every organization the tools to adopt AI safely and test their
-                      defenses continuously — without compromising on security, compliance,
-                      or operational speed.
-                    </p>
-                  </HoloCard>
-                </RevealCard>
-              </StaggerItem>
-              <StaggerItem>
-                <RevealCard
-                  accentColor="#2e7d32"
-                  accentDark="#061206"
-                  overlay={
-                    <div className="p-8 h-full">
-                      <h3 className="text-xl font-bold text-white mb-4">Our Vision</h3>
-                      <p className="text-emerald-100/80 leading-relaxed">
-                        A world where organizations can fully leverage AI's potential without
-                        risking data exposure, regulatory violations, or security breaches —
-                        where security enables innovation instead of blocking it.
-                      </p>
-                    </div>
-                  }
-                >
-                  <HoloCard className="p-8 h-full" glowColor="rgba(46, 125, 50, 0.15)">
-                    <h3 className="text-xl font-bold text-white mb-4">Our Vision</h3>
-                    <p className="text-slate-400 leading-relaxed">
-                      A world where organizations can fully leverage AI's potential without
-                      risking data exposure, regulatory violations, or security breaches —
-                      where security enables innovation instead of blocking it.
-                    </p>
-                  </HoloCard>
-                </RevealCard>
-              </StaggerItem>
+              {MISSION_VISION.map((item) => (
+                <StaggerItem key={item.title}>
+                  <RevealCard
+                    accentColor={item.accentColor}
+                    accentDark={item.accentDark}
+                    overlay={
+                      <div className="p-8 h-full">
+                        <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
+                        <p className={`${item.overlayTextClass} leading-relaxed`}>{item.body}</p>
+                      </div>
+                    }
+                  >
+                    <HoloCard className="p-8 h-full" glowColor={item.glowColor}>
+                      <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
+                      <p className="text-slate-400 leading-relaxed">{item.body}</p>
+                    </HoloCard>
+                  </RevealCard>
+                </StaggerItem>
+              ))}
             </StaggerChildren>
           </div>
         </section>

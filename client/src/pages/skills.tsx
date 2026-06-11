@@ -6,6 +6,7 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { GradientText } from "@/components/ui/gradient-text";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { PurchaseModal } from "@/components/purchase-modal";
+import { usePageMeta } from "@/lib/use-page-meta";
 import {
   PageTransition,
   HeroTextReveal,
@@ -226,7 +227,7 @@ const highlights = [
   {
     icon: AlertTriangle,
     title: "The Problem It Solves",
-    description: <><span className="font-semibold bg-gradient-to-r from-red-400 to-amber-400 bg-clip-text text-transparent">41% of community AI skills have vulnerabilities.</span> <span className="font-semibold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">99.3% lack permission manifests.</span> <span className="font-semibold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">12% contain malware.</span> <span className="text-white font-semibold">Groovy Skills are the enterprise-grade antidote.</span></>,
+    description: <><span className="font-semibold bg-gradient-to-r from-red-400 to-amber-400 bg-clip-text text-transparent">41% of community AI skills have vulnerabilities.</span> <span className="font-semibold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">99.3% lack permission manifests.</span> <span className="font-semibold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">12% contain malware.</span> <span className="text-white font-semibold">Groovy Skills are the enterprise-grade antidote.</span> <span className="text-slate-500">— Groovy Security audit of community skill repositories, 2026</span></>,
   },
   {
     icon: Award,
@@ -236,6 +237,10 @@ const highlights = [
 ];
 
 export default function Skills() {
+  usePageMeta(
+    "Secure AI Skills",
+    "111 production-grade, security-audited skills for AI agents across 14 categories — OWASP ASI Top 10 audited, zero external dependencies, lifetime access."
+  );
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>(skillLibrary[0].id);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -270,7 +275,7 @@ export default function Skills() {
             <div className="max-w-4xl mx-auto text-center">
               <HeroTextReveal>
                 <HeroLine>
-                  <h1 className="text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
                     Secure AI Skills{" "}
                     <span className="block">
                       <GradientText from="from-emerald-400" to="to-teal-300" via="via-green-400">
@@ -291,11 +296,13 @@ export default function Skills() {
 
               <ScrollReveal delay={0.5}>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button onClick={() => setShowPurchaseModal(true)}>
-                    <GradientButton variant="default" className="min-w-0 px-8 py-4 text-base rounded-xl btn-animate-colors">
-                      Request Access
-                    </GradientButton>
-                  </button>
+                  <GradientButton
+                    onClick={() => setShowPurchaseModal(true)}
+                    variant="default"
+                    className="min-w-0 px-8 py-4 text-base rounded-xl btn-animate-colors"
+                  >
+                    Request Access
+                  </GradientButton>
                   <a href="#skill-library">
                     <GradientButton variant="default" className="min-w-0 px-8 py-4 text-base rounded-xl btn-animate-colors brightness-125">
                       <Search className="w-4 h-4 mr-2" /> Browse All Skills
@@ -558,11 +565,13 @@ export default function Skills() {
                 <p className="text-lg text-slate-400 mb-8 max-w-xl mx-auto">
                   Get lifetime access to all 111 Groovy Security Skills — including every future update, new skill, and security patch.
                 </p>
-                <button onClick={() => setShowPurchaseModal(true)}>
-                  <GradientButton variant="default" className="min-w-0 px-10 py-4 text-lg rounded-xl btn-animate-colors">
-                    Request Access <ArrowRight className="w-5 h-5 ml-2" />
-                  </GradientButton>
-                </button>
+                <GradientButton
+                  onClick={() => setShowPurchaseModal(true)}
+                  variant="default"
+                  className="min-w-0 px-10 py-4 text-lg rounded-xl btn-animate-colors"
+                >
+                  Request Access <ArrowRight className="w-5 h-5 ml-2" />
+                </GradientButton>
                 <p className="text-xs text-slate-600 mt-4">
                   Reviewed and provisioned by Groovy Security
                 </p>

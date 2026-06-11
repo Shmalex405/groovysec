@@ -1,17 +1,20 @@
 import React from "react";
 import { PageTransition } from "@/components/motion";
+import { Navigation } from "@/components/navigation";
+import { Footer } from "@/components/footer";
+import { usePageMeta } from "@/lib/use-page-meta";
 
 export default function PrivacyPolicy() {
+  usePageMeta(
+    "Privacy Policy",
+    "How Groovy Security collects, uses, and protects your personal data."
+  );
   return (
     <PageTransition>
-    <main className="min-h-screen bg-slate-950 text-slate-100 px-6 py-20">
-      {/* Header + logo */}
+    <Navigation />
+    <main className="min-h-screen bg-slate-950 text-slate-100 px-6 pt-32 pb-20">
+      {/* Header */}
       <div className="max-w-4xl mx-auto text-center mb-12">
-        <img
-          src="/transparent_logo.png"
-          alt="Groovy Security Logo"
-          className="mx-auto w-32 h-32 mb-6 opacity-90 hover:opacity-100 transition-opacity duration-300"
-        />
         <h1 className="text-4xl font-bold text-blue-400">Privacy Policy</h1>
         <p className="text-slate-400 text-sm mt-2">
           This Privacy Policy explains how Groovy Security collects, uses, and
@@ -268,6 +271,7 @@ export default function PrivacyPolicy() {
         </p>
       </div>
     </main>
+    <Footer />
     </PageTransition>
   );
 }

@@ -5,87 +5,22 @@ import { GradientButton } from "@/components/ui/gradient-button";
 import { GlassCard } from "@/components/ui/glass-card";
 import { GradientText } from "@/components/ui/gradient-text";
 import { AuroraBackground } from "@/components/ui/aurora-background";
-import {
-  PageTransition,
-  ScrollReveal,
-} from "@/components/motion";
+import { PageTransition, ScrollReveal } from "@/components/motion";
 import {
   CheckCircle,
-  ExternalLink,
-  Copy,
-  Shield,
+  Mail,
   BookOpen,
   Terminal,
   ArrowRight,
-  Lock,
 } from "lucide-react";
-import { useState } from "react";
 import { motion } from "framer-motion";
-
-const INVITE_URL = "https://bufnwjyzqigmivzqy3fpu5ei5m0bfrft.lambda-url.us-west-2.on.aws/";
-
-function hasValidSession(): boolean {
-  if (typeof window === "undefined") return false;
-  const params = new URLSearchParams(window.location.search);
-  const sessionId = params.get("session_id");
-  // Stripe Checkout Session IDs start with cs_live_ or cs_test_
-  return Boolean(sessionId && /^cs_(live|test)_[A-Za-z0-9]+$/.test(sessionId));
-}
+import { usePageMeta } from "@/lib/use-page-meta";
 
 export default function SkillsSuccess() {
-  const [copied, setCopied] = useState(false);
-  const verified = hasValidSession();
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(INVITE_URL);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  if (!verified) {
-    return (
-      <PageTransition>
-        <AuroraBackground variant="green" className="min-h-screen bg-slate-950">
-          <Navigation />
-          <section className="pt-32 pb-20 min-h-[80vh] flex items-center">
-            <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-              <ScrollReveal>
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-amber-500/15 border border-amber-500/25 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Lock className="w-10 h-10 text-amber-400" />
-                  </div>
-                  <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
-                    Purchase{" "}
-                    <GradientText from="from-amber-400" to="to-orange-300">
-                      Required
-                    </GradientText>
-                  </h1>
-                  <p className="text-lg text-slate-400 max-w-xl mx-auto mb-8">
-                    This page is only accessible after completing your purchase. If you've just paid and landed here, please reach out to support — otherwise, head back to the Skills page to get started.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link href="/skills">
-                      <GradientButton variant="default" className="rounded-xl">
-                        View Skills &amp; Purchase
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </GradientButton>
-                    </Link>
-                  </div>
-                  <p className="text-sm text-slate-500 mt-6">
-                    Already paid? Contact{" "}
-                    <a href="mailto:support@groovysec.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
-                      support@groovysec.com
-                    </a>
-                  </p>
-                </div>
-              </ScrollReveal>
-            </div>
-          </section>
-          <Footer />
-        </AuroraBackground>
-      </PageTransition>
-    );
-  }
+  usePageMeta(
+    "Request Received — Secure AI Skills",
+    "Your Secure AI Skills access request has been received. We'll email you payment and repository access instructions shortly."
+  );
 
   return (
     <PageTransition>
@@ -106,83 +41,45 @@ export default function SkillsSuccess() {
                 </motion.div>
 
                 <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
-                  Purchase{" "}
+                  Request{" "}
                   <GradientText from="from-emerald-400" to="to-teal-300">
-                    Successful
+                    Received
                   </GradientText>
                 </h1>
                 <p className="text-lg text-slate-400 max-w-xl mx-auto">
-                  Welcome to Groovy Security Skills. You now have lifetime access to all 111 enterprise-grade secure AI skills.
+                  Thanks for your interest in Groovy Security Skills. We'll review
+                  your request and email you payment and repository access
+                  instructions shortly.
                 </p>
               </div>
             </ScrollReveal>
 
+            {/* What happens next */}
             <ScrollReveal delay={0.3}>
-              <GlassCard className="p-8 lg:p-10" glowColor="rgba(16,185,129,0.1)">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-emerald-400" />
-                  </div>
-                  <div>
-                    <h2 className="text-lg font-bold text-white">Access Your Skills</h2>
-                    <p className="text-sm text-slate-400">Use the link below to get started</p>
-                  </div>
-                </div>
-
-                {/* Invite Link */}
-                <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-4 mb-6">
-                  <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2 block">
-                    Your Invite Link
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <code className="flex-1 text-sm text-emerald-400 bg-slate-950/50 rounded-lg px-4 py-3 border border-white/[0.06] font-mono truncate">
-                      {INVITE_URL}
-                    </code>
-                    <button
-                      onClick={handleCopy}
-                      className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-white/[0.03] border border-white/[0.08] text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors"
-                      title="Copy link"
-                    >
-                      {copied ? (
-                        <CheckCircle className="w-4 h-4 text-emerald-400" />
-                      ) : (
-                        <Copy className="w-4 h-4" />
-                      )}
-                    </button>
-                  </div>
-                </div>
-
-                <a href={INVITE_URL} target="_blank" rel="noopener noreferrer" className="block">
-                  <GradientButton variant="default" className="w-full py-4 text-base rounded-xl btn-animate-colors">
-                    Open Invite Portal <ExternalLink className="w-4 h-4 ml-2" />
-                  </GradientButton>
-                </a>
-              </GlassCard>
-            </ScrollReveal>
-
-            {/* Quick Start Steps */}
-            <ScrollReveal delay={0.5}>
-              <div className="mt-10">
-                <h3 className="text-lg font-bold text-white mb-6 text-center">Quick Start</h3>
+              <div className="mt-4">
+                <h3 className="text-lg font-bold text-white mb-6 text-center">What Happens Next</h3>
                 <div className="grid gap-4">
                   {[
                     {
                       step: "1",
-                      icon: ExternalLink,
-                      title: "Accept Your Invite",
-                      description: "Click the link above to access the Groovy Skills repository and accept your invite.",
+                      icon: Mail,
+                      title: "Check Your Email",
+                      description:
+                        "We'll reach out from alex@groovysec.com with payment details and your private repository invite.",
                     },
                     {
                       step: "2",
                       icon: Terminal,
                       title: "Clone the Repository",
-                      description: "Clone the repository for global access, or add to your project's skills directory.",
+                      description:
+                        "Accept the invite, then clone the repository for global access or add it to your project's skills directory.",
                     },
                     {
                       step: "3",
                       icon: BookOpen,
                       title: "Configure & Deploy",
-                      description: "Add groovy-policy.yaml to customize rules, then start using skills in your AI agents.",
+                      description:
+                        "Add groovy-policy.yaml to customize rules, then start using all 111 skills in your AI agents.",
                     },
                   ].map((item, i) => (
                     <GlassCard key={i} className="p-5" hover={false}>
@@ -201,17 +98,23 @@ export default function SkillsSuccess() {
               </div>
             </ScrollReveal>
 
-            <ScrollReveal delay={0.6}>
+            <ScrollReveal delay={0.5}>
               <div className="text-center mt-10">
-                <p className="text-sm text-slate-500 mb-4">
-                  Need help? Reach out to{" "}
-                  <a href="mailto:support@groovysec.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                <p className="text-sm text-slate-500 mb-6">
+                  Questions? Reach out to{" "}
+                  <a
+                    href="mailto:support@groovysec.com"
+                    className="text-emerald-400 hover:text-emerald-300 transition-colors"
+                  >
                     support@groovysec.com
                   </a>
                 </p>
-                <a href="/skills" className="text-sm text-slate-400 hover:text-white transition-colors inline-flex items-center">
-                  <ArrowRight className="w-3 h-3 mr-1 rotate-180" /> Back to Skills
-                </a>
+                <Link href="/skills">
+                  <GradientButton variant="default" className="rounded-xl">
+                    Back to Skills
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </GradientButton>
+                </Link>
               </div>
             </ScrollReveal>
           </div>

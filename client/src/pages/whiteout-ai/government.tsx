@@ -29,14 +29,19 @@ import {
   Layers,
   Building2,
 } from "lucide-react";
+import { usePageMeta } from "@/lib/use-page-meta";
 
 export default function Government() {
+  usePageMeta(
+    "Whiteout AI for Government & Public Sector",
+    "AI governance built for the public sector — 60+ pre-built policies across 9 domains, 99.19% benchmark accuracy, SSO/MDM/SIEM integration, and audit-ready proof of every AI control."
+  );
   const demoHref = "/demo";
 
   const stats = [
-    { value: "65+", label: "Pre-Built Policies" },
-    { value: "99.5%", label: "Compliance Accuracy" },
-    { value: "9", label: "Regulatory Categories" },
+    { value: "60+", label: "Pre-Built Policies" },
+    { value: "99.19%", label: "Benchmark Accuracy" },
+    { value: "9", label: "Policy Domains" },
     { value: "<320ms", label: "Evaluation Latency (P95)" },
   ];
 
@@ -115,13 +120,13 @@ export default function Government() {
       icon: Zap,
       title: "Contextual Intelligence",
       description:
-        'LLM-based evaluation understands context, not just keywords. It distinguishes between "aggregate hospital statistics" and actual patient data\u2014zero false negatives across 195 policy test scenarios.',
+        'LLM-based evaluation understands context, not just keywords. It distinguishes between "aggregate hospital statistics" and actual patient data\u201499.19% accuracy across a 15,915-prompt public benchmark.',
     },
     {
       icon: Server,
       title: "Deployment Flexibility",
       description:
-        "Cloud, on-premise, or hybrid. Local Ollama support keeps sensitive prompts entirely within your network boundary\u2014ensuring full data sovereignty.",
+        "Cloud, self-hosted, or hybrid. A self-hosted inference option keeps sensitive prompts entirely within your network boundary\u2014ensuring full data sovereignty.",
     },
     {
       icon: Layers,
@@ -178,7 +183,7 @@ export default function Government() {
                   </HeroLine>
 
                   <HeroLine>
-                    <p className="text-xl text-slate-300 mb-8 leading-relaxed">
+                    <p className="text-lg text-slate-300 mb-8 leading-relaxed">
                       As agencies rapidly adopt generative AI, Whiteout AI ensures
                       every interaction complies with established policies — protecting
                       sensitive data, enforcing regulatory requirements, and providing
@@ -199,7 +204,7 @@ export default function Government() {
 
                   <div className="text-sm text-slate-400 flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    Trusted by enterprise organizations • SOC 2 Type II in progress
+                    SOC 2 Type II in progress • NVIDIA Inception member
                   </div>
                 </ScrollReveal>
               </div>
@@ -224,14 +229,14 @@ export default function Government() {
         </section>
 
         {/* How It Works */}
-        <section className="py-20">
+        <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
                   How Whiteout AI Works
                 </h2>
-                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
                   Whiteout AI intercepts AI interactions across every surface —
                   evaluating each prompt against organizational policies in real time
                   before any data leaves the network.
@@ -281,12 +286,12 @@ export default function Government() {
         </section>
 
         {/* Intelligent Policy Engine */}
-        <section className="py-20 relative overflow-hidden">
+        <section className="py-24 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <ScrollReveal>
-                  <h2 className="text-4xl font-bold text-white mb-6">
+                  <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
                     Intelligent Policy Engine
                   </h2>
                 </ScrollReveal>
@@ -299,7 +304,7 @@ export default function Government() {
 
                 <div className="space-y-4">
                   {[
-                    "65 pre-built policies across PHI, PII, GDPR, FERPA, SOX, PCI-DSS",
+                    "60+ pre-built policies across 9 domains covering PHI, PII, GDPR, FERPA, SOX, and PCI-DSS",
                     "Request custom policies tailored to agency-specific requirements",
                     "Group-based policy assignment for department-level control",
                     "Automatic redaction service generates compliant alternatives",
@@ -321,7 +326,7 @@ export default function Government() {
                     "PHI",
                     "PII",
                     "GDPR",
-                    "FERPA",
+                    "Education",
                     "Legal",
                     "Finance",
                     "Code/IP",
@@ -339,7 +344,7 @@ export default function Government() {
                 <div className="mt-6 text-center">
                   <div className="text-emerald-400 font-semibold text-sm flex items-center justify-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    99.5% Accuracy — Zero False Negatives in Testing
+                    99.19% Accuracy on a 15,915-Prompt Public Benchmark
                   </div>
                 </div>
               </div>
@@ -348,14 +353,14 @@ export default function Government() {
         </section>
 
         {/* Government Value Proposition */}
-        <section className="py-20">
+        <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
                   Built for Government & Public Sector
                 </h2>
-                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
                   Enterprise-grade security, compliance, and accountability designed
                   to meet the demands of public sector AI governance.
                 </p>
@@ -402,14 +407,14 @@ export default function Government() {
         </section>
 
         {/* Differentiators */}
-        <section className="py-20">
+        <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
                   Why Whiteout AI
                 </h2>
-                <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
                   Purpose-built for organizations that need to move fast with AI
                   while maintaining complete control and compliance.
                 </p>
@@ -447,12 +452,12 @@ export default function Government() {
 
         {/* CTA Section */}
         <ScrollReveal>
-          <section className="py-20 relative overflow-hidden">
+          <section className="py-24 relative overflow-hidden">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-              <h2 className="text-4xl font-bold text-white mb-6">
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
                 Ready to Govern AI with Confidence?
               </h2>
-              <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+              <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
                 See how Whiteout AI can help your agency adopt AI safely while
                 maintaining full compliance and public trust.
               </p>

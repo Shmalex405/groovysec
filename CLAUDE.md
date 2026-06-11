@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Groovy Security - Cybersecurity company with three products: **Whiteout AI** (AI governance platform), **Maestro** (AI-driven penetration testing), and **Secure AI Skills** (100 enterprise-grade security skills for OpenClaw). Full-stack TypeScript monorepo with Express backend and React frontend.
+Groovy Security - Cybersecurity company with three products: **Whiteout AI** (AI governance platform), **Maestro** (AI-driven penetration testing), and **Secure AI Skills** (111 enterprise-grade security skills for OpenClaw). Full-stack TypeScript monorepo with Express backend and React frontend.
 
 ## Commands
 

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { Menu, X, ChevronDown, Shield, Target, Sparkles } from "lucide-react";
 import { GroovyLogo } from "./groovy-logo";
+import { MaestroMark } from "@/components/ui/maestro-mark";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function Navigation() {
@@ -102,7 +103,7 @@ export function Navigation() {
                         className="flex items-start gap-3 px-3 py-3 rounded-lg hover:bg-white/[0.06] transition-colors group"
                       >
                         <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <img src="/icononly_transparent_nobuffer.png" alt="Maestro" className="w-7 h-7 object-contain grayscale" />
+                          <MaestroMark className="w-7 h-7" />
                         </div>
                         <div>
                           <span className="font-medium text-white text-sm group-hover:text-orange-400 transition-colors">
@@ -146,6 +147,20 @@ export function Navigation() {
               className={`${isActive("/about")} px-4 py-2 rounded-lg transition-all duration-300 text-sm font-medium hover:bg-white/[0.04]`}
             >
               About
+            </Link>
+
+            <Link
+              href="/resources"
+              className={`${isActive("/resources")} px-4 py-2 rounded-lg transition-all duration-300 text-sm font-medium hover:bg-white/[0.04]`}
+            >
+              Resources
+            </Link>
+
+            <Link
+              href="/contact"
+              className={`${isActive("/contact")} px-4 py-2 rounded-lg transition-all duration-300 text-sm font-medium hover:bg-white/[0.04]`}
+            >
+              Contact
             </Link>
 
             <div className="w-px h-6 bg-white/[0.08] mx-2" />
@@ -235,6 +250,30 @@ export function Navigation() {
                     className="block w-full text-left px-3 py-2.5 text-slate-300 hover:text-white hover:bg-white/[0.04] rounded-lg transition-colors text-sm font-medium"
                   >
                     About
+                  </Link>
+
+                  <Link
+                    href="/resources"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full text-left px-3 py-2.5 text-slate-300 hover:text-white hover:bg-white/[0.04] rounded-lg transition-colors text-sm font-medium"
+                  >
+                    Resources
+                  </Link>
+
+                  <Link
+                    href="/contact"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full text-left px-3 py-2.5 text-slate-300 hover:text-white hover:bg-white/[0.04] rounded-lg transition-colors text-sm font-medium"
+                  >
+                    Contact
+                  </Link>
+
+                  <Link
+                    href="/download"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full text-left px-3 py-2.5 text-slate-300 hover:text-white hover:bg-white/[0.04] rounded-lg transition-colors text-sm font-medium"
+                  >
+                    Download
                   </Link>
 
                   <div className="pt-3 border-t border-white/[0.06]">

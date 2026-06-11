@@ -56,7 +56,7 @@ const complianceCategories: ComplianceCategory[] = [
       {
         name: "NIST AI RMF",
         description: "AI Risk Management Framework core functions: Govern, Map, Measure, and Manage.",
-        enforcement: "Maps directly to the Govern, Map, and Measure functions by providing absolute visibility and interception of Shadow AI usage across the enterprise.",
+        enforcement: "Maps directly to the Govern, Map, and Measure functions by providing complete visibility and interception of Shadow AI usage across the enterprise.",
       },
       {
         name: "ISO/IEC 42001",
@@ -103,7 +103,7 @@ const complianceCategories: ComplianceCategory[] = [
       {
         name: "HIPAA",
         description: "Health Insurance Portability and Accountability Act — PHI protection.",
-        enforcement: "Prevents Protected Health Information (PHI) from being exposed to LLMs that are not covered by a Business Associate Agreement (BAA) — proven in live clinical pilots.",
+        enforcement: "Prevents Protected Health Information (PHI) from being exposed to LLMs that are not covered by a Business Associate Agreement (BAA) — proven in a live clinical pilot.",
       },
       {
         name: "HITRUST CSF",
@@ -431,13 +431,9 @@ export function ComplianceFrameworks() {
               <div className="text-center mb-8">
                 <AnimatedCounter
                   value={`${totalFrameworks}`}
-                  className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-flow-fast"
-                  style={{
-                    backgroundImage: "linear-gradient(90deg, #1a5fb4, #2e7d32, #c77800, #2e7d32, #1a5fb4)",
-                    backgroundSize: "300% 100%",
-                  }}
+                  className="text-5xl font-bold text-gradient-brand animate-gradient-flow-fast"
                 />
-                <p className="text-slate-500 mt-2 text-sm">Frameworks Enforced</p>
+                <p className="text-slate-500 mt-2 text-sm">Frameworks Supported</p>
               </div>
 
               <div className="space-y-3 mb-8">
@@ -493,9 +489,9 @@ export function ComplianceFrameworksCompact() {
               Built for Compliance
             </h2>
             <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              Whiteout AI actively enforces{" "}
+              Whiteout AI supports compliance across{" "}
               <span className="text-white font-semibold">{totalFrameworks} regulatory frameworks</span>{" "}
-              at the endpoint level — not just policy documents, but real technical controls.
+              with real technical controls at the endpoint level — not just policy documents.
             </p>
           </div>
         </ScrollReveal>

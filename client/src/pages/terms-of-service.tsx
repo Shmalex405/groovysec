@@ -1,16 +1,19 @@
 import React from "react";
 import { PageTransition } from "@/components/motion";
+import { Navigation } from "@/components/navigation";
+import { Footer } from "@/components/footer";
+import { usePageMeta } from "@/lib/use-page-meta";
 
 export default function TermsOfService() {
+  usePageMeta(
+    "Terms of Service",
+    "Terms of Service for Groovy Security's website, products, and Secure AI Skills."
+  );
   return (
     <PageTransition>
-    <main className="min-h-screen bg-slate-950 text-slate-100 px-6 py-20">
+    <Navigation />
+    <main className="min-h-screen bg-slate-950 text-slate-100 px-6 pt-32 pb-20">
       <div className="max-w-4xl mx-auto text-center mb-12">
-        <img
-          src="/transparent_logo.png"
-          alt="Groovy Security Logo"
-          className="mx-auto w-32 h-32 mb-6 opacity-90 hover:opacity-100 transition-opacity duration-300"
-        />
         <h1 className="text-4xl font-bold text-blue-400">Terms of Service</h1>
       </div>
 
@@ -167,6 +170,7 @@ export default function TermsOfService() {
         </p>
       </div>
     </main>
+    <Footer />
     </PageTransition>
   );
 }

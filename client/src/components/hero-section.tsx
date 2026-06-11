@@ -85,13 +85,7 @@ export function HeroSection() {
                   AI Is Already in
                   <span className="block">Your Organization.</span>
                   <span className="block">
-                    <span
-                      className="bg-clip-text text-transparent animate-gradient-flow-fast"
-                      style={{
-                        backgroundImage: "linear-gradient(90deg, #1a5fb4, #2e7d32, #c77800, #2e7d32, #1a5fb4)",
-                        backgroundSize: "300% 100%",
-                      }}
-                    >
+                    <span className="text-gradient-brand animate-gradient-flow-fast">
                       Now Secure It.
                     </span>
                   </span>

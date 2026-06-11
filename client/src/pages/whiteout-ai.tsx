@@ -3,14 +3,20 @@ import { Navigation } from "@/components/navigation";
 import { HeroSection } from "@/components/hero-section";
 import { PlatformOverview } from "@/components/platform-overview";
 import { ArchitectureFlow } from "@/components/architecture-flow";
-import { PolicyWorkflow } from "@/components/policy-workflow";
 import { InterceptorPlatforms } from "@/components/guard-platforms";
 import { PlatformIntegrations } from "@/components/platform-integrations";
 import { SecurityCompliance } from "@/components/security-compliance";
 import { ComplianceFrameworks } from "@/components/compliance-frameworks";
 import { Footer } from "@/components/footer";
 import { VideoSection } from "@/components/video-section";
+import {
+  FullLlmEngine,
+  EnforcementSurfaces,
+  CloudAiGovernance,
+  EnterpriseIdentity,
+} from "@/components/whiteout-differentiators";
 import { GlassCard } from "@/components/ui/glass-card";
+import { GradientButton } from "@/components/ui/gradient-button";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { ArrowRight, Building2, GraduationCap, BookOpen } from "lucide-react";
 import {
@@ -19,25 +25,36 @@ import {
   StaggerChildren,
   StaggerItem,
 } from "@/components/motion";
+import { usePageMeta } from "@/lib/use-page-meta";
 
 export default function WhiteoutAI() {
+  usePageMeta(
+    "Whiteout AI — Enterprise AI Governance",
+    "Intercept and govern every AI interaction across browser, desktop, IDE, infrastructure, and cloud. A full 27B-parameter LLM compliance engine with 60+ policies across 9 domains and 99.19% benchmark accuracy."
+  );
   return (
     <PageTransition>
       <AuroraBackground variant="bluegreen" className="min-h-screen bg-slate-950">
         <Navigation />
         <HeroSection />
+        <VideoSection />
         <ArchitectureFlow />
+        <FullLlmEngine />
+        <InterceptorPlatforms />
         <PlatformIntegrations />
+        <EnforcementSurfaces />
         <ComplianceFrameworks />
+        <CloudAiGovernance />
         <PlatformOverview />
+        <EnterpriseIdentity />
         <SecurityCompliance />
 
         {/* Learn More Links */}
-        <section className="py-20">
+        <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">Learn More</h2>
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">Learn More</h2>
                 <p className="text-base text-slate-400">
                   Explore how Whiteout AI serves specific industries and use cases.
                 </p>
@@ -92,6 +109,34 @@ export default function WhiteoutAI() {
                 );
               })}
             </StaggerChildren>
+          </div>
+        </section>
+
+        {/* Bottom CTA */}
+        <section className="py-24">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <ScrollReveal>
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+                Ready to See It Live?
+              </h2>
+              <p className="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
+                See Whiteout AI intercept, evaluate, and govern real AI traffic in
+                a live walkthrough tailored to your compliance requirements.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link href="/demo">
+                  <GradientButton variant="blue">
+                    Schedule a Demo
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </GradientButton>
+                </Link>
+                <Link href="/whiteout-ai/security-whitepaper">
+                  <GradientButton variant="default">
+                    Read the Whitepaper
+                  </GradientButton>
+                </Link>
+              </div>
+            </ScrollReveal>
           </div>
         </section>
 

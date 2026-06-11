@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,64 +11,63 @@ import {
 } from "@/components/ui/select";
 import { GlassCard } from "@/components/ui/glass-card";
 import { GradientButton } from "@/components/ui/gradient-button";
-import { Calendar, Loader2 } from "lucide-react";
+import { Calendar, CheckCircle, ExternalLink, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 
+const BOOKING_URL = "https://calendar.app.google/YtmkmpRJNZaap1y56";
+
+const initialForm = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  company: "",
+  role: "",
+  companySize: "",
+  useCase: "",
+};
+
 export function LeadCapture() {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    company: "",
-    role: "",
-    companySize: "",
-    aiUsage: [] as string[],
-    useCase: "",
-  });
+  const [formData, setFormData] = useState(initialForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<{ role?: boolean; companySize?: boolean }>({});
   const { toast } = useToast();
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    if (field === "role" || field === "companySize") {
+      setFieldErrors((prev) => ({ ...prev, [field]: false }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const errors = {
+      role: !formData.role,
+      companySize: !formData.companySize,
+    };
+    if (errors.role || errors.companySize) {
+      setFieldErrors(errors);
+      toast({
+        title: "Missing Information",
+        description: "Please select your role and company size.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
-
     try {
-      const payload = {
-        ...formData,
-        role: formData.role || "other",
-        companySize: formData.companySize || "1-50",
-        aiUsage: Array.isArray(formData.aiUsage) ? formData.aiUsage : [],
-      };
+      const res = await apiRequest("POST", "/leads", formData);
 
-      const res = await apiRequest("POST", "/leads", payload);
-
-      if (res.ok) {
-        toast({
-          title: "Demo Request Submitted",
-          description: "Redirecting you to schedule your demo...",
-        });
-
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          company: "",
-          role: "",
-          companySize: "",
-          aiUsage: [],
-          useCase: "",
-        });
-
-        setTimeout(() => {
-          const bookingUrl = `https://calendar.app.google/YtmkmpRJNZaap1y56`;
-          window.open(bookingUrl, "_blank");
-        }, 1200);
+      if (!res.ok) {
+        throw new Error("The server couldn't process your request. Please try again.");
       }
+
+      setSubmitted(true);
+      setFormData(initialForm);
     } catch (err: any) {
       const message =
         typeof err?.message === "string" ? err.message : "Please try again or contact us directly.";
@@ -87,6 +85,35 @@ export function LeadCapture() {
   const inputClasses =
     "bg-white/[0.03] border-white/[0.08] text-white placeholder:text-slate-600 focus:border-blue-500/40 focus:ring-blue-500/20 transition-colors";
   const labelClasses = "text-sm font-medium text-slate-300";
+  const errorClasses = "border-red-500/50";
+
+  if (submitted) {
+    return (
+      <section id="demo" className="py-24 bg-slate-950">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <GlassCard className="p-10 text-center" hover={false} glowColor="rgba(16,185,129,0.06)">
+            <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center">
+              <CheckCircle className="w-8 h-8 text-emerald-400" />
+            </div>
+            <h2 className="text-2xl font-bold text-white mb-3 tracking-tight">
+              Demo Request Submitted
+            </h2>
+            <p className="text-slate-400 mb-8 max-w-md mx-auto">
+              Thanks — we've received your request. Pick a time that works for
+              you and we'll take care of the rest.
+            </p>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex">
+              <GradientButton variant="blue">
+                <Calendar className="w-4 h-4 mr-2" />
+                Book Your Time
+                <ExternalLink className="w-3.5 h-3.5 ml-2" />
+              </GradientButton>
+            </a>
+          </GlassCard>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="demo" className="py-24 bg-slate-950">
@@ -158,9 +185,8 @@ export function LeadCapture() {
                 <Select
                   value={formData.role}
                   onValueChange={(value) => handleInputChange("role", value)}
-                  required
                 >
-                  <SelectTrigger className={`mt-1.5 ${inputClasses}`}>
+                  <SelectTrigger className={`mt-1.5 ${inputClasses} ${fieldErrors.role ? errorClasses : ""}`}>
                     <SelectValue placeholder="Select your role" />
                   </SelectTrigger>
                   <SelectContent className="bg-slate-900 border-white/[0.08]">
@@ -172,15 +198,17 @@ export function LeadCapture() {
                     <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
+                {fieldErrors.role && (
+                  <p className="text-xs text-red-400 mt-1.5">Please select your role.</p>
+                )}
               </div>
               <div>
                 <Label htmlFor="companySize" className={labelClasses}>Company Size *</Label>
                 <Select
                   value={formData.companySize}
                   onValueChange={(value) => handleInputChange("companySize", value)}
-                  required
                 >
-                  <SelectTrigger className={`mt-1.5 ${inputClasses}`}>
+                  <SelectTrigger className={`mt-1.5 ${inputClasses} ${fieldErrors.companySize ? errorClasses : ""}`}>
                     <SelectValue placeholder="Select company size" />
                   </SelectTrigger>
                   <SelectContent className="bg-slate-900 border-white/[0.08]">
@@ -193,6 +221,9 @@ export function LeadCapture() {
                     <SelectItem value="10000+">10,000+ employees</SelectItem>
                   </SelectContent>
                 </Select>
+                {fieldErrors.companySize && (
+                  <p className="text-xs text-red-400 mt-1.5">Please select your company size.</p>
+                )}
               </div>
             </div>
 

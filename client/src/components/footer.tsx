@@ -17,6 +17,7 @@ const footerLinks: Record<string, LinkItem[]> = {
     { label: "Documentation", href: "/docs", external: false },
   ],
   Resources: [
+    { label: "News & Research", href: "/resources" },
     { label: "Security Whitepaper", href: "/whiteout-ai/security-whitepaper" },
     { label: "Government & Public Sector", href: "/whiteout-ai/government" },
     { label: "Academic Integrity", href: "/whiteout-ai/academic-integrity" },
@@ -24,6 +25,8 @@ const footerLinks: Record<string, LinkItem[]> = {
   Company: [
     { label: "About", href: "/about" },
     { label: "Partners", href: "/partners" },
+    { label: "Contact", href: "/contact" },
+    { label: "Trust & Security", href: "/security" },
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Terms of Service", href: "/terms-of-service" },
   ],

@@ -11,6 +11,7 @@ import RadialOrbitalTimeline, { type TimelineItem } from "@/components/ui/radial
 import {
   Target,
   Search,
+  ShieldCheck,
   Globe,
   Bug,
   CheckCircle,
@@ -47,13 +48,18 @@ import {
   AnimatedCounter,
   BlurredStaggerText,
 } from "@/components/motion";
+import { usePageMeta } from "@/lib/use-page-meta";
 
 export default function Maestro() {
+  usePageMeta(
+    "Maestro — AI-Driven Penetration Testing",
+    "Maestro deploys 18 specialized AI agents with 203 MCP tools through a 209-test assessment matrix — autonomous red team exploitation across web, API, cloud, Kubernetes, and identity providers with proof of impact."
+  );
   const [expandedDomain, setExpandedDomain] = useState<number | null>(null);
   const stats = [
     { value: "18", label: "AI AGENTS", code: "001" },
-    { value: "142", label: "MCP TOOLS", code: "002" },
-    { value: "189", label: "TEST MATRIX", code: "003" },
+    { value: "203", label: "MCP TOOLS", code: "002" },
+    { value: "209", label: "TEST MATRIX", code: "003" },
     { value: "Kali", label: "LINUX POWERED", code: "004" },
   ];
 
@@ -83,7 +89,7 @@ export default function Maestro() {
 
   const features = [
     { icon: Bug, title: "Full-Spectrum Red Team", description: "Controlled exploitation across web applications, APIs, cloud infrastructure, Kubernetes, and identity providers — from OWASP Top 10 through IAM privilege escalation, container escapes, and Active Directory / Entra ID attack paths. Proven impact, not theoretical risk." },
-    { icon: Layers, title: "189-Test Assessment Matrix", description: "Structured assessment framework with 73 DAST tests, 40 identity tests, 29 cloud security tests, 24 SAST tests, 15 cross-validation tests, and 8 chain analysis tests — ensuring consistent, deterministic coverage across every engagement." },
+    { icon: Layers, title: "209-Test Assessment Matrix", description: "Structured assessment framework with 73 DAST tests, 60 identity tests, 29 cloud security tests, 24 SAST tests, 15 cross-validation tests, and 8 chain analysis tests — ensuring consistent, deterministic coverage across every engagement." },
     { icon: SplitSquareVertical, title: "Multi-Track Analysis", description: "Parallel dynamic, static, cloud, and identity analysis with cross-validation. Findings enriched with source code context, cloud posture, and identity graph data, then validated against live endpoints." },
     { icon: Zap, title: "Autonomous Testing", description: "Deploy agents and let them work autonomously — Maestro coordinates the full pentest lifecycle from reconnaissance through exploitation to reporting." },
     { icon: FileText, title: "Report Generation", description: "Evidence-based reporting in HTML, PDF, and Markdown with executive summaries, technical breakdowns, complete reproduction steps, and prioritized remediation guidance — ready for stakeholders." },
@@ -111,7 +117,7 @@ export default function Maestro() {
 
   return (
     <PageTransition>
-      <AuroraBackground variant="orange" className="min-h-screen bg-[#0a0a0a]">
+      <AuroraBackground variant="orange" className="min-h-screen bg-slate-950">
         <Navigation />
 
         {/* Hero */}
@@ -194,8 +200,7 @@ export default function Maestro() {
                     status: "completed" as const,
                     energy: [95, 90, 88, 92, 85, 87][i],
                   }))}
-                  centerImage="/icononly_transparent_nobuffer.png"
-                  centerImageClass="grayscale"
+                  centerImage="/maestro-mark.svg"
                   centerLabel="Maestro"
                   variant="orange"
                   className="scale-[0.85] lg:scale-100 -my-8"
@@ -266,7 +271,7 @@ export default function Maestro() {
                   <div
                     key={`top-${index}`}
                     tabIndex={0}
-                    className="group relative flex-shrink-0 w-80 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.06] p-5 transition-all duration-300 cursor-pointer hover:z-20 focus:z-20 hover:scale-[1.04] focus:scale-[1.04] hover:bg-[#141414] focus:bg-[#141414] hover:border-orange-500/40 focus:border-orange-500/40 hover:shadow-2xl hover:shadow-orange-500/10 focus:outline-none"
+                    className="group relative flex-shrink-0 w-80 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.06] p-5 transition-all duration-300 cursor-pointer hover:z-20 focus:z-20 hover:scale-[1.04] focus:scale-[1.04] hover:bg-slate-900 focus:bg-slate-900 hover:border-orange-500/40 focus:border-orange-500/40 hover:shadow-2xl hover:shadow-orange-500/10 focus:outline-none"
                   >
                     <span className="absolute top-4 right-5 text-[11px] font-mono font-bold text-slate-600 group-hover:text-orange-400/70 transition-colors">{agent.num}</span>
                     <div className="flex items-center gap-3 mb-3">
@@ -295,7 +300,7 @@ export default function Maestro() {
                   <div
                     key={`bottom-${index}`}
                     tabIndex={0}
-                    className="group relative flex-shrink-0 w-80 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.06] p-5 transition-all duration-300 cursor-pointer hover:z-20 focus:z-20 hover:scale-[1.04] focus:scale-[1.04] hover:bg-[#141414] focus:bg-[#141414] hover:border-orange-500/40 focus:border-orange-500/40 hover:shadow-2xl hover:shadow-orange-500/10 focus:outline-none"
+                    className="group relative flex-shrink-0 w-80 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.06] p-5 transition-all duration-300 cursor-pointer hover:z-20 focus:z-20 hover:scale-[1.04] focus:scale-[1.04] hover:bg-slate-900 focus:bg-slate-900 hover:border-orange-500/40 focus:border-orange-500/40 hover:shadow-2xl hover:shadow-orange-500/10 focus:outline-none"
                   >
                     <span className="absolute top-4 right-5 text-[11px] font-mono font-bold text-slate-600 group-hover:text-orange-400/70 transition-colors">{agent.num}</span>
                     <div className="flex items-center gap-3 mb-3">
@@ -319,7 +324,7 @@ export default function Maestro() {
               <div>
                 <ScrollReveal>
                   <h3 className="text-lg font-mono tracking-wider mb-4 px-1">
-                    <span className="text-orange-400 font-bold">142</span>{" "}
+                    <span className="text-orange-400 font-bold">203</span>{" "}
                     <span className="text-orange-300/70">MCP TOOLS</span>
                   </h3>
                 </ScrollReveal>
@@ -334,13 +339,13 @@ export default function Maestro() {
               <div>
                 <ScrollReveal>
                   <h3 className="text-lg font-mono tracking-wider mb-4 px-1">
-                    <span className="text-orange-400 font-bold">189</span>{" "}
+                    <span className="text-orange-400 font-bold">209</span>{" "}
                     <span className="text-orange-300/70">TEST MATRIX</span>
                   </h3>
                 </ScrollReveal>
                 <GlassCard className="p-8">
                   <BlurredStaggerText
-                    text="Maestro's structured assessment framework — a deterministic checklist ensuring every engagement covers the same 189 tests across DAST, SAST, cloud security, identity, cross-validation, and chain analysis. No tester variance, no missed coverage. Every run produces consistent, comparable results."
+                    text="Maestro's structured assessment framework — a deterministic checklist ensuring every engagement covers the same 209 tests across DAST, SAST, cloud security, identity, cross-validation, and chain analysis. No tester variance, no missed coverage. Every run produces consistent, comparable results."
                     className="text-lg text-orange-200/60 leading-relaxed"
 
                   />
@@ -470,7 +475,8 @@ export default function Maestro() {
                     {
                       icon: CalendarClock,
                       title: "Scheduled DAST",
-                      isNew: true,
+                      isNew: false,
+                      comingSoon: true,
                       summary: "Recurring dynamic scans on a schedule with drift detection and alerts",
                       capabilities: [
                         "Recurring DAST scans on a cron schedule",
@@ -500,6 +506,11 @@ export default function Maestro() {
                               {domain.isNew && (
                                 <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold bg-orange-500/15 text-orange-400 border border-orange-500/25 rounded">
                                   NEW
+                                </span>
+                              )}
+                              {"comingSoon" in domain && domain.comingSoon && (
+                                <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold bg-slate-500/15 text-slate-400 border border-slate-500/25 rounded">
+                                  COMING SOON
                                 </span>
                               )}
                             </div>
@@ -597,15 +608,214 @@ export default function Maestro() {
 
             {/* CTA */}
             <ScrollReveal delay={0.4}>
-              <div className="text-center mt-12">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
                 <Link href="/demo">
                   <GradientButton variant="orange">
                     Request a Demo
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </GradientButton>
                 </Link>
+                <Link href="/demo">
+                  <GradientButton variant="default">
+                    <FileText className="w-4 h-4 mr-2" />
+                    Request a Sample Report
+                  </GradientButton>
+                </Link>
               </div>
             </ScrollReveal>
+          </div>
+        </section>
+
+        {/* Trust Engineering — why findings can be trusted */}
+        <section className="py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ScrollReveal>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                  No Fake Greens. No Noise.
+                </h2>
+                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+                  Maestro is engineered so you can trust every line of the report —
+                  passes are proven, severities are earned, and findings are
+                  double-checked before they reach you.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <StaggerChildren className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: ShieldCheck,
+                  title: "Tool-Provenance Gate",
+                  description:
+                    "Every passing test must be backed by a security tool that actually ran and completed successfully. If the tool never executed, the result is automatically downgraded to BLOCKED — a silent scanner failure can never masquerade as clean coverage.",
+                },
+                {
+                  icon: Gauge,
+                  title: "Exploitation-Calibrated Severity",
+                  description:
+                    "Severity isn't copied from a CVE database. Every finding is re-rated by what actually happened during exploitation — exploited, partially exploited, or not exploitable — so your team fixes what's truly dangerous first.",
+                },
+                {
+                  icon: SplitSquareVertical,
+                  title: "SAST ↔ DAST Cross-Validation",
+                  description:
+                    "Static code findings are confirmed against the live application before they reach the report. Findings that can't be reproduced are flagged or eliminated — cutting false positives and giving every finding a confidence score.",
+                },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <StaggerItem key={item.title}>
+                    <div className="h-full p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:border-orange-500/30 transition-all duration-300">
+                      <div className="w-10 h-10 bg-orange-500/10 border border-orange-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <Icon className="w-5 h-5 text-orange-400" />
+                      </div>
+                      <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
+                      <p className="text-sm text-slate-400 leading-relaxed">{item.description}</p>
+                    </div>
+                  </StaggerItem>
+                );
+              })}
+            </StaggerChildren>
+          </div>
+        </section>
+
+        {/* Identity Attack Suite Spotlight */}
+        <section className="py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <ScrollReveal>
+                  <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-orange-500/[0.08] border border-orange-500/20 text-orange-400 text-sm mb-6 font-mono">
+                    Identity / IDP Suite
+                  </div>
+                  <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+                    Identity Is the New Perimeter.
+                    <span className="block text-orange-400">Maestro Attacks It Like One.</span>
+                  </h2>
+                  <p className="text-lg text-slate-400 mb-8 leading-relaxed">
+                    The deepest domain in Maestro's test matrix is identity — 60
+                    dedicated tests across your directory and every major identity
+                    provider, executed with lockout-governed safety controls and
+                    synthesized into a privilege-escalation graph.
+                  </p>
+                </ScrollReveal>
+
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Kerberoasting",
+                    "AS-REP Roasting",
+                    "ADCS ESC1–ESC13",
+                    "BloodHound Graphing",
+                    "Lockout-Governed Spraying",
+                    "Token & Session Replay",
+                    "Consent-Grant Abuse",
+                    "Device-Code Phishing",
+                    "MFA-Bypass Testing",
+                  ].map((technique) => (
+                    <span
+                      key={technique}
+                      className="px-3 py-1.5 bg-white/[0.03] border border-orange-500/[0.12] rounded-lg text-xs font-mono text-orange-200/70"
+                    >
+                      {technique}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <StaggerChildren className="grid grid-cols-3 gap-4 mb-6">
+                  {[
+                    { value: "60", label: "Identity Tests" },
+                    { value: "6", label: "Identity Providers" },
+                    { value: "52", label: "Dedicated Tools" },
+                  ].map((stat) => (
+                    <StaggerItem key={stat.label}>
+                      <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08] text-center">
+                        <div className="text-3xl font-bold font-mono">
+                          <GradientText from="from-orange-400" via="via-red-400" to="to-amber-300">
+                            {stat.value}
+                          </GradientText>
+                        </div>
+                        <div className="text-xs text-slate-500 mt-2">{stat.label}</div>
+                      </div>
+                    </StaggerItem>
+                  ))}
+                </StaggerChildren>
+
+                <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08]">
+                  <p className="text-xs font-mono text-slate-500 mb-4 tracking-wider">PROVIDERS COVERED</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      "Active Directory",
+                      "Microsoft Entra ID",
+                      "Microsoft 365",
+                      "Okta",
+                      "Google Workspace",
+                      "Ping Identity",
+                    ].map((provider) => (
+                      <div key={provider} className="flex items-center text-sm text-slate-300">
+                        <KeyRound className="w-3.5 h-3.5 text-orange-400/70 mr-2 flex-shrink-0" />
+                        {provider}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Deployment & Data Residency */}
+        <section className="py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ScrollReveal>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                  Your Findings Never Leave Your Account
+                </h2>
+                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+                  Penetration test results are some of the most sensitive data your
+                  organization owns. Maestro's architecture keeps them that way.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <StaggerChildren className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: Database,
+                  title: "Customer-Owned Data Plane",
+                  description:
+                    "Assessment data, findings, and reports live in your AWS account — the backend, database, and storage all deploy inside your VPC. Nothing is copied to Groovy; Groovy holds only the licensing plane.",
+                },
+                {
+                  icon: Lock,
+                  title: "Read-Only Cloud Access",
+                  description:
+                    "Cloud assessments assume a read-only IAM role built on AWS's managed SecurityAudit policy — no write permissions, and secret values are never readable. Proof of impact without production risk.",
+                },
+                {
+                  icon: Container,
+                  title: "Isolated, Scope-Enforced Testing",
+                  description:
+                    "Offensive tooling runs in a dedicated Kali Linux container under your control. Every tool call is validated against your engagement scope — out-of-scope targets are refused and destructive exploits are banned.",
+                },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <StaggerItem key={item.title}>
+                    <div className="h-full p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:border-orange-500/30 transition-all duration-300">
+                      <div className="w-10 h-10 bg-orange-500/10 border border-orange-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <Icon className="w-5 h-5 text-orange-400" />
+                      </div>
+                      <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
+                      <p className="text-sm text-slate-400 leading-relaxed">{item.description}</p>
+                    </div>
+                  </StaggerItem>
+                );
+              })}
+            </StaggerChildren>
           </div>
         </section>
 

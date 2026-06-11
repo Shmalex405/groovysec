@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GradientButton } from "@/components/ui/gradient-button";
+import { usePageMeta } from "@/lib/use-page-meta";
 
 // ── Download configuration ──────────────────────────────────────────────
 // CloudFront CDN base for all update artifacts
@@ -47,11 +48,6 @@ const DOWNLOADS = {
     platforms: {
       "macos-arm64": {
         label: "macOS (Apple Silicon)",
-        url: `${CDN_BASE}/latest/WhiteoutAI-mac-arm64-${VERSIONS.desktop}.dmg`,
-        ext: ".dmg",
-      },
-      "macos-x64": {
-        label: "macOS (Intel)",
         url: `${CDN_BASE}/latest/WhiteoutAI-mac-arm64-${VERSIONS.desktop}.dmg`,
         ext: ".dmg",
       },
@@ -138,11 +134,6 @@ const DOWNLOADS = {
         url: `${CDN_BASE}/installer/latest/WhiteoutAI-Bundled-Setup-mac-${VERSIONS.bundledInstaller}.dmg`,
         ext: ".dmg",
       },
-      "macos-x64": {
-        label: "macOS (Intel)",
-        url: `${CDN_BASE}/installer/latest/WhiteoutAI-Bundled-Setup-mac-${VERSIONS.bundledInstaller}.dmg`,
-        ext: ".dmg",
-      },
       "windows-x64": {
         label: "Windows",
         url: `${CDN_BASE}/installer/latest/Whiteout%20AI%20Bundled%20Setup.exe`,
@@ -153,7 +144,7 @@ const DOWNLOADS = {
 } as const;
 
 // ── OS Detection ────────────────────────────────────────────────────────
-type Platform = "macos-arm64" | "macos-x64" | "windows-x64";
+type Platform = "macos-arm64" | "windows-x64";
 
 function detectPlatform(): Platform {
   const ua = navigator.userAgent.toLowerCase();
@@ -211,6 +202,10 @@ const colorMap: Record<string, { bg: string; text: string; iconBg: string; borde
 
 // ── Component ───────────────────────────────────────────────────────────
 export default function DownloadPage() {
+  usePageMeta(
+    "Download Whiteout AI",
+    "Download Whiteout AI for macOS and Windows, plus Desktop Guard, browser extensions for Chrome and Firefox, and IDE extensions for VS Code and JetBrains."
+  );
   const [platform, setPlatform] = useState<Platform>("macos-arm64");
   const [showPlatformMenu, setShowPlatformMenu] = useState(false);
   const browser = useMemo(() => detectBrowser(), []);
@@ -220,11 +215,7 @@ export default function DownloadPage() {
   }, []);
 
   const platformLabel =
-    platform === "macos-arm64"
-      ? "macOS (Apple Silicon)"
-      : platform === "macos-x64"
-        ? "macOS (Intel)"
-        : "Windows";
+    platform === "macos-arm64" ? "macOS (Apple Silicon)" : "Windows";
 
   const isMac = platform.startsWith("macos");
 
@@ -276,7 +267,6 @@ export default function DownloadPage() {
                       {(
                         [
                           ["macos-arm64", "macOS (Apple Silicon)"],
-                          ["macos-x64", "macOS (Intel)"],
                           ["windows-x64", "Windows"],
                         ] as const
                       ).map(([key, label]) => (
@@ -315,9 +305,7 @@ export default function DownloadPage() {
                     </p>
                     <a
                       href={
-                        DOWNLOADS["bundled-installer"].platforms[
-                          platform === "macos-x64" ? "macos-x64" : platform
-                        ]?.url ??
+                        DOWNLOADS["bundled-installer"].platforms[platform]?.url ??
                         DOWNLOADS["bundled-installer"].platforms["macos-arm64"].url
                       }
                       className="inline-flex"
@@ -403,7 +391,7 @@ export default function DownloadPage() {
                   </div>
                   <ul className="space-y-2 text-sm text-slate-400">
                     <li>macOS 12 (Monterey) or later</li>
-                    <li>Apple Silicon (M1+) or Intel processor</li>
+                    <li>Apple Silicon (M1 or later)</li>
                     <li>4 GB RAM minimum</li>
                     <li>500 MB available disk space</li>
                   </ul>
@@ -474,11 +462,7 @@ function DesktopDownloadCard({
 
   // Find the best matching platform download
   const platformKey =
-    platform in product.platforms
-      ? platform
-      : platform === "macos-x64" && "macos-arm64" in product.platforms
-        ? "macos-arm64"
-        : Object.keys(product.platforms)[0];
+    platform in product.platforms ? platform : Object.keys(product.platforms)[0];
 
   const download = (product.platforms as Record<string, { label: string; url: string; ext: string }>)[platformKey];
 

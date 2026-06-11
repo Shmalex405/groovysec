@@ -68,9 +68,6 @@ export function VideoSection() {
           </div>
         </div>
 
-        <p className="mt-4 text-sm text-slate-600">
-
-        </p>
       </div>
     </section>
   );

@@ -1,20 +1,19 @@
+import type { ReactNode } from "react";
 import { Link } from "wouter";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { Button } from "@/components/ui/button";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { GlassCard } from "@/components/ui/glass-card";
 import { RevealCard } from "@/components/ui/reveal-card";
-import { GradientText } from "@/components/ui/gradient-text";
+import { MaestroMark } from "@/components/ui/maestro-mark";
 import { AuroraBackground } from "@/components/ui/aurora-background";
+import { usePageMeta } from "@/lib/use-page-meta";
 import {
   ArrowRight,
   CheckCircle,
   Calendar,
   Award,
   MapPin,
-  Shield,
-  Target,
 } from "lucide-react";
 import {
   PageTransition,
@@ -26,7 +25,94 @@ import {
 } from "@/components/motion";
 import { ComplianceFrameworksCompact } from "@/components/compliance-frameworks";
 
+// Single source for product card copy — rendered on both the card front and
+// its reveal overlay so the two can never drift apart.
+const PRODUCTS = {
+  whiteout: {
+    name: "Whiteout AI",
+    href: "/whiteout-ai",
+    description:
+      "Enterprise AI governance platform that intercepts, evaluates, and enforces compliance policies on every AI interaction — before sensitive data ever leaves your network.",
+    bullets: [
+      "Real-time prompt interception across browser, desktop, IDE, mobile & cloud",
+      "60+ pre-built compliance policies across 9 domains (HIPAA, GDPR, FERPA, SOX)",
+      "Full-LLM contextual evaluation — not keyword matching",
+      "Complete audit trail with SIEM/SOC integration",
+      "Isolated internal chat models for data-sensitive prompts",
+    ],
+  },
+  maestro: {
+    name: "Maestro",
+    href: "/maestro",
+    description:
+      "AI-driven automated penetration testing platform that deploys 18 specialized agents to find vulnerabilities and validate them through real red team-style exploitation — proving actual impact, not just scanner output.",
+    bullets: [
+      "Red team exploitation that tests and validates every finding",
+      "18 AI agents with 203 MCP tools covering the full pentest lifecycle",
+      "209-test assessment matrix for consistent, deterministic coverage",
+      "Locally deployed — all data and vulnerability info stays on your network",
+      "Assess vulnerability findings from other ASPM tools already implemented",
+    ],
+  },
+};
+
+function ProductCardBody({
+  product,
+  logo,
+  buttonVariant,
+  tone,
+}: {
+  product: (typeof PRODUCTS)[keyof typeof PRODUCTS];
+  logo: ReactNode;
+  buttonVariant: "blue" | "orange";
+  tone: "front" | "overlay-blue" | "overlay-orange";
+}) {
+  const textClass =
+    tone === "front"
+      ? "text-slate-400"
+      : tone === "overlay-blue"
+        ? "text-blue-100/80"
+        : "text-orange-100/80";
+  const listClass =
+    tone === "front"
+      ? "text-slate-400"
+      : tone === "overlay-blue"
+        ? "text-blue-100/70"
+        : "text-orange-100/70";
+  const checkClass = tone === "front" ? "text-emerald-400" : "text-emerald-300";
+
+  return (
+    <>
+      <div className="flex items-center gap-3 mb-6">
+        {logo}
+        <h3 className="text-2xl font-bold text-white">{product.name}</h3>
+      </div>
+      <p className={`${textClass} mb-6 leading-relaxed`}>{product.description}</p>
+      <ul className="space-y-2.5 mb-8">
+        {product.bullets.map((item) => (
+          <li key={item} className={`flex items-start text-sm ${listClass}`}>
+            <CheckCircle className={`w-4 h-4 ${checkClass} mr-2.5 flex-shrink-0 mt-0.5`} />
+            {item}
+          </li>
+        ))}
+      </ul>
+      <div className="mt-auto">
+        <Link href={product.href}>
+          <GradientButton variant={buttonVariant} className="min-w-0 px-6 py-3 text-sm">
+            Learn More <ArrowRight className="w-4 h-4 ml-2" />
+          </GradientButton>
+        </Link>
+      </div>
+    </>
+  );
+}
+
 export default function CompanyHome() {
+  usePageMeta(
+    undefined,
+    "Groovy Security builds Whiteout AI (enterprise AI governance), Maestro (AI-driven penetration testing), and Secure AI Skills. Govern AI usage, prove compliance, and validate your defenses."
+  );
+
   return (
     <PageTransition>
       <AuroraBackground variant="mixed" className="min-h-screen bg-slate-950">
@@ -37,13 +123,7 @@ export default function CompanyHome() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <HeroTextReveal>
               <HeroLine>
-                <h1
-                  className="text-5xl lg:text-8xl font-bold mb-6 leading-[1.1] tracking-tight bg-clip-text text-transparent animate-gradient-flow"
-                  style={{
-                    backgroundImage: "linear-gradient(90deg, #ffffff, #1a5fb4, #ffffff)",
-                    backgroundSize: "300% 100%",
-                  }}
-                >
+                <h1 className="text-5xl lg:text-8xl font-bold mb-6 leading-[1.1] tracking-tight text-gradient-hero animate-gradient-flow">
                   The AI Era Demands
                   <br />
                   a New Kind of Security
@@ -77,7 +157,7 @@ export default function CompanyHome() {
             <ScrollReveal delay={0.6}>
               <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto">
                 {[
-                  { value: "65+", label: "AI Policies" },
+                  { value: "60+", label: "AI Policies" },
                   { value: "12", label: "Regulatory Frameworks" },
                   { value: "23+", label: "AI Platforms" },
                 ].map((stat) => (
@@ -100,8 +180,8 @@ export default function CompanyHome() {
                   Our Products
                 </h2>
                 <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-                  Two platforms, one mission — giving organizations complete control over
-                  AI security and automated defense.
+                  Two flagship platforms, one mission — giving organizations complete
+                  control over AI security and automated defense.
                 </p>
               </div>
             </ScrollReveal>
@@ -115,68 +195,34 @@ export default function CompanyHome() {
                   className=""
                   overlay={
                     <div className="p-8 h-full flex flex-col">
-                      <div className="flex items-center gap-3 mb-6">
-                        <img src="/icononly_transparent_nobuffer.png" alt="Whiteout AI" className="w-10 h-10 object-contain" />
-                        <h3 className="text-2xl font-bold text-white">Whiteout AI</h3>
-                      </div>
-                      <p className="text-blue-100/80 mb-6 leading-relaxed">
-                        Enterprise AI governance platform that intercepts, evaluates, and enforces
-                        compliance policies on every AI interaction — before sensitive data ever
-                        leaves your network.
-                      </p>
-                      <ul className="space-y-2.5 mb-8">
-                        {[
-                          "Real-time prompt interception across browser, desktop, IDE, mobile & cloud",
-                          "65+ pre-built compliance policies (HIPAA, GDPR, FERPA, SOX)",
-                          "LLM-powered contextual evaluation — not keyword matching",
-                          "Complete audit trail with SIEM/SOC integration",
-                          "Complete isolated internal chat models for data sensitive prompts",
-                        ].map((item) => (
-                          <li key={item} className="flex items-start text-sm text-blue-100/70">
-                            <CheckCircle className="w-4 h-4 text-emerald-300 mr-2.5 flex-shrink-0 mt-0.5" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="mt-auto">
-                        <Link href="/whiteout-ai">
-                          <GradientButton variant="blue" className="min-w-0 px-6 py-3 text-sm">
-                            Learn More <ArrowRight className="w-4 h-4 ml-2" />
-                          </GradientButton>
-                        </Link>
-                      </div>
+                      <ProductCardBody
+                        product={PRODUCTS.whiteout}
+                        logo={
+                          <img
+                            src="/icononly_transparent_nobuffer.png"
+                            alt="Whiteout AI"
+                            className="w-10 h-10 object-contain"
+                          />
+                        }
+                        buttonVariant="blue"
+                        tone="overlay-blue"
+                      />
                     </div>
                   }
                 >
-                  <div className="p-8 bg-white/[0.03] backdrop-blur-xl">
-                    <div className="flex items-center gap-3 mb-6">
-                      <img src="/icononly_transparent_nobuffer.png" alt="Whiteout AI" className="w-10 h-10 object-contain" />
-                      <h3 className="text-2xl font-bold text-white">Whiteout AI</h3>
-                    </div>
-                    <p className="text-slate-400 mb-6 leading-relaxed">
-                      Enterprise AI governance platform that intercepts, evaluates, and enforces
-                      compliance policies on every AI interaction — before sensitive data ever
-                      leaves your network.
-                    </p>
-                    <ul className="space-y-2.5 mb-8">
-                      {[
-                        "Real-time prompt interception across browser, desktop, IDE, mobile & cloud",
-                        "65+ pre-built compliance policies (HIPAA, GDPR, FERPA, SOX)",
-                        "LLM-powered contextual evaluation — not keyword matching",
-                        "Complete audit trail with SIEM/SOC integration",
-                        "Complete isolated internal chat models for data sensitive prompts",
-                      ].map((item) => (
-                        <li key={item} className="flex items-start text-sm text-slate-400">
-                          <CheckCircle className="w-4 h-4 text-emerald-400 mr-2.5 flex-shrink-0 mt-0.5" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                    <Link href="/whiteout-ai">
-                      <GradientButton variant="blue" className="min-w-0 px-6 py-3 text-sm">
-                        Learn More <ArrowRight className="w-4 h-4 ml-2" />
-                      </GradientButton>
-                    </Link>
+                  <div className="p-8 bg-white/[0.03] backdrop-blur-xl flex flex-col">
+                    <ProductCardBody
+                      product={PRODUCTS.whiteout}
+                      logo={
+                        <img
+                          src="/icononly_transparent_nobuffer.png"
+                          alt="Whiteout AI"
+                          className="w-10 h-10 object-contain"
+                        />
+                      }
+                      buttonVariant="blue"
+                      tone="front"
+                    />
                   </div>
                 </RevealCard>
               </StaggerItem>
@@ -189,68 +235,22 @@ export default function CompanyHome() {
                   className=""
                   overlay={
                     <div className="p-8 h-full flex flex-col">
-                      <div className="flex items-center gap-3 mb-6">
-                        <img src="/icononly_transparent_nobuffer.png" alt="Maestro" className="w-10 h-10 object-contain grayscale brightness-200" />
-                        <h3 className="text-2xl font-bold text-white">Maestro</h3>
-                      </div>
-                      <p className="text-orange-100/80 mb-6 leading-relaxed">
-                        AI-driven automated penetration testing platform that deploys 15 specialized
-                        agents to find vulnerabilities and validate them through real red team-style
-                        exploitation — proving actual impact, not just scanner output.
-                      </p>
-                      <ul className="space-y-2.5 mb-8">
-                        {[
-                          "Red team exploitation that tests and validates every finding",
-                          "15 AI agents with 142 MCP tools covering the full pentest lifecycle",
-                          "147-test assessment matrix for consistent, deterministic coverage",
-                          "Locally deployed — all data and vulnerability info stays on your network",
-                          "Assess vulnerability findings from other ASPM tools already implemented",
-                        ].map((item) => (
-                          <li key={item} className="flex items-start text-sm text-orange-100/70">
-                            <CheckCircle className="w-4 h-4 text-emerald-300 mr-2.5 flex-shrink-0 mt-0.5" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="mt-auto">
-                        <Link href="/maestro">
-                          <GradientButton variant="orange" className="min-w-0 px-6 py-3 text-sm">
-                            Learn More <ArrowRight className="w-4 h-4 ml-2" />
-                          </GradientButton>
-                        </Link>
-                      </div>
+                      <ProductCardBody
+                        product={PRODUCTS.maestro}
+                        logo={<MaestroMark className="w-10 h-10" />}
+                        buttonVariant="orange"
+                        tone="overlay-orange"
+                      />
                     </div>
                   }
                 >
-                  <div className="p-8 bg-white/[0.03] backdrop-blur-xl">
-                    <div className="flex items-center gap-3 mb-6">
-                      <img src="/icononly_transparent_nobuffer.png" alt="Maestro" className="w-10 h-10 object-contain grayscale" />
-                      <h3 className="text-2xl font-bold text-white">Maestro</h3>
-                    </div>
-                    <p className="text-slate-400 mb-6 leading-relaxed">
-                      AI-driven automated penetration testing platform that deploys 15 specialized
-                      agents to find vulnerabilities and validate them through real red team-style
-                      exploitation — proving actual impact, not just scanner output.
-                    </p>
-                    <ul className="space-y-2.5 mb-8">
-                      {[
-                        "Red team exploitation that tests and validates every finding",
-                        "15 AI agents with 142 MCP tools covering the full pentest lifecycle",
-                        "147-test assessment matrix for consistent, deterministic coverage",
-                        "Locally deployed — all data and vulnerability info stays on your network",
-                        "Assess vulnerability findings from other ASPM tools already implemented",
-                      ].map((item) => (
-                        <li key={item} className="flex items-start text-sm text-slate-400">
-                          <CheckCircle className="w-4 h-4 text-emerald-400 mr-2.5 flex-shrink-0 mt-0.5" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                    <Link href="/maestro">
-                      <GradientButton variant="orange" className="min-w-0 px-6 py-3 text-sm">
-                        Learn More <ArrowRight className="w-4 h-4 ml-2" />
-                      </GradientButton>
-                    </Link>
+                  <div className="p-8 bg-white/[0.03] backdrop-blur-xl flex flex-col">
+                    <ProductCardBody
+                      product={PRODUCTS.maestro}
+                      logo={<MaestroMark className="w-10 h-10" />}
+                      buttonVariant="orange"
+                      tone="front"
+                    />
                   </div>
                 </RevealCard>
               </StaggerItem>

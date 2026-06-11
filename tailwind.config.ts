@@ -6,7 +6,6 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        grotesk: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
         cinzel: ['"Cinzel"', 'Georgia', 'serif'],
       },
       borderRadius: {

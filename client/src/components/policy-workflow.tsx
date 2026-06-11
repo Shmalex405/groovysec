@@ -17,7 +17,7 @@ export function PolicyWorkflow() {
     {
       icon: Search,
       title: "2. Policy Check",
-      description: "Request analyzed against organizations security policies",
+      description: "Request analyzed against your organization's security policies",
       color: "orange" as const,
     },
     {
