@@ -172,19 +172,34 @@ export function SecurityCompliance() {
               </g>
             </svg>
 
-            {/* Bottom summary */}
+            {/* Who each deployment is for */}
             <div className="grid md:grid-cols-3 gap-4 mt-6 w-full">
               <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl border border-[#1a5fb4]/20 p-5 text-center">
-                <div className="text-sm font-bold text-white mb-1">End-to-End Encryption</div>
-                <p className="text-xs text-slate-500">All data encrypted in transit and at rest across every deployment model</p>
+                <div className="text-[10px] font-mono tracking-widest text-blue-400/70 mb-1.5">WHITEOUT-HOSTED</div>
+                <div className="text-sm font-bold text-white mb-1">The Classic SaaS Approach</div>
+                <p className="text-xs text-slate-500">
+                  Sign up, set policies, done. Groovy carries the pager — dedicated,
+                  isolated infrastructure with managed keys — so your team gets
+                  governance without a single server to babysit.
+                </p>
               </div>
               <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl border border-[#2e7d32]/20 p-5 text-center">
-                <div className="text-sm font-bold text-white mb-1">SOC 2 Type II</div>
-                <p className="text-xs text-slate-500">Certification in progress — built for the strictest compliance requirements</p>
+                <div className="text-[10px] font-mono tracking-widest text-emerald-400/70 mb-1.5">CLIENT-HOSTED</div>
+                <div className="text-sm font-bold text-white mb-1">Maximum Data Control</div>
+                <p className="text-xs text-slate-500">
+                  Your cloud, your network, your keys. Whiteout runs entirely inside
+                  your own account, so the answer to "where does our data go?" is
+                  simple: nowhere. Groovy never sees it.
+                </p>
               </div>
               <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl border border-[#c77800]/20 p-5 text-center">
-                <div className="text-sm font-bold text-white mb-1">Role-Based Access</div>
-                <p className="text-xs text-slate-500">Granular RBAC with enterprise SSO integration support</p>
+                <div className="text-[10px] font-mono tracking-widest text-amber-400/70 mb-1.5">LAN-HOSTED</div>
+                <div className="text-sm font-bold text-white mb-1">For the Extremely Regulated</div>
+                <p className="text-xs text-slate-500">
+                  When the rules say nothing leaves the building, nothing leaves the
+                  building. Fully air-gapped on-premises operation with local GPU
+                  inference — built for defense, government, and classified networks.
+                </p>
               </div>
             </div>
           </div>
