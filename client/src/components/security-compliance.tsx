@@ -189,7 +189,7 @@ export function SecurityCompliance() {
                 <p className="text-xs text-slate-500">
                   Your cloud, your network, your keys. Whiteout runs entirely inside
                   your own account, so the answer to "where does our data go?" is
-                  simple: nowhere. Groovy never sees it.
+                  simple: nowhere. You own it.
                 </p>
               </div>
               <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl border border-[#c77800]/20 p-5 text-center">
