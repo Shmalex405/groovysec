@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { Menu, X, ChevronDown, Shield, Target, Sparkles } from "lucide-react";
 import { GroovyLogo } from "./groovy-logo";
-import { MaestroMark } from "@/components/ui/maestro-mark";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function Navigation() {
@@ -103,7 +102,7 @@ export function Navigation() {
                         className="flex items-start gap-3 px-3 py-3 rounded-lg hover:bg-white/[0.06] transition-colors group"
                       >
                         <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <MaestroMark className="w-7 h-7" />
+                          <img src="/icononly_transparent_nobuffer.png" alt="Maestro" className="w-7 h-7 object-contain grayscale" />
                         </div>
                         <div>
                           <span className="font-medium text-white text-sm group-hover:text-orange-400 transition-colors">

@@ -159,8 +159,8 @@ export function EnforcementSurfaces() {
     {
       icon: Server,
       title: "Infrastructure Agent",
-      mode: "Visibility",
-      description: "Tracks AI API calls from Kubernetes, EC2, ECS, and Lambda workloads — no client deployment needed.",
+      mode: "Enforce",
+      description: "Monitor or enforce AI API calls from Kubernetes, EC2, ECS, and Lambda workloads — no client deployment needed.",
     },
     {
       icon: Boxes,
@@ -181,12 +181,16 @@ export function EnforcementSurfaces() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-500/[0.08] border border-blue-500/20 text-blue-400 text-sm mb-6">
+              Whiteout AI Interceptor
+            </div>
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
               One Policy Engine. Seven Enforcement Surfaces.
             </h2>
             <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              The same policies follow your people and workloads everywhere AI is
-              used — each surface labeled with exactly what it does.
+              Policy enforcement everywhere your workforce uses AI — browser,
+              desktop, IDE, cloud, and mobile — with each surface labeled by
+              exactly what it does.
             </p>
           </div>
         </ScrollReveal>

@@ -200,7 +200,8 @@ export default function Maestro() {
                     status: "completed" as const,
                     energy: [95, 90, 88, 92, 85, 87][i],
                   }))}
-                  centerImage="/maestro-mark.svg"
+                  centerImage="/icononly_transparent_nobuffer.png"
+                  centerImageClass="grayscale"
                   centerLabel="Maestro"
                   variant="orange"
                   className="scale-[0.85] lg:scale-100 -my-8"
@@ -475,8 +476,7 @@ export default function Maestro() {
                     {
                       icon: CalendarClock,
                       title: "Scheduled DAST",
-                      isNew: false,
-                      comingSoon: true,
+                      isNew: true,
                       summary: "Recurring dynamic scans on a schedule with drift detection and alerts",
                       capabilities: [
                         "Recurring DAST scans on a cron schedule",
@@ -506,11 +506,6 @@ export default function Maestro() {
                               {domain.isNew && (
                                 <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold bg-orange-500/15 text-orange-400 border border-orange-500/25 rounded">
                                   NEW
-                                </span>
-                              )}
-                              {"comingSoon" in domain && domain.comingSoon && (
-                                <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold bg-slate-500/15 text-slate-400 border border-slate-500/25 rounded">
-                                  COMING SOON
                                 </span>
                               )}
                             </div>

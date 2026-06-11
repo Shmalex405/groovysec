@@ -5,7 +5,6 @@ import { Footer } from "@/components/footer";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { GlassCard } from "@/components/ui/glass-card";
 import { RevealCard } from "@/components/ui/reveal-card";
-import { MaestroMark } from "@/components/ui/maestro-mark";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { usePageMeta } from "@/lib/use-page-meta";
 import {
@@ -237,7 +236,13 @@ export default function CompanyHome() {
                     <div className="p-8 h-full flex flex-col">
                       <ProductCardBody
                         product={PRODUCTS.maestro}
-                        logo={<MaestroMark className="w-10 h-10" />}
+                        logo={
+                          <img
+                            src="/icononly_transparent_nobuffer.png"
+                            alt="Maestro"
+                            className="w-10 h-10 object-contain grayscale brightness-200"
+                          />
+                        }
                         buttonVariant="orange"
                         tone="overlay-orange"
                       />
@@ -247,7 +252,13 @@ export default function CompanyHome() {
                   <div className="p-8 bg-white/[0.03] backdrop-blur-xl flex flex-col">
                     <ProductCardBody
                       product={PRODUCTS.maestro}
-                      logo={<MaestroMark className="w-10 h-10" />}
+                      logo={
+                        <img
+                          src="/icononly_transparent_nobuffer.png"
+                          alt="Maestro"
+                          className="w-10 h-10 object-contain grayscale"
+                        />
+                      }
                       buttonVariant="orange"
                       tone="front"
                     />

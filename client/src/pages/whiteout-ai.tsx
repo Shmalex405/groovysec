@@ -3,12 +3,10 @@ import { Navigation } from "@/components/navigation";
 import { HeroSection } from "@/components/hero-section";
 import { PlatformOverview } from "@/components/platform-overview";
 import { ArchitectureFlow } from "@/components/architecture-flow";
-import { InterceptorPlatforms } from "@/components/guard-platforms";
 import { PlatformIntegrations } from "@/components/platform-integrations";
 import { SecurityCompliance } from "@/components/security-compliance";
 import { ComplianceFrameworks } from "@/components/compliance-frameworks";
 import { Footer } from "@/components/footer";
-import { VideoSection } from "@/components/video-section";
 import {
   FullLlmEngine,
   EnforcementSurfaces,
@@ -37,17 +35,15 @@ export default function WhiteoutAI() {
       <AuroraBackground variant="bluegreen" className="min-h-screen bg-slate-950">
         <Navigation />
         <HeroSection />
-        <VideoSection />
         <ArchitectureFlow />
         <FullLlmEngine />
-        <InterceptorPlatforms />
-        <PlatformIntegrations />
-        <EnforcementSurfaces />
         <ComplianceFrameworks />
+        <EnforcementSurfaces />
+        <PlatformIntegrations />
+        <SecurityCompliance />
         <CloudAiGovernance />
         <PlatformOverview />
         <EnterpriseIdentity />
-        <SecurityCompliance />
 
         {/* Learn More Links */}
         <section className="py-24">
