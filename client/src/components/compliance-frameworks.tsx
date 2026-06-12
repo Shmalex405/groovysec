@@ -405,7 +405,7 @@ export function ComplianceFrameworks() {
         <ScrollReveal>
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-slate-400 text-sm mb-6">
-              {totalFrameworks} Frameworks Across {complianceCategories.length} Domains
+              {totalFrameworks} Frameworks Supported
             </div>
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
               Compliance Enforcement, Not Just Checkboxes
