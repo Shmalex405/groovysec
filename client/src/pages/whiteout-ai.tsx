@@ -12,6 +12,7 @@ import {
   EnforcementSurfaces,
   EnterpriseIdentity,
 } from "@/components/whiteout-differentiators";
+import { PromptInterceptionDemo } from "@/components/prompt-interception-demo";
 import { GlassCard } from "@/components/ui/glass-card";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { AuroraBackground } from "@/components/ui/aurora-background";
@@ -35,11 +36,26 @@ export default function WhiteoutAI() {
         <Navigation />
         <HeroSection />
         <ArchitectureFlow />
+
+        {/* Live enforcement demo — the How-It-Works pipeline above, running
+            (text-center matches the alignment context the demo was designed in) */}
+        <section className="pb-24">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <ScrollReveal>
+              <PromptInterceptionDemo />
+              <p className="mt-5 text-sm text-slate-500 max-w-xl mx-auto">
+                The architecture above, running live — every prompt intercepted,
+                evaluated against 60+ policies, and enforced in real time.
+              </p>
+            </ScrollReveal>
+          </div>
+        </section>
+
         <FullLlmEngine />
         <ComplianceFrameworks />
+        <SecurityCompliance />
         <EnforcementSurfaces />
         <PlatformIntegrations />
-        <SecurityCompliance />
         <PlatformOverview />
         <EnterpriseIdentity />
 

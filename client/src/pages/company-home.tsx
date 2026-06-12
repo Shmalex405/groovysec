@@ -23,6 +23,8 @@ import {
   StaggerItem,
 } from "@/components/motion";
 import { ComplianceFrameworksCompact } from "@/components/compliance-frameworks";
+import { PromptInterceptionDemo } from "@/components/prompt-interception-demo";
+import { MaestroAssessmentDemo } from "@/components/maestro-assessment-demo";
 
 // Single source for product card copy — rendered on both the card front and
 // its reveal overlay so the two can never drift apart.
@@ -130,15 +132,15 @@ export default function CompanyHome() {
               </HeroLine>
               <HeroLine>
                 <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-                  Groovy Security gives enterprises the tools to govern AI usage, prevent data leakage, and automate security testing
-                  <br />
-                  purpose-built for a world where AI is both the innovator and the risk.
+                  Groovy Security gives enterprises the tools to govern AI usage, prevent
+                  data leakage, and automate security testing — purpose-built for a world
+                  where AI is both the innovator and the risk.
                 </p>
               </HeroLine>
             </HeroTextReveal>
 
             <ScrollReveal delay={0.4}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="#products">
                   <GradientButton variant="blue">
                     Explore Products
@@ -149,22 +151,6 @@ export default function CompanyHome() {
                     Request Demo
                   </GradientButton>
                 </Link>
-              </div>
-            </ScrollReveal>
-
-            {/* Floating stats */}
-            <ScrollReveal delay={0.6}>
-              <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto">
-                {[
-                  { value: "60+", label: "AI Policies" },
-                  { value: "12", label: "Regulatory Frameworks" },
-                  { value: "23+", label: "AI Platforms" },
-                ].map((stat) => (
-                  <div key={stat.label} className="text-center">
-                    <div className="text-2xl font-bold text-white">{stat.value}</div>
-                    <div className="text-xs text-slate-500">{stat.label}</div>
-                  </div>
-                ))}
               </div>
             </ScrollReveal>
           </div>
@@ -266,6 +252,21 @@ export default function CompanyHome() {
                 </RevealCard>
               </StaggerItem>
             </StaggerChildren>
+
+            {/* Both products running live — stacked full width so each demo
+                keeps its natural scale (text-center matches the hero context
+                the Whiteout demo was designed in) */}
+            <ScrollReveal>
+              <div className="mt-16 space-y-8 text-center">
+                <PromptInterceptionDemo />
+                <MaestroAssessmentDemo />
+                <p className="text-sm text-slate-500 max-w-2xl mx-auto">
+                  The idea is simple. Whiteout AI governs every prompt before it
+                  leaves your network. Maestro proves every vulnerability with
+                  real exploitation. Defense and offense for the AI era.
+                </p>
+              </div>
+            </ScrollReveal>
           </div>
         </section>
 

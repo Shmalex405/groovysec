@@ -47,9 +47,9 @@ import {
   ScrollReveal,
   StaggerChildren,
   StaggerItem,
-  AnimatedCounter,
   BlurredStaggerText,
 } from "@/components/motion";
+import { MaestroAssessmentDemo } from "@/components/maestro-assessment-demo";
 import { usePageMeta } from "@/lib/use-page-meta";
 
 export default function Maestro() {
@@ -58,12 +58,6 @@ export default function Maestro() {
     "Maestro deploys 21 specialized AI agents with 213 MCP tools through a 232-test assessment matrix — autonomous red team exploitation across web, API, cloud, Kubernetes, identity providers, and AI/LLM systems with proof of impact."
   );
   const [expandedDomain, setExpandedDomain] = useState<number | null>(null);
-  const stats = [
-    { value: "21", label: "AI AGENTS", code: "001" },
-    { value: "213", label: "MCP TOOLS", code: "002" },
-    { value: "232", label: "TEST MATRIX", code: "003" },
-    { value: "Kali", label: "LINUX POWERED", code: "004" },
-  ];
 
   // Each card maps 1:1 to a real worker agent in the Maestro engine
   // (config/team-assessment.yml), ordered by the penetration testing lifecycle:
@@ -214,23 +208,16 @@ export default function Maestro() {
               </ScrollReveal>
             </div>
 
-            {/* Stats — Single horizontal row */}
-            <StaggerChildren className="grid grid-cols-4 gap-3 mt-12 max-w-3xl mx-auto">
-              {stats.map((stat, index) => (
-                <StaggerItem key={index}>
-                  <div className="bg-white/[0.02] backdrop-blur-xl rounded-xl p-4 border border-orange-500/[0.08] hover:border-orange-500/20 transition-all duration-500 text-center">
-                    <div className="text-[10px] font-mono text-slate-600 mb-1 tracking-widest">
-                      {stat.code} // {stat.label}
-                    </div>
-                    <div className="text-2xl font-bold font-mono">
-                      <GradientText from="from-orange-400" via="via-red-400" to="to-amber-300">
-                        <AnimatedCounter value={stat.value} />
-                      </GradientText>
-                    </div>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerChildren>
+            {/* Live assessment visualization (stats live in its footer) */}
+            <ScrollReveal delay={0.6}>
+              <div className="mt-12">
+                <MaestroAssessmentDemo />
+                <p className="mt-5 text-sm text-slate-500 max-w-xl mx-auto text-center">
+                  Discover, exploit, validate, report — every one of the 232 tests
+                  runs the same evidence pipeline.
+                </p>
+              </div>
+            </ScrollReveal>
           </div>
         </section>
 
