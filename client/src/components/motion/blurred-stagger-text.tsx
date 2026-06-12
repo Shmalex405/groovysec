@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
 interface BlurredStaggerTextProps {
   text: string;
@@ -12,26 +12,28 @@ export function BlurredStaggerText({
   className,
   staggerDelay = 0.04,
 }: BlurredStaggerTextProps) {
-  const [isHovered, setIsHovered] = useState(false);
+  const ref = useRef<HTMLParagraphElement>(null);
+  // Reveal word-by-word once the paragraph scrolls into view, so the copy is
+  // readable without a hover — and on touch devices, which never hover.
+  const inView = useInView(ref, { once: true, amount: 0.4 });
+  const reducedMotion = useReducedMotion();
+  const revealed = inView || reducedMotion;
   const words = text.split(" ");
 
   return (
-    <motion.p
-      className={`cursor-default ${className}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <motion.p ref={ref} className={className}>
       {words.map((word, i) => (
         <motion.span
           key={i}
           className="inline-block mr-[0.3em]"
+          initial={false}
           animate={{
-            filter: isHovered ? "blur(0px)" : "blur(5px)",
-            opacity: isHovered ? 1 : 0.5,
+            filter: revealed ? "blur(0px)" : "blur(5px)",
+            opacity: revealed ? 1 : 0.5,
           }}
           transition={{
-            duration: 0.35,
-            delay: isHovered ? i * staggerDelay : (words.length - 1 - i) * staggerDelay * 0.5,
+            duration: reducedMotion ? 0 : 0.35,
+            delay: reducedMotion ? 0 : i * staggerDelay,
             ease: "easeOut",
           }}
         >
