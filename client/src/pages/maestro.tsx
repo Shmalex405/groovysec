@@ -32,6 +32,8 @@ import {
   KeyRound,
   CalendarClock,
   Cpu,
+  Bot,
+  BrainCircuit,
   Gauge,
   Share2,
   FileCheck,
@@ -53,13 +55,13 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function Maestro() {
   usePageMeta(
     "Maestro — AI-Driven Penetration Testing",
-    "Maestro deploys 18 specialized AI agents with 203 MCP tools through a 209-test assessment matrix — autonomous red team exploitation across web, API, cloud, Kubernetes, and identity providers with proof of impact."
+    "Maestro deploys 21 specialized AI agents with 213 MCP tools through a 232-test assessment matrix — autonomous red team exploitation across web, API, cloud, Kubernetes, identity providers, and AI/LLM systems with proof of impact."
   );
   const [expandedDomain, setExpandedDomain] = useState<number | null>(null);
   const stats = [
-    { value: "18", label: "AI AGENTS", code: "001" },
-    { value: "203", label: "MCP TOOLS", code: "002" },
-    { value: "209", label: "TEST MATRIX", code: "003" },
+    { value: "21", label: "AI AGENTS", code: "001" },
+    { value: "213", label: "MCP TOOLS", code: "002" },
+    { value: "232", label: "TEST MATRIX", code: "003" },
     { value: "Kali", label: "LINUX POWERED", code: "004" },
   ];
 
@@ -70,26 +72,29 @@ export default function Maestro() {
     { num: "01", icon: Search, title: "Recon & Infra Agent", description: "Reconnaissance and infrastructure security in one pass — asset discovery, port scanning, and subdomain enumeration alongside SSL/TLS, DNS/DNSSEC, certificate, and zone-transfer analysis.", color: "orange" as const },
     { num: "02", icon: Cloud, title: "Cloud Recon Agent", description: "Multi-cloud discovery across AWS, Azure, GCP, and Kubernetes — resource enumeration, IAM analysis, storage discovery, and network mapping for cloud-native environments.", color: "red" as const },
     { num: "03", icon: KeyRound, title: "Identity Recon Agent", description: "Identity provider enumeration across Active Directory, Entra ID, M365, Okta, Google Workspace, and Ping — BloodHound graph collection, Kerberoast/AS-REP candidate discovery, and ADCS vulnerable-template enumeration.", color: "amber" as const },
-    { num: "04", icon: Scan, title: "Code Scanning Agent", description: "Static application security testing with Semgrep, Bandit, and njsscan — secrets detection, dependency and supply-chain scanning, and infrastructure-as-code analysis.", color: "orange" as const },
-    { num: "05", icon: Code, title: "Code Intelligence Agent", description: "Source code intelligence that maps entry points, traces data flows with taint analysis, verifies existing defenses, and builds the attack surface from your codebase.", color: "red" as const },
-    { num: "06", icon: Globe, title: "Web App Agent", description: "Deep web application exploitation — OWASP Top 10, authorization and session testing, injection (SQLi/XSS/SSTI), SSRF, cache poisoning, HTTP smuggling, and race conditions.", color: "amber" as const },
-    { num: "07", icon: Network, title: "API & GraphQL Agent", description: "GraphQL introspection and abuse, REST API fuzzing, JWT analysis, IDOR testing, WebSocket security, file-upload checks, and Nuclei/Nikto vulnerability scanning.", color: "orange" as const },
-    { num: "08", icon: CloudCog, title: "Cloud Exploit Agent", description: "Cloud-native red team exploitation — IAM privilege escalation chains, storage abuse, Kubernetes attacks, serverless exploitation, and metadata probing with validated proof of impact.", color: "red" as const },
-    { num: "09", icon: Lock, title: "Identity Exploit Agent", description: "Lockout-governed identity exploitation — Kerberoasting, password spraying, token replay, and ADCS ESC abuse across Active Directory, Entra ID, M365, Okta, Google Workspace, and Ping, with validated privilege escalation.", color: "amber" as const },
-    { num: "10", icon: Layers, title: "Chain Analysis Agent", description: "Two-pass attack-chain analysis — hypothesizes multi-step exploit paths, then validates them against real exploitation results with severity recalculation and defense-in-depth analysis.", color: "orange" as const },
-    { num: "11", icon: CheckCircle, title: "Cross-Validation & QA Agent", description: "Cross-validates static findings against live endpoints, scores confidence, eliminates false positives, and flags coverage gaps so every reported finding is reproducible.", color: "red" as const },
-    { num: "12", icon: Gauge, title: "Severity Calibration Agent", description: "Re-rates every finding's severity from actual exploitation outcomes — exploited, partial, or not exploitable — using reachability evidence and attack-chain context.", color: "amber" as const },
-    { num: "13", icon: Share2, title: "Cloud Analysis Agent", description: "Synthesizes the cloud companion report and builds an escalation graph, rendering validated cloud attack chains from posture and IAM data.", color: "orange" as const },
-    { num: "14", icon: Share2, title: "Identity Analysis Agent", description: "Synthesizes the Identity Companion Report and builds the privilege-escalation graph, rendering validated identity attack chains across on-prem Active Directory and cloud identity providers.", color: "red" as const },
-    { num: "15", icon: Scale, title: "Compliance Agent", description: "Automated mapping to OWASP Top 10, OWASP API Top 10, NIST 800-53, PCI-DSS, and CWE standards, with CVSS v3.1 scoring for every finding.", color: "amber" as const },
-    { num: "16", icon: FileText, title: "Report Agent", description: "Professional report generation with executive summaries, technical detail, original and calibrated severity, full test-coverage checklists, and prioritized remediation guidance.", color: "orange" as const },
-    { num: "17", icon: FileCheck, title: "Report Enrichment Agent", description: "Validates each report against rigorous quality checks, re-runs tools to fill any gaps, and enforces complete coverage before the report is finalized.", color: "red" as const },
-    { num: "18", icon: Printer, title: "PDF Rendering Agent", description: "Converts the finished assessment into a polished, styled PDF and registers it for delivery to stakeholders — the final step of every engagement.", color: "amber" as const },
+    { num: "04", icon: Bot, title: "AI Recon Agent", description: "AI/LLM system reconnaissance — model, provider, and framework fingerprinting, exposed tool and function enumeration, untrusted-input surface mapping, and guardrail detection before red teaming begins.", color: "orange" as const },
+    { num: "05", icon: Scan, title: "Code Scanning Agent", description: "Static application security testing with Semgrep, Bandit, and njsscan — secrets detection, dependency and supply-chain scanning, and infrastructure-as-code analysis.", color: "red" as const },
+    { num: "06", icon: Code, title: "Code Intelligence Agent", description: "Source code intelligence that maps entry points, traces data flows with taint analysis, verifies existing defenses, and builds the attack surface from your codebase.", color: "amber" as const },
+    { num: "07", icon: Globe, title: "Web App Agent", description: "Deep web application exploitation — OWASP Top 10, authorization and session testing, injection (SQLi/XSS/SSTI), SSRF, cache poisoning, HTTP smuggling, and race conditions.", color: "orange" as const },
+    { num: "08", icon: Network, title: "API & GraphQL Agent", description: "GraphQL introspection and abuse, REST API fuzzing, JWT analysis, IDOR testing, WebSocket security, file-upload checks, and Nuclei/Nikto vulnerability scanning.", color: "red" as const },
+    { num: "09", icon: CloudCog, title: "Cloud Exploit Agent", description: "Cloud-native red team exploitation — IAM privilege escalation chains, storage abuse, Kubernetes attacks, serverless exploitation, and metadata probing with validated proof of impact.", color: "amber" as const },
+    { num: "10", icon: Lock, title: "Identity Exploit Agent", description: "Lockout-governed identity exploitation — Kerberoasting, password spraying, token replay, and ADCS ESC abuse across Active Directory, Entra ID, M365, Okta, Google Workspace, and Ping, with validated privilege escalation.", color: "orange" as const },
+    { num: "11", icon: BrainCircuit, title: "AI Red Team Agent", description: "AI/LLM exploitation against the OWASP Top 10 for LLM Applications (2025) — prompt injection, jailbreak, system-prompt extraction, sensitive disclosure, excessive agency, and RAG isolation, with capture-not-execute safety controls.", color: "red" as const },
+    { num: "12", icon: Layers, title: "Chain Analysis Agent", description: "Two-pass attack-chain analysis — hypothesizes multi-step exploit paths, then validates them against real exploitation results with severity recalculation and defense-in-depth analysis.", color: "amber" as const },
+    { num: "13", icon: CheckCircle, title: "Cross-Validation & QA Agent", description: "Cross-validates static findings against live endpoints, scores confidence, eliminates false positives, and flags coverage gaps so every reported finding is reproducible.", color: "orange" as const },
+    { num: "14", icon: Gauge, title: "Severity Calibration Agent", description: "Re-rates every finding's severity from actual exploitation outcomes — exploited, partial, or not exploitable — using reachability evidence and attack-chain context.", color: "red" as const },
+    { num: "15", icon: Share2, title: "Cloud Analysis Agent", description: "Synthesizes the cloud companion report and builds an escalation graph, rendering validated cloud attack chains from posture and IAM data.", color: "amber" as const },
+    { num: "16", icon: Share2, title: "Identity Analysis Agent", description: "Synthesizes the Identity Companion Report and builds the privilege-escalation graph, rendering validated identity attack chains across on-prem Active Directory and cloud identity providers.", color: "orange" as const },
+    { num: "17", icon: Share2, title: "AI Analysis Agent", description: "Synthesizes the AI Security Assessment Report — builds the excessive-agency graph from injection to tool to system, mapped to the OWASP LLM Top 10 and MITRE ATLAS.", color: "red" as const },
+    { num: "18", icon: Scale, title: "Compliance Agent", description: "Automated mapping to OWASP Top 10, OWASP API Top 10, OWASP LLM Top 10, NIST 800-53, PCI-DSS, MITRE ATLAS, and CWE standards, with CVSS v3.1 scoring for every finding.", color: "amber" as const },
+    { num: "19", icon: FileText, title: "Report Agent", description: "Professional report generation with executive summaries, technical detail, original and calibrated severity, full test-coverage checklists, and prioritized remediation guidance.", color: "orange" as const },
+    { num: "20", icon: FileCheck, title: "Report Enrichment Agent", description: "Validates each report against rigorous quality checks, re-runs tools to fill any gaps, and enforces complete coverage before the report is finalized.", color: "red" as const },
+    { num: "21", icon: Printer, title: "PDF Rendering Agent", description: "Converts the finished assessment into a polished, styled PDF and registers it for delivery to stakeholders — the final step of every engagement.", color: "amber" as const },
   ];
 
   const features = [
     { icon: Bug, title: "Full-Spectrum Red Team", description: "Controlled exploitation across web applications, APIs, cloud infrastructure, Kubernetes, and identity providers — from OWASP Top 10 through IAM privilege escalation, container escapes, and Active Directory / Entra ID attack paths. Proven impact, not theoretical risk." },
-    { icon: Layers, title: "209-Test Assessment Matrix", description: "Structured assessment framework with 73 DAST tests, 60 identity tests, 29 cloud security tests, 24 SAST tests, 15 cross-validation tests, and 8 chain analysis tests — ensuring consistent, deterministic coverage across every engagement." },
+    { icon: Layers, title: "232-Test Assessment Matrix", description: "Structured assessment framework with 73 DAST tests, 60 identity tests, 29 cloud security tests, 24 SAST tests, 23 AI/LLM tests, 15 cross-validation tests, and 8 chain analysis tests — ensuring consistent, deterministic coverage across every engagement." },
     { icon: SplitSquareVertical, title: "Multi-Track Analysis", description: "Parallel dynamic, static, cloud, and identity analysis with cross-validation. Findings enriched with source code context, cloud posture, and identity graph data, then validated against live endpoints." },
     { icon: Zap, title: "Autonomous Testing", description: "Deploy agents and let them work autonomously — Maestro coordinates the full pentest lifecycle from reconnaissance through exploitation to reporting." },
     { icon: FileText, title: "Report Generation", description: "Evidence-based reporting in HTML, PDF, and Markdown with executive summaries, technical breakdowns, complete reproduction steps, and prioritized remediation guidance — ready for stakeholders." },
@@ -161,11 +166,11 @@ export default function Maestro() {
 
                   <HeroLine>
                     <p className="text-lg text-slate-400 mb-8 leading-relaxed max-w-lg">
-                      Maestro deploys 18 specialized AI agents to autonomously discover
-                      vulnerabilities across web apps, APIs, cloud, and identity
-                      providers — then validates them through real red team-style
-                      exploitation. Every finding comes with proof of impact, not just
-                      scanner output.
+                      Maestro deploys 21 specialized AI agents to autonomously discover
+                      vulnerabilities across web apps, APIs, cloud, identity
+                      providers, and AI/LLM systems — then validates them through real
+                      red team-style exploitation. Every finding comes with proof of
+                      impact, not just scanner output.
                     </p>
                   </HeroLine>
                 </HeroTextReveal>
@@ -235,13 +240,13 @@ export default function Maestro() {
             <ScrollReveal>
               <div className="text-center mb-12">
                 <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
-                  18 Specialized AI Agents
+                  21 Specialized AI Agents
                 </h2>
                 <p className="text-lg text-slate-400 max-w-2xl mx-auto">
                   Each agent is purpose-built for a specific phase of the penetration
                   testing lifecycle — from reconnaissance and code intelligence through
-                  web exploitation, cloud and identity red teaming, attack chain
-                  analysis, compliance mapping, and validated reporting.
+                  web exploitation, cloud, identity, and AI/LLM red teaming, attack
+                  chain analysis, compliance mapping, and validated reporting.
                 </p>
               </div>
             </ScrollReveal>
@@ -325,7 +330,7 @@ export default function Maestro() {
               <div>
                 <ScrollReveal>
                   <h3 className="text-lg font-mono tracking-wider mb-4 px-1">
-                    <span className="text-orange-400 font-bold">203</span>{" "}
+                    <span className="text-orange-400 font-bold">213</span>{" "}
                     <span className="text-orange-300/70">MCP TOOLS</span>
                   </h3>
                 </ScrollReveal>
@@ -340,13 +345,13 @@ export default function Maestro() {
               <div>
                 <ScrollReveal>
                   <h3 className="text-lg font-mono tracking-wider mb-4 px-1">
-                    <span className="text-orange-400 font-bold">209</span>{" "}
+                    <span className="text-orange-400 font-bold">232</span>{" "}
                     <span className="text-orange-300/70">TEST MATRIX</span>
                   </h3>
                 </ScrollReveal>
                 <GlassCard className="p-8">
                   <BlurredStaggerText
-                    text="Maestro's structured assessment framework — a deterministic checklist ensuring every engagement covers the same 209 tests across DAST, SAST, cloud security, identity, cross-validation, and chain analysis. No tester variance, no missed coverage. Every run produces consistent, comparable results."
+                    text="Maestro's structured assessment framework — a deterministic checklist ensuring every engagement covers the same 232 tests across DAST, SAST, cloud security, identity, AI/LLM, cross-validation, and chain analysis. No tester variance, no missed coverage. Every run produces consistent, comparable results."
                     className="text-lg text-orange-200/60 leading-relaxed"
 
                   />
@@ -447,6 +452,18 @@ export default function Maestro() {
                         "Container escape testing",
                         "RBAC & service account analysis",
                         "Network segmentation validation",
+                      ],
+                    },
+                    {
+                      icon: Bot,
+                      title: "AI / LLM Security",
+                      isNew: true,
+                      summary: "Prompt injection, jailbreak, system-prompt leakage, RAG isolation & agent abuse — OWASP LLM Top 10 (2025)",
+                      capabilities: [
+                        "Prompt injection (direct & indirect), jailbreak & guardrail-bypass testing",
+                        "System-prompt extraction & sensitive information disclosure",
+                        "Excessive agency & improper output handling — tool calls captured, never executed",
+                        "RAG isolation, data poisoning & MCP tool-poisoning, mapped to OWASP LLM Top 10 + MITRE ATLAS",
                       ],
                     },
                     {
@@ -685,7 +702,7 @@ export default function Maestro() {
                     Identity / IDP Suite
                   </div>
                   <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
-                    Identity Is the New Perimeter.
+                    Identity Is the Standard Perimeter.
                     <span className="block text-orange-400">Maestro Attacks It Like One.</span>
                   </h2>
                   <p className="text-lg text-slate-400 mb-8 leading-relaxed">

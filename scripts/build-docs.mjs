@@ -45,7 +45,7 @@ const ROUTES = [
     path: "/maestro",
     title: `Maestro — AI-Driven Penetration Testing | ${SITE_NAME}`,
     description:
-      "Maestro deploys 18 specialized AI agents with 203 MCP tools through a 209-test assessment matrix — autonomous red team exploitation across web, API, cloud, Kubernetes, and identity providers with proof of impact.",
+      "Maestro deploys 21 specialized AI agents with 213 MCP tools through a 232-test assessment matrix — autonomous red team exploitation across web, API, cloud, Kubernetes, identity providers, and AI/LLM systems with proof of impact.",
   },
   {
     path: "/skills",
