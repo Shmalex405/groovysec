@@ -44,7 +44,7 @@ export function FullLlmEngine() {
       icon: BarChart3,
       title: "Benchmarked in Public",
       description:
-        "99.19% accuracy across a 15,915-prompt benchmark spanning all nine policy domains — published openly so you can verify it yourself, not take our word for it.",
+        "Greater than 99% accuracy across a 15,915-prompt benchmark spanning all nine policy domains — and calibrated to flag genuine violations without interrupting legitimate work. Published openly so you can verify it yourself, not take our word for it.",
     },
   ];
 
@@ -60,8 +60,9 @@ export function FullLlmEngine() {
             <p className="text-lg text-slate-400 max-w-3xl mx-auto">
               Most AI data-protection tools rely on small classifier models or
               pattern matching that miss context. Whiteout AI evaluates every
-              prompt with a full 27-billion-parameter LLM — and proves its
-              accuracy on a public benchmark.
+              prompt with a full 27-billion-parameter LLM — accurate enough to
+              catch real violations on a public benchmark, calibrated enough to
+              wave legitimate work straight through.
             </p>
           </div>
         </ScrollReveal>
@@ -88,7 +89,7 @@ export function FullLlmEngine() {
           <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] p-8">
             <div className="grid sm:grid-cols-3 gap-8 text-center mb-6">
               {[
-                { value: "99.19%", label: "Overall Accuracy" },
+                { value: ">99%", label: "Overall Accuracy" },
                 { value: "15,915", label: "Benchmark Prompts" },
                 { value: "9", label: "Policy Domains Covered" },
               ].map((stat) => (

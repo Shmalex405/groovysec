@@ -43,7 +43,7 @@ export default function Resources() {
       tagColor: "bg-blue-500/15 text-blue-400 border-blue-500/25",
       title: "Whiteout AI Compliance Benchmark — Published Openly",
       description:
-        "We published the full 15,915-prompt benchmark used to evaluate Whiteout AI's compliance engine — spanning all nine policy domains, from short prompts to long-form documents, with safe, violation, and edge-case scenarios. The engine scores 99.19% overall. The dataset is open so customers and researchers can verify the results themselves.",
+        "We published the full 15,915-prompt benchmark used to evaluate Whiteout AI's compliance engine — spanning all nine policy domains, from short prompts to long-form documents, with safe, violation, and edge-case scenarios. The engine scores greater than 99% overall. The dataset is open so customers and researchers can verify the results themselves.",
       link: {
         label: "Explore the dataset on Hugging Face",
         href: "https://huggingface.co/datasets/ShmalexFlow/whiteout-compliance-benchmark",

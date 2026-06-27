@@ -28,7 +28,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function WhiteoutAI() {
   usePageMeta(
     "Whiteout AI — Enterprise AI Governance",
-    "Intercept and govern every AI interaction across browser, desktop, IDE, infrastructure, and cloud. A full 27B-parameter LLM compliance engine with 60+ policies across 9 domains and 99.19% benchmark accuracy."
+    "Intercept and govern every AI interaction across browser, desktop, IDE, infrastructure, and cloud. A full 27B-parameter LLM compliance engine with 60+ policies across 9 domains and greater than 99% benchmark accuracy."
   );
   return (
     <PageTransition>

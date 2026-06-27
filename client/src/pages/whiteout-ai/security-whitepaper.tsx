@@ -39,7 +39,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function SecurityWhitepaper() {
   usePageMeta(
     "Whiteout AI Security Whitepaper",
-    "How Whiteout AI enables safe enterprise adoption of generative AI — 60+ policies across 9 compliance domains, 99.19% accuracy on a 15,915-prompt public benchmark, and security-first architecture."
+    "How Whiteout AI enables safe enterprise adoption of generative AI — 60+ policies across 9 compliance domains, greater than 99% accuracy on a 15,915-prompt public benchmark, and security-first architecture."
   );
   const demoHref = "/demo";
 
@@ -47,7 +47,7 @@ export default function SecurityWhitepaper() {
     { value: "60+", label: "Built-in Policies" },
     { value: "23+", label: "AI Platforms Covered" },
     { value: "9", label: "Compliance Domains" },
-    { value: "99.19%", label: "Benchmark Accuracy" },
+    { value: ">99%", label: "Benchmark Accuracy" },
   ];
 
   const challenges = [
@@ -636,7 +636,7 @@ const useCases = [
                 <div className="space-y-3">
                   {[
                     "60+ built-in policies across 9 compliance domains",
-                    "99.19% accuracy across a 15,915-prompt public benchmark",
+                    "Greater than 99% accuracy across a 15,915-prompt public benchmark",
                     "Request custom policies tailored to your organization\u2019s specific rules",
                     "Group-based assignment for departmental compliance",
                     "Supports both cloud and self-hosted LLM evaluation",

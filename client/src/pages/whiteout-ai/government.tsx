@@ -34,13 +34,13 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function Government() {
   usePageMeta(
     "Whiteout AI for Government & Public Sector",
-    "AI governance built for the public sector — 60+ pre-built policies across 9 domains, 99.19% benchmark accuracy, SSO/MDM/SIEM integration, and audit-ready proof of every AI control."
+    "AI governance built for the public sector — 60+ pre-built policies across 9 domains, greater than 99% benchmark accuracy, SSO/MDM/SIEM integration, and audit-ready proof of every AI control."
   );
   const demoHref = "/demo";
 
   const stats = [
     { value: "60+", label: "Pre-Built Policies" },
-    { value: "99.19%", label: "Benchmark Accuracy" },
+    { value: ">99%", label: "Benchmark Accuracy" },
     { value: "9", label: "Policy Domains" },
     { value: "<320ms", label: "Evaluation Latency (P95)" },
   ];
@@ -120,7 +120,7 @@ export default function Government() {
       icon: Zap,
       title: "Contextual Intelligence",
       description:
-        'LLM-based evaluation understands context, not just keywords. It distinguishes between "aggregate hospital statistics" and actual patient data\u201499.19% accuracy across a 15,915-prompt public benchmark.',
+        'LLM-based evaluation understands context, not just keywords. It distinguishes between "aggregate hospital statistics" and actual patient data\u2014greater than 99% accuracy across a 15,915-prompt public benchmark, calibrated to allow legitimate work through.',
     },
     {
       icon: Server,
@@ -344,7 +344,7 @@ export default function Government() {
                 <div className="mt-6 text-center">
                   <div className="text-emerald-400 font-semibold text-sm flex items-center justify-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    99.19% Accuracy on a 15,915-Prompt Public Benchmark
+                    Greater Than 99% Accuracy on a 15,915-Prompt Public Benchmark
                   </div>
                 </div>
               </div>
