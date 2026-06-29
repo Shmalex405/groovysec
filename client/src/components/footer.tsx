@@ -10,17 +10,22 @@ type LinkItem = {
 
 const footerLinks: Record<string, LinkItem[]> = {
   Products: [
-    { label: "Whiteout AI", href: "/whiteout-ai" },
+    { label: "Whiteout AI", href: "/" },
     { label: "Maestro", href: "/maestro" },
     { label: "Secure AI Skills", href: "/skills" },
     { label: "Downloads", href: "/download" },
     { label: "Documentation", href: "/docs", external: false },
   ],
-  Resources: [
-    { label: "News & Research", href: "/resources" },
-    { label: "Security Whitepaper", href: "/whiteout-ai/security-whitepaper" },
+  Solutions: [
     { label: "Government & Public Sector", href: "/whiteout-ai/government" },
     { label: "Academic Integrity", href: "/whiteout-ai/academic-integrity" },
+    { label: "Data Loss Prevention", href: "/solutions/data-loss-prevention" },
+    { label: "Regulated & Compliance", href: "/solutions/compliance" },
+  ],
+  Resources: [
+    { label: "News & Research", href: "/resources" },
+    { label: "Blog", href: "/blog" },
+    { label: "Security Whitepaper", href: "/whiteout-ai/security-whitepaper" },
   ],
   Company: [
     { label: "About", href: "/about" },
@@ -39,8 +44,8 @@ export function Footer() {
 
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid md:grid-cols-4 gap-12">
-            <div className="space-y-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-10">
+            <div className="col-span-2 md:col-span-3 lg:col-span-1 space-y-4">
               <GroovyLogo />
               <p className="text-slate-500 text-sm leading-relaxed mt-4">
                 Securing AI. Automating Security. Enterprise-grade cybersecurity

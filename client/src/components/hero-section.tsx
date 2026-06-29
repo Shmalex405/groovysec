@@ -75,8 +75,12 @@ export function HeroSection() {
           <div>
             <HeroTextReveal>
               <HeroLine>
-                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-500/[0.08] border border-blue-500/20 text-blue-400 text-sm mb-8">
-                  Whiteout AI
+                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-blue-500/[0.08] border border-blue-500/20 text-sm mb-8">
+                  <span className="font-semibold text-white">Whiteout AI</span>
+                  <span className="w-px h-3.5 bg-blue-400/30" />
+                  <span className="text-blue-400 text-xs font-medium uppercase tracking-[0.18em]">
+                    AI Interaction Inspection
+                  </span>
                 </div>
               </HeroLine>
 
@@ -116,7 +120,9 @@ export function HeroSection() {
             </ScrollReveal>
           </div>
 
-          <ScrollReveal direction="right" delay={0.3}>
+          {/* isolate traps the orbital nodes' inline z-index (up to 200) inside
+              their own stacking context so they can't paint over the nav dropdowns */}
+          <ScrollReveal direction="right" delay={0.3} className="relative isolate">
             <RadialOrbitalTimeline
               timelineData={interceptorData}
               centerImage="/icononly_transparent_nobuffer.png"

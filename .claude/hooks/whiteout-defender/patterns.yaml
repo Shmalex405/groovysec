@@ -1,0 +1,385 @@
+# Whiteout AI - Claude Code Prompt Injection Defender
+# ==============================================================
+# Customized pattern library for Groovy Security / Whiteout AI.
+# Extends the Lasso Security claude-hooks pattern set with
+# enterprise-specific detections for data exfiltration, policy
+# bypass, and Whiteout-specific attack vectors.
+#
+# PATTERN SYNTAX:
+#   - Uses Python regex (PCRE-like)
+#   - (?i) = case-insensitive matching
+#   - \b = word boundary
+#   - \s = whitespace, \s+ = one or more whitespace
+#
+# SEVERITY LEVELS:
+#   - critical: Enterprise data exfiltration / compliance breach
+#   - high: Definite injection attempt
+#   - medium: Suspicious, may have legitimate uses
+#   - low: Informational, potential false positive
+#
+# CATEGORIES:
+#   - instructionOverridePatterns: Override/ignore system prompts
+#   - rolePlayingPatterns: Persona switching / jailbreaks
+#   - encodingPatterns: Obfuscation / encoding attacks
+#   - contextManipulationPatterns: False authority / hidden instructions
+#   - dataExfiltrationPatterns: Attempts to leak sensitive data (Whiteout-specific)
+#   - policyBypassPatterns: Attempts to circumvent Whiteout policies (Whiteout-specific)
+# ==============================================================
+
+# ==============================================================================
+# INSTRUCTION OVERRIDE PATTERNS
+# ==============================================================================
+instructionOverridePatterns:
+  - pattern: '(?i)\bignore\s+(all\s+)?(previous|prior|above|earlier|preceding)\s+(instructions?|prompts?|rules?|guidelines?|directives?|context)'
+    reason: "Attempts to ignore previous instructions"
+    severity: high
+
+  - pattern: '(?i)\bforget\s+(all\s+)?(previous|prior|above|earlier|your)\s+(instructions?|prompts?|rules?|training|guidelines?)'
+    reason: "Attempts to make AI forget instructions"
+    severity: high
+
+  - pattern: '(?i)\bdisregard\s+(all\s+)?(previous|prior|above|earlier)\s+(instructions?|prompts?|context|rules?)'
+    reason: "Attempts to disregard previous instructions"
+    severity: high
+
+  - pattern: '(?i)\boverride\s+(your\s+|all\s+)?(instructions?|programming|directives?|rules?|guidelines?)'
+    reason: "Attempts to override instructions"
+    severity: high
+
+  - pattern: '(?i)\breplace\s+(your\s+)?(instructions?|prompt|guidelines?|rules?)\s+with'
+    reason: "Attempts to replace instructions"
+    severity: high
+
+  - pattern: '(?i)\b(do\s+)?not\s+follow\s+(your\s+)?(previous|original|initial)\s+(instructions?|rules?|guidelines?)'
+    reason: "Instructs to not follow previous guidelines"
+    severity: high
+
+  - pattern: '(?i)\b(new|updated|revised|real)\s+system\s+prompt\b'
+    reason: "Attempts to inject new system prompt"
+    severity: high
+
+  - pattern: '(?i)\bsystem\s+prompt\s*(:|=|override)'
+    reason: "System prompt injection marker"
+    severity: high
+
+  - pattern: '(?i)\b(this\s+is\s+)?(your\s+)?new\s+(instructions?|task|objective|mission|directive)'
+    reason: "Attempts to set new instructions"
+    severity: high
+
+  - pattern: '(?i)\bfrom\s+now\s+on[,\s]+(you\s+)?(will|must|should|are)'
+    reason: "Attempts to redefine behavior going forward"
+    severity: high
+
+  - pattern: '(?i)\bthis\s+(instruction|command|task|directive)\s+(takes?\s+)?(priority|precedence)\s+over'
+    reason: "Attempts to take priority over other instructions"
+    severity: high
+
+  - pattern: '(?i)\breset\s+(your\s+)?(context|memory|instructions?|state|conversation)'
+    reason: "Attempts to reset context"
+    severity: high
+
+  - pattern: '(?i)\bclear\s+(your\s+)?(memory|context|instructions?|history|state)'
+    reason: "Attempts to clear memory/context"
+    severity: high
+
+  - pattern: '(?i)\bwipe\s+(your\s+)?(memory|context|slate)'
+    reason: "Attempts to wipe memory"
+    severity: high
+
+  - pattern: '(?i)\bend\s+(of\s+)?(system\s+)?(prompt|instructions?)\b.*\b(new|begin|start)'
+    reason: "Fake end-of-prompt marker"
+    severity: high
+
+  - pattern: '(?i)\[/?system\]|\{/?system\}'
+    reason: "Fake system message markers"
+    severity: high
+
+  - pattern: '(?i)\[\[SYSTEM\]\]|\(\(SYSTEM\)\)|\{\{SYSTEM\}\}'
+    reason: "Fake system block markers"
+    severity: high
+
+# ==============================================================================
+# ROLE-PLAYING / DAN PATTERNS
+# ==============================================================================
+rolePlayingPatterns:
+  - pattern: '(?i)\byou\s+are\s+(now\s+)?DAN\b'
+    reason: "DAN jailbreak attempt"
+    severity: high
+
+  - pattern: '(?i)\bDAN\s+(mode|persona|character|version)\b'
+    reason: "DAN mode activation attempt"
+    severity: high
+
+  - pattern: '(?i)\b(do|does)\s+anything\s+now\b'
+    reason: "DAN 'Do Anything Now' pattern"
+    severity: high
+
+  - pattern: '(?i)\bjailbreak(ed)?\s+(mode|prompt|version|enabled)\b'
+    reason: "Explicit jailbreak attempt"
+    severity: high
+
+  - pattern: '(?i)\b(enable|activate|enter)\s+(jailbreak|unrestricted|god)\s*mode'
+    reason: "Mode activation jailbreak"
+    severity: high
+
+  - pattern: '(?i)\bDEVELOPER\s+MODE\s+(ENABLED|ACTIVATED|ON)'
+    reason: "Fake developer mode activation"
+    severity: high
+
+  - pattern: '(?i)\byou\s+are\s+(now\s+)?(a|an)\s+(different|new|unrestricted|unfiltered|uncensored)'
+    reason: "Persona change to unrestricted AI"
+    severity: high
+
+  - pattern: '(?i)\b(without|ignore|bypass|disable|remove)\s+(your\s+)?(restrictions?|filters?|safeguards?|limitations?|guardrails?)'
+    reason: "Restriction bypass attempt"
+    severity: high
+
+  - pattern: '(?i)\b(remove|turn\s+off|disable|deactivate)\s+(your\s+)?(ethical|safety|content)\s+(guidelines?|filters?|restrictions?)'
+    reason: "Safety filter disable attempt"
+    severity: high
+
+  - pattern: '(?i)\bunrestricted\s+(mode|access|version|output)'
+    reason: "Unrestricted mode request"
+    severity: high
+
+  - pattern: '(?i)\b(evil|unrestricted|uncensored)\s+(twin|version|mode|side|alter\s*ego)\b'
+    reason: "Evil twin persona attempt"
+    severity: high
+
+# ==============================================================================
+# ENCODING / OBFUSCATION PATTERNS
+# ==============================================================================
+encodingPatterns:
+  - pattern: '(?i)\bdecode\s+(this\s+|the\s+)?base64\b'
+    reason: "Base64 decode instruction"
+    severity: medium
+
+  - pattern: '(?i)\bbase64\s*(encoded|string|payload)?\s*[:\s]\s*[A-Za-z0-9+/]{20,}={0,2}'
+    reason: "Base64 encoded payload"
+    severity: medium
+
+  - pattern: '(?i)\bexecute\s+(the\s+)?decoded\s+(base64|content|string)'
+    reason: "Decoded content execution request"
+    severity: high
+
+  - pattern: '\\x[0-9a-fA-F]{2}(\\x[0-9a-fA-F]{2}){5,}'
+    reason: "Hex escaped string sequence"
+    severity: medium
+
+  - pattern: '\\u[0-9a-fA-F]{4}(\\u[0-9a-fA-F]{4}){3,}'
+    reason: "Unicode escape sequence"
+    severity: medium
+
+  - pattern: '[\u200B\u200C\u200D\uFEFF\u00AD]{2,}'
+    reason: "Zero-width/invisible characters detected"
+    severity: high
+
+  - pattern: '[\u2060\u180E\u2000-\u200F]{3,}'
+    reason: "Unicode whitespace manipulation"
+    severity: high
+
+  - pattern: '(?i)\b(1gn0r3|f0rg3t|d1sr3g4rd|0v3rr1d3)\b'
+    reason: "Leetspeak instruction keywords"
+    severity: medium
+
+  - pattern: '(?i)\b(syst3m|pr0mpt|1nstruct10n[s5]?)\b'
+    reason: "Leetspeak system/prompt terms"
+    severity: medium
+
+  - pattern: '(?i)\b(j41lbr34k|byp4ss|h4ck)\b'
+    reason: "Leetspeak jailbreak terms"
+    severity: high
+
+  - pattern: '[\u0430\u0435\u043E\u0440\u0441\u0443\u0445\u0456]{3,}'
+    reason: "Cyrillic homoglyphs detected (lookalike letters)"
+    severity: high
+
+# ==============================================================================
+# CONTEXT MANIPULATION PATTERNS
+# ==============================================================================
+contextManipulationPatterns:
+  - pattern: '(?i)\b(anthropic|openai|claude\s*team|google|meta)\s+(says?|requires?|demands?|orders?|instructs?)\b'
+    reason: "False authority invocation (AI company)"
+    severity: high
+
+  - pattern: '(?i)\b(official|authorized|verified)\s+(instruction|message|update|command)\s+from\s+(anthropic|openai|claude)'
+    reason: "Fake official message"
+    severity: high
+
+  - pattern: '(?i)\b(system\s+)?(administrator|admin|root|superuser)\s+(message|override|instruction|command)'
+    reason: "Fake admin message"
+    severity: high
+
+  - pattern: '(?i)\bdeveloper\s+(mode|override|access)\s+(enabled|activated|granted)'
+    reason: "Fake developer mode claim"
+    severity: high
+
+  - pattern: '(?i)\bmaintenance\s+(mode|override)\s*(enabled|active|[:\s])'
+    reason: "Fake maintenance mode"
+    severity: high
+
+  - pattern: '(?i)\bprevious\s+conversation\s+(summary|context|history)\s*:'
+    reason: "Fake previous conversation injection"
+    severity: high
+
+  - pattern: '(?i)\bignore\s+everything\s+(before|after|above|below)\s+this\s+(line|point|marker)'
+    reason: "Instruction boundary manipulation"
+    severity: high
+
+  - pattern: '(?i)\b(real|actual|true)\s+(instruction|prompt|task|command)\s*(starts?|begins?)?\s*(here|below|now)'
+    reason: "Fake real instruction marker"
+    severity: high
+
+  - pattern: '(?i)\b(show|reveal|tell|display|print|output)\s+(me\s+)?(your\s+)?(full\s+)?(system\s+)?prompt'
+    reason: "System prompt extraction attempt"
+    severity: high
+
+  - pattern: '(?i)\brepeat\s+(your\s+)?(system\s+)?(prompt|instructions?)\s+(back|verbatim|exactly)'
+    reason: "Prompt repetition extraction"
+    severity: high
+
+# ==============================================================================
+# DATA EXFILTRATION PATTERNS (Whiteout AI-specific)
+# ==============================================================================
+# Detects attempts to extract sensitive enterprise data through AI tool outputs.
+# These patterns target indirect exfiltration via code comments, URLs, or encoded payloads.
+
+dataExfiltrationPatterns:
+  - pattern: '(?i)\b(send|post|upload|transmit|exfiltrate|forward)\s+(this|the|all)?\s*(\w+\s+)?(data|content|file|secret|token|key|credential|password)\s+(to|via|using)\s+'
+    reason: "Data exfiltration instruction detected"
+    severity: critical
+
+  # NOTE: `fetch` is intentionally excluded — it's a standard JS API and
+  # matched on virtually every authenticated HTTP call in TS/JS source,
+  # producing the dominant false-positive in observed defender logs.
+  - pattern: '(?i)\b(curl|wget)\s+.{0,120}(token|secret|key|password|credential|api.key|\.env|\.pem|private.key|id_rsa|id_ed25519|\.ssh/|Authorization)\b'
+    reason: "Credential exfiltration via shell HTTP request (curl/wget)"
+    severity: critical
+
+  - pattern: '(?i)\bhttps?://.{0,120}(token|secret|key|password|credential|api.key|\.env|\.pem|private.key|id_rsa|id_ed25519|\.ssh/|Authorization)\b'
+    reason: "Credential exfiltration via HTTP URL"
+    severity: critical
+
+  - pattern: '(?i)\bwrite\s+(the\s+)?(secret|token|key|password|credential|api.key|private.key|env)\s+(to|into)\s+(a\s+)?(file|disk|log|output)'
+    reason: "Credential write-to-file attempt"
+    severity: critical
+
+  - pattern: '(?i)\binclude\s+(the\s+)?(api|secret|private|auth)\s*(key|token|credential|password)\s+(in|inside|within)\s+(the|a)\s+(comment|url|header|query)'
+    reason: "Credential embedding in output"
+    severity: critical
+
+  # Local read/print of a sensitive-looking name. Demoted to MEDIUM:
+  # this is a LOCAL read with no outbound vector — `cat .env`, `cat
+  # config/credentials.yml`, `echo "secret"`, `console.log(secret)` are
+  # all routine. The PreToolUse hook now hard-blocks ONLY when a sensitive
+  # source is combined with a confirmed outbound vector (see
+  # pre-tool-defender.py _has_outbound_vector). Kept here at medium so
+  # PostToolUse still surfaces a warning for the model to double-check.
+  - pattern: '(?i)\b(echo|print|log|console\.log|cat)\s+.*\b(\.env|secret|private.key|credentials?|passwd|shadow)\b'
+    reason: "Sensitive file content reference (local read — verify no egress)"
+    severity: medium
+
+  # Read of genuinely-secret material. /etc/passwd (world-readable) and
+  # .git/config (routine) removed — they are not secrets and reading them
+  # is normal/pentest-legitimate. Demoted to MEDIUM (warn, not pre-block);
+  # the outbound-vector gate in the PreToolUse hook handles actual exfil.
+  - pattern: '(?i)\b(read|cat|head|tail|less|more|open)\s+.*(/etc/shadow|\.ssh/id_|\.aws/credentials|\.env\b)'
+    reason: "Secret-material read (local — verify no egress)"
+    severity: medium
+
+  - pattern: '(?i)\b(encode|convert|transform)\s+(the\s+)?(secret|credential|token|key|password)\s+(to|as|into)\s+(base64|hex|url)'
+    reason: "Credential encoding for exfiltration"
+    severity: critical
+
+  - pattern: '(?i)\bappend\s+.*\b(secret|token|key|password|credential)\b.*\bto\s+(url|query|param|request)'
+    reason: "Credential appended to URL/request"
+    severity: critical
+
+  - pattern: '(?i)\b(pipe|redirect|tee)\s+.{0,40}(secret|credential|token|\.env|private)\b'
+    reason: "Sensitive data piped to external destination"
+    severity: high
+
+  - pattern: '(?i)\b(git\s+push|git\s+add)\s+.*\.(env|pem|key|p12|pfx|credentials)'
+    reason: "Sensitive file committed to git"
+    severity: critical
+
+  - pattern: '(?i)\bcopy\s+(the\s+)?(entire|full|complete)\s+(database|db|table|schema|migration)\s+(to|into)'
+    reason: "Database exfiltration attempt"
+    severity: critical
+
+  # Narrowed: bare `user`/`token` matched the ubiquitous `users` table and
+  # any `*_token` column, so `SELECT * FROM users` (the most common query in
+  # existence) was a critical FP. Require an actual secret-bearing column.
+  - pattern: '(?i)\b(SELECT|DUMP|EXPORT)\s+.*\bFROM\s+.*(password|passwd|credential|secret|api_key|access_token|private_key)'
+    reason: "SQL extraction of sensitive data"
+    severity: critical
+
+# ==============================================================================
+# POLICY BYPASS PATTERNS (Whiteout AI-specific)
+# ==============================================================================
+# Detects attempts to circumvent Whiteout AI governance policies, disable
+# compliance checks, or manipulate the governance layer.
+
+policyBypassPatterns:
+  - pattern: '(?i)\b(disable|bypass|skip|ignore|circumvent)\s+(the\s+)?(whiteout|governance|compliance|policy|security)\s+(\w+\s+)?(check|scan|filter|guard|layer|enforcement)'
+    reason: "Whiteout governance bypass attempt"
+    severity: critical
+
+  - pattern: '(?i)\b(turn\s+off|deactivate|remove|uninstall)\s+(the\s+)?(whiteout|governance|compliance|audit)\s+(extension|plugin|monitor|watcher)'
+    reason: "Governance tool removal attempt"
+    severity: critical
+
+  # SELF-PROTECTION ONLY. Previously matched ANY `.claude/...` edit, so it
+  # fired on the owner editing their own project settings (regression #1)
+  # and even on git-diff/merge OUTPUT that merely NAMED a whiteout-defender
+  # path (regression #4). Now restricted to mutation of the DEFENDER'S OWN
+  # files. `\bdelete\b` (not `deleted`) avoids matching "deleted: ..." lines
+  # in diff output. Live mutation via shell is additionally caught
+  # behaviorally by the PreToolUse hook (_targets_defender_files).
+  - pattern: '(?i)\b(modify|edit|delete|overwrite|sed|truncate|tee|chmod|rm)\b[^\n]*whiteout-defender/(pre-tool-defender|post-tool-defender|prompt-defender|patterns|defender-config)'
+    reason: "Defender self-protection: tampering with own hook config"
+    severity: critical
+
+  - pattern: '(?i)\b(kill|stop|terminate)\s+.*(whiteout|governance|compliance|audit)\s*(process|service|daemon)'
+    reason: "Governance service termination attempt"
+    severity: critical
+
+  - pattern: '(?i)\bset\s+.*\b(WHITEOUT|GOVERNANCE|COMPLIANCE)\b.*\b(false|off|disabled|0|none)\b'
+    reason: "Governance environment variable manipulation"
+    severity: critical
+
+  - pattern: '(?i)\b(force|override)\s*[=:]\s*(true|1|yes)\b.*\b(compliance|policy|block)'
+    reason: "Force-override compliance check"
+    severity: high
+
+  - pattern: '(?i)\bskip\s+(the\s+)?(pre.?commit|pre.?push|post.?tool|hook)\s+(check|validation|scan)'
+    reason: "Hook bypass attempt"
+    severity: high
+
+  # Demoted high -> medium: `git push --force` and `git commit --no-verify`
+  # are everyday developer ops on one's own branch. A dev-workflow signal
+  # worth a warning, not a hard pre-block.
+  - pattern: '(?i)(?:^|\s)(--no-verify|--force|--skip-hooks)(?:\s|$)'
+    reason: "Git/tool hook skip flags detected"
+    severity: medium
+
+  - pattern: '(?i)\bchmod\s+.*\.(claude|whiteout)/'
+    reason: "Permission change on governance files"
+    severity: high
+
+  - pattern: '(?i)\brm\s+(-rf?\s+)?.*(\.claude/hooks|\.whiteout|settings\.local\.json|patterns\.yaml)'
+    reason: "Governance file deletion attempt"
+    severity: critical
+
+  # Demoted critical -> medium: this is a governance codebase that
+  # legitimately contains tests mocking the compliance endpoint. Warn so
+  # the model double-checks; don't hard-block normal test authoring.
+  - pattern: '(?i)\b(mock|stub|fake|spoof)\s+(the\s+)?(compliance|audit|policy)\s+(api|endpoint|check|response)'
+    reason: "Compliance API spoofing attempt"
+    severity: medium
+
+  # Demoted critical -> medium: the compliance engine in this repo
+  # legitimately returns is_compliant=True. FP on the product's own source.
+  - pattern: '(?i)\breturn\s+.*\bis_compliant\s*[=:]\s*(true|True)\b'
+    reason: "Hardcoded compliance bypass in code"
+    severity: medium

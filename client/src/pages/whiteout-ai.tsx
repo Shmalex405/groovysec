@@ -16,7 +16,7 @@ import { PromptInterceptionDemo } from "@/components/prompt-interception-demo";
 import { GlassCard } from "@/components/ui/glass-card";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { AuroraBackground } from "@/components/ui/aurora-background";
-import { ArrowRight, Building2, GraduationCap, BookOpen } from "lucide-react";
+import { ArrowRight, Building2, GraduationCap, BookOpen, Calendar, MapPin, Award } from "lucide-react";
 import {
   PageTransition,
   ScrollReveal,
@@ -119,6 +119,62 @@ export default function WhiteoutAI() {
                 );
               })}
             </StaggerChildren>
+          </div>
+        </section>
+
+        {/* Company trust strip — condensed; full story lives on /about */}
+        <section className="py-20 border-t border-white/[0.06]">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ScrollReveal>
+              <div className="text-center mb-10">
+                <h2 className="text-2xl lg:text-3xl font-bold text-white mb-3 tracking-tight">
+                  Built by Security Professionals
+                </h2>
+                <p className="text-base text-slate-400 max-w-2xl mx-auto">
+                  Groovy Security was founded by cybersecurity professionals who saw the
+                  critical gaps in AI governance firsthand — and built Whiteout AI to close them.
+                </p>
+              </div>
+            </ScrollReveal>
+            <StaggerChildren className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              {[
+                {
+                  icon: Calendar,
+                  title: "Founded 2025",
+                  description: "Purpose-built from day one for AI-era security.",
+                },
+                {
+                  icon: MapPin,
+                  title: "US & EU Presence",
+                  description: "With offices in Utah and Ireland.",
+                },
+                {
+                  icon: Award,
+                  title: "Enterprise-Grade",
+                  description: "For organizations with the highest compliance standards.",
+                },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <StaggerItem key={item.title}>
+                    <GlassCard className="p-5 text-center h-full">
+                      <div className="w-9 h-9 mx-auto bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center mb-3">
+                        <Icon className="w-4 h-4 text-blue-400" />
+                      </div>
+                      <h3 className="text-base font-bold text-white mb-1">{item.title}</h3>
+                      <p className="text-sm text-slate-500">{item.description}</p>
+                    </GlassCard>
+                  </StaggerItem>
+                );
+              })}
+            </StaggerChildren>
+            <ScrollReveal>
+              <div className="text-center mt-8">
+                <Link href="/about" className="text-blue-400 font-medium text-sm inline-flex items-center hover:text-blue-300 transition-colors">
+                  Learn more about Groovy Security <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                </Link>
+              </div>
+            </ScrollReveal>
           </div>
         </section>
 

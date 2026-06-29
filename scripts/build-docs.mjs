@@ -39,7 +39,7 @@ const ROUTES = [
     path: "/whiteout-ai",
     title: `Whiteout AI — Enterprise AI Governance | ${SITE_NAME}`,
     description:
-      "Intercept and govern every AI interaction across browser, desktop, IDE, infrastructure, and cloud. A full 27B-parameter LLM compliance engine with 60+ policies across 9 domains and 99.19% benchmark accuracy.",
+      "Intercept and govern every AI interaction across browser, desktop, IDE, infrastructure, and cloud. A full 27B-parameter LLM compliance engine with 60+ policies across 9 domains and greater than 99% benchmark accuracy.",
   },
   {
     path: "/maestro",
@@ -63,7 +63,7 @@ const ROUTES = [
     path: "/whiteout-ai/government",
     title: `Whiteout AI for Government & Public Sector | ${SITE_NAME}`,
     description:
-      "AI governance built for the public sector — 60+ pre-built policies across 9 domains, 99.19% benchmark accuracy, SSO/MDM/SIEM integration, and audit-ready proof of every AI control.",
+      "AI governance built for the public sector — 60+ pre-built policies across 9 domains, greater than 99% benchmark accuracy, SSO/MDM/SIEM integration, and audit-ready proof of every AI control.",
   },
   {
     path: "/whiteout-ai/academic-integrity",
@@ -75,7 +75,7 @@ const ROUTES = [
     path: "/whiteout-ai/security-whitepaper",
     title: `Whiteout AI Security Whitepaper | ${SITE_NAME}`,
     description:
-      "How Whiteout AI enables safe enterprise adoption of generative AI — 60+ policies across 9 compliance domains, 99.19% accuracy on a 15,915-prompt public benchmark, and security-first architecture.",
+      "How Whiteout AI enables safe enterprise adoption of generative AI — 60+ policies across 9 compliance domains, greater than 99% accuracy on a 15,915-prompt public benchmark, and security-first architecture.",
   },
   {
     path: "/about",
@@ -168,6 +168,52 @@ const DOC_ROUTES = [
   "docs/admin-guides/mdm-providers/kandji",
   "docs/admin-guides/mdm-providers/mosyle",
 ];
+
+/**
+ * Blog routes, derived from the Markdown posts in client/src/content/blog.
+ * Mirrors the frontmatter parser in client/src/lib/blog.ts — each post gets a
+ * crawler-visible /blog/<slug> HTML page and a sitemap entry. Keep the two
+ * parsers in sync if the frontmatter format changes.
+ */
+const BLOG_DIR = path.join(ROOT, "client", "src", "content", "blog");
+
+function parseFrontmatter(raw) {
+  const match = /^---\r?\n([\s\S]*?)\r?\n---/.exec(raw);
+  if (!match) return {};
+  const data = {};
+  for (const line of match[1].split(/\r?\n/)) {
+    const m = /^([A-Za-z0-9_]+):\s*(.*)$/.exec(line);
+    if (m) data[m[1]] = m[2].trim().replace(/^["']|["']$/g, "");
+  }
+  return data;
+}
+
+function blogRoutes() {
+  if (!fs.existsSync(BLOG_DIR)) return [];
+  const posts = fs
+    .readdirSync(BLOG_DIR)
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => {
+      const fm = parseFrontmatter(fs.readFileSync(path.join(BLOG_DIR, f), "utf8"));
+      const slug = fm.slug || f.replace(/\.md$/, "");
+      return {
+        path: `/blog/${slug}`,
+        title: `${fm.title || slug} | ${SITE_NAME}`,
+        description: fm.excerpt || `${fm.title || slug} — from the Groovy Security blog.`,
+      };
+    });
+  return [
+    {
+      path: "/blog",
+      title: `Blog | ${SITE_NAME}`,
+      description:
+        "Insights on AI governance, compliance, and offensive security from the Groovy Security team — engineering deep dives, research, and product news.",
+    },
+    ...posts,
+  ];
+}
+
+ROUTES.push(...blogRoutes());
 
 function run(cmd, cwd) {
   console.log(`\n$ ${cmd}${cwd ? `  (in ${path.relative(ROOT, cwd) || "."})` : ""}`);

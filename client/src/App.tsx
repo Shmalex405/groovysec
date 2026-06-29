@@ -13,8 +13,8 @@ function ScrollToTop() {
   }, [location]);
   return null;
 }
-import CompanyHome from "@/pages/company-home";
 import WhiteoutAI from "@/pages/whiteout-ai";
+import SolutionPage from "@/pages/solutions/solution-page";
 import Maestro from "@/pages/maestro";
 import About from "@/pages/about";
 import WhiteoutGovernment from "@/pages/whiteout-ai/government";
@@ -31,6 +31,8 @@ import SkillsSuccess from "@/pages/skills/success";
 import Contact from "@/pages/contact";
 import Resources from "@/pages/resources";
 import Security from "@/pages/security";
+import Blog from "@/pages/blog";
+import BlogPost from "@/pages/blog/post";
 
 function Router() {
   return (
@@ -38,16 +40,23 @@ function Router() {
     <ScrollToTop />
     <AnimatePresence mode="wait">
       <Switch>
-        <Route path="/" component={CompanyHome} />
+        <Route path="/" component={WhiteoutAI} />
         <Route path="/demo" component={Demo} />
         <Route path="/download" component={Download} />
         <Route path="/whiteout-ai" component={WhiteoutAI} />
         <Route path="/maestro" component={Maestro} />
         <Route path="/skills" component={Skills} />
         <Route path="/skills/success" component={SkillsSuccess} />
+        <Route path="/solutions/:slug">
+          {(params) => <SolutionPage slug={params.slug} />}
+        </Route>
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         <Route path="/resources" component={Resources} />
+        <Route path="/blog" component={Blog} />
+        <Route path="/blog/:slug">
+          {(params) => <BlogPost slug={params.slug} />}
+        </Route>
         <Route path="/security" component={Security} />
         <Route path="/whiteout-ai/government" component={WhiteoutGovernment} />
         <Route path="/whiteout-ai/academic-integrity" component={WhiteoutAcademicIntegrity} />

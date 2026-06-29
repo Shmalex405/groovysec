@@ -5,3 +5,13 @@ server/public
 vite.config.ts.*
 *.tar.gz
 .env
+
+# Internal business documents — keep out of this public repo
+enterprise-ireland-application.txt
+compliance-gap-report/
+maestro-value-case/
+business-card/
+
+# Python build artifacts
+__pycache__/
+*.pyc
