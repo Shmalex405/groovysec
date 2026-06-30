@@ -12,12 +12,6 @@ const router = Router();
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : undefined;
 
-const ATTRIBUTION_LABELS: Record<string, string> = {
-  full: "Full name, title & company",
-  title_company: "Title & company (no name)",
-  anonymous: "Anonymous",
-};
-
 const escapeHtml = (s: string) =>
   s
     .replace(/&/g, "&amp;")
@@ -74,8 +68,6 @@ router.post("/", async (req, res) => {
         Array.isArray(data.experience) && data.experience.length
           ? data.experience.join(", ")
           : "None selected";
-      const attributionText =
-        ATTRIBUTION_LABELS[data.attribution] || data.attribution;
 
       const statusLine = stored
         ? "Saved as pending — approve before using it publicly."
@@ -94,7 +86,6 @@ Name: ${data.name}
 Job title: ${data.jobTitle}
 Company: ${company}
 Email: ${data.email}
-Attribution allowed: ${attributionText}
 Experience: ${experienceText}
 
 Review:
@@ -110,7 +101,6 @@ ${data.review}
         <p><strong>Job title:</strong> ${escapeHtml(data.jobTitle)}</p>
         <p><strong>Company:</strong> ${escapeHtml(company)}</p>
         <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
-        <p><strong>Attribution allowed:</strong> ${escapeHtml(attributionText)}</p>
         <p><strong>Experience:</strong> ${escapeHtml(experienceText)}</p>
         <p><strong>Review:</strong></p>
         <blockquote style="border-left:3px solid #cbd5e1;margin:0;padding:4px 0 4px 14px;color:#0f172a;white-space:pre-wrap;">${escapeHtml(

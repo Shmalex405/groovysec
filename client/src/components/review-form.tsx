@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { GlassCard } from "@/components/ui/glass-card";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { CheckCircle, ChevronDown, Loader2, Send } from "lucide-react";
@@ -22,18 +21,11 @@ const EXPERIENCE_OPTIONS = [
   "Worked directly with the Groovy Security team",
 ];
 
-const ATTRIBUTION_OPTIONS = [
-  { value: "full", label: "Use my name, job title, and company" },
-  { value: "title_company", label: "Use my job title and company, but not my name" },
-  { value: "anonymous", label: "Keep me anonymous (e.g. “CISO, healthcare provider”)" },
-];
-
 const initialForm = {
   name: "",
   jobTitle: "",
   company: "",
   email: "",
-  attribution: "full",
   review: "",
   website: "", // honeypot — must stay empty
 };
@@ -282,29 +274,6 @@ export function ReviewForm() {
               </div>
             </div>
 
-            {/* Attribution choice */}
-            <div>
-              <Label className={labelClasses}>How may we attribute your review?</Label>
-              <RadioGroup
-                value={formData.attribution}
-                onValueChange={(value) => handleInputChange("attribution", value)}
-                className="mt-3 gap-2.5"
-              >
-                {ATTRIBUTION_OPTIONS.map((option) => (
-                  <label
-                    key={option.value}
-                    className="flex items-center gap-3 rounded-lg border border-white/[0.08] bg-white/[0.02] px-3.5 py-3 cursor-pointer hover:border-white/20 transition-colors"
-                  >
-                    <RadioGroupItem
-                      value={option.value}
-                      className="border-slate-500 text-blue-400"
-                    />
-                    <span className="text-sm text-slate-300">{option.label}</span>
-                  </label>
-                ))}
-              </RadioGroup>
-            </div>
-
             {/* Marketing-use release (collapsible to save space) */}
             <div>
               <button
@@ -339,9 +308,9 @@ export function ReviewForm() {
                   <p>
                     You grant Groovy Security a perpetual, worldwide, royalty-free
                     license to use, reproduce, publish, and display your review —
-                    together with the attribution details you selected above —
-                    across its marketing and promotional materials, including its
-                    website, social media, presentations, and sales materials.
+                    together with your name, job title, and company — across its
+                    marketing and promotional materials, including its website,
+                    social media, presentations, and sales materials.
                   </p>
                   <p>
                     You agree Groovy Security may lightly edit the review for
@@ -351,8 +320,9 @@ export function ReviewForm() {
                     compensation is provided in exchange for this review.
                   </p>
                   <p>
-                    You may ask us to stop using your review at any time by
-                    emailing{" "}
+                    You may ask us to anonymize your review (remove your name,
+                    job title, and company) or to stop using it entirely at any
+                    time by emailing{" "}
                     <span className="text-slate-300">alex@groovysec.com</span>, and
                     we will honor that request going forward, although copies
                     already distributed may remain in circulation.
@@ -367,8 +337,9 @@ export function ReviewForm() {
                   className="mt-0.5 border-slate-500 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
                 />
                 <span className="text-sm text-slate-300">
-                  I have read and accept the review terms, and I confirm this review
-                  reflects my genuine experience. *
+                  I have read and accept the review terms — including that my name,
+                  job title, and company may be used publicly — and I confirm this
+                  review reflects my genuine experience. *
                 </span>
               </label>
             </div>

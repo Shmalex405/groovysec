@@ -33,11 +33,6 @@ export const reviews = pgTable("reviews", {
   jobTitle: text("job_title").notNull(),
   company: text("company"),
   email: text("email").notNull(),
-  // How the reviewer agreed to be attributed publicly:
-  //   "full"          = name + title + company
-  //   "title_company" = title + company only (no name)
-  //   "anonymous"     = no identifying details shown
-  attribution: text("attribution").notNull().default("full"),
   // Credibility checkboxes ("Deployed it in our environment", "Saw a live demo", …)
   experience: jsonb("experience").$type<string[]>().default([]),
   review: text("review").notNull(),
@@ -59,7 +54,6 @@ export const insertReviewSchema = createInsertSchema(reviews)
     jobTitle: z.string().trim().min(1, "Please enter your job title."),
     company: z.string().trim().max(120).optional(),
     email: z.string().trim().email("Please enter a valid email address."),
-    attribution: z.enum(["full", "title_company", "anonymous"]).default("full"),
     experience: z.array(z.string()).optional(),
     review: z
       .string()
