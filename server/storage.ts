@@ -1,4 +1,4 @@
-import { users, leads, type User, type InsertUser, type Lead, type InsertLead } from "@shared/schema";
+import { users, leads, reviews, type User, type InsertUser, type Lead, type InsertLead, type Review, type InsertReview } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 
@@ -8,6 +8,8 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   createLead(lead: InsertLead): Promise<Lead>;
   getLeads(): Promise<Lead[]>;
+  createReview(review: InsertReview): Promise<Review>;
+  getReviews(): Promise<Review[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -39,6 +41,18 @@ export class DatabaseStorage implements IStorage {
 
   async getLeads(): Promise<Lead[]> {
     return await db.select().from(leads);
+  }
+
+  async createReview(insertReview: InsertReview): Promise<Review> {
+    const [review] = await db
+      .insert(reviews)
+      .values(insertReview)
+      .returning();
+    return review;
+  }
+
+  async getReviews(): Promise<Review[]> {
+    return await db.select().from(reviews);
   }
 }
 

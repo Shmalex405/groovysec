@@ -24,6 +24,7 @@ import NotFound from "@/pages/not-found";
 import TermsOfService from "@/pages/terms-of-service";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import Demo from "@/pages/demo";
+import Review from "@/pages/review";
 import Download from "@/pages/download";
 import Partners from "@/pages/partners";
 import Skills from "@/pages/skills";
@@ -42,6 +43,7 @@ function Router() {
       <Switch>
         <Route path="/" component={WhiteoutAI} />
         <Route path="/demo" component={Demo} />
+        <Route path="/review" component={Review} />
         <Route path="/download" component={Download} />
         <Route path="/whiteout-ai" component={WhiteoutAI} />
         <Route path="/maestro" component={Maestro} />
