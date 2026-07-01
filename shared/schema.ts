@@ -58,7 +58,7 @@ export const insertReviewSchema = createInsertSchema(reviews)
     review: z
       .string()
       .trim()
-      .min(150, "Please write at least 150 characters so the review is useful.")
+      .min(75, "Please write at least 75 characters so the review is useful.")
       .max(1500, "Please keep your review under 1500 characters."),
     consent: z.boolean().refine((v) => v === true, {
       message: "Please accept the review terms to submit.",

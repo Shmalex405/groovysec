@@ -9,7 +9,7 @@ import { CheckCircle, ChevronDown, Loader2, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 
-const MIN_CHARS = 150;
+const MIN_CHARS = 75;
 const MAX_CHARS = 1500;
 
 const EXPERIENCE_OPTIONS = [
@@ -262,14 +262,11 @@ export function ReviewForm() {
                 rows={6}
                 maxLength={MAX_CHARS}
               />
-              <div className="flex justify-between items-center mt-1.5 text-xs">
+              <div className="mt-1.5 text-xs">
                 <span className={meetsMin ? "text-emerald-400" : "text-amber-400/80"}>
                   {meetsMin
                     ? "Looks good"
                     : `${Math.max(0, MIN_CHARS - reviewLen)} more characters needed`}
-                </span>
-                <span className="text-slate-600">
-                  {reviewLen} / {MAX_CHARS}
                 </span>
               </div>
             </div>
