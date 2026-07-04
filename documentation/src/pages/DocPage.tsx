@@ -125,10 +125,11 @@ export function DocPage() {
             // External links open in new tab
             a: ({ href, children, ...props }) => {
               const isExternal = href?.startsWith('http');
-              // Convert relative .md links to proper routes
+              // Convert relative .md links to proper routes (preserving anchors)
               let finalHref = href || '';
-              if (finalHref.endsWith('.md')) {
-                finalHref = finalHref.replace('.md', '').replace('./', '/admin-guides/');
+              const mdLink = /^(.*)\.md(#.*)?$/.exec(finalHref);
+              if (!isExternal && mdLink) {
+                finalHref = mdLink[1].replace('./', '/admin-guides/') + (mdLink[2] ?? '');
               }
               if (isExternal) {
                 return (

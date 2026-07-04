@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && cp ../client/public/docs/index.html ../client/public/docs/404.html",
+    "build": "node scripts/build-search-index.mjs && tsc && vite build && cp ../client/public/docs/index.html ../client/public/docs/404.html",
     "preview": "vite preview"
   },
   "dependencies": {

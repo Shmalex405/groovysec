@@ -9,7 +9,11 @@ import {
   FileText,
   Database,
   Radio,
-  Monitor
+  Monitor,
+  Server,
+  Code2,
+  KeyRound,
+  Cloud
 } from 'lucide-react';
 
 const quickLinks = [
@@ -41,6 +45,20 @@ const quickLinks = [
     icon: Monitor,
     color: 'text-purple-500',
   },
+  {
+    title: 'Deployment',
+    description: 'SaaS, self-hosted AWS, and enterprise endpoint rollout',
+    href: '/admin-guides/deployment/overview',
+    icon: Server,
+    color: 'text-cyan-500',
+  },
+  {
+    title: 'Developers',
+    description: 'Python and Node.js SDKs, plus the AWS Lambda layer',
+    href: '/admin-guides/developers/python-sdk',
+    icon: Code2,
+    color: 'text-amber-500',
+  },
 ];
 
 const popularGuides = [
@@ -50,6 +68,8 @@ const popularGuides = [
   { title: 'Microsoft Entra ID', href: '/admin-guides/sso-providers/microsoft-entra-id', icon: Shield },
   { title: 'Confluence', href: '/admin-guides/integrations/confluence', icon: FileText },
   { title: 'Custom Integration', href: '/admin-guides/integrations/custom-integration', icon: Database },
+  { title: 'AWS Bedrock', href: '/admin-guides/integrations/aws-bedrock', icon: Cloud },
+  { title: 'BYOK Encryption', href: '/admin-guides/security/byok', icon: KeyRound },
 ];
 
 export function HomePage() {

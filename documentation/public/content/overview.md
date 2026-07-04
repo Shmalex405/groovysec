@@ -21,6 +21,7 @@ Connect your organization's tools to enable AI governance across your data sourc
 | [Linear](./integrations/linear.md) | Modern issue tracking | [Setup Guide](./integrations/linear.md) |
 | [Asana](./integrations/asana.md) | Work management platform | [Setup Guide](./integrations/asana.md) |
 | [SharePoint](./integrations/sharepoint.md) | Microsoft document management | [Setup Guide](./integrations/sharepoint.md) |
+| [AWS Bedrock](./integrations/aws-bedrock.md) | Govern Bedrock model usage across AWS accounts | [Setup Guide](./integrations/aws-bedrock.md) |
 | [Custom Integration](./integrations/custom-integration.md) | Connect any REST API | [Setup Guide](./integrations/custom-integration.md) |
 
 ### Single Sign-On (SSO) Providers
@@ -38,6 +39,7 @@ Configure identity providers to enable secure authentication for your organizati
 | [Auth0](./sso-providers/auth0.md) | OIDC | [Setup Guide](./sso-providers/auth0.md) |
 | [Generic OIDC](./sso-providers/generic-oidc.md) | OIDC | [Setup Guide](./sso-providers/generic-oidc.md) |
 | [Generic SAML](./sso-providers/generic-saml.md) | SAML 2.0 (Beta) | [Setup Guide](./sso-providers/generic-saml.md) |
+| [Groups, Users & SCIM](./sso-providers/groups-users-scim.md) | SCIM, JIT, Group Sync | [Setup Guide](./sso-providers/groups-users-scim.md) |
 
 ### SOC/SIEM Destinations
 
@@ -63,6 +65,32 @@ Deploy and manage Whiteout AI agents across your device fleet using your existin
 | [VMware Workspace ONE](./mdm-providers/vmware-workspace-one.md) | Cross-platform UEM | [Setup Guide](./mdm-providers/vmware-workspace-one.md) |
 | [Kandji](./mdm-providers/kandji.md) | Apple device management | [Setup Guide](./mdm-providers/kandji.md) |
 | [Mosyle](./mdm-providers/mosyle.md) | Apple device management | [Setup Guide](./mdm-providers/mosyle.md) |
+
+### Deployment
+
+Choose how Whiteout AI runs for your organization and roll it out to your device fleet.
+
+| Guide | Description |
+|-------|-------------|
+| [Deployment Models](./deployment/overview.md) | SaaS, self-hosted AWS, and air-gapped options compared |
+| [Self-Hosted AWS](./deployment/self-hosted-aws.md) | Run the entire platform in your own AWS account |
+| [Zero-Touch MDM](./deployment/zero-touch-mdm.md) | Device-attested, zero-touch endpoint enrollment |
+| [Windows MSI](./deployment/windows-msi.md) | Enterprise MSI deployment via GPO or Intune |
+
+### Security & Encryption
+
+| Guide | Description |
+|-------|-------------|
+| [BYOK Encryption](./security/byok.md) | Encrypt your deployment under a KMS key you control |
+| [BYOK Terraform Module](./security/byok-terraform-module.md) | Provision the customer-managed key with Terraform |
+
+### Developers
+
+| Guide | Description |
+|-------|-------------|
+| [Python SDK](./developers/python-sdk.md) | Govern LLM calls in Python services |
+| [Node.js SDK](./developers/node-sdk.md) | Govern LLM calls in Node.js and TypeScript |
+| [AWS Lambda Layer](./developers/lambda-layer.md) | Drop-in governance for Lambda functions |
 
 ## Before You Begin
 

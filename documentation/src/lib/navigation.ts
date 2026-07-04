@@ -17,6 +17,15 @@ export const navigation: NavSection[] = [
     ],
   },
   {
+    title: 'Deployment',
+    items: [
+      { title: 'Deployment Models', href: '/admin-guides/deployment/overview' },
+      { title: 'Self-Hosted AWS', href: '/admin-guides/deployment/self-hosted-aws' },
+      { title: 'Zero-Touch MDM', href: '/admin-guides/deployment/zero-touch-mdm' },
+      { title: 'Windows MSI', href: '/admin-guides/deployment/windows-msi' },
+    ],
+  },
+  {
     title: 'Whiteout AI Connector',
     items: [
       { title: 'Overview', href: '/admin-guides/whiteout-ai-connector/overview' },
@@ -50,11 +59,12 @@ export const navigation: NavSection[] = [
       { title: 'Linear', href: '/admin-guides/integrations/linear' },
       { title: 'Asana', href: '/admin-guides/integrations/asana' },
       { title: 'SharePoint', href: '/admin-guides/integrations/sharepoint' },
+      { title: 'AWS Bedrock', href: '/admin-guides/integrations/aws-bedrock' },
       { title: 'Custom Integration', href: '/admin-guides/integrations/custom-integration' },
     ],
   },
   {
-    title: 'SSO Providers',
+    title: 'SSO & Identity',
     items: [
       { title: 'Microsoft Entra ID', href: '/admin-guides/sso-providers/microsoft-entra-id' },
       { title: 'Okta', href: '/admin-guides/sso-providers/okta' },
@@ -65,6 +75,7 @@ export const navigation: NavSection[] = [
       { title: 'Auth0', href: '/admin-guides/sso-providers/auth0' },
       { title: 'Generic OIDC', href: '/admin-guides/sso-providers/generic-oidc' },
       { title: 'Generic SAML', href: '/admin-guides/sso-providers/generic-saml' },
+      { title: 'Groups, Users & SCIM', href: '/admin-guides/sso-providers/groups-users-scim' },
     ],
   },
   {
@@ -86,6 +97,21 @@ export const navigation: NavSection[] = [
       { title: 'VMware Workspace ONE', href: '/admin-guides/mdm-providers/vmware-workspace-one' },
       { title: 'Kandji', href: '/admin-guides/mdm-providers/kandji' },
       { title: 'Mosyle', href: '/admin-guides/mdm-providers/mosyle' },
+    ],
+  },
+  {
+    title: 'Security & Encryption',
+    items: [
+      { title: 'BYOK Encryption', href: '/admin-guides/security/byok' },
+      { title: 'BYOK Terraform Module', href: '/admin-guides/security/byok-terraform-module' },
+    ],
+  },
+  {
+    title: 'Developers',
+    items: [
+      { title: 'Python SDK', href: '/admin-guides/developers/python-sdk' },
+      { title: 'Node.js SDK', href: '/admin-guides/developers/node-sdk' },
+      { title: 'AWS Lambda Layer', href: '/admin-guides/developers/lambda-layer' },
     ],
   },
 ];

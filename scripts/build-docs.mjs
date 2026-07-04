@@ -131,43 +131,28 @@ const ROUTES = [
   },
 ];
 
-/** Documentation subsite routes (client-rendered; fan out its own index.html). */
-const DOC_ROUTES = [
-  "docs/admin-guides",
-  "docs/admin-guides/overview",
-  "docs/admin-guides/integrations/github",
-  "docs/admin-guides/integrations/confluence",
-  "docs/admin-guides/integrations/jira",
-  "docs/admin-guides/integrations/notion",
-  "docs/admin-guides/integrations/slack",
-  "docs/admin-guides/integrations/microsoft-teams",
-  "docs/admin-guides/integrations/google-drive",
-  "docs/admin-guides/integrations/trello",
-  "docs/admin-guides/integrations/linear",
-  "docs/admin-guides/integrations/asana",
-  "docs/admin-guides/integrations/sharepoint",
-  "docs/admin-guides/integrations/custom-integration",
-  "docs/admin-guides/sso-providers/microsoft-entra-id",
-  "docs/admin-guides/sso-providers/okta",
-  "docs/admin-guides/sso-providers/google-workspace",
-  "docs/admin-guides/sso-providers/onelogin",
-  "docs/admin-guides/sso-providers/ping-identity",
-  "docs/admin-guides/sso-providers/jumpcloud",
-  "docs/admin-guides/sso-providers/auth0",
-  "docs/admin-guides/sso-providers/generic-oidc",
-  "docs/admin-guides/sso-providers/generic-saml",
-  "docs/admin-guides/soc-destinations/webhook",
-  "docs/admin-guides/soc-destinations/splunk-hec",
-  "docs/admin-guides/soc-destinations/azure-sentinel",
-  "docs/admin-guides/soc-destinations/elasticsearch",
-  "docs/admin-guides/soc-destinations/ibm-qradar",
-  "docs/admin-guides/soc-destinations/aws-s3",
-  "docs/admin-guides/mdm-providers/microsoft-intune",
-  "docs/admin-guides/mdm-providers/jamf",
-  "docs/admin-guides/mdm-providers/vmware-workspace-one",
-  "docs/admin-guides/mdm-providers/kandji",
-  "docs/admin-guides/mdm-providers/mosyle",
-];
+/**
+ * Documentation subsite routes (client-rendered; fan out its own index.html).
+ * Derived from documentation/public/content so new guides are picked up
+ * automatically: content/<category>/<slug>.md -> docs/admin-guides/<category>/<slug>.
+ */
+const CONTENT_DIR = path.join(ROOT, "documentation", "public", "content");
+
+function docRoutes() {
+  const routes = ["docs/admin-guides", "docs/admin-guides/overview"];
+  if (!fs.existsSync(CONTENT_DIR)) return routes;
+  for (const entry of fs.readdirSync(CONTENT_DIR, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    for (const file of fs.readdirSync(path.join(CONTENT_DIR, entry.name))) {
+      if (file.endsWith(".md")) {
+        routes.push(`docs/admin-guides/${entry.name}/${file.slice(0, -3)}`);
+      }
+    }
+  }
+  return routes;
+}
+
+const DOC_ROUTES = docRoutes();
 
 /**
  * Blog routes, derived from the Markdown posts in client/src/content/blog.
@@ -263,10 +248,15 @@ function injectMeta(html, route) {
 }
 
 function buildSitemap() {
-  const urls = ROUTES.filter((r) => r.path !== "/skills/success")
-    .map(
-      (r) => `  <url>\n    <loc>${ORIGIN}${r.path === "/" ? "/" : r.path}</loc>\n  </url>`
-    )
+  const locs = [
+    ...ROUTES.filter((r) => r.path !== "/skills/success").map(
+      (r) => `${ORIGIN}${r.path === "/" ? "/" : r.path}`
+    ),
+    `${ORIGIN}/docs`,
+    ...DOC_ROUTES.map((r) => `${ORIGIN}/${r}`),
+  ];
+  const urls = locs
+    .map((loc) => `  <url>\n    <loc>${loc}</loc>\n  </url>`)
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }

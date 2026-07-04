@@ -14,6 +14,8 @@ import { motion, AnimatePresence } from "framer-motion";
 type NavLink = {
   label: string;
   href: string;
+  /** Hard-navigate via a plain <a> — for targets outside the SPA (e.g. /docs). */
+  hardNav?: boolean;
   description?: string;
   image?: string;
   imageClass?: string;
@@ -139,6 +141,7 @@ const MENUS: NavMenu[] = [
         links: [
           { label: "News & Research", href: "/resources" },
           { label: "Blog", href: "/blog" },
+          { label: "Documentation", href: "/docs", hardNav: true },
           { label: "Security Whitepaper", href: "/whiteout-ai/security-whitepaper" },
           { label: "Downloads", href: "/download" },
         ],
@@ -305,8 +308,10 @@ export function Navigation() {
                                     {col.heading}
                                   </div>
                                 )}
-                                {col.links.map((link) => (
-                                  <Link
+                                {col.links.map((link) => {
+                                  const LinkComp = (link.hardNav ? "a" : Link) as typeof Link;
+                                  return (
+                                  <LinkComp
                                     key={`${link.label}-${link.href}`}
                                     href={link.href}
                                     className="block px-3 py-2 rounded-lg hover:bg-white/[0.06] transition-colors group/item"
@@ -319,8 +324,9 @@ export function Navigation() {
                                         {link.description}
                                       </span>
                                     )}
-                                  </Link>
-                                ))}
+                                  </LinkComp>
+                                  );
+                                })}
                               </div>
                             ))}
                           </div>
@@ -398,8 +404,10 @@ export function Navigation() {
                                     {col.heading}
                                   </div>
                                 )}
-                                {col.links.map((link) => (
-                                  <Link
+                                {col.links.map((link) => {
+                                  const LinkComp = (link.hardNav ? "a" : Link) as typeof Link;
+                                  return (
+                                  <LinkComp
                                     key={`${link.label}-${link.href}`}
                                     href={link.href}
                                     onClick={() => setIsMenuOpen(false)}
@@ -411,8 +419,9 @@ export function Navigation() {
                                         {link.badge}
                                       </span>
                                     )}
-                                  </Link>
-                                ))}
+                                  </LinkComp>
+                                  );
+                                })}
                               </div>
                             ))}
                           </motion.div>
