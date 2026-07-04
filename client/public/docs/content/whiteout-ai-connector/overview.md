@@ -1,7 +1,8 @@
 # Whiteout AI Connector — Overview
 
 The Whiteout AI Connector is the single endpoint your AI assistants
-(Claude Desktop, ChatGPT Custom GPTs, Gemini Actions) connect to in
+(Claude Desktop, ChatGPT Custom GPTs, Gemini Actions, and any other
+MCP-capable client such as Cursor, VS Code, or Cline) connect to in
 order to read documents and events from your connected apps —
 **after** every payload passes through Whiteout's policy engine.
 
@@ -10,15 +11,16 @@ order to read documents and events from your connected apps —
 1. **Connect a source app** (Google Drive, Slack, etc.) once from the
    Integrations page. We OAuth into the source under your admin's
    account.
-2. **Initial scan runs automatically** for document-store integrations
-   (Drive, SharePoint, OneDrive, Dropbox, Box, Confluence, Notion).
+2. **Initial scan runs automatically** for pre-vetted document-store
+   integrations (Drive, SharePoint, OneDrive, Confluence, Notion).
    Every doc gets classified against your policy library and stamped
    into our verdict cache. Typical duration: ~5 minutes for 100 docs,
    scaling roughly linearly.
 3. **Real-time sync** keeps the cache fresh. Drive/SharePoint/OneDrive/
-   Dropbox/Box/Confluence/Notion poll for deltas every 5 minutes and
-   optionally fire webhooks for sub-minute latency. Gmail/Slack/GitHub/
-   Jira/Linear/Asana/Trello classify events as they happen.
+   Confluence/Notion poll for deltas every 5 minutes and optionally
+   fire webhooks for sub-minute latency. Dropbox and Box are vetted
+   on demand at query time instead. Gmail/Slack/GitHub/Jira/Linear/
+   Asana/Trello classify events as they happen.
 4. **Your AI assistant calls the connector.** It only sees content
    that survived the policy verdict — flagged docs come back with
    `content: null` plus a `whiteout_vetting` annotation, existence-
@@ -26,8 +28,12 @@ order to read documents and events from your connected apps —
 
 ## Setup categories
 
-**Document stores** — full corpus is scanned, deltas keep it current:
-Google Drive, SharePoint, OneDrive, Dropbox, Box, Confluence, Notion.
+**Document stores (pre-vetted)** — full corpus is scanned up front,
+deltas keep it current: Google Drive, SharePoint, OneDrive,
+Confluence, Notion.
+
+**Document stores (on-demand)** — no upfront corpus scan; content is
+vetted at query time when your assistant requests it: Dropbox, Box.
 
 **Event streams (firehose)** — no historical scan; classified on
 arrival, optionally backfilled to last 30 days: Gmail, Slack, GitHub,
