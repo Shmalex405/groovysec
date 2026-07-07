@@ -1,57 +1,66 @@
 # Connect Slack
 
-Expose Slack public-channel messages to AI assistants through the
-Whiteout AI Connector.
+Slack is the **exception** to the connector's per-user model. Where
+document stores connect per user, Slack is exposed **once by an admin**
+through a shared Whiteout Slack **bot**.
+
+## Why Slack is different
+
+For document stores, each user connects their own account so the
+connector serves only what that user can see. Slack works the other
+way: a single **bot** reads the channels it's been invited to, and
+**the bot's own membership *is* the intended exposure**. Adding the bot
+to a channel is itself an access-control decision (a Slack ACL), not an
+override of one — so there is no per-user connect. Content is still
+governed the same way: every message is vetted against your org-wide
+connector policy before an assistant reads it.
 
 ## Prerequisites
 
-- **Slack workspace admin** (to install our app)
-- **Whiteout admin** access
+- **Slack workspace admin** (to install the Whiteout bot)
+- **Whiteout admin** access to the desktop app (to expose Slack and
+  manage the connector policy)
 
 ## Setup steps
 
-1. Open the **Whiteout AI Connector** card → click **Slack**.
-2. Click **Connect Slack**.
-3. Sign in to the Slack workspace and **Allow** the Whiteout app.
-4. The card shows **Connected**.
+1. In the Whiteout desktop app, open the connector and **Connect
+   Slack**.
+2. Sign in to your Slack workspace and **Allow** the Whiteout app to
+   install the bot.
+3. Slack shows **Connected**.
+4. **Invite the bot to the channels you want governed:** in each
+   channel, type `/invite @whiteout-ai-bot`. The bot reads only
+   channels it's a member of.
 
 ## Scopes Whiteout requests
 
 | Scope | Why |
 |---|---|
-| `channels:history` | Read messages in public channels. |
+| `search:read` | Find messages across the channels the bot is in. |
+| `channels:history` | Read messages in channels the bot is a member of. |
 | `channels:read` | Enumerate channels at sync time. |
-| `users:read` | Identify which user posted each message. |
 
-**Off by default**: `groups:history` (private channels), `im:history`
-(DMs), `mpim:history` (group DMs). Enable these only if you want
-governance over private/DM traffic — they require additional admin
-consent.
+The bot never reads a channel it hasn't been invited to.
 
 ## What to expect after connect
 
-- **No initial scan.** Slack is a high-volume firehose — we anchor at
-  "now". Historical messages stay out of cache unless touched.
-- **Content-length floor:** messages under 50 characters skip the deep
-  classifier. ~80% of Slack traffic is short ack messages ("yes",
-  "+1", "thanks") — running them through Ollama is pure waste.
-- **Tier 1 sync:** every 5 minutes, `conversations.history` per
-  channel filtered by message timestamp.
-- **Real-time sync (Tier 2):** click **Enable real-time sync**. Slack's
-  Events API is configured at the Whiteout-app level (we've already
-  done this); Enable real-time binds your workspace's team_id to your
-  org so notifications route correctly.
+- **Access = bot membership.** Assistants can surface messages only
+  from channels the bot has been added to. Removing the bot from a
+  channel removes that channel from governance.
+- **Not per-user.** Unlike Notion / Confluence / Box / Dropbox, users
+  do **not** connect their own Slack accounts. The single bot is the
+  connection for the whole org.
+- **Content vetting:** every message still passes the org-wide
+  connector policy before an assistant sees it.
+- **Sync:** Tier 1 delta polling runs ~every 5 minutes; enable Tier 2
+  **real-time sync** for sub-minute latency.
 
 ## Troubleshooting
 
-- **Bot can't read a channel** — the Slack bot user needs to be
-  invited to that specific channel. Type `/invite @whiteout-ai-bot`
-  in the channel.
-- **Replay attacks rejected** — Slack signatures have a 5-minute
-  freshness window. If your backend clock drifts > 5min from real
-  time, signatures fail. Sync NTP.
-- **DM traffic not appearing** — by design. Enable the DM scopes
-  during connect (see above) to opt in.
+- **Bot can't read a channel** — invite it: `/invite @whiteout-ai-bot`
+  in that channel.
+- **Private channels / DMs not appearing** — by design. The bot only
+  reads channels it's explicitly added to.
 
 ## Audit log
 

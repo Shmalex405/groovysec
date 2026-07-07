@@ -1,61 +1,93 @@
 # Connect SharePoint
 
-Expose a SharePoint site's document library to AI assistants through
-the Whiteout AI Connector.
+Expose your organization's SharePoint content to AI assistants through
+the Whiteout AI Connector. SharePoint is a **document store**, so it
+uses two credentials with separate roles: an org-wide **scanner** that
+classifies the whole corpus, and **per-user** connections that decide
+what each person is actually served.
+
+- **Whiteout governs content** — one org-wide policy vets every file
+  before an AI sees it.
+- **Microsoft governs access** — each user is served only the sites and
+  files their own account can already see.
 
 ## Prerequisites
 
-- **Microsoft 365 Global Admin** access (consent to app-only scopes)
-- **Whiteout admin** access
-- The SharePoint site URL you want to expose (e.g.
-  `https://contoso.sharepoint.com/sites/engineering`)
+- **Whiteout admin** access (to expose SharePoint and manage the
+  org-wide policy)
+- A **Microsoft 365 tenant admin** to grant admin-consent for the
+  org-wide scanner credential
+- Each end user needs their **own Microsoft account** to connect
+- Your **Tenant ID** (Microsoft tenant GUID)
+
+> No restricted-scope review. Unlike Google, Microsoft's scopes here
+> need only tenant **admin-consent** — there's no separate security
+> assessment gating rollout.
 
 ## Setup steps
 
-1. From the Integrations page, open the **Whiteout AI Connector**
-   card and click **SharePoint** in the apps grid.
-2. Click **Connect SharePoint**.
-3. You'll be prompted for:
-   - **Tenant ID** — your Microsoft tenant GUID
-   - **Site URL** — the specific SharePoint site to expose
-4. Sign in as a Global Admin and **Accept** the requested permissions.
-5. You're returned to Whiteout; the card shows **Connected**.
-6. Initial scan begins automatically.
+### Admin — expose SharePoint and connect the scanner
+
+1. In the Whiteout desktop app, open **Integrations → Whiteout AI
+   Connector** and find **SharePoint**.
+2. Click **Expose** to make SharePoint available to your users.
+3. Provide your **Tenant ID**, then sign in as a tenant admin and
+   **Accept** the requested permissions (admin-consent).
+4. The org-wide **scan** starts automatically and classifies the
+   corpus, populating the admin **Documents** review view. The scanner
+   **only classifies — it never serves files to a user.**
+
+### Each user — connect their own account
+
+1. In the Whiteout desktop app, open **Connect your sources**.
+2. Find **Microsoft** in the list and click **Connect**.
+3. Sign in with your own Microsoft account and approve access.
+4. You're now served SharePoint content at query time — limited to the
+   sites and files your own account can access, drawn from the
+   already-classified corpus.
+
+> One connect per provider: connecting **Microsoft** covers both
+> SharePoint and OneDrive. Users don't connect them separately.
 
 ## Scopes Whiteout requests
 
-| Scope | Why |
-|---|---|
-| `Files.Read.All` (Application) | Read SharePoint document library content for classification. |
-| `Sites.Read.All` (Application) | Enumerate sites + drives for the site you authorize. |
+| Role | Scope | Why |
+|---|---|---|
+| Scanner (org-wide) | `Sites.Read.All` | Enumerate all sites + drives to classify the whole corpus. |
+| Scanner (org-wide) | `Files.Read.All` | Read document-library content for classification. |
+| Per-user serving | `Sites.Read.All` | At query time, resolve which sites that user can access. |
+| Per-user serving | `Files.Read.All` | At query time, read only the files that user's account can access. |
 
-App-only (client credentials) flow — we don't impersonate any user.
+We **do not** request write scopes. Whiteout never modifies your
+SharePoint content.
 
 ## What to expect after connect
 
-- **Initial scan duration:** ~3s per doc. SharePoint site libraries
-  range from hundreds to tens of thousands of docs depending on size.
-- **Sync model:** Tier 1 (poll) uses Microsoft Graph's `delta`
-  endpoint — true incremental, not timestamp polling.
-- **Real-time sync:** click **Enable real-time sync**. We register a
-  Graph subscription on `sites/{site_id}/drive/root`. Subscriptions
-  auto-renew via PATCH; default lifetime ~3 days.
-- During subscription registration, Microsoft Graph performs a
+- **Corpus classification (scanner):** ~3s per doc. Tenant libraries
+  range from hundreds to tens of thousands of docs. The **Documents**
+  review view fills in as the scan runs.
+- **Per-user serving is immediate.** Once a user connects, queries are
+  served right away from the classified corpus, intersected with that
+  user's live SharePoint permissions.
+- **Sync model:** delta sync uses Microsoft Graph's `delta` endpoint —
+  true incremental, not timestamp polling — with optional real-time
+  change notifications for sub-minute latency.
+- During change-notification registration, Microsoft Graph performs a
   validation handshake with our webhook URL. If your network blocks
   inbound HTTPS from `*.notifications.api.microsoft.com`, registration
   fails — open the firewall to that range.
 
 ## Troubleshooting
 
-- **"sharepoint integration is not CONNECTED"** — the app-only token
-  expired (tokens are minted from client credentials and typically
-  last 1 hour). Whiteout auto-refreshes; if you see this persistently
-  the client secret is likely rotated. Re-connect to refresh.
-- **403 Forbidden on subscription create** — the SharePoint admin
-  hasn't consented to `Sites.Read.All`. Re-run consent.
-- **No files appearing in the scan** — verify the site URL points to
-  a site, not a sub-folder. Whiteout enumerates the site's default
-  drive, not arbitrary URL paths.
+- **403 Forbidden during scan or consent** — the tenant admin hasn't
+  granted admin-consent for `Sites.Read.All` / `Files.Read.All`. Re-run
+  consent as a tenant admin.
+- **User sees fewer sites/files than expected** — by design. A user is
+  served only what their own Microsoft account can access. Fix broader
+  access in SharePoint's permissions, not in Whiteout.
+- **"sharepoint integration is not CONNECTED"** — the scanner token
+  expired or the client secret rotated. Re-connect the org-wide scanner
+  credential to refresh.
 
 ## Audit log
 

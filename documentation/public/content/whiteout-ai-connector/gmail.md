@@ -1,78 +1,85 @@
 # Connect Gmail
 
 Expose Gmail mailbox content to AI assistants through the Whiteout AI
-Connector. This is the only integration with a customer-side
-infrastructure requirement (a Google Cloud Pub/Sub topic) — plan ~30
-minutes for the GCP setup.
+Connector. Gmail is a **live source**: it's **per-user only** and
+classified **on demand at query time** — there is no pre-scanned corpus
+and no org-wide scanner.
+
+- **Whiteout governs content** — one org-wide policy vets every message
+  before an AI sees it.
+- **Google governs access** — each user connects their own mailbox and
+  is served only their own mail.
 
 ## Prerequisites
 
-- A **Gmail mailbox** (Workspace or personal)
-- **Google Cloud Platform** access to create a Pub/Sub topic
-- **Whiteout admin** access
+- **Whiteout admin** access (to expose Gmail and manage the org-wide
+  policy)
+- Each end user needs their **own Gmail account** (Workspace or
+  personal) to connect
+- Whiteout's OAuth app is pre-configured — nothing to register on the
+  Google side
+- **Google restricted-scope verification:** `gmail.readonly` is a
+  restricted scope. Google requires the Whiteout OAuth app to pass a
+  security assessment before general rollout. Until verification
+  completes, connecting works only for **allowlisted test users**.
+
+> No customer-side infrastructure. Because Gmail is classified on
+> demand per user rather than pre-scanned, the old Pub/Sub topic
+> requirement no longer applies.
 
 ## Setup steps
 
-### Step A — Create the Pub/Sub topic (one-time, customer-side)
+### Admin — expose Gmail
 
-1. In Google Cloud Console, create or select a project.
-2. Enable the **Cloud Pub/Sub API**.
-3. Create a topic named `whiteout-gmail-notifications` (or any name —
-   you'll provide it to Whiteout).
-4. Create a **push subscription** on that topic with:
-   - **Endpoint URL** —
-     `https://api.whiteout.<your-customer-org>.com/connector/v1/webhooks/gmail`
-     (Whiteout will provide the exact URL on the Gmail card detail
-     dialog)
-   - **Authentication** — use a service account with role
-     `pubsub.subscriber`
-5. Grant `roles/pubsub.publisher` on the topic to
-   `gmail-api-push@system.gserviceaccount.com` (Google's official
-   Gmail push service account).
-6. Copy the topic name (full `projects/<project-id>/topics/...` form).
+1. In the Whiteout desktop app, open **Integrations → Whiteout AI
+   Connector** and find **Gmail**.
+2. Click **Expose** to make Gmail available to your users.
 
-### Step B — Connect Gmail in Whiteout
+### Each user — connect their own mailbox
 
-1. Open the **Whiteout AI Connector** card → click **Gmail**.
-2. Click **Connect Gmail**.
-3. Sign in to the Gmail account and authorize.
-4. In the detail dialog, paste the **Pub/Sub topic name** from Step
-   A.6.
-5. Click **Enable real-time sync**. Whiteout calls `users.watch()`
-   pointing at your topic.
+1. In the Whiteout desktop app, open **Connect your sources**.
+2. Find **Google** in the list and click **Connect**.
+3. Sign in with your own Google account and click **Allow**.
+4. Your mail is now vetted on demand whenever an AI assistant queries
+   it — limited to your own mailbox.
+
+> One connect per provider: connecting **Google** covers both Gmail and
+> Drive. Users don't connect them separately.
 
 ## Scopes Whiteout requests
 
-| Scope | Why |
-|---|---|
-| `gmail.readonly` | Read email subject + body for classification. |
-| `gmail.metadata` | Detect new emails via the history feed. |
+| Role | Scope | Why |
+|---|---|---|
+| Per-user serving | `gmail.readonly` | At query time, read only that user's own mail subject + body for classification. |
+
+We request no write scopes and no scanner credential — Gmail has no
+org-wide corpus scan.
 
 ## What to expect after connect
 
-- **No initial scan.** Anchored at the current `historyId`.
-- **Content-length floor:** emails under 100 characters skip the deep
+- **No corpus scan.** Nothing is classified up front. Messages are
+  vetted the moment an assistant requests them, per user.
+- **Content-length floor:** messages under 100 characters skip the deep
   classifier (auto-replies, one-liners).
-- **Tier 1 sync:** every 5 minutes, `users.history.list` from the
-  persisted historyId.
-- **Tier 2 sync:** Pub/Sub push delivers near-instant notifications,
-  which trigger an immediate Tier 1 poll.
-- **Gmail watch expires every 7 days.** Whiteout auto-renews via the
-  channel renewal sweep.
+- **Access is per-user.** A user can only surface their own mailbox.
+  There is no shared credential and no admin scanner reading everyone's
+  mail.
 - **Attachments NOT classified.** Email body text only. To govern
   attachments, route them through the Whiteout interception flow
   (browser extension or desktop guard).
 
 ## Troubleshooting
 
-- **`users.watch()` 403** — the Gmail account hasn't granted
-  publisher access to `gmail-api-push@system.gserviceaccount.com` on
-  your Pub/Sub topic. Re-check Step A.5.
-- **Push messages not arriving** — Pub/Sub subscription's endpoint
-  URL is wrong. Check it matches exactly (no trailing slash issues).
-- **Watch expired** — the renewal sweep should fix this within 24h of
-  expiry. If it persists, check the channel's `status` in the
-  Connector detail dialog and click **Re-register webhook**.
+- **"Access blocked: this app hasn't been verified"** — Google
+  restricted-scope verification isn't complete yet. Add the affected
+  user to the OAuth app's **test users** allowlist, or wait for
+  verification to finish for general rollout.
+- **User sees no mail / fewer results than expected** — Gmail is
+  per-user and on-demand; a user only ever surfaces their own mailbox,
+  and only messages that match the query.
+- **"gmail integration is not CONNECTED"** — that user's OAuth grant
+  expired or was revoked. Have them re-connect **Google** from
+  **Connect your sources**.
 
 ## Audit log
 

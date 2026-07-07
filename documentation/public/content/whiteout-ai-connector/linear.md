@@ -1,49 +1,73 @@
 # Connect Linear
 
-Expose Linear issues and comments to AI assistants through the
-Whiteout AI Connector.
+Expose Linear issues and comments to AI assistants through the Whiteout
+AI Connector — with each user connecting their **own** Linear account.
+
+## How access works
+
+- **Whiteout governs content.** Your org-wide connector policy vets
+  every issue and comment before any AI assistant sees it.
+- **Linear governs access.** The connector reads through *your* Linear
+  grant, so it only ever sees the teams and issues **you** can already
+  access. Linear's own permissions scope what's reachable — there is no
+  shared API key standing in for everyone.
+
+This is a **live, on-demand** source. There is no pre-scanned org-wide
+corpus and no admin "Documents" view — content is classified at query
+time, per user, against your org connector policy.
+
+> **Availability:** Per-user connect for Linear is **coming**. The
+> Linear OAuth app is not yet wired into the connector's connect layer,
+> so the **Connect** button is not live on the "Connect your sources"
+> page yet. This guide describes the intended per-user model and the
+> scope we'll request so you know what to expect.
 
 ## Prerequisites
 
-- **Linear workspace admin** (to authorize the OAuth or personal API
-  key)
-- **Whiteout admin** access
+- A **Linear account** — each user connects their own; no shared
+  personal API key
+- The **Whiteout desktop app**, signed in
+- **Admin (one-time):** expose the Linear integration and set the
+  org-wide connector policy in the desktop app
 
-## Setup steps
+## Setup steps (per user)
 
-1. Open the **Whiteout AI Connector** card → click **Linear**.
-2. Click **Connect Linear**.
-3. Either:
-   - **OAuth flow** — sign in and authorize the Whiteout app, OR
-   - **API key flow** — paste a Linear personal API key (create at
-     `https://linear.app/settings/api`)
-4. The card shows **Connected**.
+1. Open the Whiteout desktop app → **Connect your sources**.
+2. Find **Linear** in the sources grid → click **Connect**.
+3. Authorize the Whiteout app on Linear's OAuth screen with your own
+   account.
+4. You're returned to Whiteout; Linear shows **Connected** for your
+   account.
 
-## Scopes / permissions
+## Scopes Whiteout requests
 
-If using OAuth, Whiteout requests the **read** scope. Personal API
-keys carry whatever permissions the issuing user has.
+| Scope | Why |
+|---|---|
+| `read` | Read the issues and comments you can access, so we can classify them before AI sees them. |
+
+We **do not** request write scopes. Whiteout never modifies your
+Linear workspace.
 
 ## What to expect after connect
 
-- **No initial scan.** Linear is a firehose — we anchor at "now" and
-  classify issues + comments as they fire.
-- **Tier 1 sync:** every 5 minutes, GraphQL `issueSearch(filter:
-  {updatedAt: {gt: "..."}})`.
-- **Real-time sync (Tier 2):** click **Enable real-time sync**. We
-  create a Linear webhook subscribed to `Issue` + `Comment` resource
-  types. Notifications are HMAC-SHA256-signed (Linear's
-  per-subscription secret).
-- **Comments emit as separate events** under composite ids
-  (`<issue_id>:comment:<comment_id>`) so each gets its own cache row.
+- **Per-user visibility.** Each user sees only the Linear teams and
+  issues **they** can access. Nothing is pooled under a shared key.
+- **On-demand classification.** Content is vetted at query time the
+  first time your assistant requests it, then the verdict is cached.
+  There is no initial scan and no org-wide corpus.
+- **Content-governed results.** Items that fail policy come back with
+  `content: null` plus a `whiteout_vetting` annotation; existence-
+  classified items are removed entirely.
 
 ## Troubleshooting
 
-- **GraphQL 401** — API key revoked or OAuth scopes downgraded.
-  Re-connect.
-- **Webhook signature mismatch** — Linear's secret was rotated.
-  Click **Re-register webhook** in the detail dialog.
+- **Connect button missing** — expected for now; per-user connect ships
+  once the Linear OAuth app is wired into the connect layer.
+- **An issue isn't showing up** — the connector only sees what your
+  Linear grant sees. Confirm you have access in Linear itself; access
+  is governed by Linear, not Whiteout.
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=linear`.
+**Admin → Audit → MCP Activity**, filter `integration=linear`. Each row
+is tagged with the requesting user, so per-user activity is visible.

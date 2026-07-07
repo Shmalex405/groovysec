@@ -1,62 +1,100 @@
 # Connect Google Drive
 
-This guide walks an admin through exposing their organization's Google
-Drive to AI assistants through the Whiteout AI Connector.
+Expose your organization's Google Drive to AI assistants through the
+Whiteout AI Connector. Drive is a **document store**, so it uses two
+credentials with separate roles: an org-wide **scanner** that
+classifies the whole corpus, and **per-user** connections that decide
+what each person is actually served.
+
+- **Whiteout governs content** — one org-wide policy vets every file
+  before an AI sees it.
+- **Google governs access** — each user is served only the files their
+  own Drive account can already see.
 
 ## Prerequisites
 
-- **Google Workspace admin** access (to consent to OAuth scopes)
-- **Whiteout admin** access to the Integrations page
+- **Whiteout admin** access (to expose Drive and manage the org-wide
+  policy)
+- A **Google Workspace admin** account for the org-wide scanner
+  credential — either a service admin account or domain-wide delegation
+- Each end user needs their **own Google account** to connect
 - Whiteout's Drive OAuth app is pre-configured in the Whiteout backend
   — nothing to register on the Google side
+- **Google restricted-scope verification:** `drive.readonly` is a
+  restricted scope. Google requires the Whiteout OAuth app to pass a
+  security assessment before general rollout. Until verification
+  completes, connecting works only for **allowlisted test users**. (See
+  Troubleshooting.)
 
 ## Setup steps
 
-1. From the Integrations page, scroll to the **Whiteout AI Connector**
-   card.
-2. Find **Google Drive** in the apps grid (top-left). Click it.
-3. The detail dialog opens with a **Connect Google Drive** button.
-   Click it.
-4. You're redirected to Google's OAuth consent screen. Sign in with
-   the workspace admin account, review the scopes, and click **Allow**.
-5. You're returned to Whiteout. The Drive card now shows the green
-   **Connected** dot.
-6. The **initial scan** starts within ~60 seconds. The progress bar
-   shows live counts.
+### Admin — expose Drive and connect the scanner
+
+1. In the Whiteout desktop app, open **Integrations → Whiteout AI
+   Connector** and find **Google Drive**.
+2. Click **Expose** to make Drive available to your users.
+3. Connect the **org-wide scanner credential** — either sign in with a
+   Workspace service admin account, or configure **domain-wide
+   delegation** (recommended, see below).
+4. The org-wide **scan** starts within ~60 seconds and classifies every
+   file in the corpus. This populates the admin **Documents** review
+   view. The scanner **only classifies — it never serves files to a
+   user.**
+
+### Each user — connect their own Drive
+
+1. In the Whiteout desktop app, open **Connect your sources**.
+2. Find **Google** in the list and click **Connect**.
+3. Sign in with your own Google account and click **Allow**.
+4. You're now served Drive content at query time — limited to what your
+   own account can access, drawn from the already-classified corpus.
+
+> One connect per provider: connecting **Google** covers both Drive and
+> Gmail. Users don't connect them separately.
+
+### Domain-wide delegation (recommended)
+
+A Workspace admin can grant **domain-wide delegation** to Whiteout's
+service account. This provisions every user **zero-click** — no
+per-user OAuth consent screen. Users still only ever see their own
+files; delegation just removes the individual grant step.
 
 ## Scopes Whiteout requests
 
-| Scope | Why |
-|---|---|
-| `drive.readonly` | Read all Drive files the admin can see, so we can classify them before AI sees them. |
-| `drive.metadata.readonly` | Detect new/modified/deleted docs without re-reading content. |
+| Role | Scope | Why |
+|---|---|---|
+| Scanner (org-wide) | `drive.readonly` | Read the whole corpus once to classify every file before any AI sees it. |
+| Scanner (org-wide) | `drive.metadata.readonly` | Detect new/modified/deleted docs without re-reading content. |
+| Per-user serving | `drive.readonly` | At query time, read only the files that user's own account can access. |
 
 We **do not** request write scopes. Whiteout never modifies your Drive.
 
 ## What to expect after connect
 
-- **Initial scan duration:** roughly 3 seconds per document on the
-  standard compliance engine. A 1,000-doc Drive takes ~50 minutes; a
-  10,000-doc Drive takes ~8 hours. Customers with large corpora can
-  bump the scanner GPU temporarily.
-- **Tier 1 sync starts:** every 5 minutes after the initial scan
-  completes. New/modified/deleted docs flow into the cache.
-- **Tier 2 (real-time) sync:** click **Enable real-time sync** in the
-  detail dialog. This registers a Drive `changes.watch` channel with
-  a 7-day expiry that we auto-renew.
-- The connector's overall **Active** badge appears in the card header
-  once the scan completes.
+- **Corpus classification (scanner):** roughly 3 seconds per document
+  on the standard compliance engine. A 1,000-doc org takes ~50 minutes;
+  a 10,000-doc org takes ~8 hours. Large corpora can bump the scanner
+  GPU temporarily. The **Documents** review view fills in as the scan
+  runs.
+- **Per-user serving is immediate.** Once a user connects, queries are
+  served right away from the classified corpus — no per-user scan.
+  Access is intersected with that user's live Drive ACLs.
+- **Delta sync** keeps the classified corpus current every ~5 minutes;
+  real-time change notifications drop that to seconds.
 
 ## Troubleshooting
 
-- **"google_drive integration is not CONNECTED"** — the OAuth grant
-  expired or was revoked. Click Connect Google Drive again to
-  re-authorize.
-- **Initial scan stuck at 0** — check that the scanner GPU endpoint
-  is configured (admin-only, in the Preflight dialog).
-- **Webhook channel expired** — should auto-renew at the 24-hour-out
-  mark. If you see this on the dashboard, click **Re-register
-  webhook** in the detail dialog.
+- **"Access blocked: this app hasn't been verified"** — Google
+  restricted-scope verification isn't complete yet. Add the affected
+  user to the OAuth app's **test users** allowlist, or wait for
+  verification to finish for general rollout.
+- **User sees fewer files than expected** — by design. A user is served
+  only what their own Google account can access. If they need broader
+  access, fix it in Google Drive's sharing, not in Whiteout.
+- **"google_drive integration is not CONNECTED"** — the scanner grant
+  expired or was revoked. Re-connect the org-wide scanner credential.
+- **Corpus scan stuck at 0** — check that the scanner GPU endpoint is
+  configured (admin-only, in the Preflight dialog).
 
 ## Audit log
 
