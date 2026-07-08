@@ -23,6 +23,28 @@ reads only what that user is already permitted to see in the source.
 There is no single shared admin credential handing the same data to
 everyone.
 
+## Route each source only through Whiteout
+
+Whiteout's guarantee — **every document and email is vetted against
+your policies before the AI sees it** — holds only for content the AI
+reads **through the Whiteout AI Connector**. Whiteout cannot govern a
+path it doesn't sit on.
+
+Most AI workspaces ship their **own vendor-native connectors** too:
+claude.ai has a built-in Gmail and Google Drive connector, and ChatGPT
+and Gemini offer their own equivalents. If the **same** workspace has
+both Whiteout **and** a vendor-native connector enabled for the **same**
+source, the AI can read that source **directly on the native path**,
+bypassing Whiteout's vetting entirely. The two connectors are separate
+doors into the same room — Whiteout only guards its own.
+
+> **Important:** For any source you govern through Whiteout, do **not**
+> also enable the vendor-native connector for that source in the same
+> workspace. Route it **exclusively** through the Whiteout AI Connector.
+> If you genuinely need both, treat the native connector as an
+> **ungoverned path** and disable it for that source — otherwise the AI
+> keeps a direct, unvetted line to your data.
+
 ## The three connect models
 
 Every integration uses one of three models. Each source's guide tells

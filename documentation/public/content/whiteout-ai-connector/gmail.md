@@ -10,6 +10,13 @@ and no org-wide scanner.
 - **Google governs access** — each user connects their own mailbox and
   is served only their own mail.
 
+> **Route Gmail only through Whiteout.** If the same AI workspace also
+> has its vendor-native Gmail connector enabled (e.g. claude.ai's
+> built-in Gmail), the AI can read mail directly on that path, skipping
+> Whiteout's vetting. Disable the native Gmail connector where you
+> govern Gmail through Whiteout. See
+> [Overview → Route each source only through Whiteout](./whiteout-ai-connector/overview.md#route-each-source-only-through-whiteout).
+
 ## Prerequisites
 
 - **Whiteout admin** access (to expose Gmail and manage the org-wide

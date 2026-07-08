@@ -11,6 +11,13 @@ what each person is actually served.
 - **Google governs access** — each user is served only the files their
   own Drive account can already see.
 
+> **Route Drive only through Whiteout.** If the same AI workspace also
+> has its vendor-native Google Drive connector enabled (e.g.
+> claude.ai's built-in Drive connector), the AI can read files directly
+> on that path, skipping Whiteout's vetting. Disable the native Drive
+> connector where you govern Drive through Whiteout. See
+> [Overview → Route each source only through Whiteout](./whiteout-ai-connector/overview.md#route-each-source-only-through-whiteout).
+
 ## Prerequisites
 
 - **Whiteout admin** access (to expose Drive and manage the org-wide
