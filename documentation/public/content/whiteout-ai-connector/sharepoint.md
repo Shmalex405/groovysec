@@ -7,9 +7,18 @@ classifies the whole corpus, and **per-user** connections that decide
 what each person is actually served.
 
 - **Whiteout governs content** — one org-wide policy vets every file
-  before an AI sees it.
+  before an AI sees it — a dedicated connector policy, separate from
+  your users' normal group policies, which don't apply to connector
+  reads.
 - **Microsoft governs access** — each user is served only the sites and
   files their own account can already see.
+
+> **Route SharePoint only through Whiteout.** If the same AI workspace
+> also has its vendor-native SharePoint connector enabled (e.g.
+> claude.ai's built-in SharePoint), the AI can read files directly on
+> that path, skipping Whiteout's vetting. Disable the native SharePoint
+> connector where you govern SharePoint through Whiteout. See
+> [Overview → Route each source only through Whiteout](./whiteout-ai-connector/overview.md#route-each-source-only-through-whiteout).
 
 ## Prerequisites
 

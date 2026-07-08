@@ -1,85 +1,88 @@
 # Connect Box
 
-Box is a **document store**: the Whiteout AI Connector governs the
-*content* assistants can read, while Box governs *access*. Every item
-is classified against your org's connector policy before any assistant
-sees it, and each user is served only the content their own Box account
-can access.
+Expose Box file content to AI assistants through the Whiteout AI
+Connector. Box is a **live source**: it's **per-user only** and
+classified **on demand at read time** — there is no pre-scanned corpus,
+no org-wide scanner, and no admin **Documents** review view.
 
-> **Per-user connect for Box is coming.** The Box OAuth app is not yet
-> wired into the connector's connect layer, so users can't yet connect
-> their own Box accounts from the desktop app. The intended model is
-> described below; the org scanner side is available today.
+- **Whiteout governs content** — one org-wide connector policy vets
+  every file's content the instant an AI reads it, before the AI sees
+  it.
+- **Box governs access** — each user connects their own Box account and
+  is served only the files and folders their account can access.
+
+> **Route Box only through Whiteout.** If the same AI workspace also has
+> a vendor-native Box connector enabled, the AI can read Box directly on
+> that path, skipping Whiteout's vetting. Disable the native connector
+> where you govern Box through Whiteout. See
+> [Overview → Route each source only through Whiteout](./whiteout-ai-connector/overview.md#route-each-source-only-through-whiteout).
 
 ## How access works
 
 Two concerns are kept separate:
 
 - **Content governance (org-wide).** Your Whiteout admin defines one
-  connector policy for the organization. Every Box item is vetted
-  against it before an assistant reads it.
-- **Access (per user).** Each user will connect their *own* Box
-  account, and the connector serves that user only the files and
-  folders their account can access. No shared admin credential exposes
-  everyone's Box content.
-
-Box uses **two credentials with different jobs**:
-
-| Credential | Who sets it up | What it does |
-|---|---|---|
-| **Org scanner** | Admin, once | Pre-scans and classifies the whole corpus so the admin's **Documents** review view is complete. It **only classifies — it never serves content to assistants.** |
-| **Per-user connection** *(coming)* | Each user, for their own account | Will serve that user only the content their Box account can access, after content vetting. |
+  connector policy for the organization. Every Box file's content is
+  vetted against it the moment an assistant reads it — there is no
+  up-front scan.
+- **Access (per user).** Each user connects their *own* Box account, and
+  the connector serves that user only the files and folders their
+  account can access. No shared admin credential exposes everyone's Box
+  content.
 
 ## Prerequisites
 
-**Admin**
-- **Whiteout admin** access to the desktop app
-- **Box admin** to authorize the org scanner
-
-**Each user** *(once per-user connect ships)*
-- A **Box account** with access to the content they need
-- The **Whiteout desktop app**, signed in
+- **Whiteout admin** access (to expose Box and manage the org-wide
+  policy)
+- Each end user needs their **own Box account** with access to the files
+  they want to reach
+- **Operator OAuth app:** per-user connect activates once your operator
+  registers the Box OAuth app and sets `BOX_CLIENT_ID` /
+  `BOX_CLIENT_SECRET`. Until those are set, connecting fails safe to a
+  "connect your account" stub.
 
 ## Setup steps
 
-**Admin — expose Box and enable scanning**
-1. In the Whiteout desktop app, expose **Box** and authorize the **org
-   scanner** so the corpus is classified into the **Documents** review
-   view.
-2. Set your org-wide **connector policy**.
+### Admin — expose Box
 
-**Each user — connect your own account** *(coming)*
-1. Open **Connect your sources** in the Whiteout desktop app.
-2. Find **Box**, click **Connect**, and complete Box OAuth.
-3. Assistants then read only the content your Box account can access,
-   after content vetting.
+1. In the Whiteout desktop app, open **Integrations → Whiteout AI
+   Connector** and find **Box**.
+2. Click **Expose** to make Box available to your users.
+3. Set your org-wide **connector policy**.
+
+### Each user — connect their own account
+
+1. In the Whiteout desktop app, open **Connect your sources**.
+2. Find **Box** in the list and click **Connect**.
+3. Sign in with your own Box account and complete Box OAuth.
+4. Your files are now vetted on demand whenever an AI assistant reads
+   them — limited to what your own Box account can access.
 
 ## Scopes Whiteout requests
 
-Per-user connect requests a single read scope:
+| Role | Scope | Why |
+|---|---|---|
+| Per-user serving | `root_readonly` | At read time, read only the files and folders the connecting user can access, for classification and serving. |
 
-| Scope | Why |
-|---|---|
-| `root_readonly` | Read the files and folders the connecting user can access, for classification and serving. |
-
-Read-only — no write or delete scopes.
+Read-only — no write or delete scopes, and no scanner credential (Box
+has no org-wide corpus scan).
 
 ## What to expect after connect
 
-- **Per-user scope:** assistants see only the content the connecting
-  user can access; Box's permissions do the scoping.
-- **Org scanner coverage:** the admin's Documents view reflects the
-  whole corpus today, independent of per-user connect.
-- **Content vetting:** flagged items return with content withheld plus
-  a `whiteout_vetting` annotation; existence-classified items are
-  removed.
-- **Sync:** Tier 1 delta polling runs ~every 5 minutes; Tier 2
-  **real-time sync** is available for sub-minute latency.
+- **No corpus scan.** Nothing is classified up front. Files are vetted
+  the moment an assistant reads them, per user.
+- **Access is per-user.** A user can only surface files their own Box
+  account can access; Box's permissions do the scoping. There is no
+  shared credential and no admin scanner reading everyone's Box.
+- **Content vetting:** flagged items return with content withheld plus a
+  `whiteout_vetting` annotation; existence-classified items are removed.
 
 ## Troubleshooting
 
-- **Users can't connect Box yet** — expected. Per-user connect isn't
-  wired yet; only the org scanner is live.
+- **Users can't connect Box** — the operator hasn't set
+  `BOX_CLIENT_ID` / `BOX_CLIENT_SECRET` yet, so connect fails safe to a
+  stub. Have your operator register the Box OAuth app and set those
+  secrets.
 - **A file is missing (per-user)** — the connecting user's Box account
   can't see it. Fix sharing in Box.
 

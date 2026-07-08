@@ -50,13 +50,16 @@ doors into the same room — Whiteout only guards its own.
 Every integration uses one of three models. Each source's guide tells
 you which one applies.
 
-**1. Per-user OAuth (live sources)** — Gmail and similar. Each user
-connects their own account. Content is classified on demand at query
-time; there is no pre-scanned corpus. The user is served only what
-their own account can read.
+**1. Per-user OAuth (live / on-demand sources)** — Gmail, Box, Dropbox,
+GitHub, Jira, Linear, Asana, Trello. Each user connects their own
+account. Content is classified on demand at query time; there is no
+pre-scanned corpus and no admin **Documents** review view. The user is
+served only what their own account can read. (Slack is per-source too,
+but uses model 3 below.)
 
 **2. Per-user OAuth + org-wide scanner (document stores)** — Google
-Drive, SharePoint, OneDrive. Two credentials with **separate roles**:
+Drive, SharePoint, OneDrive, Confluence, Notion. Two credentials with
+**separate roles**:
 
 - An **org-wide scanner credential** (a Workspace / service admin
   account, or domain-wide delegation) pre-scans and classifies the

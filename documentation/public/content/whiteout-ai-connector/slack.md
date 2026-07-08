@@ -4,6 +4,13 @@ Slack is the **exception** to the connector's per-user model. Where
 document stores connect per user, Slack is exposed **once by an admin**
 through a shared Whiteout Slack **bot**.
 
+> **Route Slack only through Whiteout.** If the same AI workspace also
+> has its vendor-native Slack connector enabled (e.g. claude.ai's
+> built-in Slack), the AI can read messages directly on that path,
+> skipping Whiteout's vetting. Disable the native Slack connector where
+> you govern Slack through Whiteout. See
+> [Overview → Route each source only through Whiteout](./whiteout-ai-connector/overview.md#route-each-source-only-through-whiteout).
+
 ## Why Slack is different
 
 For document stores, each user connects their own account so the
@@ -13,7 +20,9 @@ way: a single **bot** reads the channels it's been invited to, and
 to a channel is itself an access-control decision (a Slack ACL), not an
 override of one — so there is no per-user connect. Content is still
 governed the same way: every message is vetted against your org-wide
-connector policy before an assistant reads it.
+connector policy before an assistant reads it — a dedicated policy,
+separate from your users' normal group policies, which don't apply to
+connector reads.
 
 ## Prerequisites
 

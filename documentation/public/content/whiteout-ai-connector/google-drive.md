@@ -66,6 +66,10 @@ service account. This provisions every user **zero-click** — no
 per-user OAuth consent screen. Users still only ever see their own
 files; delegation just removes the individual grant step.
 
+> For the full step-by-step DWD runbook (it covers both Drive **and**
+> Gmail in one setup), see
+> [Google Workspace (Zero-Click)](./whiteout-ai-connector/google-workspace-dwd.md).
+
 ## Scopes Whiteout requests
 
 | Role | Scope | Why |

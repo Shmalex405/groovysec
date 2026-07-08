@@ -6,13 +6,22 @@ Every page is classified against your org's connector policy before any
 assistant sees it, and each user is served only the pages their own
 Notion account can access.
 
+> **Route Notion only through Whiteout.** If the same AI workspace also
+> has its vendor-native Notion connector enabled (e.g. claude.ai's
+> built-in Notion), the AI can read pages directly on that path,
+> skipping Whiteout's vetting. Disable the native Notion connector where
+> you govern Notion through Whiteout. See
+> [Overview → Route each source only through Whiteout](./whiteout-ai-connector/overview.md#route-each-source-only-through-whiteout).
+
 ## How access works
 
 Two concerns are kept separate:
 
 - **Content governance (org-wide).** Your Whiteout admin defines one
-  connector policy for the organization. Every Notion page is vetted
-  against it before an assistant is allowed to read it.
+  connector policy for the organization — separate from your users'
+  normal group policies, which don't apply to connector reads. Every
+  Notion page is vetted against it before an assistant is allowed to
+  read it.
 - **Access (per user).** Each user connects their *own* Notion account
   from the Whiteout desktop app. The connector then serves that user
   only the pages they've shared with the integration — Notion's own

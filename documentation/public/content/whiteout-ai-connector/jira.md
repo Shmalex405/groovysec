@@ -17,11 +17,19 @@ This is a **live, on-demand** source. There is no pre-scanned org-wide
 corpus and no admin "Documents" view — content is classified at query
 time, per user, against your org connector policy.
 
-> **Availability:** Per-user connect for Jira is **coming**. The
-> Atlassian OAuth app is not yet wired into the connector's connect
-> layer, so the **Connect** button is not live on the "Connect your
-> sources" page yet. This guide describes the intended per-user model
-> and the scope we'll request so you know what to expect.
+> **Route Jira only through Whiteout.** If the same AI workspace also
+> has its vendor-native Jira connector enabled (e.g. claude.ai's
+> built-in Atlassian), the AI can read Jira directly on that path,
+> skipping Whiteout's vetting. Disable the native Jira connector where
+> you govern Jira through Whiteout. See
+> [Overview → Route each source only through Whiteout](./whiteout-ai-connector/overview.md#route-each-source-only-through-whiteout).
+
+> **Availability:** Per-user connect for Jira is **built and wired**. It
+> activates for your org once your operator registers an Atlassian OAuth
+> app and sets its `ATLASSIAN_CLIENT_ID` / `ATLASSIAN_CLIENT_SECRET`.
+> Until then the **Connect** button on the "Connect your sources" page
+> falls back to a "connect your account" stub instead of starting
+> Atlassian's OAuth flow.
 
 ## Prerequisites
 
@@ -30,6 +38,10 @@ time, per user, against your org connector policy.
 - The **Whiteout desktop app**, signed in
 - **Admin (one-time):** expose the Jira integration and set the
   org-wide connector policy in the desktop app
+- **Operator (one-time):** register an Atlassian OAuth app and set
+  `ATLASSIAN_CLIENT_ID` / `ATLASSIAN_CLIENT_SECRET` on the backend (this
+  same app covers Confluence). Until this is set, per-user connect stays
+  in its fail-safe "connect your account" stub.
 
 ## Setup steps (per user)
 
@@ -62,8 +74,10 @@ We **do not** request write scopes. Whiteout never modifies your Jira.
 
 ## Troubleshooting
 
-- **Connect button missing** — expected for now; per-user connect ships
-  once the Atlassian OAuth app is wired into the connect layer.
+- **Connect opens a "connect your account" stub instead of Atlassian's
+  OAuth screen** — your operator hasn't set `ATLASSIAN_CLIENT_ID` /
+  `ATLASSIAN_CLIENT_SECRET` yet. Per-user connect is wired; it activates
+  once those are in place.
 - **A project or issue isn't showing up** — the connector only sees
   what your Atlassian grant sees. Confirm you have access in Jira
   itself; access is governed by Jira, not Whiteout.

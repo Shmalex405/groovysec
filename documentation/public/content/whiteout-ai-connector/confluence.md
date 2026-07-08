@@ -6,11 +6,12 @@ the *content* assistants can read, while Confluence (Atlassian) governs
 before any assistant sees it, and each user is served only the pages
 their own Atlassian account can access.
 
-> **Per-user connect for Confluence is coming.** The Atlassian OAuth
-> app is not yet wired into the connector's connect layer, so users
-> can't yet connect their own Confluence accounts from the desktop app.
-> The intended model is described below; the org scanner side is
-> available today.
+> **Per-user connect for Confluence is built and wired.** It activates
+> for your org once your operator registers an Atlassian OAuth app and
+> sets its `ATLASSIAN_CLIENT_ID` / `ATLASSIAN_CLIENT_SECRET` (the same
+> app covers Jira). Until then the **Connect** button falls back to a
+> "connect your account" stub. The org scanner side (below) is
+> independent and available today.
 
 ## How access works
 
@@ -30,15 +31,18 @@ Confluence uses **two credentials with different jobs**:
 | Credential | Who sets it up | What it does |
 |---|---|---|
 | **Org scanner** | Admin, once | Pre-scans and classifies the whole corpus so the admin's **Documents** review view is complete. It **only classifies — it never serves content to assistants.** |
-| **Per-user connection** *(coming)* | Each user, for their own account | Will serve that user only the pages their Atlassian account can access, after content vetting. |
+| **Per-user connection** | Each user, for their own account | Serves that user only the pages their Atlassian account can access, after content vetting. Activates once the operator sets `ATLASSIAN_CLIENT_ID` / `ATLASSIAN_CLIENT_SECRET`. |
 
 ## Prerequisites
 
-**Admin**
+**Admin / operator**
 - **Whiteout admin** access to the desktop app
 - **Confluence Cloud admin** to authorize the org scanner
+- **Operator (one-time):** register an Atlassian OAuth app and set
+  `ATLASSIAN_CLIENT_ID` / `ATLASSIAN_CLIENT_SECRET` on the backend to
+  activate per-user connect (this same app covers Jira)
 
-**Each user** *(once per-user connect ships)*
+**Each user**
 - An **Atlassian account** with access to the spaces they need
 - The **Whiteout desktop app**, signed in
 
@@ -50,7 +54,7 @@ Confluence uses **two credentials with different jobs**:
    review view.
 2. Set your org-wide **connector policy**.
 
-**Each user — connect your own account** *(coming)*
+**Each user — connect your own account**
 1. Open **Connect your sources** in the Whiteout desktop app.
 2. Find **Confluence**, click **Connect**, and complete Atlassian
    OAuth.
@@ -82,9 +86,11 @@ Read-only — we never request write access.
 
 ## Troubleshooting
 
-- **Users can't connect Confluence yet** — expected. Per-user connect
-  is not yet wired; only the org scanner is live. Watch the release
-  notes for availability.
+- **Connect opens a "connect your account" stub instead of Atlassian's
+  OAuth screen** — your operator hasn't set `ATLASSIAN_CLIENT_ID` /
+  `ATLASSIAN_CLIENT_SECRET` yet. Per-user connect is wired; it activates
+  once those are in place. The org scanner works independently either
+  way.
 - **Pages from one space missing (per-user)** — the connecting user
   lacks view permission on that space in Confluence. Grant access
   there.

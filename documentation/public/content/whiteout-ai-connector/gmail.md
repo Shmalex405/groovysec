@@ -34,6 +34,12 @@ and no org-wide scanner.
 > demand per user rather than pre-scanned, the old Pub/Sub topic
 > requirement no longer applies.
 
+> **Google Workspace tenant?** Skip the per-user connect *and* the
+> restricted-scope verification wait with domain-wide delegation — one
+> admin authorization provisions every user's Gmail (and Drive)
+> zero-click. See
+> [Google Workspace (Zero-Click)](./whiteout-ai-connector/google-workspace-dwd.md).
+
 ## Setup steps
 
 ### Admin — expose Gmail
@@ -53,6 +59,18 @@ and no org-wide scanner.
 > One connect per provider: connecting **Google** covers both Gmail and
 > Drive. Users don't connect them separately.
 
+### Admin — zero-click via domain-wide delegation (optional)
+
+Instead of each user running the OAuth screen, a **Google Workspace
+admin** can authorize Whiteout's service account for **domain-wide
+delegation** on the `https://www.googleapis.com/auth/gmail.readonly`
+scope **once**. Every user then gets Gmail governance **zero-click** —
+no per-user consent screen. Users still only ever surface their **own**
+mailbox; delegation only removes the individual grant step. This is the
+same DWD path described for Drive in the
+[Connect Google Drive](./whiteout-ai-connector/google-drive.md#domain-wide-delegation-recommended)
+guide.
+
 ## Scopes Whiteout requests
 
 | Role | Scope | Why |
@@ -66,8 +84,6 @@ org-wide corpus scan.
 
 - **No corpus scan.** Nothing is classified up front. Messages are
   vetted the moment an assistant requests them, per user.
-- **Content-length floor:** messages under 100 characters skip the deep
-  classifier (auto-replies, one-liners).
 - **Access is per-user.** A user can only surface their own mailbox.
   There is no shared credential and no admin scanner reading everyone's
   mail.

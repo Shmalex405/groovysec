@@ -17,13 +17,15 @@ This is a **live, on-demand** source. There is no pre-scanned org-wide
 corpus and no admin "Documents" view — content is classified at query
 time, per user, against your org connector policy.
 
-> **Availability:** Per-user connect for Trello is **coming**, and its
-> connect design differs from the other sources. Trello does not use
+> **Availability:** Per-user connect for Trello is **built and wired**.
+> Its connect design differs from the other sources: Trello does not use
 > standard OAuth — it authenticates with an **API key + token** pair
-> rather than an OAuth app. Wiring a per-user key + token flow into the
-> connector's connect layer is still pending, so the **Connect** button
-> is not live on the "Connect your sources" page yet. This guide
-> describes the intended per-user model so you know what to expect.
+> rather than an OAuth app. That per-user key + token flow is wired into
+> the connector's connect layer; it activates for your org once your
+> operator sets the Trello **`TRELLO_API_KEY`** (the app's API key,
+> against which each user captures their own read-only token). Until
+> then the **Connect** button on the "Connect your sources" page falls
+> back to a "connect your account" stub.
 
 ## Prerequisites
 
@@ -32,6 +34,10 @@ time, per user, against your org connector policy.
 - The **Whiteout desktop app**, signed in
 - **Admin (one-time):** expose the Trello integration and set the
   org-wide connector policy in the desktop app
+- **Operator (one-time):** register a Trello API key and set
+  `TRELLO_API_KEY` on the backend (Trello uses a key + token pair, not
+  OAuth2). Until this is set, per-user connect stays in its fail-safe
+  "connect your account" stub.
 
 ## Setup steps (per user)
 
@@ -39,8 +45,7 @@ time, per user, against your org connector policy.
 2. Find **Trello** in the sources grid → click **Connect**.
 3. Authorize Whiteout with your own Trello account. Because Trello uses
    key + token auth rather than OAuth, the connect flow captures a
-   per-user token scoped to your access — the exact steps are still
-   being finalized.
+   per-user token scoped to your access.
 4. You're returned to Whiteout; Trello shows **Connected** for your
    account.
 
@@ -64,8 +69,9 @@ your boards.
 
 ## Troubleshooting
 
-- **Connect button missing** — expected for now; per-user connect ships
-  once the key + token flow is wired into the connect layer.
+- **Connect opens a "connect your account" stub instead of Trello's
+  authorize screen** — your operator hasn't set `TRELLO_API_KEY` yet.
+  Per-user connect is wired; it activates once the key is in place.
 - **A board or card isn't showing up** — the connector only sees what
   your Trello grant sees. Confirm you have access in Trello itself;
   access is governed by Trello, not Whiteout.

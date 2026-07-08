@@ -1,53 +1,82 @@
 # Connect Trello
 
 Expose Trello card content (descriptions + comments) to AI assistants
-through the Whiteout AI Connector.
+through the Whiteout AI Connector — with each user connecting their
+**own** Trello account.
+
+## How access works
+
+- **Whiteout governs content.** Your org-wide connector policy vets
+  every card description and comment before any AI assistant sees it.
+- **Trello governs access.** The connector reads through *your* Trello
+  grant, so it only ever sees the boards and cards **you** can already
+  access. Trello's own permissions scope what's reachable — there is no
+  shared key + token standing in for everyone.
+
+This is a **live, on-demand** source. There is no pre-scanned org-wide
+corpus and no admin "Documents" view — content is classified at query
+time, per user, against your org connector policy.
+
+> **Availability:** Per-user connect for Trello is **built and wired**.
+> Its connect design differs from the other sources: Trello does not use
+> standard OAuth — it authenticates with an **API key + token** pair
+> rather than an OAuth app. That per-user key + token flow is wired into
+> the connector's connect layer; it activates for your org once your
+> operator sets the Trello **`TRELLO_API_KEY`** (the app's API key,
+> against which each user captures their own read-only token). Until
+> then the **Connect** button on the "Connect your sources" page falls
+> back to a "connect your account" stub.
 
 ## Prerequisites
 
-- **Trello workspace admin** OR **board admin** access
-- **Whiteout admin** access
+- A **Trello account** — each user connects their own; no shared board
+  admin key
+- The **Whiteout desktop app**, signed in
+- **Admin (one-time):** expose the Trello integration and set the
+  org-wide connector policy in the desktop app
+- **Operator (one-time):** register a Trello API key and set
+  `TRELLO_API_KEY` on the backend (Trello uses a key + token pair, not
+  OAuth2). Until this is set, per-user connect stays in its fail-safe
+  "connect your account" stub.
 
-## Setup steps
+## Setup steps (per user)
 
-1. Open the **Whiteout AI Connector** card → click **Trello**.
-2. Click **Connect Trello**.
-3. Provide:
-   - **Trello API key** (from `https://trello.com/app-key`)
-   - **OAuth token** (Trello generates this on the same page after
-     authorizing)
-   - **Board ID** — the board to expose
-4. The card shows **Connected**.
+1. Open the Whiteout desktop app → **Connect your sources**.
+2. Find **Trello** in the sources grid → click **Connect**.
+3. Authorize Whiteout with your own Trello account. Because Trello uses
+   key + token auth rather than OAuth, the connect flow captures a
+   per-user token scoped to your access.
+4. You're returned to Whiteout; Trello shows **Connected** for your
+   account.
 
 ## Scopes / permissions
 
-Trello uses OAuth 1.0a with the **read** scope. We don't request
-`write` or `account`. To cover multiple boards, connect each board as
-a separate connection.
+Trello authenticates with an **API key + token** pair (not standard
+OAuth). The intended per-user flow requests **read-only** access — we
+do not request `write` or `account` scopes, and Whiteout never modifies
+your boards.
 
 ## What to expect after connect
 
-- **No initial scan.** Firehose anchored at "now".
-- **Tier 1 sync:** every 5 minutes, via
-  `/boards/{board_id}/actions?since=<action_id>`. Filter is
-  `createCard,updateCard,commentCard,deleteCard`.
-- **Real-time sync (Tier 2):** click **Enable real-time sync**. We
-  POST to `/webhooks` with `idModel=<board_id>`. Trello first sends a
-  HEAD request to verify the URL — our receiver responds 200
-  automatically. Auth is token-in-URL.
-- **Comments emit as separate events** with synthetic IDs of the form
-  `<card_id>:comment:<action_id>`.
+- **Per-user visibility.** Each user sees only the boards and cards
+  **they** can access. Nothing is pooled under a shared key + token.
+- **On-demand classification.** Content is vetted at query time the
+  first time your assistant requests it, then the verdict is cached.
+  There is no initial scan and no org-wide corpus.
+- **Content-governed results.** Items that fail policy come back with
+  `content: null` plus a `whiteout_vetting` annotation; existence-
+  classified items are removed entirely.
 
 ## Troubleshooting
 
-- **HEAD request fails** — your Whiteout backend isn't publicly
-  reachable on HTTPS. Trello refuses to register the webhook.
-- **Card content not updating** — `fetch_event_content` re-fetches
-  the card on demand if the event payload didn't carry the body. If
-  the OAuth user lost access to the card, fetch returns nothing.
-- **OAuth 1.0a token expired** — Trello tokens don't auto-expire but
-  can be manually revoked. Generate a fresh one and re-connect.
+- **Connect opens a "connect your account" stub instead of Trello's
+  authorize screen** — your operator hasn't set `TRELLO_API_KEY` yet.
+  Per-user connect is wired; it activates once the key is in place.
+- **A board or card isn't showing up** — the connector only sees what
+  your Trello grant sees. Confirm you have access in Trello itself;
+  access is governed by Trello, not Whiteout.
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=trello`.
+**Admin → Audit → MCP Activity**, filter `integration=trello`. Each row
+is tagged with the requesting user, so per-user activity is visible.

@@ -16,11 +16,12 @@ This is a **live, on-demand** source. There is no pre-scanned org-wide
 corpus and no admin "Documents" view — content is classified at query
 time, per user, against your org connector policy.
 
-> **Availability:** Per-user connect for Linear is **coming**. The
-> Linear OAuth app is not yet wired into the connector's connect layer,
-> so the **Connect** button is not live on the "Connect your sources"
-> page yet. This guide describes the intended per-user model and the
-> scope we'll request so you know what to expect.
+> **Availability:** Per-user connect for Linear is **built and wired**.
+> It activates for your org once your operator registers a Linear OAuth
+> app and sets its `LINEAR_CLIENT_ID` / `LINEAR_CLIENT_SECRET`. Until
+> then the **Connect** button on the "Connect your sources" page falls
+> back to a "connect your account" stub instead of starting Linear's
+> OAuth flow.
 
 ## Prerequisites
 
@@ -29,6 +30,10 @@ time, per user, against your org connector policy.
 - The **Whiteout desktop app**, signed in
 - **Admin (one-time):** expose the Linear integration and set the
   org-wide connector policy in the desktop app
+- **Operator (one-time):** register a Linear OAuth app and set
+  `LINEAR_CLIENT_ID` / `LINEAR_CLIENT_SECRET` on the backend. Until this
+  is set, per-user connect stays in its fail-safe "connect your account"
+  stub.
 
 ## Setup steps (per user)
 
@@ -61,8 +66,10 @@ Linear workspace.
 
 ## Troubleshooting
 
-- **Connect button missing** — expected for now; per-user connect ships
-  once the Linear OAuth app is wired into the connect layer.
+- **Connect opens a "connect your account" stub instead of Linear's
+  OAuth screen** — your operator hasn't set `LINEAR_CLIENT_ID` /
+  `LINEAR_CLIENT_SECRET` yet. Per-user connect is wired; it activates
+  once those are in place.
 - **An issue isn't showing up** — the connector only sees what your
   Linear grant sees. Confirm you have access in Linear itself; access
   is governed by Linear, not Whiteout.

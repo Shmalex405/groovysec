@@ -8,9 +8,18 @@ corpus, and **per-user** connections that decide what each person is
 actually served.
 
 - **Whiteout governs content** — one org-wide policy vets every file
-  before an AI sees it.
+  before an AI sees it — a dedicated connector policy, separate from
+  your users' normal group policies, which don't apply to connector
+  reads.
 - **Microsoft governs access** — each user is served only the files
   their own OneDrive can already see.
+
+> **Route OneDrive only through Whiteout.** If the same AI workspace
+> also has its vendor-native OneDrive connector enabled (e.g.
+> claude.ai's built-in OneDrive), the AI can read files directly on
+> that path, skipping Whiteout's vetting. Disable the native OneDrive
+> connector where you govern OneDrive through Whiteout. See
+> [Overview → Route each source only through Whiteout](./whiteout-ai-connector/overview.md#route-each-source-only-through-whiteout).
 
 ## Prerequisites
 
