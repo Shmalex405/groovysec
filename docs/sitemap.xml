@@ -202,6 +202,12 @@
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/confluence</loc>
   </url>
   <url>
+    <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/connect-ai-assistant</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/connector-policy</loc>
+  </url>
+  <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/dropbox</loc>
   </url>
   <url>
@@ -212,6 +218,9 @@
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/google-drive</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/google-workspace-dwd</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/jira</loc>
