@@ -86,6 +86,37 @@ Slack's channel membership, not by a per-user grant.
   **one connect per provider** — connecting Google covers both Drive
   and Gmail; connecting Microsoft covers SharePoint and OneDrive.
 
+## Before you connect — availability & prerequisites
+
+Connecting a source is a **two-part** action, and each source first
+needs a one-time **operator setup** at the deployment level:
+
+1. **Operator prerequisite (once per provider).** Every provider needs
+   its OAuth application (client ID + secret — or, for Google, a
+   domain-wide-delegation service account) configured for your Whiteout
+   deployment before it can be connected. **Today, Google Workspace is
+   the configured provider:** Google Drive and Gmail work **zero-click**
+   via domain-wide delegation — no per-user consent screen. **Every
+   other provider requires its OAuth app to be set up first and is not
+   yet available to connect** — each guide describes the flow for when
+   it is.
+2. **Admin — expose (+ connect the scanner for document stores).** In
+   **Integrations → Whiteout AI Connector**, toggle **Expose** on the
+   source. The expose wizard verifies reachability, has you point it at
+   a GPU endpoint for the backfill, and starts the initial scan. A
+   document store's backfill needs the org-wide **scanner credential**
+   from step 1 to enumerate the corpus — so exposing it before that
+   credential is configured yields an empty scan.
+3. **Each user — connect their own account** (per-user sources) — except
+   where the provider is zero-click (Google DWD), which needs no
+   per-user step.
+
+| Provider | Model | Available today |
+|---|---|---|
+| Google Drive, Gmail | Zero-click (domain-wide delegation) | **Yes** |
+| SharePoint, OneDrive (Microsoft 365) | Admin-consent (planned) | Requires operator setup |
+| Confluence, Jira, Notion, Box, Dropbox, GitHub, Linear, Asana, Trello, Slack | Per-user OAuth / bot | Requires operator OAuth app |
+
 ## What's on this page
 
 Each linked guide on the left walks through:

@@ -1,5 +1,12 @@
 # Connect OneDrive
 
+> **Availability: ⚙️ Requires operator setup.** Microsoft 365 needs its
+> OAuth app configured for your Whiteout deployment (a one-time operator
+> step) before OneDrive can be connected — **not yet enabled**. Google
+> Workspace is the currently-live zero-click provider. The steps below
+> describe the flow for when Microsoft is configured. See
+> [Overview → Before you connect](./whiteout-ai-connector/overview.md#before-you-connect--availability--prerequisites).
+
 Expose your organization's OneDrive content to AI assistants through
 the Whiteout AI Connector. OneDrive is a **document store** on the same
 Microsoft Graph foundation as SharePoint, so it uses two credentials

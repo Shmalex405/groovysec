@@ -1,5 +1,10 @@
 # Connect Google Drive
 
+> **Availability: ✅ Live.** Google Workspace is configured via
+> domain-wide delegation, so Drive works **zero-click** — no per-user
+> connect step. See
+> [Overview → Before you connect](./whiteout-ai-connector/overview.md#before-you-connect--availability--prerequisites).
+
 Expose your organization's Google Drive to AI assistants through the
 Whiteout AI Connector. Drive is a **document store**, so it uses two
 credentials with separate roles: an org-wide **scanner** that

@@ -1,5 +1,11 @@
 # Connect Slack
 
+> **Availability: ⚙️ Requires operator setup.** Slack needs its bot /
+> OAuth app configured for your Whiteout deployment before it can be
+> exposed. Google Workspace (Drive + Gmail) is the currently-live
+> provider. See
+> [Overview → Before you connect](./whiteout-ai-connector/overview.md#before-you-connect--availability--prerequisites).
+
 Slack is the **exception** to the connector's per-user model. Where
 document stores connect per user, Slack is exposed **once by an admin**
 through a shared Whiteout Slack **bot**.

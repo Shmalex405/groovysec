@@ -1,5 +1,10 @@
 # Connect Gmail
 
+> **Availability: ✅ Live.** Google Workspace is configured via
+> domain-wide delegation, so Gmail works **zero-click** — no per-user
+> connect step. See
+> [Overview → Before you connect](./whiteout-ai-connector/overview.md#before-you-connect--availability--prerequisites).
+
 Expose Gmail mailbox content to AI assistants through the Whiteout AI
 Connector. Gmail is a **live source**: it's **per-user only** and
 classified **on demand at query time** — there is no pre-scanned corpus

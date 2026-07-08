@@ -1,5 +1,11 @@
 # Connect Notion
 
+> **Availability: ⚙️ Requires operator setup.** Notion needs its OAuth
+> app configured for your Whiteout deployment before it can be
+> connected. Google Workspace (Drive + Gmail) is the currently-live
+> provider. See
+> [Overview → Before you connect](./whiteout-ai-connector/overview.md#before-you-connect--availability--prerequisites).
+
 Notion is a **document store**: the Whiteout AI Connector governs the
 *content* your AI assistants can read, while Notion governs *access*.
 Every page is classified against your org's connector policy before any

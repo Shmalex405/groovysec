@@ -1,5 +1,12 @@
 # Connect SharePoint
 
+> **Availability: ⚙️ Requires operator setup.** Microsoft 365 needs its
+> OAuth app configured for your Whiteout deployment (a one-time operator
+> step) before SharePoint can be connected — **not yet enabled**. Google
+> Workspace is the currently-live zero-click provider. The steps below
+> describe the flow for when Microsoft is configured. See
+> [Overview → Before you connect](./whiteout-ai-connector/overview.md#before-you-connect--availability--prerequisites).
+
 Expose your organization's SharePoint content to AI assistants through
 the Whiteout AI Connector. SharePoint is a **document store**, so it
 uses two credentials with separate roles: an org-wide **scanner** that
@@ -37,14 +44,22 @@ what each person is actually served.
 
 ### Admin — expose SharePoint and connect the scanner
 
-1. In the Whiteout desktop app, open **Integrations → Whiteout AI
+1. **Connect the org-wide scanner credential (operator/admin setup).**
+   Microsoft 365 support requires its OAuth app configured for your
+   deployment; a tenant admin then grants **admin-consent** (provide
+   your **Tenant ID**, sign in as a tenant admin, **Accept** the
+   requested permissions). This is the step that's **not yet enabled**
+   — see the Availability note above.
+2. In the Whiteout desktop app, open **Integrations → Whiteout AI
    Connector** and find **SharePoint**.
-2. Click **Expose** to make SharePoint available to your users.
-3. Provide your **Tenant ID**, then sign in as a tenant admin and
-   **Accept** the requested permissions (admin-consent).
-4. The org-wide **scan** starts automatically and classifies the
-   corpus, populating the admin **Documents** review view. The scanner
-   **only classifies — it never serves files to a user.**
+3. Toggle **Expose**. The expose wizard verifies SharePoint is
+   reachable, has you point it at a **GPU endpoint** for the backfill,
+   and starts the **initial scan** (Test integration → Configure GPU →
+   Start initial scan).
+4. The scan classifies the corpus, populating the admin **Documents**
+   review view. The scanner **only classifies — it never serves files
+   to a user.** (Without the step-1 scanner credential the scan has
+   nothing to enumerate.)
 
 ### Each user — connect their own account
 
