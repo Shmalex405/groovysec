@@ -96,17 +96,24 @@ needs a one-time **operator setup** at the deployment level:
    domain-wide-delegation service account) configured for your Whiteout
    deployment before it can be connected. **Today, Google Workspace is
    the configured provider:** Google Drive and Gmail work **zero-click**
-   via domain-wide delegation — no per-user consent screen. **Every
-   other provider requires its OAuth app to be set up first and is not
-   yet available to connect** — each guide describes the flow for when
-   it is.
+   via domain-wide delegation — no per-user consent screen.
+   **Microsoft 365 has the analogous zero-click path** — once the
+   operator enables Whiteout's Entra app, one tenant admin-consent
+   covers SharePoint, OneDrive, Outlook Mail and Outlook Calendar (see
+   [Microsoft 365 (Zero-Click)](./whiteout-ai-connector/microsoft-365-zero-click.md)).
+   **Every other provider requires its OAuth app to be set up first and
+   is not yet available to connect** — each guide describes the flow for
+   when it is.
 2. **Admin — expose (+ connect the scanner for document stores).** In
    **Integrations → Whiteout AI Connector**, toggle **Expose** on the
    source. The expose wizard verifies reachability, has you point it at
    a GPU endpoint for the backfill, and starts the initial scan. A
    document store's backfill needs the org-wide **scanner credential**
    from step 1 to enumerate the corpus — so exposing it before that
-   credential is configured yields an empty scan.
+   credential is configured yields an empty scan. (SharePoint's scanner
+   can instead run off the Microsoft 365 zero-click grant + site
+   allowlist — no separate scanner credential needed; the expose wizard
+   now tells you which scanner credential, if any, is in place.)
 3. **Each user — connect their own account** (per-user sources) — except
    where the provider is zero-click (Google DWD), which needs no
    per-user step.

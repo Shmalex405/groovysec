@@ -1,5 +1,10 @@
 # Microsoft 365 (Zero-Click)
 
+> **Availability: ⚙️ Requires operator setup.** The platform support is
+> live; your Whiteout operator enables the Entra app for the deployment
+> (a one-time step — Whiteout-hosted: ask your account manager). After
+> that, everything on this page is a single admin click.
+
 Light up **per-user** SharePoint, OneDrive, Outlook Mail **and** Outlook
 Calendar access for the Whiteout AI Connector across your whole Microsoft
 365 tenant — with **no end-user OAuth screen**. Instead of every user

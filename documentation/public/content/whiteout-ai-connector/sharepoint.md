@@ -1,10 +1,12 @@
 # Connect SharePoint
 
-> **Availability: ⚙️ Requires operator setup.** Microsoft 365 needs its
-> OAuth app configured for your Whiteout deployment (a one-time operator
-> step) before SharePoint can be connected — **not yet enabled**. Google
-> Workspace is the currently-live zero-click provider. The steps below
-> describe the flow for when Microsoft is configured. See
+> **Availability: ⚙️ Requires operator setup.** Microsoft 365 needs
+> Whiteout's Entra app enabled for your deployment (a one-time operator
+> step) — after that, **[Microsoft 365 (Zero-Click)](./whiteout-ai-connector/microsoft-365-zero-click.md)**
+> is the recommended path: one tenant admin-consent covers SharePoint,
+> OneDrive and Outlook, and SharePoint is additionally bounded to an
+> admin-chosen **site allowlist**. The backfill scanner can run off the
+> same grant — no customer-registered Entra app needed. See
 > [Overview → Before you connect](./whiteout-ai-connector/overview.md#before-you-connect--availability--prerequisites).
 
 Expose your organization's SharePoint content to AI assistants through

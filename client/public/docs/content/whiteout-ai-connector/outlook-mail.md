@@ -1,6 +1,8 @@
 # Connect Outlook Mail
 
-> **Availability: ✅ Live.** With
+> **Availability: ⚙️ Requires operator setup.** Microsoft 365 needs
+> Whiteout's Entra app enabled for your deployment (a one-time operator
+> step). With
 > [Microsoft 365 zero-click](./whiteout-ai-connector/microsoft-365-zero-click.md)
 > in place, Outlook Mail works **zero-click** — no per-user connect step.
 

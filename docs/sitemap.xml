@@ -229,10 +229,19 @@
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/linear</loc>
   </url>
   <url>
+    <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/microsoft-365-zero-click</loc>
+  </url>
+  <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/notion</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/onedrive</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/outlook-calendar</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/outlook-mail</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/overview</loc>
