@@ -12,8 +12,10 @@ clicking "Connect," a Microsoft **tenant admin consents once**, org-wide,
 to the Whiteout app; from then on the connector serves each caller their
 **own** data using Microsoft's app-only (application-permission) model.
 
-This one consent covers **SharePoint, OneDrive, Outlook Mail and Outlook
-Calendar** — you do it once, not per source.
+This one consent covers **SharePoint, OneDrive, Outlook Mail, Outlook
+Calendar, and Microsoft Teams chats** — you do it once, not per source.
+(Tenants that consented before Teams support must **re-consent** — same
+one-click flow — because the app's permission set grew.)
 
 - **Zero per-user clicks.** No individual consent screens.
 - **Still ACL-correct for personal data.** Every read is addressed to the
@@ -85,6 +87,8 @@ same grant — no separate scanner credential to configure.
 | Source | Zero-click read | Permission model |
 |---|---|---|
 | OneDrive | The caller's own drive | Per-user by construction |
+| Teams chats | The caller's own 1:1/group chats | Per-user by construction |
+| Teams channels | Not served zero-click | Delegated-only — each user's own connected account, exactly their team memberships |
 | Outlook Mail / Calendar | The caller's own mailbox/calendar | Per-user by construction |
 | SharePoint | Allowlisted sites only | Site-level (admin-chosen); users with their own connected account keep full per-user permissions |
 

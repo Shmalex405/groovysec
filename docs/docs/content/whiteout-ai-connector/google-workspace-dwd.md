@@ -8,8 +8,8 @@ super admin authorizes Whiteout **once**, org-wide, using Google's
 per-user token by impersonating each caller's Workspace identity at
 query time.
 
-This one setup covers **both Google Drive and Gmail** — you do it once,
-not per source.
+This one setup covers **Google Drive, Gmail, and Google Calendar** — you
+do it once, not per source.
 
 - **Zero per-user clicks.** No individual consent screen, and no wait
   on Google restricted-scope verification.
@@ -64,8 +64,13 @@ In the same GCP project, enable the **Google Drive API** and the
    reads with:
    ```
    https://www.googleapis.com/auth/drive.readonly,
-   https://www.googleapis.com/auth/gmail.readonly
+   https://www.googleapis.com/auth/gmail.readonly,
+   https://www.googleapis.com/auth/calendar.readonly,
+   https://www.googleapis.com/auth/admin.directory.user.readonly
    ```
+   (`calendar.readonly` powers zero-click Google Calendar;
+   `admin.directory.user.readonly` lets the corpus scanner enumerate your
+   Workspace users for the org-wide Drive scan.)
 4. Click **Authorize.**
 
 > Both scopes are **read-only**. Whiteout never writes to Drive or
@@ -135,3 +140,15 @@ fails outright.
 Drive and Gmail reads land in **Admin → Audit → MCP Activity**, tagged
 `integration=google_drive` and `integration=gmail` respectively — same
 trail as any other connector read, now resolved per user.
+
+### Org-wide corpus scan (no scanner credential needed)
+
+With the delegation in place, Whiteout's **corpus scanner** can also run
+zero-click: it enumerates every active Workspace user (Directory API) and
+scans each user's Drive view — all My Drives **and all shared drives** —
+into the admin Documents review. Your Whiteout operator sets one value,
+the **scanner subject** (`GOOGLE_DWD_SCANNER_SUBJECT`): a Workspace
+**admin** identity used for the enumeration. No customer-created OAuth
+credential is required. The scanner only classifies — serving is always
+per-user, and vetting applies to every read whether or not a document was
+pre-scanned.

@@ -214,13 +214,25 @@
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/github</loc>
   </url>
   <url>
+    <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/gitlab</loc>
+  </url>
+  <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/gmail</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/google-calendar</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/google-drive</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/google-workspace-dwd</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/hubspot</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/intercom</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/jira</loc>
@@ -230,6 +242,9 @@
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/microsoft-365-zero-click</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/microsoft-teams</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/notion</loc>
@@ -247,6 +262,9 @@
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/overview</loc>
   </url>
   <url>
+    <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/salesforce</loc>
+  </url>
+  <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/sharepoint</loc>
   </url>
   <url>
@@ -254,5 +272,8 @@
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/trello</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/whiteout-ai-connector/zoom</loc>
   </url>
 </urlset>
