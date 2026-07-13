@@ -46,25 +46,33 @@ it directly on the connector card, described below.
 > relevant group policy separately — the two surfaces are configured
 > independently by design.
 
-## Scope a rule to specific groups
+## Exempt groups from a rule
 
 By default an enforced rule fires for **every** connector query. When
 permissions genuinely differ by team — the finance group may retrieve
 financial statements through the connector while everyone else may not —
-narrow the rule instead of inverting your whole policy set:
+exempt that team from the rule instead of inverting your whole policy
+set:
 
 1. On the **Policies** surface, every enforced rule shows a scope chip
    (**All users** by default).
-2. Click it and choose **Everyone except selected groups** (a
-   carve-out: the listed groups are exempt from the rule) or **Only
-   selected groups** (targeted enforcement), then pick the groups.
+2. Click it and pick the groups to **exempt**. The rule then applies to
+   everyone *except* those groups — the chip reads e.g.
+   **Exempt: Finance**. Deselect every group to return to **All users**.
 3. Save. The change applies on the very next query — scoping is decided
    at read time against the already-classified corpus, so there is
    **no re-scan**.
 
+Note there is deliberately **no "apply only to these groups" mode**:
+every user belongs to your org's baseline group, so an "only" list can
+never exempt anyone from an org-wide rule, and apply-to lists silently
+miss groups synced from your IdP later. Exemption lists stay
+fail-closed: a new group is covered by every rule until you explicitly
+exempt it.
+
 Three rules of the road:
 
-- **Membership in any selected group counts.** A user in several groups
+- **Membership in any exempted group counts.** A user in several groups
   is exempted if *any* of their groups is exempted — an exemption is a
   grant, and grants union.
 - **Scoping requires caller identity.** It applies to reads made via an
