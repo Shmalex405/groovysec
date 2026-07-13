@@ -14,7 +14,8 @@ with separate roles: an org-wide **scanner** that classifies the whole
 corpus, and **per-user** connections that decide what each person is
 actually served.
 
-- **Whiteout governs content** — one org-wide policy vets every file
+- **Whiteout governs content** — the connector policy (org-wide by
+  default; rules can be scoped to groups) vets every file
   before an AI sees it — a dedicated connector policy, separate from
   your users' normal group policies, which don't apply to connector
   reads.

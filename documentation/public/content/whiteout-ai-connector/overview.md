@@ -10,10 +10,13 @@ order to read documents and events from your connected apps —
 
 The connector and the source system each own one half of the decision:
 
-- **Whiteout governs CONTENT.** One org-wide policy set vets every
-  payload before any AI sees it. Flagged material is redacted or
-  withheld regardless of who asked for it. This policy is the same for
-  every query, every user, every assistant.
+- **Whiteout governs CONTENT.** A dedicated connector policy set vets
+  every payload before any AI sees it, and flagged material is redacted
+  or withheld before it reaches the assistant. The policy set is
+  org-wide by default; individual rules can be **scoped to user
+  groups** (e.g. the finance team may retrieve financial statements
+  through the connector while everyone else may not) — see
+  [Connector Policy](./whiteout-ai-connector/connector-policy.md).
 - **The source governs ACCESS.** Google, Microsoft, and Slack keep
   their own ACLs. Whiteout never overrides them and never widens them.
 
@@ -78,13 +81,16 @@ Slack's channel membership, not by a per-user grant.
 
 - **Admin (Whiteout desktop app):** *exposes* an integration, connects
   the org-wide scanner credential for document stores, and manages the
-  **org-wide connector policy** — one policy set that governs every
-  connector query.
+  **connector policy** — one policy set that governs every connector
+  query, org-wide by default with rules optionally scoped to groups.
 - **Each user (Whiteout desktop app → "Connect your sources"):**
   connects their own account. The page lists the exposed integrations
   with a **Connect** button that runs OAuth for that provider. It's
   **one connect per provider** — connecting Google covers both Drive
-  and Gmail; connecting Microsoft covers SharePoint and OneDrive.
+  and Gmail; connecting Microsoft covers SharePoint and OneDrive. The
+  same page also mints your **personal connector token** for AI clients
+  that take a static header instead of an OAuth sign-in (Claude Code,
+  Cursor, custom GPTs) — it identifies you exactly like the OAuth path.
 
 ## Before you connect — availability & prerequisites
 

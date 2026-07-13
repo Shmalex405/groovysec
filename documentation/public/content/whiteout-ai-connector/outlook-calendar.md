@@ -13,7 +13,8 @@ and classified **on demand at query time**.
 
 - **Whiteout governs content** — event subjects and bodies routinely
   carry sensitive context (deals, candidates, incident bridges); every
-  event is vetted against your org-wide connector policy before an AI
+  event is vetted against your connector policy (org-wide by default;
+  rules can be scoped to groups) before an AI
   sees it.
 - **Microsoft governs access** — each user is served only their own
   calendars.

@@ -11,8 +11,9 @@ credentials with separate roles: an org-wide **scanner** that
 classifies the whole corpus, and **per-user** connections that decide
 what each person is actually served.
 
-- **Whiteout governs content** — one org-wide policy vets every file
-  before an AI sees it.
+- **Whiteout governs content** — the connector policy (org-wide by
+  default; rules can be scoped to groups) vets every file before an AI
+  sees it.
 - **Google governs access** — each user is served only the files their
   own Drive account can already see.
 

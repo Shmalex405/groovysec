@@ -26,9 +26,10 @@ is the same:
 
 ## The two things you need
 
-Your Whiteout admin gets both from the **Whiteout AI Connector** card
-in the Whiteout desktop app (**Integrations → Whiteout AI Connector →
-Generate credentials**):
+Both are shown in the Whiteout desktop app — admins under
+**Integrations → Whiteout AI Connector → Generate credentials**, and
+every user on **Connect your sources → Personal connector token**
+(same URLs, plus your own token for static-header clients):
 
 | Value | Looks like | Used by |
 |---|---|---|
@@ -44,7 +45,9 @@ Generate credentials**):
 The connector speaks **Streamable HTTP** and authenticates with
 **OAuth 2.1** (bearer). MCP-native clients discover the OAuth flow
 automatically from the URL and prompt you to sign in to Whiteout; a few
-clients still take a static bearer token instead (see each client
+clients still take a static bearer token instead — for those, use your
+**personal connector token** (see
+[Personal connector tokens](#personal-connector-tokens-static-header-clients)
 below).
 
 ## Claude (claude.ai / Claude Desktop)
@@ -65,9 +68,11 @@ Claude supports **custom / remote connectors** over MCP directly.
 
 > Claude Desktop can also be wired via
 > `claude_desktop_config.json` with a static bearer token instead of
-> the OAuth consent — use that only for headless/shared workstations.
-> The OAuth path is preferred because it identifies the individual
-> user, which is what per-user access depends on.
+> the OAuth consent. If you do, use your **personal connector token**
+> (below) — it carries your identity exactly like the OAuth sign-in.
+> The org-shared token cannot read per-user sources (Drive, Gmail,
+> OneDrive, mailboxes, …) for anyone — those queries return a governed
+> "mint your personal token" message instead of data.
 
 ## ChatGPT (Custom GPT action / connector)
 
@@ -115,10 +120,39 @@ Claude Desktop.
   pointing at the **MCP URL**; sign in to Whiteout when prompted.
 
 > For clients that only accept a static token rather than an
-> interactive OAuth sign-in, paste the connector **bearer token** as an
-> `Authorization: Bearer <token>` header. Prefer the interactive OAuth
-> consent wherever the client supports it — it is what carries the
-> caller's identity into per-user access enforcement.
+> interactive OAuth sign-in, paste your **personal connector token** as
+> an `Authorization: Bearer <token>` header (next section). Prefer the
+> interactive OAuth consent wherever the client supports it; both carry
+> your identity into per-user access and policy enforcement.
+
+## Personal connector tokens (static-header clients)
+
+Some clients can't run an interactive OAuth sign-in and only accept a
+static `Authorization` header. For those, every user mints their
+**own** token — self-service, no admin needed:
+
+1. In the Whiteout desktop app, open **Connect your sources** (from the
+   chat avatar menu; admins can also reach it from the connector card).
+2. On the **Personal connector token** card, click **Mint token**. The
+   token is shown **once** — copy it. The dialog also shows your MCP
+   and OpenAPI URLs.
+3. Paste it into the client's config as
+   `Authorization: Bearer <token>`.
+
+A personal token identifies **you**: reads are served with your own
+source permissions, your groups' policy scopes apply, and activity is
+logged under your name. Treat it like a password — anyone holding it
+acts as you. Click **Rotate token** to replace it (the old one stops
+working immediately) and **Revoke** to kill it. Admins can see and
+revoke every active personal token from the connector card's
+**Credentials** dialog.
+
+**What about the org-shared token?** It stays valid, but it carries no
+individual identity, so it cannot read per-user-scoped sources — Drive,
+Gmail, OneDrive, mailboxes, ticketing, and the rest. Queries through it
+get a governed "mint your personal token" message instead of another
+person's data. Keep it only for Slack (shared-bot model) and
+service-style automations.
 
 ## Verify it's working
 
