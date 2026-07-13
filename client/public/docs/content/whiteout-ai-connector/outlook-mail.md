@@ -11,9 +11,10 @@ Connector. Outlook Mail is a **live source**: it's **per-user only** and
 classified **on demand at query time** — there is no pre-scanned corpus
 and no org-wide scanner.
 
-- **Whiteout governs content** — one org-wide policy vets every message,
-  and every attachment's extracted text, before an AI sees it. Raw
-  attachment bytes are never returned to the AI.
+- **Whiteout governs content** — the connector policy (org-wide by
+  default; rules can be scoped to groups) vets every message, and every
+  attachment's extracted text, before an AI sees it. Raw attachment
+  bytes are never returned to the AI.
 - **Microsoft governs access** — each user is served only their own
   mailbox (`/users/{caller}/…` under zero-click, or their own delegated
   token if they connected manually).

@@ -10,8 +10,9 @@ Connector. Gmail is a **live source**: it's **per-user only** and
 classified **on demand at query time** — there is no pre-scanned corpus
 and no org-wide scanner.
 
-- **Whiteout governs content** — one org-wide policy vets every message
-  before an AI sees it.
+- **Whiteout governs content** — the connector policy (org-wide by
+  default; rules can be scoped to groups) vets every message before an
+  AI sees it.
 - **Google governs access** — each user connects their own mailbox and
   is served only their own mail.
 
