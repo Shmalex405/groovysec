@@ -32,10 +32,10 @@ const CDN_BASE = "https://updates.groovysec.com";
 
 // Current versions — update these when new releases are published
 const VERSIONS = {
-  desktop: "2.60.0",
-  interceptor: "1.2.38",
-  desktopGuardWindows: "1.7.42",
-  windowsDesktop: "2.60.0",
+  desktop: "2.63.1",
+  interceptor: "1.2.39",
+  desktopGuardWindows: "1.7.43",
+  windowsDesktop: "2.63.1",
   bundledInstaller: "1.0.15",
 };
 
