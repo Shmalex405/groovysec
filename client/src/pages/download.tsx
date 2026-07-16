@@ -36,7 +36,7 @@ const VERSIONS = {
   interceptor: "1.2.43",
   desktopGuardWindows: "1.7.47",
   windowsDesktop: "2.63.1",
-  bundledInstaller: "1.0.17",
+  bundledInstaller: "1.0.18",
 };
 
 const DOWNLOADS = {
