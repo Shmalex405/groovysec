@@ -66,14 +66,15 @@ const MENUS: NavMenu[] = [
             imageClass: "grayscale",
             hover: "orange",
           },
-          {
-            label: "Secure AI Skills",
-            href: "/skills",
-            description: "111 Secure AI Skills",
-            image: "/icon_green.png",
-            badge: "NEW",
-            hover: "emerald",
-          },
+          // TEMP: Skills page unpublished 2026-07-16 — restore to relist in Products menu.
+          // {
+          //   label: "Secure AI Skills",
+          //   href: "/skills",
+          //   description: "111 Secure AI Skills",
+          //   image: "/icon_green.png",
+          //   badge: "NEW",
+          //   hover: "emerald",
+          // },
         ],
       },
     ],
@@ -122,11 +123,12 @@ const MENUS: NavMenu[] = [
             href: "/maestro",
             description: "Confirm findings from your existing tools",
           },
-          {
-            label: "Secure AI Skills",
-            href: "/skills",
-            description: "111 enterprise-grade security skills",
-          },
+          // TEMP: Skills page unpublished 2026-07-16 — restore to relist in Solutions menu.
+          // {
+          //   label: "Secure AI Skills",
+          //   href: "/skills",
+          //   description: "111 enterprise-grade security skills",
+          // },
         ],
       },
     ],

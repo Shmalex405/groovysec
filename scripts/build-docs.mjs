@@ -47,18 +47,19 @@ const ROUTES = [
     description:
       "Maestro deploys 21 specialized AI agents with 213 MCP tools through a 232-test assessment matrix — autonomous red team exploitation across web, API, cloud, Kubernetes, identity providers, and AI/LLM systems with proof of impact.",
   },
-  {
-    path: "/skills",
-    title: `Secure AI Skills | ${SITE_NAME}`,
-    description:
-      "111 production-grade, security-audited skills for AI agents across 14 categories — OWASP ASI Top 10 audited, zero external dependencies, lifetime access.",
-  },
-  {
-    path: "/skills/success",
-    title: `Request Received — Secure AI Skills | ${SITE_NAME}`,
-    description:
-      "Your Secure AI Skills access request has been received. We'll email you payment and repository access instructions shortly.",
-  },
+  // TEMP: Skills page unpublished 2026-07-16 — excluded from docs build + sitemap; restore to relist.
+  // {
+  //   path: "/skills",
+  //   title: `Secure AI Skills | ${SITE_NAME}`,
+  //   description:
+  //     "111 production-grade, security-audited skills for AI agents across 14 categories — OWASP ASI Top 10 audited, zero external dependencies, lifetime access.",
+  // },
+  // {
+  //   path: "/skills/success",
+  //   title: `Request Received — Secure AI Skills | ${SITE_NAME}`,
+  //   description:
+  //     "Your Secure AI Skills access request has been received. We'll email you payment and repository access instructions shortly.",
+  // },
   {
     path: "/whiteout-ai/government",
     title: `Whiteout AI for Government & Public Sector | ${SITE_NAME}`,

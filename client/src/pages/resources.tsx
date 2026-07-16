@@ -50,6 +50,7 @@ export default function Resources() {
         external: true,
       },
     },
+    /* TEMP: Skills page unpublished 2026-07-16 — this research card funnels to /skills; restore to relist.
     {
       icon: ShieldAlert,
       tag: "RESEARCH",
@@ -63,6 +64,7 @@ export default function Resources() {
         external: false,
       },
     },
+    */
     {
       icon: Award,
       tag: "NEWS",

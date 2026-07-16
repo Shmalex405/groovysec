@@ -27,8 +27,9 @@ import Demo from "@/pages/demo";
 import Review from "@/pages/review";
 import Download from "@/pages/download";
 import Partners from "@/pages/partners";
-import Skills from "@/pages/skills";
-import SkillsSuccess from "@/pages/skills/success";
+// TEMP: Skills page unpublished 2026-07-16 — page files kept; re-enable import + routes below to relist.
+// import Skills from "@/pages/skills";
+// import SkillsSuccess from "@/pages/skills/success";
 import Contact from "@/pages/contact";
 import Resources from "@/pages/resources";
 import Security from "@/pages/security";
@@ -47,8 +48,9 @@ function Router() {
         <Route path="/download" component={Download} />
         <Route path="/whiteout-ai" component={WhiteoutAI} />
         <Route path="/maestro" component={Maestro} />
-        <Route path="/skills" component={Skills} />
-        <Route path="/skills/success" component={SkillsSuccess} />
+        {/* TEMP: Skills page unpublished 2026-07-16 — re-enable to relist. */}
+        {/* <Route path="/skills" component={Skills} /> */}
+        {/* <Route path="/skills/success" component={SkillsSuccess} /> */}
         <Route path="/solutions/:slug">
           {(params) => <SolutionPage slug={params.slug} />}
         </Route>
