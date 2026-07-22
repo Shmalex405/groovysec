@@ -416,7 +416,7 @@ const useCases = [
                       </GradientButton>
                     </Link>
                     <a
-                      href="/WHITEOUT_AI_WHITEPAPER.pdf"
+                      href="/WHITEOUT_AI_WHITEPAPER.pdf?v=4.0"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
