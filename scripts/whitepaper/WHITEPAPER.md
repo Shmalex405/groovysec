@@ -6,7 +6,7 @@ Generative AI has become the fastest-adopted workplace technology in history —
 
 **Whiteout AI**, by Groovy Security, is an enterprise AI governance and security platform that closes this gap. It intercepts and evaluates every AI interaction — prompts, file uploads, pastes, tool calls, and connector reads — against your organization's policies **before** data reaches an external AI service, across every surface where employees touch AI: the browser, native desktop apps, IDEs and coding agents, cloud infrastructure, mobile devices, and the MCP connectors that wire AI assistants into business systems.
 
-The platform's verdicts come from a dedicated semantic compliance engine — a full 27-billion-parameter LLM, self-hosted on your infrastructure — governed by 60 expert-authored policies across 9 regulated data classes. On the public 15,915-prompt Whiteout AI Compliance Benchmark, the engine's production configuration achieves **99.59% validated accuracy**, with near-zero false positives and a complete, exportable audit trail of every decision.
+The platform's verdicts come from a dedicated semantic compliance engine — a full 27-billion-parameter LLM, self-hosted on your infrastructure — governed by 60 expert-authored policies across 9 regulated data classes, every one of them enabled **group by group**, so each department gets exactly the guardrails its work requires. On the public 15,915-prompt Whiteout AI Compliance Benchmark, the engine's production configuration achieves **99.59% validated accuracy**, with near-zero false positives and a complete, exportable audit trail of every decision.
 
 ### Platform at a glance
 
@@ -91,12 +91,6 @@ Pattern matching flags both prompts (or neither). Whiteout AI understands that t
 - **Graduated enforcement actions.** From any block: **Allow** (compliant), **Block** (with reason), **Redact** (sanitized rewrite), or **Accountable Override**. The Infrastructure Agent adds fleet-wide **enforce / warn / monitor** modes for progressive rollout.
 - **Verdict caching.** Successful verdicts are cached against prompt, context, and a hash of the current policy state — repeat submissions return in ~30 ms, and any policy edit invalidates the cache instantly. Error verdicts are never cached.
 
-### Remediation, not dead ends
-
-- **Two-stage redaction.** The block verdict returns immediately; a sanitized rewrite that replaces sensitive values with descriptive placeholders is generated on demand. Rewrites that would gut the prompt are refused with an explanation rather than silently mangled.
-- **Redaction resend approval.** A generated rewrite carries a single-use, content-hash-bound, five-minute approval — resubmitting the exact sanitized text sails through instead of being re-blocked, with no forgeable client token.
-- **Accountable Override.** Where a group enables it, a user can override a specific block by supplying a written justification (server-enforced minimum length). The server re-verifies the block, permission, and membership; marks the audit row overridden (who/when/why); and emits a distinct SOC event. Override tokens are single-use, five-minute, and bound to the SHA-256 of the exact content — an edited resend fails safe to a fresh block. Hard blocks with no escape hatch get circumvented; blanket bypasses destroy accountability. This is the governed middle.
-
 ### Large documents and files
 
 Uploads return a scan handle in ~100 ms while a background pipeline extracts, chunks, and evaluates — with live progress and a terminal allowed / blocked / partial verdict. Extraction covers PDFs, Office documents, images (OCR), CSV, HTML, JSON/YAML, XML, OpenDocument, and archives. Content is split into overlapping chunks evaluated concurrently, and the first violating chunk short-circuits the job. Sensitive data on page 40 of a contract is found on page 40 of the contract.
@@ -104,6 +98,55 @@ Uploads return a scan handle in ~100 ms while a background pipeline extracts, ch
 ### Availability, your call
 
 A per-organization setting decides whether a brief engine outage **allows with an amber warning** (default) or **hard-blocks** until the engine returns. A dedicated **Audit-Only / Discovery tier** runs the entire platform in observe-and-log mode — the deployment pattern for discovering shadow-AI exposure before turning on enforcement.
+
+---
+
+## The Block Workflow: Redaction & Accountable Override
+
+Enforcement that dead-ends gets circumvented — screenshots, personal devices, shadow accounts. Enforcement that offers a governed path forward gets adopted. When Whiteout AI blocks a prompt or file, the employee is never stranded, and every path forward preserves accountability.
+
+### What the employee experiences
+
+1. **The send is held.** The composer locks for the ~2 seconds the verdict takes; compliant prompts release with no interruption at all.
+2. **A clear block card** names the exact policy that fired and explains the reason in plain language. Every block doubles as training: employees learn *what* made the content sensitive, not just that something did.
+3. **Governed paths forward** — revise the prompt; insert the sanitized rewrite; or, where their group allows it, take an accountable override. Every choice is logged.
+
+### The redactor: a sanitized rewrite, one click away
+
+- The block verdict returns **immediately**; the rewrite is generated on demand — no spinner while the user decides what to do.
+- Sensitive values are replaced with **descriptive placeholders**, so the question survives while the data doesn't — the prompt keeps its meaning and its usefulness.
+- One click inserts the rewrite back into the composer. In native desktop apps, Desktop Guard writes it into the application's own input field and **verifies the text actually landed**, falling back to the clipboard so work is never lost.
+- **It refuses rather than mangles.** A rewrite that would strip away most of the prompt is declined with an honest explanation (too sensitive to sanitize / nothing to change / temporarily unavailable) instead of returning garbage.
+- **It never blocks its own fix.** The rewrite carries a single-use, five-minute approval bound to a hash of the exact sanitized text — resubmitting it passes without re-evaluation, and any edit voids the approval and triggers a fresh scan.
+
+### Accountable Override: a governed release valve
+
+Where an administrator enables it **for a group**, a member of that group can release a specific blocked item — by putting their name on it.
+
+**The workflow when selected for a group:**
+
+1. The block card offers **Override** alongside the rewrite option (groups without the grant never see it).
+2. The user writes a **justification** — a server-enforced minimum, not an empty ritual.
+3. **The server is the sole authority.** It re-verifies the original block, the group's override permission, and the user's current membership — a client cannot self-authorize, and the compliance engine is never re-run or weakened.
+4. A **single-use token** is minted: five-minute lifetime, bound to the SHA-256 of the exact content. Exactly what was justified is released, exactly once — an edited resend fails safe to a fresh block.
+5. **The record is permanent.** The original audit row is marked overridden with who, when, and why; a distinct `prompt_overridden` event streams to every configured SOC destination; the override is counted on the executive dashboard and reviewable — justification included — in Prompt Review.
+
+The same gate serves all four enforcement surfaces (browser, desktop, file uploads, IDE). The policy still fired; the record shows it; a named person took responsibility. Hard blocks with no escape hatch get worked around, and blanket bypasses destroy the audit trail — this is the governed middle: work keeps moving, and compliance gets a defensible record of every exception.
+
+---
+
+## Group-Based Policy: Full Customizable Control
+
+Real organizations are not uniform — legal, engineering, finance, and HR carry different data, different regulations, and different risk appetites. Every enforcement decision in Whiteout AI is therefore scoped to **groups**, synced from your identity provider, so policy mirrors the org chart instead of flattening it:
+
+- **Per-group policy toggles** — each of the 60 library rules is enabled or disabled per group, each with its own independent internal/external direction. Engineering gets source-code and secrets policies without FERPA noise; clinical teams get PHI enforcement without code-IP friction.
+- **Per-group custom rules** — free-text rules (a project codename, a customer list, an internal hostname) merge into the same semantic evaluation, per group, with the same direction controls.
+- **Per-group override rights** — Accountable Override is a group-level grant: give the deal desk a governed release valve while keeping a hard boundary for interns.
+- **Per-group data exposure** — which integrations are exposed to AI is decided per group and per integration, and connector policies carry group exemption carve-outs: Finance may retrieve finance documents through the AI connector while every other group stays blocked.
+- **Groups follow the IdP** — membership, renames, and lifecycle sync from Entra, Okta, and the rest, so enforcement scope updates when HR updates the directory — not when someone remembers to edit a console.
+- **Group-scoped visibility** — the executive dashboard, analytics, and reports all re-scope by group, so each department's posture is measurable on its own terms.
+
+The result: one platform, one audit trail — and per-department guardrails precise enough that no team is ever asked to live under another team's policy.
 
 ---
 
@@ -121,26 +164,19 @@ On initial publication (April 2026), the engine scored **99.19%** across the ful
 
 In June 2026 we re-ran the benchmark against the **production engine configuration** — the same self-hosted vLLM stack that serves customer traffic — sweeping **14,799 expert-authored prompts across all 9 data classes**, and then did what benchmark tables usually skip: we manually adjudicated **every single flagged miss**.
 
-| Result | Value |
+| Validated result | Value |
 |---|---|
-| Measured accuracy (production gate) | **99.00%** |
-| Validated accuracy (after expert adjudication) | **99.59%** |
-| False positives | **6** — zero outside deliberately adversarial PII edge-case traps |
+| **Validated accuracy** | **99.59%** |
+| GDPR data class | **100.00%** — zero misses, identical measured and validated |
+| Long-form documents (1,000–12,000 chars) | **99.91%** |
+| False positives | **6** across 14,799 prompts — zero outside deliberately adversarial PII edge-case traps |
 | Hallucinated blocks on admin-disabled rules | **0** |
 
 The adjudication reviewed all 154 flagged misses. **102 of them proved not to be data-leakage violations at all** — they are cases where the engine's restraint is the correct behavior: an employee sharing *their own code* for review flagged as "IP leakage," a public IP address in a legitimate firewall task, an asset serial number in routine IT inventory, academic-integrity intent questions that contain no protected data. Crediting only those 102 (and conservatively retaining 52 as genuine misses — named emails, patient names, M&A material, credentials), validated accuracy is **99.59%**. The engine is above 99% no matter how the gray zone is scored.
 
-### Accuracy by data class
+### The per-class pattern
 
-| Data class | Accuracy | Data class | Accuracy |
-|---|---|---|---|
-| GDPR | **100.00%** | Security | 99.23% |
-| Legal | 99.70% | Confidential | 99.21% |
-| PHI | 99.59% | PII | 98.66% |
-| Finance | 99.55% | Education | 97.62% |
-| | | Code | 96.67% |
-
-The pattern in the lower-scoring classes is consistent and deliberate: they are **judgment-boundary policies** (is an employee's own source code a secret? is an asset serial personal data?), where scope is correctly a per-organization configuration decision. On canonical regulated-data fingerprints — SSNs, IBANs, medical record numbers, password hashes, docket numbers — the engine rarely slips, and GDPR scored a perfect 100%.
+The validated view is consistent across all nine data classes. On **canonical regulated-data fingerprints** — SSNs, IBANs, medical record numbers, password hashes, docket numbers — the engine rarely slips: GDPR scored a perfect 100%, and Legal, PHI, and Finance all validated at or above 99.5%. The classes that measured lower before adjudication were precisely the **judgment-boundary policies** (is an employee's own source code a secret? is an asset serial personal data? is exam-help misconduct a *data* leak?) — and those are exactly the misses the expert review credited as correct restraint, because whether they are in scope is properly a per-organization, per-group configuration decision, not an engine limitation.
 
 ### Why near-zero false positives is the headline
 

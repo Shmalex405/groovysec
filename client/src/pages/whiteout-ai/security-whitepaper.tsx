@@ -87,6 +87,9 @@ export default function SecurityWhitepaper() {
     "Preventive Control — Sensitive data is blocked before it reaches external AI services",
     "Contextual Understanding — AI-powered analysis understands natural language context",
     "User Education — Clear feedback on policy violations creates a learning loop",
+    "Redact & Continue — One-click sanitized rewrites keep work moving without the sensitive data",
+    "Accountable Override — Groups can grant a justified, fully audited release valve on any block",
+    "Group-Scoped Control — Policies, custom rules, override rights, and data exposure are configured per group",
     "Zero Productivity Impact — Compliant prompts proceed with imperceptible latency",
   ];
 
@@ -416,7 +419,7 @@ const useCases = [
                       </GradientButton>
                     </Link>
                     <a
-                      href="/WHITEOUT_AI_WHITEPAPER.pdf?v=4.0"
+                      href="/WHITEOUT_AI_WHITEPAPER.pdf?v=4.1"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -429,7 +432,7 @@ const useCases = [
 
                   <div className="text-sm text-slate-400 flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    Whiteout AI by Groovy Security — Version 4.0 | July 2026
+                    Whiteout AI by Groovy Security — Version 4.1 | July 2026
                   </div>
                 </ScrollReveal>
               </div>
@@ -700,7 +703,7 @@ const useCases = [
                     "99.59% validated accuracy on the public 15,915-prompt benchmark \u2014 re-validated on the production engine with every flagged miss expert-adjudicated",
                     "Near-zero false positives: 6 across 14,799 prompts, so legitimate work is never interrupted",
                     "Request custom policies tailored to your organization\u2019s specific rules",
-                    "Group-based assignment for departmental compliance",
+                    "Group-based enforcement throughout — policies, custom rules, override rights, and connector exposure all scoped per group for full customizable control",
                     "Supports both cloud and self-hosted LLM evaluation",
                   ].map((item, index) => (
                     <div key={index} className="flex items-start">

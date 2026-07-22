@@ -29,7 +29,7 @@ SRC = os.path.join(HERE, "WHITEPAPER.md")
 OUT = os.path.join(ROOT, "client", "public", "WHITEOUT_AI_WHITEPAPER.pdf")
 LOGO = os.path.join(HERE, "whiteout_logo.png")
 
-VERSION = "Version 4.0 · July 2026"
+VERSION = "Version 4.1 · July 2026"
 
 # Brand palette shared with the platform marketing PDFs: blues #0f3a57 /
 # #15598f / #1c8fc9, green #5a9e3f, orange #e08a1e. weasyprint-safe CSS
