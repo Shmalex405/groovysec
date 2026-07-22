@@ -56,7 +56,7 @@ a { color: #15598f; text-decoration: none; }
                  position: absolute; top: 0; left: 0; right: 0; }
 .cover img.logo { width: 100mm; margin-top: 4mm; }
 .cover .doctype { margin-top: 56mm; font-size: 10pt; letter-spacing: 3px; text-transform: uppercase; color: #1c8fc9; font-weight: 700; }
-.cover h1.cv { font-size: 29pt; line-height: 1.12; color: #0f3a57; margin: 5mm 0 4mm 0; font-weight: 800; letter-spacing: -0.5px; border: none; padding: 0; }
+.cover h1.cv { font-size: 29pt; line-height: 1.12; color: #0f3a57; margin: 5mm 0 4mm 0; font-weight: 800; letter-spacing: -0.5px; border: none; padding: 0; bookmark-level: none; }
 .cover .sub { font-size: 12.5pt; color: #486581; max-width: 152mm; }
 .cover .badge { display: inline-block; margin-top: 8mm; padding: 5px 14px; border: 1.5px solid #1c8fc9; border-radius: 30px;
                 color: #15598f; font-size: 9pt; font-weight: 700; letter-spacing: .5px; }
