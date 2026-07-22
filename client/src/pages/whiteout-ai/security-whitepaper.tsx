@@ -24,6 +24,8 @@ import {
   Building2,
   Brain,
   BarChart3,
+  Code2,
+  Smartphone,
 } from "lucide-react";
 import {
   PageTransition,
@@ -39,15 +41,15 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function SecurityWhitepaper() {
   usePageMeta(
     "Whiteout AI Security Whitepaper",
-    "How Whiteout AI enables safe enterprise adoption of generative AI — 60+ policies across 9 compliance domains, 99.19% accuracy on a 15,915-prompt public benchmark, and security-first architecture."
+    "How Whiteout AI enables safe enterprise adoption of generative AI — 60+ policies across 9 compliance domains, 99.59% validated accuracy on the public compliance benchmark, prompt-injection defense for agentic AI, MCP governance, and security-first architecture."
   );
   const demoHref = "/demo";
 
   const stats = [
     { value: "60+", label: "Built-in Policies" },
-    { value: "23+", label: "AI Platforms Covered" },
+    { value: "40+", label: "AI Platforms & Providers" },
     { value: "9", label: "Compliance Domains" },
-    { value: "99.19%", label: "Benchmark Accuracy" },
+    { value: "99.59%", label: "Validated Accuracy" },
   ];
 
   const challenges = [
@@ -100,25 +102,25 @@ export default function SecurityWhitepaper() {
     {
       icon: Globe,
       title: "Browser Extension",
-      description: "Chrome, Firefox, Edge, Safari — ChatGPT, Claude, Gemini, Copilot, Perplexity, and 23+ AI platforms",
+      description: "Chrome, Firefox, Edge, Safari — ChatGPT, Claude, Gemini, Copilot, Perplexity + 6 more AI web apps, plus embedded Microsoft 365 Copilot and Google Workspace Gemini",
       color: "blue",
     },
     {
       icon: Monitor,
       title: "Desktop Guard",
-      description: "Native AI desktop apps — file drop scanning, attach interception",
+      description: "macOS & Windows — ChatGPT, Claude, Codex, Copilot, Office Copilot, Perplexity, Gemini desktop apps; pre-send gating, file drops, paste & attach interception",
       color: "green",
     },
     {
       icon: Layers,
       title: "IDE Extensions",
-      description: "VS Code, Cursor, Windsurf, JetBrains — Claude Code, Copilot, Codex monitoring",
+      description: "VS Code, Cursor, Windsurf, JetBrains — Claude Code, GitHub Copilot, Codex, Gemini CLI, Aider coverage with prompt-injection defense",
       color: "orange",
     },
     {
       icon: Brain,
       title: "MCP Governance",
-      description: "Controls which external tools AI agents can access (GitHub, Google Drive, Jira, etc.)",
+      description: "A governed MCP + OpenAPI gateway with field-level response vetting across 23 business integrations — and endpoint blocking of ungoverned vendor connectors",
       color: "blue",
     },
     {
@@ -130,8 +132,20 @@ export default function SecurityWhitepaper() {
     {
       icon: Cloud,
       title: "Infrastructure Agents",
-      description: "EKS, EC2, ECS, Lambda — AI API call tracking without client deployment",
+      description: "EKS, EC2, ECS, Lambda — transcript, tap & eBPF observation, in-process SDK enforcement, and full AWS Bedrock coverage",
       color: "orange",
+    },
+    {
+      icon: Code2,
+      title: "Developer SDKs",
+      description: "Python, Node, and an AWS Lambda layer — one-line governance for the AI calls inside your own applications",
+      color: "blue",
+    },
+    {
+      icon: Smartphone,
+      title: "Mobile Governance",
+      description: "Managed iOS & Android — AI-app discovery, usage analytics, and block policies pushed through your MDM",
+      color: "green",
     },
   ];
 
@@ -139,12 +153,24 @@ export default function SecurityWhitepaper() {
     "ChatGPT",
     "Claude",
     "Gemini",
-    "Copilot",
+    "Microsoft Copilot",
     "Perplexity",
     "Mistral",
     "Grok",
     "DeepSeek",
-    "15+ more",
+    "You.com",
+    "Poe",
+    "HuggingFace",
+    "Claude Code",
+    "GitHub Copilot",
+    "OpenAI Codex",
+    "Cursor",
+    "Windsurf",
+    "Gemini CLI",
+    "Aider",
+    "M365 Copilot",
+    "Workspace Gemini",
+    "20+ more",
   ];
 
   const policyCategories = [
@@ -157,6 +183,38 @@ export default function SecurityWhitepaper() {
     { name: "Security", count: 7, desc: "NIST, ISO 27001" },
     { name: "Confidential", count: 5, desc: "Trade Secrets, NDA" },
     { name: "Education", count: 12, desc: "FERPA" },
+  ];
+
+  const injectionLayers = [
+    {
+      title: "Prompt Entry",
+      description: "Scans what the user submits to the agent before the model sees it",
+    },
+    {
+      title: "Before Tool Execution",
+      description: "The enforcement point — risky tool calls are stopped before they run",
+    },
+    {
+      title: "After Tool Output",
+      description: "Scans what came back, flagging injected instructions before the agent acts on them",
+    },
+  ];
+
+  const injectionCategories = [
+    "Instruction override",
+    "Role-play jailbreaks",
+    "Encoding & obfuscation",
+    "Context manipulation",
+    "Data exfiltration",
+    "Policy bypass",
+  ];
+
+  const tamperFeatures = [
+    "Hooks centrally installed and owned by Desktop Guard, locked read-only",
+    "Integrity re-verified every 60 seconds with surgical self-repair on drift",
+    "Removed hook registrations are restored — user configuration left untouched",
+    "Runtime auth via short-lived local tokens — no credentials stored on disk",
+    "Self-protection hard-blocks any attempt to disable the defenses — even in warn-first mode",
   ];
 
   const securityFeatures = [
@@ -341,7 +399,10 @@ const useCases = [
                     <p className="text-lg text-slate-300 mb-8 leading-relaxed">
                       A comprehensive overview of how Whiteout AI enables
                       organizations to safely adopt generative AI tools while
-                      enforcing compliance, data security, and auditability.
+                      enforcing compliance, data security, and auditability —
+                      across the browser, desktop, IDE, infrastructure, mobile,
+                      and the MCP connectors that wire AI into your business
+                      systems.
                     </p>
                   </HeroLine>
                 </HeroTextReveal>
@@ -368,7 +429,7 @@ const useCases = [
 
                   <div className="text-sm text-slate-400 flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    Whiteout AI by Groovy Security — Version 3.1 | June 2026
+                    Whiteout AI by Groovy Security — Version 4.0 | July 2026
                   </div>
                 </ScrollReveal>
               </div>
@@ -636,7 +697,8 @@ const useCases = [
                 <div className="space-y-3">
                   {[
                     "60+ built-in policies across 9 compliance domains",
-                    "99.19% accuracy across a 15,915-prompt public benchmark",
+                    "99.59% validated accuracy on the public 15,915-prompt benchmark \u2014 re-validated on the production engine with every flagged miss expert-adjudicated",
+                    "Near-zero false positives: 6 across 14,799 prompts, so legitimate work is never interrupted",
                     "Request custom policies tailored to your organization\u2019s specific rules",
                     "Group-based assignment for departmental compliance",
                     "Supports both cloud and self-hosted LLM evaluation",
@@ -677,6 +739,82 @@ const useCases = [
                   <span className="font-semibold text-slate-300">60</span> expert-curated
                   policies across all domains — extendable with custom policies
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* === PROMPT-INJECTION DEFENSE === */}
+        <section className="py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ScrollReveal>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                  Prompt-Injection Defense for Agentic AI
+                </h2>
+                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
+                  Coding agents execute commands and read whatever their tools return —
+                  making injected instructions a first-class enterprise threat. Whiteout AI
+                  defends agentic tools like Claude Code and Cursor with centrally managed,
+                  tamper-resistant hooks at three interception points.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+              <div>
+                <div className="space-y-3 mb-8">
+                  {injectionLayers.map((layer, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start p-4 bg-blue-500/10 rounded-lg border border-blue-500/20"
+                    >
+                      <div className="w-8 h-8 bg-blue-600/30 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <span className="text-blue-300 font-bold text-sm">
+                          {index + 1}
+                        </span>
+                      </div>
+                      <div>
+                        <div className="text-slate-200 font-medium">{layer.title}</div>
+                        <div className="text-sm text-slate-400">
+                          {layer.description}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-sm font-medium text-slate-500 mb-3">
+                  Six detection categories
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {injectionCategories.map((cat, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1.5 bg-white/[0.03] text-slate-300 rounded-full text-xs font-medium border border-white/[0.08]"
+                    >
+                      {cat}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-8 border border-white/[0.08]">
+                <h3 className="text-lg font-bold text-white mb-2">
+                  Tamper-Resistant by Design
+                </h3>
+                <p className="text-sm text-slate-400 mb-4">
+                  Tuned warn-first so it never blocks legitimate developer work — with
+                  one unconditional hard block: any attempt to disable the defense
+                  itself.
+                </p>
+                <ul className="space-y-2">
+                  {tamperFeatures.map((item, i) => (
+                    <li key={i} className="flex items-start text-sm">
+                      <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-300">{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>

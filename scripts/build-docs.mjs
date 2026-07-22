@@ -76,7 +76,7 @@ const ROUTES = [
     path: "/whiteout-ai/security-whitepaper",
     title: `Whiteout AI Security Whitepaper | ${SITE_NAME}`,
     description:
-      "How Whiteout AI enables safe enterprise adoption of generative AI — 60+ policies across 9 compliance domains, greater than 99% accuracy on a 15,915-prompt public benchmark, and security-first architecture.",
+      "How Whiteout AI enables safe enterprise adoption of generative AI — 60+ policies across 9 compliance domains, 99.59% validated accuracy on the public compliance benchmark, prompt-injection defense for agentic AI, MCP governance, and security-first architecture.",
   },
   {
     path: "/about",
