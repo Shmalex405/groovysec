@@ -1,17 +1,19 @@
 import { useLayoutEffect, useRef } from "react";
 import { PLATE_DRIFT } from "@/components/ui/spinning-mark";
+import { readSplashContext, shouldPlaySplash } from "./splash-policy";
 
 /**
- * First-visit splash for the homepage: the stacked lockup dials in like a
- * vault (three colour plates counter-rotating into place), the wordmark pops
- * in, and after one breath the mark flies into its nav slot on its own while
- * the page rises in underneath. Clicking anywhere (or Enter/Escape) skips
- * straight to the handoff.
+ * Arrival sequence for the homepage: the stacked lockup dials in like a vault
+ * (three colour plates counter-rotating into place), the wordmark pops in, and
+ * after one breath the mark flies into its nav slot on its own while the page
+ * rises in underneath. Clicking anywhere (or Enter/Escape) skips straight to
+ * the handoff.
  *
- * Shown once per session; skipped for reduced-motion users.
+ * Plays on every visit to the site root, so every visitor sees it — but only
+ * once per page load, never when moving between pages inside the app. Skipped
+ * for reduced-motion users and for tabs that start hidden.
  */
 
-const SEEN_KEY = "gs-splash-seen";
 // Dial settles ~1.4s, wordmark lands ~1.73s, pulse fades ~2.1s — then release.
 const HOLD_MS = 2600;
 const EXPO_OUT = "cubic-bezier(0.16, 1, 0.3, 1)";
@@ -27,38 +29,25 @@ const DIAL = [
   { color: "orange", angles: [-320, 60, -20], dur: 1400, spin: 720 },
 ] as const;
 
-/** `?splash` in the URL forces a replay — for previewing the first-visit experience. */
-function splashForced(): boolean {
-  return new URLSearchParams(window.location.search).has("splash");
+/**
+ * Captured at module load, before any client-side navigation can change the
+ * URL, and reset on every page load — so a reload replays the sequence while
+ * moving around inside the app never does.
+ */
+const CONTEXT = typeof window === "undefined" ? null : readSplashContext();
+let armed = true;
+
+function markSplashConsumed() {
+  armed = false;
 }
 
 export function shouldShowSplash(): boolean {
-  if (typeof window === "undefined") return false;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
-
-  // A tab that starts hidden — opened in the background, restored with a
-  // session, prerendered, or rendered by a crawler — must get the page
-  // itself, not an intro it cannot see. Consume the flag so the sequence
-  // can't ambush the visitor later in the session either.
-  if (document.visibilityState !== "visible") {
-    markSeen();
-    return false;
-  }
-
-  if (splashForced()) return true;
-  try {
-    return !window.sessionStorage.getItem(SEEN_KEY);
-  } catch {
-    return true;
-  }
-}
-
-function markSeen() {
-  try {
-    window.sessionStorage.setItem(SEEN_KEY, "1");
-  } catch {
-    /* storage unavailable — the splash simply plays again next visit */
-  }
+  if (!CONTEXT) return false;
+  const play = shouldPlaySplash(CONTEXT, armed);
+  // Either way this decision is final for the page load: a visitor who isn't
+  // getting the sequence must not be ambushed by it on a later in-app hop.
+  if (!play) markSplashConsumed();
+  return play;
 }
 
 interface SplashIntroProps {
@@ -89,7 +78,6 @@ export function SplashIntro({ onEnterStart, onDone }: SplashIntroProps) {
   function enter() {
     if (enteredRef.current) return;
     enteredRef.current = true;
-    markSeen();
     cbRef.current.onEnterStart();
     const root = rootRef.current!;
     root.style.pointerEvents = "none";
@@ -192,6 +180,10 @@ export function SplashIntro({ onEnterStart, onDone }: SplashIntroProps) {
   }
 
   useLayoutEffect(() => {
+    // Spend the sequence the moment it starts, so returning to the homepage
+    // from another page in this same page load lands on the page directly.
+    markSplashConsumed();
+
     const stack = stackRef.current!;
 
     // Dial in: container settles while the plates counter-rotate into place.
