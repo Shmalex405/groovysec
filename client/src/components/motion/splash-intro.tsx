@@ -50,6 +50,27 @@ export function shouldShowSplash(): boolean {
   return play;
 }
 
+/**
+ * Where an element will come to rest, ignoring transforms currently animating
+ * on it or its ancestors. The page mounts as the handoff starts, so the nav is
+ * still sliding down from its own entrance when we measure the dock — aiming at
+ * its live rect lands the mark high, above where the logo actually settles.
+ */
+function restingRect(el: HTMLElement) {
+  const r = el.getBoundingClientRect();
+  let dx = 0;
+  let dy = 0;
+  for (let n: HTMLElement | null = el; n; n = n.parentElement) {
+    const t = getComputedStyle(n).transform;
+    if (t && t !== "none") {
+      const m = new DOMMatrixReadOnly(t);
+      dx += m.m41;
+      dy += m.m42;
+    }
+  }
+  return { left: r.left - dx, top: r.top - dy, width: r.width, height: r.height };
+}
+
 interface SplashIntroProps {
   /** Fired when the handoff begins — mount the page underneath now. */
   onEnterStart: () => void;
@@ -120,7 +141,7 @@ export function SplashIntro({ onEnterStart, onDone }: SplashIntroProps) {
         if (navWord) navWord.style.opacity = "0";
 
         // The flight: shrink into the dock, plates spinning at their own rates.
-        const d = dock.getBoundingClientRect();
+        const d = restingRect(dock);
         const s0 = stack.getBoundingClientRect();
         const scale = d.width / s0.width;
         stack.animate(
