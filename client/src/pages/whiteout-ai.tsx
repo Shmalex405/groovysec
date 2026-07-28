@@ -22,15 +22,34 @@ import {
   ScrollReveal,
   StaggerChildren,
   StaggerItem,
+  SplashIntro,
+  shouldShowSplash,
 } from "@/components/motion";
 import { usePageMeta } from "@/lib/use-page-meta";
+import { useState } from "react";
 
 export default function WhiteoutAI() {
   usePageMeta(
     "Whiteout AI — Enterprise AI Governance",
     "Intercept and govern every AI interaction across browser, desktop, IDE, infrastructure, and cloud. A full 27B-parameter LLM compliance engine with 60+ policies across 9 domains and greater than 99% benchmark accuracy."
   );
+
+  // First visit each session opens on the splash; the page mounts underneath
+  // the moment Enter fires so its own entrance animations play during the
+  // handoff, and the splash unmounts once the mark has docked into the nav.
+  const [splash, setSplash] = useState<"active" | "entering" | "done">(() =>
+    shouldShowSplash() ? "active" : "done"
+  );
+
   return (
+    <>
+      {splash !== "done" && (
+        <SplashIntro
+          onEnterStart={() => setSplash("entering")}
+          onDone={() => setSplash("done")}
+        />
+      )}
+      {splash !== "active" && (
     <PageTransition>
       <AuroraBackground variant="bluegreen" className="min-h-screen bg-slate-950">
         <Navigation />
@@ -209,5 +228,7 @@ export default function WhiteoutAI() {
         <Footer />
       </AuroraBackground>
     </PageTransition>
+      )}
+    </>
   );
 }

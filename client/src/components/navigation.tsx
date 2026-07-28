@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { GroovyLogo } from "./groovy-logo";
+import { SpinningMark } from "@/components/ui/spinning-mark";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ---------------------------------------------------------------------------
@@ -17,6 +18,8 @@ type NavLink = {
   /** Hard-navigate via a plain <a> — for targets outside the SPA (e.g. /docs). */
   hardNav?: boolean;
   description?: string;
+  /** Render the spinning Groovy mark instead of a flat image. */
+  mark?: boolean;
   image?: string;
   imageClass?: string;
   badge?: string;
@@ -55,14 +58,14 @@ const MENUS: NavMenu[] = [
             label: "Whiteout AI",
             href: "/",
             description: "AI Interaction Inspection",
-            image: "/icononly_transparent_nobuffer.png",
+            mark: true,
             hover: "blue",
           },
           {
             label: "Maestro",
             href: "/maestro",
             description: "AI-Driven Penetration Testing",
-            image: "/icononly_transparent_nobuffer.png",
+            mark: true,
             imageClass: "grayscale",
             hover: "orange",
           },
@@ -218,7 +221,7 @@ export function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" ref={navRef}>
         <div className="flex justify-between items-center h-16">
-          <GroovyLogo />
+          <GroovyLogo splashDock />
 
           <div className="hidden md:flex items-center space-x-1">
             {MENUS.map((menu) => (
@@ -269,11 +272,18 @@ export function Navigation() {
                                 className="flex items-start gap-3 px-3 py-3 rounded-lg hover:bg-white/[0.06] transition-colors group/item"
                               >
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                                  <img
-                                    src={link.image}
-                                    alt={link.label}
-                                    className={`w-7 h-7 object-contain ${link.imageClass ?? ""}`}
-                                  />
+                                  {link.mark ? (
+                                    <SpinningMark
+                                      alt={link.label}
+                                      className={`w-7 h-7 ${link.imageClass ?? ""}`}
+                                    />
+                                  ) : (
+                                    <img
+                                      src={link.image}
+                                      alt={link.label}
+                                      className={`w-7 h-7 object-contain ${link.imageClass ?? ""}`}
+                                    />
+                                  )}
                                 </div>
                                 <div>
                                   <div className="flex items-center gap-2">

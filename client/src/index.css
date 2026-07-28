@@ -507,6 +507,40 @@ html {
   backdrop-filter: blur(16px);
 }
 
+/* ---------------------------------------------------------------------------
+   Logo plate drift — the mark's three colour layers rotate independently, so
+   the icon reads as a slowly turning mechanism wherever it appears. Blue and
+   orange turn the same way, so their speeds are kept far apart. Tune the
+   durations here and every logo on the site follows.
+   The global reduced-motion block below stops these along with everything else.
+   --------------------------------------------------------------------------- */
+@keyframes gs-plate-cw {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes gs-plate-ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.gs-plate-blue {
+  animation: gs-plate-cw 110s linear infinite;
+}
+.gs-plate-green {
+  animation: gs-plate-ccw 85s linear infinite;
+}
+.gs-plate-orange {
+  animation: gs-plate-cw 45s linear infinite;
+}
+
+/* SVG <image> plates rotate about the SVG origin unless boxed to themselves */
+.gs-plate-svg {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
 /* Respect users who opt out of motion */
 @media (prefers-reduced-motion: reduce) {
   html {

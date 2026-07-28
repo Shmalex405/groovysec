@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { ArrowRight } from "lucide-react";
 import { motion, useAnimation } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { SpinningMark } from "@/components/ui/spinning-mark";
 
 export interface TimelineItem {
   id: number;
@@ -19,8 +20,9 @@ export interface TimelineItem {
 interface RadialOrbitalTimelineProps {
   timelineData: TimelineItem[];
   centerIcon?: React.ElementType;
-  centerImage?: string;
-  centerImageClass?: string;
+  /** Render the spinning Groovy mark at the hub. */
+  centerMark?: boolean;
+  centerMarkClass?: string;
   centerLabel?: string;
   variant?: "blue" | "orange";
   className?: string;
@@ -85,8 +87,8 @@ function MagneticParticles({
 export default function RadialOrbitalTimeline({
   timelineData,
   centerIcon: CenterIcon,
-  centerImage,
-  centerImageClass,
+  centerMark,
+  centerMarkClass,
   centerLabel,
   variant = "blue",
   className,
@@ -286,11 +288,11 @@ export default function RadialOrbitalTimeline({
         >
           {/* Center node */}
           <div className="absolute flex items-center justify-center z-10">
-            {centerImage ? (
+            {centerMark ? (
               <div className="relative flex items-center justify-center">
                 <div className={`absolute rounded-full border ${c.ring} animate-ping opacity-50`} style={{ width: 96, height: 96 }} />
                 <div className={`absolute rounded-full border ${c.ring2} animate-ping opacity-30`} style={{ width: 116, height: 116, animationDelay: "0.5s" }} />
-                <img src={centerImage} alt="" className={cn("w-20 h-20 object-contain drop-shadow-2xl animate-pulse", centerImageClass)} />
+                <SpinningMark className={cn("w-20 h-20 drop-shadow-2xl", centerMarkClass)} />
               </div>
             ) : CenterIcon ? (
               <div className={cn(

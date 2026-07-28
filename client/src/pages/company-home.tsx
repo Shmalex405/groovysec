@@ -25,6 +25,7 @@ import {
 import { ComplianceFrameworksCompact } from "@/components/compliance-frameworks";
 import { PromptInterceptionDemo } from "@/components/prompt-interception-demo";
 import { MaestroAssessmentDemo } from "@/components/maestro-assessment-demo";
+import { SpinningMark } from "@/components/ui/spinning-mark";
 
 // Single source for product card copy — rendered on both the card front and
 // its reveal overlay so the two can never drift apart.
@@ -182,13 +183,7 @@ export default function CompanyHome() {
                     <div className="p-8 h-full flex flex-col">
                       <ProductCardBody
                         product={PRODUCTS.whiteout}
-                        logo={
-                          <img
-                            src="/icononly_transparent_nobuffer.png"
-                            alt="Whiteout AI"
-                            className="w-10 h-10 object-contain"
-                          />
-                        }
+                        logo={<SpinningMark alt="Whiteout AI" className="w-10 h-10" />}
                         buttonVariant="blue"
                         tone="overlay-blue"
                       />
@@ -198,13 +193,7 @@ export default function CompanyHome() {
                   <div className="p-8 bg-white/[0.03] backdrop-blur-xl flex flex-col">
                     <ProductCardBody
                       product={PRODUCTS.whiteout}
-                      logo={
-                        <img
-                          src="/icononly_transparent_nobuffer.png"
-                          alt="Whiteout AI"
-                          className="w-10 h-10 object-contain"
-                        />
-                      }
+                      logo={<SpinningMark alt="Whiteout AI" className="w-10 h-10" />}
                       buttonVariant="blue"
                       tone="front"
                     />
@@ -222,13 +211,7 @@ export default function CompanyHome() {
                     <div className="p-8 h-full flex flex-col">
                       <ProductCardBody
                         product={PRODUCTS.maestro}
-                        logo={
-                          <img
-                            src="/icononly_transparent_nobuffer.png"
-                            alt="Maestro"
-                            className="w-10 h-10 object-contain grayscale brightness-200"
-                          />
-                        }
+                        logo={<SpinningMark alt="Maestro" className="w-10 h-10 grayscale brightness-200" />}
                         buttonVariant="orange"
                         tone="overlay-orange"
                       />
@@ -238,13 +221,7 @@ export default function CompanyHome() {
                   <div className="p-8 bg-white/[0.03] backdrop-blur-xl flex flex-col">
                     <ProductCardBody
                       product={PRODUCTS.maestro}
-                      logo={
-                        <img
-                          src="/icononly_transparent_nobuffer.png"
-                          alt="Maestro"
-                          className="w-10 h-10 object-contain grayscale"
-                        />
-                      }
+                      logo={<SpinningMark alt="Maestro" className="w-10 h-10 grayscale" />}
                       buttonVariant="orange"
                       tone="front"
                     />

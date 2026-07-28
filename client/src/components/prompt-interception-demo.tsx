@@ -14,6 +14,7 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
+import { SpinningMark } from "@/components/ui/spinning-mark";
 
 type Verdict = "redact" | "block" | "allow";
 
@@ -316,11 +317,7 @@ export function PromptInterceptionDemo() {
                 transition={{ duration: 1.1, repeat: Infinity, ease: "easeOut" }}
               />
             )}
-            <img
-              src="/icononly_transparent_nobuffer.png"
-              alt=""
-              className="w-7 h-7 object-contain"
-            />
+            <SpinningMark className="w-7 h-7" />
           </div>
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-slate-950/80 px-1.5 py-0.5 text-center leading-tight">
             <span className="block text-[10px] font-medium text-slate-300">

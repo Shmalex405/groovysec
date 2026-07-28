@@ -98,7 +98,7 @@ export function InterceptorPlatforms() {
 
         <RadialOrbitalTimeline
           timelineData={timelineData}
-          centerImage="/icononly_transparent_nobuffer.png"
+          centerMark
           centerLabel="Policy Engine"
           variant="blue"
         />

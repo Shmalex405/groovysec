@@ -199,8 +199,8 @@ export default function Maestro() {
                     status: "completed" as const,
                     energy: [95, 90, 88, 92, 85, 87][i],
                   }))}
-                  centerImage="/icononly_transparent_nobuffer.png"
-                  centerImageClass="grayscale"
+                  centerMark
+                  centerMarkClass="grayscale"
                   centerLabel="Maestro"
                   variant="orange"
                   className="scale-[0.85] lg:scale-100 -my-8"

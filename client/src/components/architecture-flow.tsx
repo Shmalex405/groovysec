@@ -1,4 +1,5 @@
 import { ScrollReveal } from "@/components/motion";
+import { SpinningMarkSvg } from "@/components/ui/spinning-mark";
 
 export function ArchitectureFlow() {
   return (
@@ -112,7 +113,7 @@ export function ArchitectureFlow() {
               <g>
                 <rect x="350" y="80" width="100" height="80" rx="14" fill="#0f1115" stroke="#1a5fb4" strokeWidth="1" />
                 {/* Logo image */}
-                <image href="/icononly_transparent_nobuffer.png" x="388" y="86" width="24" height="24" />
+                <SpinningMarkSvg x={388} y={86} size={24} />
                 <text x="400" y="128" fill="white" fontSize="11" fontWeight="600" textAnchor="middle">Whiteout AI</text>
                 <text x="400" y="143" fill="#64748b" fontSize="8" textAnchor="middle">Policy verification</text>
                 {/* Glow */}

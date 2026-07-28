@@ -125,7 +125,7 @@ export function HeroSection() {
           <ScrollReveal direction="right" delay={0.3} className="relative isolate">
             <RadialOrbitalTimeline
               timelineData={interceptorData}
-              centerImage="/icononly_transparent_nobuffer.png"
+              centerMark
               centerLabel="Whiteout AI"
               variant="blue"
               className="scale-[0.85] lg:scale-100 -my-8"

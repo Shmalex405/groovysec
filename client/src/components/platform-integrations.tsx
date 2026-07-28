@@ -5,6 +5,7 @@ import {
   MessageCircle, Code, Eye, Zap, Monitor, Cloud, Pencil, FileSearch,
 } from "lucide-react";
 import { ScrollReveal } from "@/components/motion";
+import { SpinningMark } from "@/components/ui/spinning-mark";
 
 /* ── Radar ── */
 function Radar({ className }: { className?: string }) {
@@ -135,7 +136,7 @@ export function PlatformIntegrations() {
 
           {/* Center — Logo */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
-            <img src="/icononly_transparent_nobuffer.png" alt="Whiteout AI" className="w-16 h-16 drop-shadow-2xl" />
+            <SpinningMark alt="Whiteout AI" className="w-16 h-16 drop-shadow-2xl" />
           </div>
         </div>
       </div>

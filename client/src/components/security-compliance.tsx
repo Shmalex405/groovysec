@@ -1,4 +1,5 @@
 import { ScrollReveal } from "@/components/motion";
+import { SpinningMarkSvg } from "@/components/ui/spinning-mark";
 
 export function SecurityCompliance() {
   return (
@@ -76,7 +77,7 @@ export function SecurityCompliance() {
               {/* Top center — Whiteout AI source */}
               <g>
                 <rect x="340" y="16" width="120" height="44" rx="10" fill="#0f1115" stroke="currentColor" strokeWidth="0.8" />
-                <image href="/icononly_transparent_nobuffer.png" x="352" y="22" width="24" height="24" />
+                <SpinningMarkSvg x={352} y={22} size={24} />
                 <text x="382" y="39" fill="white" fontSize="12" fontWeight="600">Whiteout AI</text>
                 <text x="358" y="52" fill="#64748b" fontSize="8">Choose your deployment</text>
               </g>
