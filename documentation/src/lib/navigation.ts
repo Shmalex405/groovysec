@@ -31,6 +31,7 @@ export const navigation: NavSection[] = [
       { title: 'Overview', href: '/admin-guides/whiteout-ai-connector/overview' },
       { title: 'Connect an AI Assistant', href: '/admin-guides/whiteout-ai-connector/connect-ai-assistant' },
       { title: 'Connector Policy', href: '/admin-guides/whiteout-ai-connector/connector-policy' },
+      { title: 'Vendor-Native Connector Control', href: '/admin-guides/whiteout-ai-connector/native-connector-control' },
       { title: 'Google Workspace (Zero-Click)', href: '/admin-guides/whiteout-ai-connector/google-workspace-dwd' },
       { title: 'Microsoft 365 (Zero-Click)', href: '/admin-guides/whiteout-ai-connector/microsoft-365-zero-click' },
       { title: 'Google Drive', href: '/admin-guides/whiteout-ai-connector/google-drive' },
