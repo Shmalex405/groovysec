@@ -60,21 +60,35 @@ In the same GCP project, enable the **Google Drive API** and the
 1. Go to **admin.google.com → Security → Access and data control →
    API controls → Domain-wide delegation → Add new**.
 2. **Client ID:** the service account's OAuth client ID from step 1.3.
-3. **OAuth scopes** (comma-separated) — exactly the two the connector
-   reads with:
+3. **OAuth scopes** (comma-separated) — exactly what the connector uses:
    ```
    https://www.googleapis.com/auth/drive.readonly,
    https://www.googleapis.com/auth/gmail.readonly,
    https://www.googleapis.com/auth/calendar.readonly,
-   https://www.googleapis.com/auth/admin.directory.user.readonly
+   https://www.googleapis.com/auth/admin.directory.user.readonly,
+   https://www.googleapis.com/auth/admin.directory.user.security
    ```
-   (`calendar.readonly` powers zero-click Google Calendar;
-   `admin.directory.user.readonly` lets the corpus scanner enumerate your
-   Workspace users for the org-wide Drive scan.)
+   - `drive.readonly`, `gmail.readonly`, `calendar.readonly` — the
+     content the connector reads on each user's behalf.
+   - `admin.directory.user.readonly` — lets the corpus scanner enumerate
+     your Workspace users for the org-wide Drive scan.
+   - `admin.directory.user.security` — **optional.** Only needed if you
+     want Whiteout to find and revoke AI vendors' existing OAuth grants
+     against your Workspace. See
+     [Vendor-Native Connector Control](./whiteout-ai-connector/native-connector-control.md).
+     Omit it and everything else still works.
 4. Click **Authorize.**
 
-> Both scopes are **read-only**. Whiteout never writes to Drive or
-> Gmail, and requests nothing beyond these two.
+> **Adding a scope later?** The scope box holds one comma-separated list
+> and **saving replaces the whole list** — append to what's already
+> there rather than retyping it, or you'll silently drop a scope the
+> connector depends on.
+
+> Whiteout **never writes** to Drive, Gmail, or Calendar, and requests
+> nothing beyond the scopes above. The one non-read-only capability —
+> `admin.directory.user.security` — can delete third-party OAuth grants,
+> and only ever does so when you explicitly confirm a revocation. It
+> gives Whiteout no access to mail or file content.
 
 ### 4. Hand the service-account key to your Whiteout operator
 

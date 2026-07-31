@@ -60,6 +60,36 @@ one-click flow — because the app's permission set grew.)
 Whiteout validates the grant immediately (it mints a real app-only token
 before recording anything), so a half-completed consent can't be saved.
 
+> **Re-consent when the permission set grows.** Microsoft records the
+> permissions in force at the moment you consented, so any tenant that
+> consented earlier must re-run this same one-click flow to pick up new
+> ones. Two rounds have added permissions so far: Teams support, and —
+> optionally — vendor-grant revocation (below).
+
+### 1b. (Optional) Permissions for revoking AI-vendor grants
+
+Whiteout can find and remove the OAuth grants AI vendors hold against
+your tenant — see
+[Vendor-Native Connector Control](./whiteout-ai-connector/native-connector-control.md).
+That capability needs these additional Graph **application** permissions:
+
+| Permission | Purpose |
+|---|---|
+| `Application.Read.All` | Identify AI-vendor applications in your tenant |
+| `DelegatedPermissionGrant.ReadWrite.All` | Remove delegated consent grants |
+| `AppRoleAssignment.ReadWrite.All` | Remove application-permission grants |
+| `User.RevokeSessions.All` | *Optional* — force immediate sign-out so already-issued tokens die with the grant |
+
+> Evaluate these on their own terms: delegated-grant write can remove
+> **any** application's consent in your tenant, not only AI vendors'.
+> Whiteout constrains every action to applications it can identify by
+> verified OAuth ID and previews each one before you confirm — but the
+> permission itself is broad.
+
+Skip this section entirely if you don't want revocation. Blocking
+native connectors and detecting pre-existing connections need **no
+Microsoft permissions at all.**
+
 ### 2. (SharePoint only) Allowlist the sites to govern
 
 In the SharePoint source's zero-click panel, enter the site URLs to make
