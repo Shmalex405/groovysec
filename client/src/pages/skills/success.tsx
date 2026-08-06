@@ -24,7 +24,7 @@ export default function SkillsSuccess() {
 
   return (
     <PageTransition>
-      <AuroraBackground variant="green" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="green" className="min-h-screen">
         <Navigation />
 
         <section className="pt-32 pb-20 min-h-[80vh] flex items-center">
@@ -35,18 +35,18 @@ export default function SkillsSuccess() {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
-                  className="w-20 h-20 bg-emerald-500/15 border border-emerald-500/25 rounded-full flex items-center justify-center mx-auto mb-6"
+                  className="w-20 h-20 bg-[#2E7D32]/10 border border-[#2E7D32]/25 rounded-full flex items-center justify-center mx-auto mb-6"
                 >
-                  <CheckCircle className="w-10 h-10 text-emerald-400" />
+                  <CheckCircle className="w-10 h-10 text-[#2E7D32]" />
                 </motion.div>
 
-                <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
+                <h1 className="text-4xl lg:text-5xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Request{" "}
                   <GradientText from="from-emerald-400" to="to-teal-300">
                     Received
                   </GradientText>
                 </h1>
-                <p className="text-lg text-slate-400 max-w-xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-xl mx-auto">
                   Thanks for your interest in Groovy Security Skills. We'll review
                   your request and email you payment and repository access
                   instructions shortly.
@@ -57,7 +57,7 @@ export default function SkillsSuccess() {
             {/* What happens next */}
             <ScrollReveal delay={0.3}>
               <div className="mt-4">
-                <h3 className="text-lg font-bold text-white mb-6 text-center">What Happens Next</h3>
+                <h3 className="text-lg font-bold text-[#0F1B2D] mb-6 text-center">What Happens Next</h3>
                 <div className="grid gap-4">
                   {[
                     {
@@ -84,12 +84,12 @@ export default function SkillsSuccess() {
                   ].map((item, i) => (
                     <GlassCard key={i} className="p-5" hover={false}>
                       <div className="flex items-start gap-4">
-                        <div className="w-8 h-8 bg-emerald-500/10 border border-emerald-500/20 rounded-lg flex items-center justify-center flex-shrink-0 text-sm font-bold text-emerald-400">
+                        <div className="w-8 h-8 bg-[#2E7D32]/10 border border-[#2E7D32]/25 rounded-md flex items-center justify-center flex-shrink-0 text-sm font-bold text-[#2E7D32]">
                           {item.step}
                         </div>
                         <div>
-                          <h4 className="text-sm font-bold text-white mb-1">{item.title}</h4>
-                          <p className="text-sm text-slate-400">{item.description}</p>
+                          <h4 className="text-sm font-bold text-[#0F1B2D] mb-1">{item.title}</h4>
+                          <p className="text-sm text-[#51617A]">{item.description}</p>
                         </div>
                       </div>
                     </GlassCard>
@@ -100,17 +100,17 @@ export default function SkillsSuccess() {
 
             <ScrollReveal delay={0.5}>
               <div className="text-center mt-10">
-                <p className="text-sm text-slate-500 mb-6">
+                <p className="text-sm text-[#6E7B8C] mb-6">
                   Questions? Reach out to{" "}
                   <a
                     href="mailto:support@groovysec.com"
-                    className="text-emerald-400 hover:text-emerald-300 transition-colors"
+                    className="text-[#2E7D32] hover:text-[#256428] transition-colors"
                   >
                     support@groovysec.com
                   </a>
                 </p>
                 <Link href="/skills">
-                  <GradientButton variant="default" className="rounded-xl">
+                  <GradientButton variant="default">
                     Back to Skills
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </GradientButton>

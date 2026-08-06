@@ -27,19 +27,19 @@ export default function Review() {
 
   return (
     <PageTransition>
-      <AuroraBackground variant="mixed" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="mixed" className="min-h-screen">
         <Navigation />
 
         <section className="pt-32 pb-4">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <ScrollReveal>
-              <div className="w-12 h-12 mx-auto mb-6 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                <Quote className="w-6 h-6 text-blue-400" />
+              <div className="w-12 h-12 mx-auto mb-6 rounded-md bg-[#1A5FB4]/10 border border-[#1A5FB4]/25 flex items-center justify-center">
+                <Quote className="w-6 h-6 text-[#1A5FB4]" />
               </div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
+              <h1 className="text-4xl lg:text-5xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                 Share Your Experience
               </h1>
-              <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+              <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                 If Groovy Security has helped your team secure or test your AI,
                 we'd love to hear about it. It takes a couple of minutes, and your
                 review helps other security and compliance teams know what to expect.

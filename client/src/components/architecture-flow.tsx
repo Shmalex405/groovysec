@@ -1,5 +1,6 @@
 import { ScrollReveal } from "@/components/motion";
 import { SpinningMarkSvg } from "@/components/ui/spinning-mark";
+import { AuroraDrift } from "@/components/ui/aurora-background";
 
 export function ArchitectureFlow() {
   return (
@@ -7,10 +8,10 @@ export function ArchitectureFlow() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
               How Whiteout AI Works
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-4">
+            <p className="text-lg text-[#51617A] max-w-2xl mx-auto mb-4">
               Every AI prompt/upload is intercepted, verified against your policies — routed if approved, blocked on the device level if not.
             </p>
           </div>
@@ -18,13 +19,18 @@ export function ArchitectureFlow() {
 
         <ScrollReveal>
           <div className="relative flex flex-col items-center">
-            {/* SVG Flow Diagram */}
-            <svg
-              className="w-full text-slate-700"
-              viewBox="0 0 800 340"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            {/* Dark instrument plate — the one place the aurora still lives,
+                drifting behind the interception flow as the ambient AI
+                traffic the product tames. The SVG itself is untouched. */}
+            <div className="relative w-full overflow-hidden rounded-xl border border-[#0F1B2D]/10 bg-[#0B1218] p-6 md:p-8 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
+              <AuroraDrift variant="mixed" />
+              {/* SVG Flow Diagram */}
+              <svg
+                className="relative z-10 w-full text-slate-700"
+                viewBox="0 0 800 340"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
               <defs>
                 <radialGradient id="flow-blue" fx="0.5" fy="0.5">
                   <stop offset="0%" stopColor="#1a5fb4" />
@@ -160,15 +166,16 @@ export function ArchitectureFlow() {
 
               {/* Label on the direct path */}
               <text x="340" y="240" fill="#64748b" fontSize="7" fontStyle="italic">data-sensitive prompts</text>
-            </svg>
+              </svg>
+            </div>
 
             {/* Semantic callout */}
             <div className="mt-10 mb-8 text-center">
-              <div className="inline-block bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl px-8 py-5">
-                <span className="text-lg font-bold text-gradient-brand animate-gradient-flow-fast">
+              <div className="inline-block bg-white border border-[#0F1B2D]/10 rounded-xl px-8 py-5 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
+                <span className="text-lg font-bold text-[#1A5FB4]">
                   No Regex. Pure Semantic.
                 </span>
-                <p className="text-sm text-slate-400 mt-2 max-w-lg">
+                <p className="text-sm text-[#51617A] mt-2 max-w-lg">
                   Unlike traditional DLP that relies on pattern matching, the Compliance Engine uses AI-powered analysis to understand the meaning and context of every prompt.
                 </p>
               </div>
@@ -176,36 +183,36 @@ export function ArchitectureFlow() {
 
             {/* Bottom summary cards */}
             <div className="grid md:grid-cols-3 gap-4 w-full">
-              <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl border border-emerald-500/[0.12] p-5">
+              <div className="bg-white rounded-xl border border-[#2E7D32]/25 p-5 shadow-[0_1px_2px_rgba(15,27,45,0.05)]">
                 <div className="flex items-center mb-3">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400 mr-2" />
-                  <h4 className="text-emerald-400 font-semibold text-sm">Safe for External</h4>
+                  <div className="w-2 h-2 rounded-full bg-[#2E7D32] mr-2" />
+                  <h4 className="text-[#2E7D32] font-semibold text-sm">Safe for External</h4>
                 </div>
-                <ul className="text-slate-500 text-xs space-y-1.5">
+                <ul className="text-[#51617A] text-xs space-y-1.5">
                   <li>No sensitive data detected</li>
                   <li>Complies with all policies</li>
                   <li>Routed through Whiteout AI</li>
                 </ul>
               </div>
 
-              <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl border border-amber-500/[0.12] p-5">
+              <div className="bg-white rounded-xl border border-[#A05F00]/25 p-5 shadow-[0_1px_2px_rgba(15,27,45,0.05)]">
                 <div className="flex items-center mb-3">
-                  <div className="w-2 h-2 rounded-full bg-amber-400 mr-2" />
-                  <h4 className="text-amber-400 font-semibold text-sm">Internal Only</h4>
+                  <div className="w-2 h-2 rounded-full bg-[#A05F00] mr-2" />
+                  <h4 className="text-[#A05F00] font-semibold text-sm">Internal Only</h4>
                 </div>
-                <ul className="text-slate-500 text-xs space-y-1.5">
+                <ul className="text-[#51617A] text-xs space-y-1.5">
                   <li>Sensitive data detected</li>
                   <li>Routed directly to internal AI</li>
                   <li>Data never leaves your network</li>
                 </ul>
               </div>
 
-              <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl border border-red-500/[0.12] p-5">
+              <div className="bg-white rounded-xl border border-[#B3261E]/25 p-5 shadow-[0_1px_2px_rgba(15,27,45,0.05)]">
                 <div className="flex items-center mb-3">
-                  <div className="w-2 h-2 rounded-full bg-red-400 mr-2" />
-                  <h4 className="text-red-400 font-semibold text-sm">Policy Violation</h4>
+                  <div className="w-2 h-2 rounded-full bg-[#B3261E] mr-2" />
+                  <h4 className="text-[#B3261E] font-semibold text-sm">Policy Violation</h4>
                 </div>
-                <ul className="text-slate-500 text-xs space-y-1.5">
+                <ul className="text-[#51617A] text-xs space-y-1.5">
                   <li>Violates company policies</li>
                   <li>Potential security risk</li>
                   <li>Prompt blocked by Whiteout AI</li>

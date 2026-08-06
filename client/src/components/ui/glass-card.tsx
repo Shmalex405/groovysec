@@ -3,6 +3,8 @@ import { cn } from "@/lib/utils";
 interface GlassCardProps {
   children: React.ReactNode;
   className?: string;
+  /** Kept for call-site compatibility; the light system uses one neutral
+   *  ink-tinted shadow instead of per-card colored glows. */
   glowColor?: string;
   hover?: boolean;
 }
@@ -10,24 +12,17 @@ interface GlassCardProps {
 export function GlassCard({
   children,
   className,
-  glowColor,
   hover = true,
 }: GlassCardProps) {
   return (
     <div
       className={cn(
-        "relative bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08]",
+        "relative bg-white rounded-xl border border-[#0F1B2D]/10",
+        "shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]",
         hover &&
-          "transition-all duration-500 hover:bg-white/[0.06] hover:border-white/[0.15] hover:shadow-2xl hover:-translate-y-1",
+          "transition-all duration-300 hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] hover:-translate-y-0.5",
         className
       )}
-      style={
-        glowColor
-          ? {
-              boxShadow: `0 0 40px -12px ${glowColor}`,
-            }
-          : undefined
-      }
     >
       {children}
     </div>

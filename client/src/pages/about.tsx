@@ -5,7 +5,6 @@ import { GradientButton } from "@/components/ui/gradient-button";
 import { GlassCard } from "@/components/ui/glass-card";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { RevealCard } from "@/components/ui/reveal-card";
-import { HoloCard } from "@/components/ui/holo-card";
 import { ArrowRight } from "lucide-react";
 import {
   PageTransition,
@@ -45,7 +44,7 @@ export default function About() {
   );
   return (
     <PageTransition>
-      <AuroraBackground variant="mixed" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="mixed" className="min-h-screen">
         <Navigation />
 
         {/* Hero */}
@@ -53,14 +52,14 @@ export default function About() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <HeroTextReveal>
               <HeroLine>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight text-gradient-hero animate-gradient-flow">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight text-[#0F1B2D]">
                   Built by Security
                   <br />
                   Professionals
                 </h1>
               </HeroLine>
               <HeroLine>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto leading-relaxed">
                   Groovy Security was founded to close the critical gaps in AI governance
                   and security testing — building enterprise-grade products that
                   organizations can trust.
@@ -75,8 +74,8 @@ export default function About() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">Our Founders</h2>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">Our Founders</h2>
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   The leadership team behind Groovy Security's mission.
                 </p>
               </div>
@@ -108,14 +107,14 @@ export default function About() {
                 },
               ].map((founder) => {
                 const colorMap = {
-                  blue: "border-blue-500/30 shadow-blue-500/5",
-                  emerald: "border-emerald-500/30 shadow-emerald-500/5",
-                  orange: "border-orange-500/30 shadow-orange-500/5",
+                  blue: "border-[#1A5FB4]/30",
+                  emerald: "border-[#2E7D32]/30",
+                  orange: "border-[#A05F00]/30",
                 };
                 const roleColorMap = {
-                  blue: "text-blue-400",
-                  emerald: "text-emerald-400",
-                  orange: "text-orange-400",
+                  blue: "text-[#1A5FB4]",
+                  emerald: "text-[#2E7D32]",
+                  orange: "text-[#A05F00]",
                 };
                 return (
                   <StaggerItem key={founder.name}>
@@ -123,12 +122,12 @@ export default function About() {
                       <img
                         src={founder.img}
                         alt={founder.name}
-                        className={`w-28 h-28 rounded-2xl object-cover mx-auto mb-6 border-2 ${colorMap[founder.color]} shadow-lg`}
+                        className={`w-28 h-28 rounded-xl object-cover mx-auto mb-6 border-2 ${colorMap[founder.color]} shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]`}
                         style={founder.imgPosition ? { objectPosition: founder.imgPosition } : undefined}
                       />
-                      <h3 className="text-xl font-bold text-white mb-1">{founder.name}</h3>
+                      <h3 className="text-xl font-bold text-[#0F1B2D] mb-1">{founder.name}</h3>
                       <p className={`${roleColorMap[founder.color]} font-medium text-sm mb-4`}>{founder.role}</p>
-                      <p className="text-sm text-slate-400 leading-relaxed">{founder.bio}</p>
+                      <p className="text-sm text-[#51617A] leading-relaxed">{founder.bio}</p>
                     </GlassCard>
                   </StaggerItem>
                 );
@@ -153,10 +152,10 @@ export default function About() {
                       </div>
                     }
                   >
-                    <HoloCard className="p-8 h-full" glowColor={item.glowColor}>
-                      <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
-                      <p className="text-slate-400 leading-relaxed">{item.body}</p>
-                    </HoloCard>
+                    <div className="p-8 h-full">
+                      <h3 className="text-xl font-bold text-[#0F1B2D] mb-4">{item.title}</h3>
+                      <p className="text-[#51617A] leading-relaxed">{item.body}</p>
+                    </div>
                   </RevealCard>
                 </StaggerItem>
               ))}
@@ -168,10 +167,10 @@ export default function About() {
         <section className="py-24">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <ScrollReveal>
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
                 See What We're Building
               </h2>
-              <p className="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
+              <p className="text-lg text-[#51617A] mb-10 max-w-xl mx-auto">
                 Explore our products and see how Groovy Security is shaping the future
                 of AI governance and automated security testing.
               </p>

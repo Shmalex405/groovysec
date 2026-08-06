@@ -154,13 +154,13 @@ export default function AcademicIntegrity() {
   ];
 
   const colorClasses: Record<string, { bg: string; icon: string }> = {
-    blue: { bg: "bg-blue-500/10", icon: "text-blue-400" },
-    green: { bg: "bg-emerald-500/10", icon: "text-emerald-400" },
-    orange: { bg: "bg-orange-500/10", icon: "text-orange-400" },
+    blue: { bg: "bg-[#1A5FB4]/10", icon: "text-[#1A5FB4]" },
+    green: { bg: "bg-[#2E7D32]/10", icon: "text-[#2E7D32]" },
+    orange: { bg: "bg-[#A05F00]/10", icon: "text-[#A05F00]" },
   };
 
   return (
-    <AuroraBackground variant="bluegreen" className="min-h-screen bg-slate-950">
+    <AuroraBackground variant="bluegreen" className="min-h-screen">
       <PageTransition>
         <Navigation />
 
@@ -168,8 +168,8 @@ export default function AcademicIntegrity() {
         <section className="pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="text-white">
-                <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-600/20 text-blue-400 border border-blue-500/30 mb-6">
+              <div className="text-[#0F1B2D]">
+                <div className="inline-flex items-center px-4 py-2 rounded-md bg-[#1A5FB4]/10 text-[#1A5FB4] border border-[#1A5FB4]/25 mb-6">
                   <GraduationCap className="w-4 h-4 mr-2" />
                   <span className="text-sm font-medium">
                     Academic Integrity & Education
@@ -180,7 +180,7 @@ export default function AcademicIntegrity() {
                   <HeroLine>
                     <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                       AI Governance
-                      <span className="block bg-gradient-to-r from-blue-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">
+                      <span className="block text-[#1A5FB4]">
                         Built for
                       </span>
                       Academic Integrity
@@ -188,7 +188,7 @@ export default function AcademicIntegrity() {
                   </HeroLine>
 
                   <HeroLine>
-                    <p className="text-lg text-slate-300 mb-8 leading-relaxed">
+                    <p className="text-lg text-[#51617A] mb-8 leading-relaxed">
                       As students and faculty rapidly adopt generative AI, Whiteout AI
                       gives institutions the tools to uphold academic integrity —
                       intercepting policy violations before they happen while
@@ -207,7 +207,7 @@ export default function AcademicIntegrity() {
                     </Link>
                   </div>
 
-                  <div className="text-sm text-slate-400 flex items-center">
+                  <div className="text-sm text-[#51617A] flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
                     Built for FERPA · SOC 2 Type II in progress · NVIDIA Inception
                     member
@@ -220,12 +220,12 @@ export default function AcademicIntegrity() {
                 {stats.map((stat, index) => (
                   <StaggerItem key={index}>
                     <div
-                      className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08] text-center hover:border-blue-500/50 transition-all duration-300"
+                      className="bg-white rounded-xl p-6 border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] text-center hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300"
                     >
-                      <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent mb-2">
+                      <div className="text-3xl font-bold text-[#1A5FB4] mb-2">
                         {stat.value}
                       </div>
-                      <div className="text-sm text-slate-400">{stat.label}</div>
+                      <div className="text-sm text-[#51617A]">{stat.label}</div>
                     </div>
                   </StaggerItem>
                 ))}
@@ -239,10 +239,10 @@ export default function AcademicIntegrity() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   How Whiteout AI Works
                 </h2>
-                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
                   Whiteout AI intercepts AI interactions across every surface —
                   evaluating each prompt against your institution's academic
                   integrity policies in real time before any content is generated.
@@ -258,12 +258,12 @@ export default function AcademicIntegrity() {
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="p-6 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 hover:-translate-y-1 text-center"
+                      className="p-6 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300 hover:-translate-y-1 text-center"
                     >
-                      <h3 className="text-lg font-bold text-white mb-2">
+                      <h3 className="text-lg font-bold text-[#0F1B2D] mb-2">
                         {surface.title}
                       </h3>
-                      <p className="text-sm text-slate-400">
+                      <p className="text-sm text-[#51617A]">
                         {surface.description}
                       </p>
                     </div>
@@ -274,14 +274,14 @@ export default function AcademicIntegrity() {
 
             {/* Monitored Platforms */}
             <div className="mt-12 text-center">
-              <p className="text-sm font-medium text-slate-500 mb-4">
+              <p className="text-sm font-medium text-[#6E7B8C] mb-4">
                 AI Platforms Monitored
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 {monitoredPlatforms.map((platform, index) => (
                   <span
                     key={index}
-                    className="px-4 py-2 bg-white/[0.03] text-slate-300 rounded-full text-sm font-medium border border-white/[0.08]"
+                    className="px-4 py-2 bg-white text-[#51617A] rounded-md text-sm font-medium border border-[#0F1B2D]/10"
                   >
                     {platform}
                   </span>
@@ -297,11 +297,11 @@ export default function AcademicIntegrity() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <ScrollReveal>
-                  <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+                  <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
                     Context-Aware Academic Integrity
                   </h2>
                 </ScrollReveal>
-                <p className="text-lg text-slate-300 mb-6 leading-relaxed">
+                <p className="text-lg text-[#51617A] mb-6 leading-relaxed">
                   Unlike keyword-based filters, Whiteout AI uses LLM-based
                   contextual evaluation. It distinguishes between a student asking
                   "write my essay on climate change" and "help me understand the
@@ -317,15 +317,15 @@ export default function AcademicIntegrity() {
                     "Automatic redaction generates compliant alternatives that guide learning instead of giving answers",
                   ].map((item, index) => (
                     <div key={index} className="flex items-start">
-                      <CheckCircle className="w-5 h-5 text-emerald-400 mr-3 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-300">{item}</span>
+                      <CheckCircle className="w-5 h-5 text-[#2E7D32] mr-3 flex-shrink-0 mt-0.5" />
+                      <span className="text-[#51617A]">{item}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-8 border border-white/[0.08]">
-                <h3 className="text-xl font-semibold text-white mb-6 text-center">
+              <div className="bg-white rounded-xl p-8 border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
+                <h3 className="text-xl font-semibold text-[#0F1B2D] mb-6 text-center">
                   Academic Integrity Policies
                 </h3>
                 <div className="grid grid-cols-3 gap-3">
@@ -342,14 +342,14 @@ export default function AcademicIntegrity() {
                   ].map((category, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-center p-3 bg-blue-600/20 rounded-lg border border-blue-500/30 text-blue-300 text-sm font-medium"
+                      className="flex items-center justify-center p-3 bg-[#1A5FB4]/10 rounded-md border border-[#1A5FB4]/25 text-[#1A5FB4] text-sm font-medium"
                     >
                       {category}
                     </div>
                   ))}
                 </div>
                 <div className="mt-6 text-center">
-                  <div className="text-emerald-400 font-semibold text-sm flex items-center justify-center">
+                  <div className="text-[#2E7D32] font-semibold text-sm flex items-center justify-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
                     99.21% Accuracy on 1,007 Education Benchmark Prompts
                   </div>
@@ -364,10 +364,10 @@ export default function AcademicIntegrity() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Built for Education Institutions
                 </h2>
-                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
                   Comprehensive AI governance designed to maintain academic standards
                   while embracing the educational benefits of AI technology.
                 </p>
@@ -378,19 +378,19 @@ export default function AcademicIntegrity() {
               {academicFeatures.map((feature, index) => {
                 const Icon = feature.icon;
                 const colorList = [
-                  "bg-blue-500/10 text-blue-400",
-                  "bg-emerald-500/10 text-emerald-400",
-                  "bg-orange-500/10 text-orange-400",
-                  "bg-blue-500/10 text-blue-400",
+                  "bg-[#1A5FB4]/10 text-[#1A5FB4]",
+                  "bg-[#2E7D32]/10 text-[#2E7D32]",
+                  "bg-[#A05F00]/10 text-[#A05F00]",
+                  "bg-[#1A5FB4]/10 text-[#1A5FB4]",
                 ];
 
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300"
+                      className="p-8 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300"
                     >
                       <div className="flex items-center mb-4">
-                        <h3 className="text-xl font-bold text-white">
+                        <h3 className="text-xl font-bold text-[#0F1B2D]">
                           {feature.title}
                         </h3>
                       </div>
@@ -398,9 +398,9 @@ export default function AcademicIntegrity() {
                         {feature.items.map((item, itemIndex) => (
                           <li
                             key={itemIndex}
-                            className="flex items-start text-sm text-slate-400"
+                            className="flex items-start text-sm text-[#51617A]"
                           >
-                            <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0 mt-0.5" />
+                            <CheckCircle className="w-4 h-4 text-[#2E7D32] mr-2 flex-shrink-0 mt-0.5" />
                             {item}
                           </li>
                         ))}
@@ -418,10 +418,10 @@ export default function AcademicIntegrity() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Why Whiteout AI for Education
                 </h2>
-                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
                   Purpose-built for institutions that want to embrace AI responsibly
                   while maintaining the academic standards that define educational
                   excellence.
@@ -433,21 +433,21 @@ export default function AcademicIntegrity() {
               {differentiators.map((diff, index) => {
                 const Icon = diff.icon;
                 const colorList = [
-                  { bg: "bg-blue-500/10", text: "text-blue-400" },
-                  { bg: "bg-emerald-500/10", text: "text-emerald-400" },
-                  { bg: "bg-orange-500/10", text: "text-orange-400" },
+                  { bg: "bg-[#1A5FB4]/10", text: "text-[#1A5FB4]" },
+                  { bg: "bg-[#2E7D32]/10", text: "text-[#2E7D32]" },
+                  { bg: "bg-[#A05F00]/10", text: "text-[#A05F00]" },
                 ];
                 const colors = colorList[index];
 
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 hover:-translate-y-1"
+                      className="p-8 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300 hover:-translate-y-1"
                     >
-                      <h3 className="text-2xl font-bold text-white mb-4">
+                      <h3 className="text-2xl font-bold text-[#0F1B2D] mb-4">
                         {diff.title}
                       </h3>
-                      <p className="text-slate-400 leading-relaxed">
+                      <p className="text-[#51617A] leading-relaxed">
                         {diff.description}
                       </p>
                     </div>
@@ -462,10 +462,10 @@ export default function AcademicIntegrity() {
         <ScrollReveal>
           <section className="py-24 relative overflow-hidden">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
                 Ready to Protect Academic Integrity?
               </h2>
-              <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
+              <p className="text-lg text-[#51617A] mb-8 max-w-2xl mx-auto">
                 See how Whiteout AI can help your institution embrace AI responsibly
                 while maintaining the academic standards your students, faculty, and
                 community expect.
@@ -478,7 +478,7 @@ export default function AcademicIntegrity() {
                   </GradientButton>
                 </Link>
               </div>
-              <p className="text-sm text-slate-400 mt-6">
+              <p className="text-sm text-[#6E7B8C] mt-6">
                 Whiteout AI by Groovy Security — Enterprise AI Governance
               </p>
             </div>

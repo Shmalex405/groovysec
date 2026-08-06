@@ -75,21 +75,21 @@ export function HeroSection() {
           <div>
             <HeroTextReveal>
               <HeroLine>
-                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-blue-500/[0.08] border border-blue-500/20 text-sm mb-8">
-                  <span className="font-semibold text-white">Whiteout AI</span>
-                  <span className="w-px h-3.5 bg-blue-400/30" />
-                  <span className="text-blue-400 text-xs font-medium uppercase tracking-[0.18em]">
+                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-md bg-[#1A5FB4]/10 border border-[#1A5FB4]/25 text-sm mb-8">
+                  <span className="font-semibold text-[#0F1B2D]">Whiteout AI</span>
+                  <span className="w-px h-3.5 bg-[#1A5FB4]/30" />
+                  <span className="text-[#1A5FB4] text-xs font-semibold uppercase tracking-[0.18em]">
                     AI Interaction Inspection
                   </span>
                 </div>
               </HeroLine>
 
               <HeroLine>
-                <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
+                <h1 className="text-5xl lg:text-6xl font-bold text-[#0F1B2D] mb-6 leading-tight tracking-tight">
                   AI Is Already in
                   <span className="block">Your Organization.</span>
                   <span className="block">
-                    <span className="text-gradient-brand animate-gradient-flow-fast">
+                    <span className="text-[#1A5FB4]">
                       Now Secure It.
                     </span>
                   </span>
@@ -97,7 +97,7 @@ export function HeroSection() {
               </HeroLine>
 
               <HeroLine>
-                <p className="text-lg text-slate-400 mb-8 leading-relaxed max-w-lg">
+                <p className="text-lg text-[#51617A] mb-8 leading-relaxed max-w-lg">
                   Your employees are already using ChatGPT, Copilot, and Claude Code. Whiteout AI gives you full visibility and control — scanning every prompt, enforcing your policies, and preventing sensitive data from ever leaving your organization.
                 </p>
               </HeroLine>
@@ -113,8 +113,7 @@ export function HeroSection() {
                 </Link>
               </div>
 
-              <div className="text-sm text-slate-500 flex items-center">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-2 animate-pulse" />
+              <div className="text-sm text-[#6E7B8C] flex items-center">
                 Security certifications in progress · SOC 2 Type II pending
               </div>
             </ScrollReveal>
@@ -123,13 +122,15 @@ export function HeroSection() {
           {/* isolate traps the orbital nodes' inline z-index (up to 200) inside
               their own stacking context so they can't paint over the nav dropdowns */}
           <ScrollReveal direction="right" delay={0.3} className="relative isolate">
-            <RadialOrbitalTimeline
-              timelineData={interceptorData}
-              centerMark
-              centerLabel="Whiteout AI"
-              variant="blue"
-              className="scale-[0.85] lg:scale-100 -my-8"
-            />
+            <div className="relative overflow-hidden rounded-xl border border-[#0F1B2D]/10 bg-[#0B1218] shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
+              <RadialOrbitalTimeline
+                timelineData={interceptorData}
+                centerMark
+                centerLabel="Whiteout AI"
+                variant="blue"
+                className="scale-[0.85] lg:scale-100 -my-8"
+              />
+            </div>
           </ScrollReveal>
         </div>
       </div>

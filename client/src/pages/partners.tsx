@@ -4,7 +4,6 @@ import { Footer } from "@/components/footer";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { GlassCard } from "@/components/ui/glass-card";
 import { AuroraBackground } from "@/components/ui/aurora-background";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
 import {
   PageTransition,
   HeroTextReveal,
@@ -104,22 +103,22 @@ const partnerTracks = [
 
 const colorMap: Record<string, { bg: string; border: string; text: string; icon: string }> = {
   blue: {
-    bg: "bg-blue-500/10",
-    border: "border-blue-500/20",
-    text: "text-blue-400",
-    icon: "text-blue-400",
+    bg: "bg-[#1A5FB4]/10",
+    border: "border-[#1A5FB4]/25",
+    text: "text-[#1A5FB4]",
+    icon: "text-[#1A5FB4]",
   },
   emerald: {
-    bg: "bg-emerald-500/10",
-    border: "border-emerald-500/20",
-    text: "text-emerald-400",
-    icon: "text-emerald-400",
+    bg: "bg-[#2E7D32]/10",
+    border: "border-[#2E7D32]/25",
+    text: "text-[#2E7D32]",
+    icon: "text-[#2E7D32]",
   },
   orange: {
-    bg: "bg-orange-500/10",
-    border: "border-orange-500/20",
-    text: "text-orange-400",
-    icon: "text-orange-400",
+    bg: "bg-[#A05F00]/10",
+    border: "border-[#A05F00]/25",
+    text: "text-[#A05F00]",
+    icon: "text-[#A05F00]",
   },
 };
 
@@ -130,7 +129,7 @@ export default function Partners() {
   );
   return (
     <PageTransition>
-      <AuroraBackground variant="mixed" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="mixed" className="min-h-screen">
         <Navigation />
 
         {/* Hero */}
@@ -138,21 +137,21 @@ export default function Partners() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <HeroTextReveal>
               <HeroLine>
-                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-slate-400 text-sm mb-8">
+                <div className="inline-flex items-center px-4 py-1.5 rounded-md bg-white border border-[#0F1B2D]/10 text-[#51617A] text-sm mb-8">
                   <Handshake className="w-4 h-4 mr-2" />
                   Channel Partner Program
                 </div>
               </HeroLine>
               <HeroLine>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0F1B2D] mb-6 leading-[1.1] tracking-tight">
                   Grow With{" "}
-                  <span className="text-gradient-brand animate-gradient-flow">
+                  <span className="text-[#1A5FB4]">
                     Groovy Security
                   </span>
                 </h1>
               </HeroLine>
               <HeroLine>
-                <p className="text-lg lg:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                <p className="text-lg lg:text-xl text-[#51617A] max-w-2xl mx-auto mb-10 leading-relaxed">
                   Join our partner ecosystem and bring enterprise-grade AI governance and
                   automated penetration testing to your customers.
                 </p>
@@ -178,13 +177,13 @@ export default function Partners() {
                 hover={false}
                 glowColor="rgba(46,125,50,0.06)"
               >
-                <div className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium uppercase tracking-wider mb-4">
+                <div className="inline-flex items-center px-3 py-1 rounded-md bg-[#2E7D32]/10 border border-[#2E7D32]/25 text-[#2E7D32] text-xs font-semibold uppercase tracking-[0.18em] mb-4">
                   Coming Q2 2026
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">
+                <h3 className="text-xl font-semibold text-[#0F1B2D] mb-2">
                   Partner Portal Launching Soon
                 </h3>
-                <p className="text-slate-400 text-sm leading-relaxed max-w-lg mx-auto">
+                <p className="text-[#51617A] text-sm leading-relaxed max-w-lg mx-auto">
                   We're building a dedicated partner portal with deal registration,
                   lead tracking, training resources, and co-branded marketing tools.
                   In the meantime, reach out directly to get started.
@@ -199,10 +198,10 @@ export default function Partners() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white tracking-tight mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] tracking-tight mb-4">
                   Partnership Tracks
                 </h2>
-                <p className="text-slate-400 text-lg max-w-xl mx-auto">
+                <p className="text-[#51617A] text-lg max-w-xl mx-auto">
                   Choose the engagement model that fits your business.
                 </p>
               </div>
@@ -213,30 +212,30 @@ export default function Partners() {
                 const colors = colorMap[track.accentColor];
                 return (
                   <StaggerItem key={track.name}>
-                    <SpotlightCard className="p-8 h-full flex flex-col" spotlightColor={track.spotlightHue}>
+                    <GlassCard className="p-8 h-full flex flex-col">
                       <div
-                        className={`inline-flex self-start items-center px-3 py-1 rounded-full ${colors.bg} border ${colors.border} ${colors.text} text-xs font-medium uppercase tracking-wider mb-5`}
+                        className={`inline-flex self-start items-center px-3 py-1 rounded-md ${colors.bg} border ${colors.border} ${colors.text} text-xs font-semibold uppercase tracking-[0.18em] mb-5`}
                       >
                         {track.name}
                       </div>
-                      <h3 className="text-xl font-semibold text-white mb-3">
+                      <h3 className="text-xl font-semibold text-[#0F1B2D] mb-3">
                         {track.name} Partner
                       </h3>
-                      <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                      <p className="text-[#51617A] text-sm leading-relaxed mb-6">
                         {track.description}
                       </p>
                       <ul className="space-y-3 mt-auto">
                         {track.features.map((feature) => (
                           <li
                             key={feature}
-                            className="flex items-center text-sm text-slate-400"
+                            className="flex items-center text-sm text-[#51617A]"
                           >
-                            <CheckCircle className="w-4 h-4 text-emerald-400 mr-2.5 flex-shrink-0" />
+                            <CheckCircle className="w-4 h-4 text-[#2E7D32] mr-2.5 flex-shrink-0" />
                             {feature}
                           </li>
                         ))}
                       </ul>
-                    </SpotlightCard>
+                    </GlassCard>
                   </StaggerItem>
                 );
               })}
@@ -249,10 +248,10 @@ export default function Partners() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white tracking-tight mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] tracking-tight mb-4">
                   Why Partner With Us
                 </h2>
-                <p className="text-slate-400 text-lg max-w-xl mx-auto">
+                <p className="text-[#51617A] text-lg max-w-xl mx-auto">
                   Everything you need to succeed — from enablement to execution.
                 </p>
               </div>
@@ -261,14 +260,14 @@ export default function Partners() {
             <StaggerChildren className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {partnerBenefits.map((benefit) => (
                 <StaggerItem key={benefit.title}>
-                  <SpotlightCard className="p-6 h-full" spotlightColor={benefit.spotlightHue}>
-                    <h3 className="text-lg font-semibold text-white mb-2">
+                  <GlassCard className="p-6 h-full">
+                    <h3 className="text-lg font-semibold text-[#0F1B2D] mb-2">
                       {benefit.title}
                     </h3>
-                    <p className="text-sm text-slate-400 leading-relaxed">
+                    <p className="text-sm text-[#51617A] leading-relaxed">
                       {benefit.description}
                     </p>
-                  </SpotlightCard>
+                  </GlassCard>
                 </StaggerItem>
               ))}
             </StaggerChildren>
@@ -284,10 +283,10 @@ export default function Partners() {
                 hover={false}
                 glowColor="rgba(26,95,180,0.06)"
               >
-                <h2 className="text-3xl font-bold text-white mb-4">
+                <h2 className="text-3xl font-bold text-[#0F1B2D] mb-4">
                   Ready to Get Started?
                 </h2>
-                <p className="text-slate-400 mb-8 max-w-md mx-auto">
+                <p className="text-[#51617A] mb-8 max-w-md mx-auto">
                   Whether you're a reseller, consultant, or technology vendor —
                   we'd love to explore how we can grow together.
                 </p>
@@ -299,7 +298,7 @@ export default function Partners() {
                     </GradientButton>
                   </Link>
                   <a href="mailto:partners@groovysec.com">
-                    <GradientButton variant="orange" className="text-base px-8 py-3">
+                    <GradientButton variant="white" className="text-base px-8 py-3">
                       Contact Us — partners@groovysec.com
                     </GradientButton>
                   </a>

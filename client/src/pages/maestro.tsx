@@ -4,7 +4,6 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { GlassCard } from "@/components/ui/glass-card";
-import { HoloCard } from "@/components/ui/holo-card";
 import { GradientText } from "@/components/ui/gradient-text";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import RadialOrbitalTimeline, { type TimelineItem } from "@/components/ui/radial-orbital-timeline";
@@ -104,54 +103,37 @@ export default function Maestro() {
   ];
 
   const colorMap = {
-    orange: { icon: "text-orange-400", bg: "bg-orange-500/10", border: "border-orange-500/20" },
-    red: { icon: "text-red-400", bg: "bg-red-500/10", border: "border-red-500/20" },
-    amber: { icon: "text-amber-400", bg: "bg-amber-500/10", border: "border-amber-500/20" },
+    orange: { icon: "text-[#A05F00]", bg: "bg-[#A05F00]/10", border: "border-[#A05F00]/25" },
+    red: { icon: "text-[#B3261E]", bg: "bg-[#B3261E]/10", border: "border-[#B3261E]/25" },
+    amber: { icon: "text-[#A05F00]", bg: "bg-[#A05F00]/10", border: "border-[#A05F00]/25" },
   };
 
   const featureColors = [
-    "text-red-400", "text-orange-400", "text-amber-400",
-    "text-red-400", "text-orange-400", "text-amber-400",
+    "text-[#B3261E]", "text-[#A05F00]", "text-[#A05F00]",
+    "text-[#B3261E]", "text-[#A05F00]", "text-[#A05F00]",
   ];
 
   return (
     <PageTransition>
-      <AuroraBackground variant="orange" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="orange" className="min-h-screen">
         <Navigation />
 
         {/* Hero */}
         <section className="pt-32 pb-20 relative overflow-hidden">
-          {/* Scan line effect */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0 bg-gradient-to-b from-orange-500/[0.02] via-transparent to-transparent" />
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,60,0,0.015) 2px, rgba(255,60,0,0.015) 4px)",
-              }}
-            />
-          </div>
-
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
                 <HeroTextReveal>
                   <HeroLine>
-                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-orange-500/[0.08] border border-orange-500/20 text-orange-400 text-sm mb-8 font-mono">
+                    <div className="inline-flex items-center px-4 py-1.5 rounded-md bg-[#A05F00]/10 border border-[#A05F00]/25 text-[#A05F00] text-sm mb-8 font-mono">
                       Maestro
                     </div>
                   </HeroLine>
 
                   <HeroLine>
-                    <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
+                    <h1 className="text-5xl lg:text-6xl font-bold text-[#0F1B2D] mb-6 leading-tight tracking-tight">
                       Automated
-                      <span
-                        className="block bg-clip-text text-transparent animate-gradient-flow"
-                        style={{
-                          backgroundImage: "linear-gradient(90deg, #fb923c, #ef4444, #f59e0b, #ef4444, #fb923c)",
-                          backgroundSize: "300% 100%",
-                        }}
-                      >
+                      <span className="block text-[#A05F00]">
                         Penetration Testing
                       </span>
                       From Code to Cloud
@@ -159,7 +141,7 @@ export default function Maestro() {
                   </HeroLine>
 
                   <HeroLine>
-                    <p className="text-lg text-slate-400 mb-8 leading-relaxed max-w-lg">
+                    <p className="text-lg text-[#51617A] mb-8 leading-relaxed max-w-lg">
                       Maestro deploys 21 specialized AI agents to autonomously discover
                       vulnerabilities across web apps, APIs, cloud, identity
                       providers, and AI/LLM systems — then validates them through real
@@ -179,8 +161,7 @@ export default function Maestro() {
                     </Link>
                   </div>
 
-                  <div className="text-sm text-slate-500 flex items-center font-mono">
-                    <div className="w-1.5 h-1.5 rounded-full bg-orange-400 mr-2 animate-pulse" />
+                  <div className="text-sm text-[#6E7B8C] flex items-center font-mono">
                     Built on Kali Linux · AWS / Azure / GCP · Enterprise-ready
                   </div>
                 </ScrollReveal>
@@ -212,7 +193,7 @@ export default function Maestro() {
             <ScrollReveal delay={0.6}>
               <div className="mt-12">
                 <MaestroAssessmentDemo />
-                <p className="mt-5 text-sm text-slate-500 max-w-xl mx-auto text-center">
+                <p className="mt-5 text-sm text-[#6E7B8C] max-w-xl mx-auto text-center">
                   Discover, exploit, validate, report — every one of the 232 tests
                   runs the same evidence pipeline.
                 </p>
@@ -226,10 +207,10 @@ export default function Maestro() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-12">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   21 Specialized AI Agents
                 </h2>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Each agent is purpose-built for a specific phase of the penetration
                   testing lifecycle — from reconnaissance and code intelligence through
                   web exploitation, cloud, identity, and AI/LLM red teaming, attack
@@ -264,16 +245,16 @@ export default function Maestro() {
                   <div
                     key={`top-${index}`}
                     tabIndex={0}
-                    className="group relative flex-shrink-0 w-80 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.06] p-5 transition-all duration-300 cursor-pointer hover:z-20 focus:z-20 hover:scale-[1.04] focus:scale-[1.04] hover:bg-slate-900 focus:bg-slate-900 hover:border-orange-500/40 focus:border-orange-500/40 hover:shadow-2xl hover:shadow-orange-500/10 focus:outline-none"
+                    className="group relative flex-shrink-0 w-80 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-5 transition-all duration-300 cursor-pointer hover:z-20 focus:z-20 hover:scale-[1.04] focus:scale-[1.04] hover:border-[#0F1B2D]/20 focus:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] focus:outline-none"
                   >
-                    <span className="absolute top-4 right-5 text-[11px] font-mono font-bold text-slate-600 group-hover:text-orange-400/70 transition-colors">{agent.num}</span>
+                    <span className="absolute top-4 right-5 text-[11px] font-mono font-bold text-[#6E7B8C] group-hover:text-[#A05F00] transition-colors">{agent.num}</span>
                     <div className="flex items-center gap-3 mb-3">
-                      <div className={`w-9 h-9 ${colors.bg} ${colors.border} border rounded-lg flex items-center justify-center`}>
+                      <div className={`w-9 h-9 ${colors.bg} ${colors.border} border rounded-md flex items-center justify-center`}>
                         <Icon className={`w-4 h-4 ${colors.icon}`} />
                       </div>
-                      <h3 className="text-sm font-bold text-white pr-6">{agent.title}</h3>
+                      <h3 className="text-sm font-bold text-[#0F1B2D] pr-6">{agent.title}</h3>
                     </div>
-                    <p className="text-xs text-slate-500 group-hover:text-slate-300 transition-colors leading-relaxed">{agent.description}</p>
+                    <p className="text-xs text-[#6E7B8C] group-hover:text-[#51617A] transition-colors leading-relaxed">{agent.description}</p>
                   </div>
                 );
               })}
@@ -293,16 +274,16 @@ export default function Maestro() {
                   <div
                     key={`bottom-${index}`}
                     tabIndex={0}
-                    className="group relative flex-shrink-0 w-80 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.06] p-5 transition-all duration-300 cursor-pointer hover:z-20 focus:z-20 hover:scale-[1.04] focus:scale-[1.04] hover:bg-slate-900 focus:bg-slate-900 hover:border-orange-500/40 focus:border-orange-500/40 hover:shadow-2xl hover:shadow-orange-500/10 focus:outline-none"
+                    className="group relative flex-shrink-0 w-80 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-5 transition-all duration-300 cursor-pointer hover:z-20 focus:z-20 hover:scale-[1.04] focus:scale-[1.04] hover:border-[#0F1B2D]/20 focus:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] focus:outline-none"
                   >
-                    <span className="absolute top-4 right-5 text-[11px] font-mono font-bold text-slate-600 group-hover:text-orange-400/70 transition-colors">{agent.num}</span>
+                    <span className="absolute top-4 right-5 text-[11px] font-mono font-bold text-[#6E7B8C] group-hover:text-[#A05F00] transition-colors">{agent.num}</span>
                     <div className="flex items-center gap-3 mb-3">
-                      <div className={`w-9 h-9 ${colors.bg} ${colors.border} border rounded-lg flex items-center justify-center`}>
+                      <div className={`w-9 h-9 ${colors.bg} ${colors.border} border rounded-md flex items-center justify-center`}>
                         <Icon className={`w-4 h-4 ${colors.icon}`} />
                       </div>
-                      <h3 className="text-sm font-bold text-white pr-6">{agent.title}</h3>
+                      <h3 className="text-sm font-bold text-[#0F1B2D] pr-6">{agent.title}</h3>
                     </div>
-                    <p className="text-xs text-slate-500 group-hover:text-slate-300 transition-colors leading-relaxed">{agent.description}</p>
+                    <p className="text-xs text-[#6E7B8C] group-hover:text-[#51617A] transition-colors leading-relaxed">{agent.description}</p>
                   </div>
                 );
               })}
@@ -317,14 +298,14 @@ export default function Maestro() {
               <div>
                 <ScrollReveal>
                   <h3 className="text-lg font-mono tracking-wider mb-4 px-1">
-                    <span className="text-orange-400 font-bold">213</span>{" "}
-                    <span className="text-orange-300/70">MCP TOOLS</span>
+                    <span className="text-[#A05F00] font-bold">213</span>{" "}
+                    <span className="text-[#6E7B8C]">MCP TOOLS</span>
                   </h3>
                 </ScrollReveal>
                 <GlassCard className="p-8">
                   <BlurredStaggerText
                     text="Each agent is equipped with specialized MCP tools — purpose-built security instruments that interact directly with targets, APIs, cloud environments, and infrastructure. Scanners, fuzzers, exploit modules, and evidence collectors that turn AI reasoning into real security testing."
-                    className="text-lg text-orange-200/60 leading-relaxed"
+                    className="text-lg text-[#51617A] leading-relaxed"
 
                   />
                 </GlassCard>
@@ -332,14 +313,14 @@ export default function Maestro() {
               <div>
                 <ScrollReveal>
                   <h3 className="text-lg font-mono tracking-wider mb-4 px-1">
-                    <span className="text-orange-400 font-bold">232</span>{" "}
-                    <span className="text-orange-300/70">TEST MATRIX</span>
+                    <span className="text-[#A05F00] font-bold">232</span>{" "}
+                    <span className="text-[#6E7B8C]">TEST MATRIX</span>
                   </h3>
                 </ScrollReveal>
                 <GlassCard className="p-8">
                   <BlurredStaggerText
                     text="Maestro's structured assessment framework — a deterministic checklist ensuring every engagement covers the same 232 tests across DAST, SAST, cloud security, identity, AI/LLM, cross-validation, and chain analysis. No tester variance, no missed coverage. Every run produces consistent, comparable results."
-                    className="text-lg text-orange-200/60 leading-relaxed"
+                    className="text-lg text-[#51617A] leading-relaxed"
 
                   />
                 </GlassCard>
@@ -353,10 +334,10 @@ export default function Maestro() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Full-Spectrum Security Assessment
                 </h2>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Covers your entire attack surface — from application code to cloud
                   infrastructure. Every domain is tested, validated, and reported with
                   real evidence.
@@ -367,7 +348,7 @@ export default function Maestro() {
             {/* Floating accordion menu */}
             <ScrollReveal>
               <div className="max-w-3xl mx-auto">
-                <div className="bg-white/[0.02] backdrop-blur-xl rounded-2xl border border-white/[0.06] overflow-hidden">
+                <div className="bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] overflow-hidden">
                   {[
                     {
                       icon: Globe,
@@ -494,28 +475,28 @@ export default function Maestro() {
                     const isExpanded = expandedDomain === index;
                     return (
                       <div key={index}>
-                        {index > 0 && <div className="border-t border-white/[0.04]" />}
+                        {index > 0 && <div className="border-t border-[#0F1B2D]/10" />}
                         <button
                           onClick={() => setExpandedDomain(isExpanded ? null : index)}
-                          className="w-full flex items-center gap-4 px-6 py-4 text-left hover:bg-white/[0.03] transition-all duration-300 group"
+                          className="w-full flex items-center gap-4 px-6 py-4 text-left hover:bg-[#0F1B2D]/[0.02] transition-all duration-300 group"
                         >
-                          <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-300 ${isExpanded ? "bg-orange-500/20 border border-orange-500/30" : "bg-white/[0.04] border border-white/[0.06]"}`}>
-                            <Icon className={`w-4 h-4 transition-colors duration-300 ${isExpanded ? "text-orange-400" : "text-slate-400 group-hover:text-orange-400"}`} />
+                          <div className={`w-9 h-9 rounded-md flex items-center justify-center flex-shrink-0 transition-colors duration-300 ${isExpanded ? "bg-[#A05F00]/10 border border-[#A05F00]/25" : "bg-[#0F1B2D]/[0.04] border border-[#0F1B2D]/10"}`}>
+                            <Icon className={`w-4 h-4 transition-colors duration-300 ${isExpanded ? "text-[#A05F00]" : "text-[#51617A] group-hover:text-[#A05F00]"}`} />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
-                              <h3 className={`text-sm font-bold transition-colors duration-300 ${isExpanded ? "text-orange-300" : "text-white"}`}>
+                              <h3 className={`text-sm font-bold transition-colors duration-300 ${isExpanded ? "text-[#A05F00]" : "text-[#0F1B2D]"}`}>
                                 {domain.title}
                               </h3>
                               {domain.isNew && (
-                                <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold bg-orange-500/15 text-orange-400 border border-orange-500/25 rounded">
+                                <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold bg-[#A05F00]/10 text-[#A05F00] border border-[#A05F00]/25 rounded">
                                   NEW
                                 </span>
                               )}
                             </div>
-                            <p className="text-xs text-slate-500 mt-0.5 truncate">{domain.summary}</p>
+                            <p className="text-xs text-[#6E7B8C] mt-0.5 truncate">{domain.summary}</p>
                           </div>
-                          <ChevronRight className={`w-4 h-4 text-slate-600 flex-shrink-0 transition-transform duration-300 ${isExpanded ? "rotate-90 text-orange-400" : "group-hover:text-slate-400"}`} />
+                          <ChevronRight className={`w-4 h-4 text-[#6E7B8C] flex-shrink-0 transition-transform duration-300 ${isExpanded ? "rotate-90 text-[#A05F00]" : "group-hover:text-[#51617A]"}`} />
                         </button>
                         <div
                           className="overflow-hidden transition-all duration-300 ease-in-out"
@@ -527,8 +508,8 @@ export default function Maestro() {
                           <div className="px-6 pb-4 pl-[4.25rem]">
                             <ul className="space-y-2">
                               {domain.capabilities.map((item) => (
-                                <li key={item} className="flex items-center text-xs text-slate-400">
-                                  <CheckCircle className="w-3 h-3 text-orange-400/60 mr-2 flex-shrink-0" />
+                                <li key={item} className="flex items-center text-xs text-[#51617A]">
+                                  <CheckCircle className="w-3 h-3 text-[#A05F00] mr-2 flex-shrink-0" />
                                   {item}
                                 </li>
                               ))}
@@ -545,7 +526,7 @@ export default function Maestro() {
                   {["AWS", "Azure", "GCP", "Kubernetes", "IDP", "OWASP", "NIST"].map((badge) => (
                     <span
                       key={badge}
-                      className="px-3 py-1.5 bg-white/[0.03] border border-orange-500/[0.08] rounded-lg text-xs font-mono text-orange-300/60"
+                      className="px-3 py-1.5 bg-[#A05F00]/10 border border-[#A05F00]/25 rounded-md text-xs font-mono text-[#A05F00]"
                     >
                       {badge}
                     </span>
@@ -559,7 +540,7 @@ export default function Maestro() {
               <GlassCard className="p-8 max-w-3xl mx-auto">
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
-                    <h3 className="text-sm font-bold text-slate-400 mb-4 font-mono tracking-wider">
+                    <h3 className="text-sm font-semibold text-[#6E7B8C] mb-4 font-mono tracking-[0.18em]">
                       TRADITIONAL SCANNERS
                     </h3>
                     <ul className="space-y-3">
@@ -570,15 +551,15 @@ export default function Maestro() {
                         "Alert on public exposure",
                         "Prioritize by theoretical risk",
                       ].map((item) => (
-                        <li key={item} className="flex items-center text-sm text-slate-500">
-                          <span className="w-1.5 h-1.5 rounded-full bg-slate-600 mr-3 flex-shrink-0" />
+                        <li key={item} className="flex items-center text-sm text-[#51617A]">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#6E7B8C] mr-3 flex-shrink-0" />
                           {item}
                         </li>
                       ))}
                     </ul>
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-orange-400 mb-4 font-mono tracking-wider">
+                    <h3 className="text-sm font-semibold text-[#A05F00] mb-4 font-mono tracking-[0.18em]">
                       MAESTRO RED TEAM
                     </h3>
                     <ul className="space-y-3">
@@ -589,16 +570,16 @@ export default function Maestro() {
                         "Escape containers and pivot across clusters",
                         "Validate with actual attack paths",
                       ].map((item) => (
-                        <li key={item} className="flex items-center text-sm text-orange-200/70">
-                          <CheckCircle className="w-4 h-4 text-orange-400 mr-3 flex-shrink-0" />
+                        <li key={item} className="flex items-center text-sm text-[#51617A]">
+                          <CheckCircle className="w-4 h-4 text-[#A05F00] mr-3 flex-shrink-0" />
                           {item}
                         </li>
                       ))}
                     </ul>
                   </div>
                 </div>
-                <div className="mt-6 pt-6 border-t border-white/[0.06] text-center">
-                  <p className="text-sm text-slate-400 italic">
+                <div className="mt-6 pt-6 border-t border-[#0F1B2D]/10 text-center">
+                  <p className="text-sm text-[#51617A] italic">
                     "Other tools tell you what's wrong. Maestro proves what's exploitable."
                   </p>
                 </div>
@@ -615,7 +596,7 @@ export default function Maestro() {
                   </GradientButton>
                 </Link>
                 <Link href="/demo">
-                  <GradientButton variant="default">
+                  <GradientButton variant="white">
                     <FileText className="w-4 h-4 mr-2" />
                     Request a Sample Report
                   </GradientButton>
@@ -630,10 +611,10 @@ export default function Maestro() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   No Fake Greens. No Noise.
                 </h2>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Maestro is engineered so you can trust every line of the report —
                   passes are proven, severities are earned, and findings are
                   double-checked before they reach you.
@@ -665,12 +646,12 @@ export default function Maestro() {
                 const Icon = item.icon;
                 return (
                   <StaggerItem key={item.title}>
-                    <div className="h-full p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:border-orange-500/30 transition-all duration-300">
-                      <div className="w-10 h-10 bg-orange-500/10 border border-orange-500/20 rounded-lg flex items-center justify-center mb-4">
-                        <Icon className="w-5 h-5 text-orange-400" />
+                    <div className="h-full p-8 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300">
+                      <div className="w-10 h-10 bg-[#A05F00]/10 border border-[#A05F00]/25 rounded-md flex items-center justify-center mb-4">
+                        <Icon className="w-5 h-5 text-[#A05F00]" />
                       </div>
-                      <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
-                      <p className="text-sm text-slate-400 leading-relaxed">{item.description}</p>
+                      <h3 className="text-lg font-bold text-[#0F1B2D] mb-3">{item.title}</h3>
+                      <p className="text-sm text-[#51617A] leading-relaxed">{item.description}</p>
                     </div>
                   </StaggerItem>
                 );
@@ -685,14 +666,14 @@ export default function Maestro() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <ScrollReveal>
-                  <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-orange-500/[0.08] border border-orange-500/20 text-orange-400 text-sm mb-6 font-mono">
+                  <div className="inline-flex items-center px-4 py-1.5 rounded-md bg-[#A05F00]/10 border border-[#A05F00]/25 text-[#A05F00] text-sm mb-6 font-mono">
                     Identity / IDP Suite
                   </div>
-                  <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+                  <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
                     Identity Is the Standard Perimeter.
-                    <span className="block text-orange-400">Maestro Attacks It Like One.</span>
+                    <span className="block text-[#A05F00]">Maestro Attacks It Like One.</span>
                   </h2>
-                  <p className="text-lg text-slate-400 mb-8 leading-relaxed">
+                  <p className="text-lg text-[#51617A] mb-8 leading-relaxed">
                     The deepest domain in Maestro's test matrix is identity — 60
                     dedicated tests across your directory and every major identity
                     provider, executed with lockout-governed safety controls and
@@ -714,7 +695,7 @@ export default function Maestro() {
                   ].map((technique) => (
                     <span
                       key={technique}
-                      className="px-3 py-1.5 bg-white/[0.03] border border-orange-500/[0.12] rounded-lg text-xs font-mono text-orange-200/70"
+                      className="px-3 py-1.5 bg-[#A05F00]/10 border border-[#A05F00]/25 rounded-md text-xs font-mono text-[#A05F00]"
                     >
                       {technique}
                     </span>
@@ -730,20 +711,20 @@ export default function Maestro() {
                     { value: "52", label: "Dedicated Tools" },
                   ].map((stat) => (
                     <StaggerItem key={stat.label}>
-                      <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08] text-center">
+                      <div className="bg-white rounded-xl p-6 border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] text-center">
                         <div className="text-3xl font-bold font-mono">
                           <GradientText from="from-orange-400" via="via-red-400" to="to-amber-300">
                             {stat.value}
                           </GradientText>
                         </div>
-                        <div className="text-xs text-slate-500 mt-2">{stat.label}</div>
+                        <div className="text-xs text-[#6E7B8C] mt-2">{stat.label}</div>
                       </div>
                     </StaggerItem>
                   ))}
                 </StaggerChildren>
 
-                <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08]">
-                  <p className="text-xs font-mono text-slate-500 mb-4 tracking-wider">PROVIDERS COVERED</p>
+                <div className="bg-white rounded-xl p-6 border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
+                  <p className="text-xs font-mono font-semibold text-[#6E7B8C] mb-4 tracking-[0.18em]">PROVIDERS COVERED</p>
                   <div className="grid grid-cols-2 gap-3">
                     {[
                       "Active Directory",
@@ -753,8 +734,8 @@ export default function Maestro() {
                       "Google Workspace",
                       "Ping Identity",
                     ].map((provider) => (
-                      <div key={provider} className="flex items-center text-sm text-slate-300">
-                        <KeyRound className="w-3.5 h-3.5 text-orange-400/70 mr-2 flex-shrink-0" />
+                      <div key={provider} className="flex items-center text-sm text-[#51617A]">
+                        <KeyRound className="w-3.5 h-3.5 text-[#A05F00] mr-2 flex-shrink-0" />
                         {provider}
                       </div>
                     ))}
@@ -770,10 +751,10 @@ export default function Maestro() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Your Findings Never Leave Your Account
                 </h2>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Penetration test results are some of the most sensitive data your
                   organization owns. Maestro's architecture keeps them that way.
                 </p>
@@ -804,12 +785,12 @@ export default function Maestro() {
                 const Icon = item.icon;
                 return (
                   <StaggerItem key={item.title}>
-                    <div className="h-full p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:border-orange-500/30 transition-all duration-300">
-                      <div className="w-10 h-10 bg-orange-500/10 border border-orange-500/20 rounded-lg flex items-center justify-center mb-4">
-                        <Icon className="w-5 h-5 text-orange-400" />
+                    <div className="h-full p-8 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300">
+                      <div className="w-10 h-10 bg-[#A05F00]/10 border border-[#A05F00]/25 rounded-md flex items-center justify-center mb-4">
+                        <Icon className="w-5 h-5 text-[#A05F00]" />
                       </div>
-                      <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
-                      <p className="text-sm text-slate-400 leading-relaxed">{item.description}</p>
+                      <h3 className="text-lg font-bold text-[#0F1B2D] mb-3">{item.title}</h3>
+                      <p className="text-sm text-[#51617A] leading-relaxed">{item.description}</p>
                     </div>
                   </StaggerItem>
                 );
@@ -823,10 +804,10 @@ export default function Maestro() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Integration Points
                 </h2>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Maestro fits into your existing workflow — pushing findings and reports
                   where your team already works.
                 </p>
@@ -836,10 +817,10 @@ export default function Maestro() {
             <StaggerChildren className="grid md:grid-cols-2 lg:grid-cols-5 gap-3">
               {integrations.map((integration, index) => (
                 <StaggerItem key={index}>
-                  <HoloCard className="p-5 text-center" glowColor="rgba(249, 115, 22, 0.3)">
-                    <h3 className="text-sm font-bold text-white mb-1">{integration.name}</h3>
-                    <p className="text-xs text-slate-500">{integration.description}</p>
-                  </HoloCard>
+                  <div className="p-5 text-center h-full bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300">
+                    <h3 className="text-sm font-bold text-[#0F1B2D] mb-1">{integration.name}</h3>
+                    <p className="text-xs text-[#6E7B8C]">{integration.description}</p>
+                  </div>
                 </StaggerItem>
               ))}
             </StaggerChildren>

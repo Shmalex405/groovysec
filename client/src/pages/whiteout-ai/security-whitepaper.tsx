@@ -363,13 +363,13 @@ const useCases = [
   ];
 
   const colorClasses: Record<string, { bg: string; icon: string }> = {
-    blue: { bg: "bg-blue-500/10", icon: "text-blue-400" },
-    green: { bg: "bg-emerald-500/10", icon: "text-emerald-400" },
-    orange: { bg: "bg-orange-500/10", icon: "text-orange-400" },
+    blue: { bg: "bg-[#1A5FB4]/10", icon: "text-[#1A5FB4]" },
+    green: { bg: "bg-[#2E7D32]/10", icon: "text-[#2E7D32]" },
+    orange: { bg: "bg-[#A05F00]/10", icon: "text-[#A05F00]" },
   };
 
   return (
-    <AuroraBackground variant="bluegreen" className="min-h-screen bg-slate-950">
+    <AuroraBackground variant="bluegreen" className="min-h-screen">
       <Navigation />
 
       <PageTransition>
@@ -377,10 +377,10 @@ const useCases = [
         <section className="pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="text-white">
+              <div className="text-[#0F1B2D]">
                 <HeroTextReveal>
                   <HeroLine>
-                    <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-600/20 text-blue-400 border border-blue-500/30 mb-6">
+                    <div className="inline-flex items-center px-4 py-2 rounded-md bg-[#1A5FB4]/10 text-[#1A5FB4] border border-[#1A5FB4]/25 mb-6">
                       <BookOpen className="w-4 h-4 mr-2" />
                       <span className="text-sm font-medium">
                         Security Whitepaper
@@ -391,7 +391,7 @@ const useCases = [
                   <HeroLine>
                     <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                       Enterprise AI
-                      <span className="block bg-gradient-to-r from-blue-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">
+                      <span className="block text-[#1A5FB4]">
                         Security &amp; Compliance
                       </span>
                       Whitepaper
@@ -399,7 +399,7 @@ const useCases = [
                   </HeroLine>
 
                   <HeroLine>
-                    <p className="text-lg text-slate-300 mb-8 leading-relaxed">
+                    <p className="text-lg text-[#51617A] mb-8 leading-relaxed">
                       A comprehensive overview of how Whiteout AI enables
                       organizations to safely adopt generative AI tools while
                       enforcing compliance, data security, and auditability —
@@ -430,7 +430,7 @@ const useCases = [
                     </a>
                   </div>
 
-                  <div className="text-sm text-slate-400 flex items-center">
+                  <div className="text-sm text-[#51617A] flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
                     Whiteout AI by Groovy Security — Version 4.1 | July 2026
                   </div>
@@ -441,12 +441,12 @@ const useCases = [
                 {stats.map((stat, index) => (
                   <StaggerItem key={index}>
                     <div
-                      className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08] text-center hover:border-blue-500/50 transition-all duration-300"
+                      className="bg-white rounded-xl shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-6 border border-[#0F1B2D]/10 text-center hover:border-[#0F1B2D]/20 transition-all duration-300"
                     >
-                      <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent mb-2">
+                      <div className="text-3xl font-bold text-[#1A5FB4] mb-2">
                         {stat.value}
                       </div>
-                      <div className="text-sm text-slate-400">{stat.label}</div>
+                      <div className="text-sm text-[#51617A]">{stat.label}</div>
                     </div>
                   </StaggerItem>
                 ))}
@@ -460,10 +460,10 @@ const useCases = [
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   The Enterprise AI Governance Challenge
                 </h2>
-                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
                   Generative AI creates a new category of risk: conversational data
                   exfiltration. Employees share sensitive context in natural language
                   that traditional security tools cannot detect.
@@ -478,14 +478,14 @@ const useCases = [
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="p-6 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300"
+                      className="p-6 bg-white rounded-xl shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] border border-[#0F1B2D]/10 hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300"
                     >
                       <div className="flex items-center mb-3">
-                        <h3 className="text-lg font-bold text-white">
+                        <h3 className="text-lg font-bold text-[#0F1B2D]">
                           {challenge.title}
                         </h3>
                       </div>
-                      <p className="text-slate-400">{challenge.description}</p>
+                      <p className="text-[#51617A]">{challenge.description}</p>
                     </div>
                   </StaggerItem>
                 );
@@ -494,35 +494,35 @@ const useCases = [
 
             {/* Governance Gap callout */}
             <ScrollReveal>
-              <div className="bg-slate-900 rounded-2xl p-8 text-white">
+              <div className="bg-white rounded-xl p-8 border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] text-[#0F1B2D]">
                 <h3 className="text-2xl font-bold mb-4 text-center">
                   The Governance Gap
                 </h3>
                 <div className="grid md:grid-cols-3 gap-6 text-sm">
                   <div>
-                    <h4 className="font-semibold text-blue-400 mb-2">
+                    <h4 className="font-semibold text-[#1A5FB4] mb-2">
                       DLP Falls Short
                     </h4>
-                    <p className="text-slate-300">
+                    <p className="text-[#51617A]">
                       Data Loss Prevention systems designed for file transfers cannot
                       effectively analyze unstructured conversational AI
                       interactions.
                     </p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-emerald-400 mb-2">
+                    <h4 className="font-semibold text-[#2E7D32] mb-2">
                       CASB Creates Crisis
                     </h4>
-                    <p className="text-slate-300">
+                    <p className="text-[#51617A]">
                       Blocking AI services entirely pushes usage to personal devices,
                       creating zero visibility into AI usage.
                     </p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-orange-400 mb-2">
+                    <h4 className="font-semibold text-[#A05F00] mb-2">
                       Training Isn't Enough
                     </h4>
-                    <p className="text-slate-300">
+                    <p className="text-[#51617A]">
                       Employees have good intentions but lack expertise to identify
                       every category of sensitive data in real-time.
                     </p>
@@ -539,10 +539,10 @@ const useCases = [
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <ScrollReveal>
-                  <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+                  <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
                     Intelligent Interception with Contextual Compliance
                   </h2>
-                  <p className="text-lg text-slate-300 mb-6 leading-relaxed">
+                  <p className="text-lg text-[#51617A] mb-6 leading-relaxed">
                     Rather than blocking AI tools or relying on post-hoc detection,
                     Whiteout AI evaluates every prompt and file upload against
                     organizational policies in real time — before any data reaches
@@ -552,35 +552,35 @@ const useCases = [
                 <div className="space-y-4">
                   {capabilities.map((item, index) => (
                     <div key={index} className="flex items-start">
-                      <CheckCircle className="w-5 h-5 text-emerald-400 mr-3 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-300">{item}</span>
+                      <CheckCircle className="w-5 h-5 text-[#2E7D32] mr-3 flex-shrink-0 mt-0.5" />
+                      <span className="text-[#51617A]">{item}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               <ScrollReveal>
-                <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-8 border border-white/[0.08]">
-                  <h3 className="text-xl font-semibold text-white mb-6 text-center">
+                <div className="bg-white rounded-xl shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-8 border border-[#0F1B2D]/10">
+                  <h3 className="text-xl font-semibold text-[#0F1B2D] mb-6 text-center">
                     How It Works
                   </h3>
                   <div className="space-y-3">
                     {howItWorks.map((step, index) => (
                       <div
                         key={index}
-                        className="flex items-center p-3 bg-blue-500/10 rounded-lg border border-blue-500/20"
+                        className="flex items-center p-3 bg-[#1A5FB4]/10 rounded-md border border-[#1A5FB4]/20"
                       >
-                        <div className="w-8 h-8 bg-blue-600/30 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                          <span className="text-blue-300 font-bold text-sm">
+                        <div className="w-8 h-8 bg-[#1A5FB4] rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                          <span className="text-white font-bold text-sm">
                             {index + 1}
                           </span>
                         </div>
-                        <span className="text-slate-200 font-medium">{step}</span>
+                        <span className="text-[#0F1B2D] font-medium">{step}</span>
                       </div>
                     ))}
                   </div>
                   <div className="mt-6 text-center">
-                    <div className="text-emerald-400 font-semibold text-sm flex items-center justify-center">
+                    <div className="text-[#2E7D32] font-semibold text-sm flex items-center justify-center">
                       <CheckCircle className="w-4 h-4 mr-2" />
                       Original submission proceeds only if compliant
                     </div>
@@ -596,10 +596,10 @@ const useCases = [
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Multi-Surface Coverage
                 </h2>
-                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
                   Unified policy enforcement across every AI touchpoint in your
                   organization.
                 </p>
@@ -613,12 +613,12 @@ const useCases = [
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="p-6 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 hover:-translate-y-1 text-center"
+                      className="p-6 bg-white rounded-xl shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] border border-[#0F1B2D]/10 hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300 hover:-translate-y-1 text-center"
                     >
-                      <h3 className="text-lg font-bold text-white mb-2">
+                      <h3 className="text-lg font-bold text-[#0F1B2D] mb-2">
                         {surface.title}
                       </h3>
-                      <p className="text-sm text-slate-400">
+                      <p className="text-sm text-[#51617A]">
                         {surface.description}
                       </p>
                     </div>
@@ -628,14 +628,14 @@ const useCases = [
             </StaggerChildren>
 
             <div className="mt-12 text-center">
-              <p className="text-sm font-medium text-slate-500 mb-4">
+              <p className="text-sm font-medium text-[#6E7B8C] mb-4">
                 AI Platforms Monitored
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 {monitoredPlatforms.map((platform, index) => (
                   <span
                     key={index}
-                    className="px-4 py-2 bg-white/[0.03] text-slate-300 rounded-full text-sm font-medium border border-white/[0.08]"
+                    className="px-4 py-2 bg-white text-[#51617A] rounded-md text-sm font-medium border border-[#0F1B2D]/10"
                   >
                     {platform}
                   </span>
@@ -651,26 +651,26 @@ const useCases = [
             <div className="grid lg:grid-cols-2 gap-12 items-start">
               <div>
                 <ScrollReveal>
-                  <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+                  <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
                     Intelligent Policy Engine
                   </h2>
-                  <p className="text-lg text-slate-400 mb-6 leading-relaxed">
+                  <p className="text-lg text-[#51617A] mb-6 leading-relaxed">
                     Unlike traditional DLP that relies on pattern matching, the
                     Compliance Engine uses AI-powered analysis to understand the
                     semantic meaning and context of every prompt.
                   </p>
                 </ScrollReveal>
 
-                <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-6 mb-6">
-                  <h4 className="font-semibold text-white mb-3">
+                <div className="bg-white rounded-xl shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] border border-[#0F1B2D]/10 p-6 mb-6">
+                  <h4 className="font-semibold text-[#0F1B2D] mb-3">
                     Context Matters
                   </h4>
                   <div className="space-y-3 text-sm">
                     <div className="flex items-start">
-                      <span className="px-2 py-1 bg-red-500/10 text-red-400 border border-red-500/20 rounded text-xs font-medium mr-3 mt-0.5 flex-shrink-0">
+                      <span className="px-2 py-1 bg-[#B3261E]/10 text-[#B3261E] border border-[#B3261E]/25 rounded text-xs font-medium mr-3 mt-0.5 flex-shrink-0">
                         BLOCKED
                       </span>
-                      <p className="text-slate-400 italic">
+                      <p className="text-[#51617A] italic">
                         "Summarize the treatment plan for patient John A. Murphy,
                         DOB 03/12/1974, MRN 4583921. He was diagnosed with Type 2
                         Diabetes last month, his most recent HbA1c was 8.9%, and
@@ -680,16 +680,16 @@ const useCases = [
                       </p>
                     </div>
                     <div className="flex items-start">
-                      <span className="px-2 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded text-xs font-medium mr-3 mt-0.5 flex-shrink-0">
+                      <span className="px-2 py-1 bg-[#2E7D32]/10 text-[#2E7D32] border border-[#2E7D32]/25 rounded text-xs font-medium mr-3 mt-0.5 flex-shrink-0">
                         ALLOWED
                       </span>
-                      <p className="text-slate-400 italic">
+                      <p className="text-[#51617A] italic">
                         "I have a patient I need help with — help me build a
                         reusable treatment plan summary template I can use."
                       </p>
                     </div>
                   </div>
-                  <p className="text-xs text-slate-500 mt-3">
+                  <p className="text-xs text-[#6E7B8C] mt-3">
                     Pattern matching flags both. Whiteout AI understands the first
                     contains real patient identifiers and protected health
                     information while the second is a generic template request
@@ -707,8 +707,8 @@ const useCases = [
                     "Supports both cloud and self-hosted LLM evaluation",
                   ].map((item, index) => (
                     <div key={index} className="flex items-start">
-                      <CheckCircle className="w-5 h-5 text-emerald-400 mr-3 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-400">{item}</span>
+                      <CheckCircle className="w-5 h-5 text-[#2E7D32] mr-3 flex-shrink-0 mt-0.5" />
+                      <span className="text-[#51617A]">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -716,7 +716,7 @@ const useCases = [
 
               <div>
                 <ScrollReveal>
-                  <h3 className="text-xl font-bold text-white mb-6">
+                  <h3 className="text-xl font-bold text-[#0F1B2D] mb-6">
                     Policy Categories
                   </h3>
                 </ScrollReveal>
@@ -724,22 +724,22 @@ const useCases = [
                   {policyCategories.map((cat, index) => (
                     <div
                       key={index}
-                      className="p-4 bg-white/[0.03] rounded-xl border border-white/[0.06] hover:shadow-lg hover:shadow-black/20 transition-all duration-300 text-center"
+                      className="p-4 bg-white rounded-xl shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] border border-[#0F1B2D]/10 hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300 text-center"
                     >
-                      <div className="text-2xl font-bold text-blue-400">
+                      <div className="text-2xl font-bold text-[#1A5FB4]">
                         {cat.count}
                       </div>
-                      <div className="text-sm font-semibold text-white mt-1">
+                      <div className="text-sm font-semibold text-[#0F1B2D] mt-1">
                         {cat.name}
                       </div>
-                      <div className="text-xs text-slate-500 mt-1">
+                      <div className="text-xs text-[#6E7B8C] mt-1">
                         {cat.desc}
                       </div>
                     </div>
                   ))}
                 </div>
-                <div className="mt-4 text-center text-sm text-slate-500">
-                  <span className="font-semibold text-slate-300">60</span> expert-curated
+                <div className="mt-4 text-center text-sm text-[#6E7B8C]">
+                  <span className="font-semibold text-[#0F1B2D]">60</span> expert-curated
                   policies across all domains — extendable with custom policies
                 </div>
               </div>
@@ -752,10 +752,10 @@ const useCases = [
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Prompt-Injection Defense for Agentic AI
                 </h2>
-                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
                   Coding agents execute commands and read whatever their tools return —
                   making injected instructions a first-class enterprise threat. Whiteout AI
                   defends agentic tools like Claude Code and Cursor with centrally managed,
@@ -770,30 +770,30 @@ const useCases = [
                   {injectionLayers.map((layer, index) => (
                     <div
                       key={index}
-                      className="flex items-start p-4 bg-blue-500/10 rounded-lg border border-blue-500/20"
+                      className="flex items-start p-4 bg-[#1A5FB4]/10 rounded-md border border-[#1A5FB4]/20"
                     >
-                      <div className="w-8 h-8 bg-blue-600/30 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                        <span className="text-blue-300 font-bold text-sm">
+                      <div className="w-8 h-8 bg-[#1A5FB4] rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <span className="text-white font-bold text-sm">
                           {index + 1}
                         </span>
                       </div>
                       <div>
-                        <div className="text-slate-200 font-medium">{layer.title}</div>
-                        <div className="text-sm text-slate-400">
+                        <div className="text-[#0F1B2D] font-medium">{layer.title}</div>
+                        <div className="text-sm text-[#51617A]">
                           {layer.description}
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
-                <p className="text-sm font-medium text-slate-500 mb-3">
+                <p className="text-sm font-medium text-[#6E7B8C] mb-3">
                   Six detection categories
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {injectionCategories.map((cat, index) => (
                     <span
                       key={index}
-                      className="px-3 py-1.5 bg-white/[0.03] text-slate-300 rounded-full text-xs font-medium border border-white/[0.08]"
+                      className="px-3 py-1.5 bg-white text-[#51617A] rounded-md text-xs font-medium border border-[#0F1B2D]/10"
                     >
                       {cat}
                     </span>
@@ -801,11 +801,11 @@ const useCases = [
                 </div>
               </div>
 
-              <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-8 border border-white/[0.08]">
-                <h3 className="text-lg font-bold text-white mb-2">
+              <div className="bg-white rounded-xl shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-8 border border-[#0F1B2D]/10">
+                <h3 className="text-lg font-bold text-[#0F1B2D] mb-2">
                   Tamper-Resistant by Design
                 </h3>
-                <p className="text-sm text-slate-400 mb-4">
+                <p className="text-sm text-[#51617A] mb-4">
                   Tuned warn-first so it never blocks legitimate developer work — with
                   one unconditional hard block: any attempt to disable the defense
                   itself.
@@ -813,8 +813,8 @@ const useCases = [
                 <ul className="space-y-2">
                   {tamperFeatures.map((item, i) => (
                     <li key={i} className="flex items-start text-sm">
-                      <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-300">{item}</span>
+                      <CheckCircle className="w-4 h-4 text-[#2E7D32] mr-2 flex-shrink-0 mt-0.5" />
+                      <span className="text-[#51617A]">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -828,10 +828,10 @@ const useCases = [
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Enterprise-Grade Security Architecture
                 </h2>
-                <p className="text-lg text-slate-300 max-w-3xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
                   Built with security-first architecture to meet the strictest
                   enterprise and regulatory requirements.
                 </p>
@@ -842,24 +842,24 @@ const useCases = [
               {securityFeatures.map((feature, index) => {
                 const Icon = feature.icon;
                 const colorList = [
-                  "text-blue-400",
-                  "text-emerald-400",
-                  "text-orange-400",
-                  "text-blue-400",
+                  "text-[#1A5FB4]",
+                  "text-[#2E7D32]",
+                  "text-[#A05F00]",
+                  "text-[#1A5FB4]",
                 ];
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08]"
+                      className="bg-white rounded-xl shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-6 border border-[#0F1B2D]/10"
                     >
-                      <h3 className="text-lg font-bold text-white mb-4">
+                      <h3 className="text-lg font-bold text-[#0F1B2D] mb-4">
                           {feature.title}
                       </h3>
                       <ul className="space-y-2">
                         {feature.items.map((item, i) => (
                           <li key={i} className="flex items-start text-sm">
-                            <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0 mt-0.5" />
-                            <span className="text-slate-300">{item}</span>
+                            <CheckCircle className="w-4 h-4 text-[#2E7D32] mr-2 flex-shrink-0 mt-0.5" />
+                            <span className="text-[#51617A]">{item}</span>
                           </li>
                         ))}
                       </ul>
@@ -879,10 +879,10 @@ const useCases = [
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Enterprise Use Cases
                 </h2>
-                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
                   Whiteout AI adapts to the specific compliance requirements of any
                   industry.
                 </p>
@@ -893,31 +893,31 @@ const useCases = [
               {useCases.map((useCase, index) => {
                 const Icon = useCase.icon;
                 const colorList = [
-                  "bg-blue-500/10 text-blue-400",
-                  "bg-emerald-500/10 text-emerald-400",
-                  "bg-orange-500/10 text-orange-400",
-                  "bg-blue-500/10 text-blue-400",
+                  "bg-[#1A5FB4]/10 text-[#1A5FB4]",
+                  "bg-[#2E7D32]/10 text-[#2E7D32]",
+                  "bg-[#A05F00]/10 text-[#A05F00]",
+                  "bg-[#1A5FB4]/10 text-[#1A5FB4]",
                 ];
                 return (
                   <StaggerItem key={index}>
                     <div
-                      className="p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300"
+                      className="p-8 bg-white rounded-xl shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] border border-[#0F1B2D]/10 hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300"
                     >
                       <div className="flex items-center mb-3">
-                        <h3 className="text-lg font-bold text-white">
+                        <h3 className="text-lg font-bold text-[#0F1B2D]">
                           {useCase.title}
                         </h3>
                       </div>
-                      <p className="text-sm text-slate-400 mb-4">
+                      <p className="text-sm text-[#51617A] mb-4">
                         {useCase.description}
                       </p>
                       <ul className="space-y-2">
                         {useCase.items.map((item, i) => (
                           <li
                             key={i}
-                            className="flex items-start text-sm text-slate-400"
+                            className="flex items-start text-sm text-[#51617A]"
                           >
-                            <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0 mt-0.5" />
+                            <CheckCircle className="w-4 h-4 text-[#2E7D32] mr-2 flex-shrink-0 mt-0.5" />
                             {item}
                           </li>
                         ))}
@@ -935,10 +935,10 @@ const useCases = [
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Regulatory Compliance
                 </h2>
-                <p className="text-lg text-slate-300 max-w-3xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
                   Purpose-built policy enforcement for major regulatory frameworks.
                 </p>
               </div>
@@ -948,17 +948,17 @@ const useCases = [
               {regulations.map((reg, index) => (
                 <StaggerItem key={index}>
                   <div
-                    className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08]"
+                    className="bg-white rounded-xl shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-6 border border-[#0F1B2D]/10"
                   >
-                    <div className="text-2xl font-bold text-blue-400 mb-1">
+                    <div className="text-2xl font-bold text-[#1A5FB4] mb-1">
                       {reg.name}
                     </div>
-                    <p className="text-xs text-slate-400 mb-4">{reg.full}</p>
+                    <p className="text-xs text-[#51617A] mb-4">{reg.full}</p>
                     <ul className="space-y-2">
                       {reg.items.map((item, i) => (
                         <li key={i} className="flex items-start text-sm">
-                          <CheckCircle className="w-3 h-3 text-emerald-400 mr-2 flex-shrink-0 mt-1" />
-                          <span className="text-slate-300">{item}</span>
+                          <CheckCircle className="w-3 h-3 text-[#2E7D32] mr-2 flex-shrink-0 mt-1" />
+                          <span className="text-[#51617A]">{item}</span>
                         </li>
                       ))}
                     </ul>
@@ -974,10 +974,10 @@ const useCases = [
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-8">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Integration Ecosystem
                 </h2>
-                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
                   Whiteout AI connects to your existing productivity tools, enabling
                   AI assistants to safely access organizational data through
                   authenticated, audited channels.
@@ -989,14 +989,14 @@ const useCases = [
               {integrations.map((name, index) => (
                 <span
                   key={index}
-                  className="px-6 py-3 bg-white/[0.03] text-slate-300 rounded-full text-sm font-medium border border-white/[0.08]"
+                  className="px-6 py-3 bg-white text-[#51617A] rounded-md text-sm font-medium border border-[#0F1B2D]/10"
                 >
                   {name}
                 </span>
               ))}
             </div>
 
-            <p className="text-center text-sm text-slate-500 max-w-2xl mx-auto">
+            <p className="text-center text-sm text-[#6E7B8C] max-w-2xl mx-auto">
               Each integration has configurable access controls. Through the Model
               Context Protocol (MCP), external AI development tools can securely
               access organizational data with full authentication and audit
@@ -1009,10 +1009,10 @@ const useCases = [
         <ScrollReveal>
           <section className="py-24 relative overflow-hidden">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
                 Ready to Govern AI with Confidence?
               </h2>
-              <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
+              <p className="text-lg text-[#51617A] mb-8 max-w-2xl mx-auto">
                 See how Whiteout AI can help your organization adopt AI safely while
                 maintaining full compliance and data protection.
               </p>
@@ -1024,7 +1024,7 @@ const useCases = [
                   </GradientButton>
                 </Link>
               </div>
-              <p className="text-sm text-slate-400 mt-6">
+              <p className="text-sm text-[#51617A] mt-6">
                 Whiteout AI by Groovy Security — Enterprise AI Governance
               </p>
             </div>

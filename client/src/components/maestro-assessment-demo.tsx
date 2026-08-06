@@ -209,7 +209,7 @@ export function MaestroAssessmentDemo() {
   return (
     <div
       ref={containerRef}
-      className="max-w-4xl mx-auto h-full flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-xl p-4 sm:p-6"
+      className="max-w-4xl mx-auto h-full flex flex-col rounded-xl border border-[#0F1B2D]/10 bg-[#0B1218] shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] overflow-hidden p-4 sm:p-6"
       role="img"
       aria-label="Animated diagram: Maestro's AI agents discover a vulnerability, exploit it under controlled safety rules, validate real impact with recalibrated severity, and write evidence-backed findings to the report — eliminating false positives along the way."
     >
@@ -217,7 +217,6 @@ export function MaestroAssessmentDemo() {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2 text-xs text-slate-400">
           <span className="relative flex w-2 h-2">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-60 animate-ping" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-400" />
           </span>
           Maestro · Autonomous pentest in progress
@@ -278,14 +277,14 @@ export function MaestroAssessmentDemo() {
           beside the (taller) Whiteout demo */}
       <div className="relative flex-1 flex flex-col">
         <div
-          className={`relative flex-1 flex flex-col rounded-xl border bg-slate-900/90 backdrop-blur-md transition-colors duration-500 ${
+          className={`relative flex-1 flex flex-col rounded-xl border bg-[#0F171F] transition-colors duration-500 ${
             phase === "exploit" || phase === "validate"
               ? "border-orange-400/40"
               : "border-white/10"
           }`}
         >
           {/* Window title bar */}
-          <div className="flex items-center gap-1.5 rounded-t-xl border-b border-white/5 bg-white/[0.03] px-3 py-1.5">
+          <div className="flex items-center gap-1.5 rounded-t-xl border-b border-white/5 bg-[#131D27] px-3 py-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-red-400/40" />
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400/40" />
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/40" />
@@ -334,7 +333,7 @@ export function MaestroAssessmentDemo() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className={`absolute -top-2.5 right-2.5 flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-medium backdrop-blur-md ${outcomeStyle.badge}`}
+                className={`absolute -top-2.5 right-2.5 flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-medium ${outcomeStyle.badge}`}
               >
                 <OutcomeIcon className="w-3 h-3" />
                 {outcomeStyle.label}

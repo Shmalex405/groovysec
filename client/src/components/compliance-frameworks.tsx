@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect, memo } from "react";
+import { useState, useRef, useEffect, memo } from "react";
 import { Link } from "wouter";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -44,9 +44,9 @@ const complianceCategories: ComplianceCategory[] = [
     title: "AI-Specific Governance",
     icon: Brain,
     color: "blue",
-    colorBg: "bg-blue-500/10",
-    colorBorder: "border-blue-500/20",
-    colorText: "text-blue-400",
+    colorBg: "bg-[#1A5FB4]/10",
+    colorBorder: "border-[#1A5FB4]/25",
+    colorText: "text-[#1A5FB4]",
     frameworks: [
       {
         name: "EU AI Act",
@@ -70,9 +70,9 @@ const complianceCategories: ComplianceCategory[] = [
     title: "Defense & Government",
     icon: ShieldCheck,
     color: "green",
-    colorBg: "bg-emerald-500/10",
-    colorBorder: "border-emerald-500/20",
-    colorText: "text-emerald-400",
+    colorBg: "bg-[#2E7D32]/10",
+    colorBorder: "border-[#2E7D32]/25",
+    colorText: "text-[#2E7D32]",
     frameworks: [
       {
         name: "CMMC",
@@ -96,9 +96,9 @@ const complianceCategories: ComplianceCategory[] = [
     title: "Healthcare & Medical Privacy",
     icon: HeartPulse,
     color: "orange",
-    colorBg: "bg-orange-500/10",
-    colorBorder: "border-orange-500/20",
-    colorText: "text-orange-400",
+    colorBg: "bg-[#A05F00]/10",
+    colorBorder: "border-[#A05F00]/25",
+    colorText: "text-[#A05F00]",
     frameworks: [
       {
         name: "HIPAA",
@@ -117,9 +117,9 @@ const complianceCategories: ComplianceCategory[] = [
     title: "Enterprise Security & Privacy",
     icon: Lock,
     color: "purple",
-    colorBg: "bg-purple-500/10",
-    colorBorder: "border-purple-500/20",
-    colorText: "text-purple-400",
+    colorBg: "bg-[#7C3AED]/10",
+    colorBorder: "border-[#7C3AED]/25",
+    colorText: "text-[#6D28D9]",
     frameworks: [
       {
         name: "SOC 2 (Type I & II)",
@@ -151,7 +151,7 @@ const totalFrameworks = complianceCategories.reduce(
 );
 
 
-/* ── Glow card with cursor-tracking border ── */
+/* ── Selectable category card — accent border when active ── */
 function GlowCard({
   children,
   className,
@@ -165,47 +165,19 @@ function GlowCard({
   isActive?: boolean;
   onClick?: () => void;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
-      if (!ref.current) return;
-      const { left, top, width, height } = ref.current.getBoundingClientRect();
-      const x = ((e.clientX - left) / width) * 100;
-      const y = ((e.clientY - top) / height) * 100;
-      ref.current.style.setProperty("--glow-x", `${x}%`);
-      ref.current.style.setProperty("--glow-y", `${y}%`);
-    },
-    []
-  );
-
   return (
     <div
-      ref={ref}
-      onMouseMove={handleMouseMove}
       onClick={onClick}
       className={cn(
-        "relative rounded-2xl cursor-pointer overflow-hidden transition-all duration-300",
+        "relative rounded-xl cursor-pointer overflow-hidden bg-white transition-colors duration-300",
+        "shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]",
         isActive
-          ? "bg-white/[0.06] border-2"
-          : "bg-white/[0.03] border border-white/[0.06] hover:border-transparent",
+          ? "border-2"
+          : "border border-[#0F1B2D]/10 hover:border-[#0F1B2D]/20",
         className
       )}
       style={isActive ? { borderColor: glowColor } : undefined}
     >
-      {/* Glow border that follows cursor */}
-      {!isActive && (
-        <div
-          className="pointer-events-none absolute -inset-px rounded-[inherit] opacity-0 hover:opacity-100 transition-opacity duration-300"
-          style={{
-            background: `radial-gradient(circle 80px at var(--glow-x, 50%) var(--glow-y, 50%), ${glowColor}, transparent 70%)`,
-            mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-            maskComposite: "exclude",
-            WebkitMaskComposite: "xor",
-            padding: "2px",
-          }}
-        />
-      )}
       {children}
     </div>
   );
@@ -237,22 +209,22 @@ function FrameworkPill({
           if (!open && onExpand) onExpand();
         }}
         className={cn(
-          "w-full flex items-center justify-between p-3.5 rounded-xl border transition-all duration-300 text-left",
+          "w-full flex items-center justify-between p-3.5 rounded-md border transition-all duration-300 text-left",
           open
-            ? "bg-white/[0.05] border-white/[0.12]"
-            : "bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.1]"
+            ? "bg-[#0F1B2D]/[0.02] border-[#0F1B2D]/20"
+            : "bg-white border-[#0F1B2D]/10 hover:bg-[#0F1B2D]/[0.02] hover:border-[#0F1B2D]/20"
         )}
       >
         <div className="flex items-center gap-2.5">
-          <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold ${category.colorBg} ${category.colorText} border ${category.colorBorder}`}>
+          <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold ${category.colorBg} ${category.colorText} border ${category.colorBorder}`}>
             {framework.name}
           </span>
-          <span className="text-xs text-slate-500 hidden sm:inline">{framework.description}</span>
+          <span className="text-xs text-[#6E7B8C] hidden sm:inline">{framework.description}</span>
         </div>
         <motion.div
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="text-slate-600 flex-shrink-0 ml-2"
+          className="text-[#6E7B8C] flex-shrink-0 ml-2"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M6 9l6 6 6-6" />
@@ -270,9 +242,9 @@ function FrameworkPill({
             className="overflow-hidden"
           >
             <div className="pt-2 pl-4">
-              <div className="flex items-start bg-emerald-500/[0.05] border border-emerald-500/[0.1] rounded-lg p-3">
-                <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0 mt-0.5" />
-                <p className="text-xs text-emerald-300 font-medium leading-relaxed">
+              <div className="flex items-start bg-[#2E7D32]/10 border border-[#2E7D32]/25 rounded-md p-3">
+                <CheckCircle className="w-4 h-4 text-[#2E7D32] mr-2 flex-shrink-0 mt-0.5" />
+                <p className="text-xs text-[#2E7D32] font-medium leading-relaxed">
                   {framework.enforcement}
                 </p>
               </div>
@@ -292,10 +264,10 @@ function ComplianceGrid() {
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const glowColors: Record<string, string> = {
-    "ai-governance": "#1a5fb4",
-    "defense-government": "#2e7d32",
-    "healthcare": "#c77800",
-    "enterprise-security": "#7c3aed",
+    "ai-governance": "#1A5FB4",
+    "defense-government": "#2E7D32",
+    "healthcare": "#A05F00",
+    "enterprise-security": "#7C3AED",
   };
 
   // Auto-rotate through categories
@@ -342,12 +314,12 @@ function ComplianceGrid() {
             >
               <div className="p-5">
                 <div className="flex items-center mb-2">
-                  <div className={`w-9 h-9 ${category.colorBg} rounded-xl flex items-center justify-center mr-3 border ${category.colorBorder}`}>
+                  <div className={`w-9 h-9 ${category.colorBg} rounded-md flex items-center justify-center mr-3 border ${category.colorBorder}`}>
                     <Icon className={`w-4 h-4 ${category.colorText}`} />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-white">{category.title}</h3>
-                    <p className="text-[11px] text-slate-500">
+                    <h3 className="text-sm font-bold text-[#0F1B2D]">{category.title}</h3>
+                    <p className="text-[11px] text-[#6E7B8C]">
                       {category.frameworks.length} framework{category.frameworks.length !== 1 ? "s" : ""}
                     </p>
                   </div>
@@ -356,7 +328,7 @@ function ComplianceGrid() {
                   {category.frameworks.map((fw) => (
                     <span
                       key={fw.name}
-                      className={`text-[10px] px-2 py-0.5 rounded-full border font-medium ${category.colorBg} ${category.colorText} ${category.colorBorder}`}
+                      className={`text-[10px] px-2 py-0.5 rounded-md border font-medium ${category.colorBg} ${category.colorText} ${category.colorBorder}`}
                     >
                       {fw.name}
                     </span>
@@ -404,13 +376,13 @@ export function ComplianceFrameworks() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-slate-400 text-sm mb-6">
+            <div className="inline-flex items-center px-4 py-1.5 rounded-md bg-white border border-[#0F1B2D]/15 text-[#51617A] text-sm mb-6">
               {totalFrameworks} Frameworks Supported
             </div>
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
               Compliance Enforcement, Not Just Checkboxes
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
               Whiteout AI doesn't just claim compliance — it actively enforces
               AI policies at the endpoint level, giving you audit-ready proof of every AI control.
             </p>
@@ -421,19 +393,19 @@ export function ComplianceFrameworks() {
           {/* Left column — Stats summary */}
           <ScrollReveal className="lg:col-span-2">
             <GlassCard className="lg:sticky lg:top-24 p-8" hover={false} glowColor="rgba(59,130,246,0.04)">
-              <h3 className="text-xl font-bold text-white mb-2">
+              <h3 className="text-xl font-bold text-[#0F1B2D] mb-2">
                 Compliance Command Center
               </h3>
-              <p className="text-slate-500 text-sm mb-8">
+              <p className="text-[#51617A] text-sm mb-8">
                 Real-time endpoint enforcement across every major regulatory framework.
               </p>
 
               <div className="text-center mb-8">
                 <AnimatedCounter
                   value={`${totalFrameworks}`}
-                  className="text-5xl font-bold text-gradient-brand animate-gradient-flow-fast"
+                  className="text-5xl font-bold text-[#1A5FB4]"
                 />
-                <p className="text-slate-500 mt-2 text-sm">Frameworks Supported</p>
+                <p className="text-[#6E7B8C] mt-2 text-sm">Frameworks Supported</p>
               </div>
 
               <div className="space-y-3 mb-8">
@@ -442,15 +414,15 @@ export function ComplianceFrameworks() {
                   return (
                     <div
                       key={cat.id}
-                      className="flex items-center justify-between p-3 bg-white/[0.03] rounded-xl border border-white/[0.06]"
+                      className="flex items-center justify-between p-3 bg-[#0F1B2D]/[0.02] rounded-md border border-[#0F1B2D]/10"
                     >
                       <div className="flex items-center">
-                        <Icon className="w-4 h-4 text-slate-400 mr-3" />
-                        <span className="text-xs font-medium text-slate-300">{cat.title}</span>
+                        <Icon className="w-4 h-4 text-[#51617A] mr-3" />
+                        <span className="text-xs font-medium text-[#51617A]">{cat.title}</span>
                       </div>
                       <AnimatedCounter
                         value={`${cat.frameworks.length}`}
-                        className="text-sm font-bold text-white"
+                        className="text-sm font-bold text-[#0F1B2D]"
                       />
                     </div>
                   );
@@ -485,12 +457,12 @@ export function ComplianceFrameworksCompact() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
               Built for Compliance
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
               Whiteout AI supports compliance across{" "}
-              <span className="text-white font-semibold">{totalFrameworks} regulatory frameworks</span>{" "}
+              <span className="text-[#0F1B2D] font-semibold">{totalFrameworks} regulatory frameworks</span>{" "}
               with real technical controls at the endpoint level — not just policy documents.
             </p>
           </div>
@@ -512,10 +484,10 @@ export function ComplianceFrameworksCompact() {
             {[...complianceCategories, ...complianceCategories].map((category, i) => {
               const Icon = category.icon;
               const hoverColors: Record<string, { accent: string; dark: string }> = {
-                "ai-governance": { accent: "#1a5fb4", dark: "#060e1f" },
-                "defense-government": { accent: "#2e7d32", dark: "#061206" },
-                "healthcare": { accent: "#8a3a1e", dark: "#0a0500" },
-                "enterprise-security": { accent: "#7c3aed", dark: "#0d0620" },
+                "ai-governance": { accent: "#1A5FB4", dark: "#060e1f" },
+                "defense-government": { accent: "#2E7D32", dark: "#061206" },
+                "healthcare": { accent: "#A05F00", dark: "#0a0500" },
+                "enterprise-security": { accent: "#7C3AED", dark: "#0d0620" },
               };
               const hc = hoverColors[category.id];
               return (
@@ -529,12 +501,12 @@ export function ComplianceFrameworksCompact() {
                       <div className="text-4xl font-bold text-white mb-2">
                         {category.frameworks.length}
                       </div>
-                      <h3 className="text-sm font-semibold text-slate-300 mb-3">{category.title}</h3>
+                      <h3 className="text-sm font-semibold text-white/85 mb-3">{category.title}</h3>
                       <div className={`flex justify-center gap-1.5 ${category.id === "healthcare" ? "flex-col items-center" : "flex-wrap"}`}>
                         {category.frameworks.map((fw) => (
                           <span
                             key={fw.name}
-                            className="text-xs px-2 py-0.5 rounded-full bg-white/[0.04] text-slate-400 border border-white/[0.06]"
+                            className="text-xs px-2 py-0.5 rounded-md bg-white/15 text-white border border-white/25"
                           >
                             {fw.name}
                           </span>
@@ -543,16 +515,16 @@ export function ComplianceFrameworksCompact() {
                     </div>
                   }
                 >
-                  <div className="p-6 text-center bg-white/[0.03] backdrop-blur-xl">
-                    <div className="text-4xl font-bold text-white mb-2">
+                  <div className="p-6 text-center">
+                    <div className="text-4xl font-bold text-[#0F1B2D] mb-2">
                       {category.frameworks.length}
                     </div>
-                    <h3 className="text-sm font-semibold text-slate-300 mb-3">{category.title}</h3>
+                    <h3 className="text-sm font-semibold text-[#51617A] mb-3">{category.title}</h3>
                     <div className={`flex justify-center gap-1.5 ${category.id === "healthcare" ? "flex-col items-center" : "flex-wrap"}`}>
                       {category.frameworks.map((fw) => (
                         <span
                           key={fw.name}
-                          className="text-xs px-2 py-0.5 rounded-full bg-white/[0.04] text-slate-400 border border-white/[0.06]"
+                          className="text-xs px-2 py-0.5 rounded-md bg-[#0F1B2D]/[0.03] text-[#51617A] border border-[#0F1B2D]/10"
                         >
                           {fw.name}
                         </span>

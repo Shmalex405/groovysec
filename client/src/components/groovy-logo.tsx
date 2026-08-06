@@ -31,7 +31,7 @@ export function GroovyLogo({ showText = true, size = "md", splashDock }: GroovyL
       {showText && (
         <span
           data-splash-word={splashDock ? "" : undefined}
-          className={`font-cinzel font-semibold ${s.text} ${s.tracking} uppercase leading-none text-white group-hover:text-blue-300 transition-colors duration-300`}
+          className={`font-cinzel font-semibold ${s.text} ${s.tracking} uppercase leading-none text-[#0F1B2D] group-hover:text-[#1A5FB4] transition-colors duration-300`}
         >
           Groovy Security
         </span>

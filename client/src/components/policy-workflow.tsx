@@ -35,9 +35,9 @@ export function PolicyWorkflow() {
   ];
 
   const colorMap = {
-    blue: { icon: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/20" },
-    orange: { icon: "text-orange-400", bg: "bg-orange-500/10", border: "border-orange-500/20" },
-    emerald: { icon: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/20" },
+    blue: { icon: "text-[#1A5FB4]", bg: "bg-[#1A5FB4]/10", border: "border-[#1A5FB4]/20" },
+    orange: { icon: "text-[#A05F00]", bg: "bg-[#A05F00]/10", border: "border-[#A05F00]/20" },
+    emerald: { icon: "text-[#2E7D32]", bg: "bg-[#2E7D32]/10", border: "border-[#2E7D32]/20" },
   };
 
   return (
@@ -45,10 +45,10 @@ export function PolicyWorkflow() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
               Policy Verification Workflow
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
               See how Whiteout AI ensures every AI interaction meets your security and compliance requirements.
             </p>
           </div>
@@ -62,14 +62,14 @@ export function PolicyWorkflow() {
             return (
               <StaggerItem key={index}>
                 <GlassCard className="p-6 text-center h-full">
-                  <div className={`w-12 h-12 ${colors.bg} ${colors.border} border rounded-xl flex items-center justify-center mx-auto mb-4`}>
+                  <div className={`w-12 h-12 ${colors.bg} ${colors.border} border rounded-md flex items-center justify-center mx-auto mb-4`}>
                     <Icon className={`w-6 h-6 ${colors.icon}`} />
                   </div>
-                  <h3 className="font-bold text-white text-sm mb-2">{step.title}</h3>
-                  <p className="text-xs text-slate-500 leading-relaxed">{step.description}</p>
+                  <h3 className="font-bold text-[#0F1B2D] text-sm mb-2">{step.title}</h3>
+                  <p className="text-xs text-[#6E7B8C] leading-relaxed">{step.description}</p>
 
                   {index < steps.length - 1 && (
-                    <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-px bg-gradient-to-r from-white/10 to-transparent" />
+                    <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-px bg-gradient-to-r from-[#0F1B2D]/15 to-transparent" />
                   )}
                 </GlassCard>
               </StaggerItem>

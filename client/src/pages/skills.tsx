@@ -222,17 +222,17 @@ const highlights = [
   {
     icon: ShieldCheck,
     title: "OWASP ASI Top 10 Audited",
-    description: <>Every skill is audited against the <span className="text-white font-semibold">OWASP Agentic Security Initiative Top 10</span> — covering prompt injection, excessive agency, insecure tool integration, sensitive data exposure, and more.</>,
+    description: <>Every skill is audited against the <span className="text-[#0F1B2D] font-semibold">OWASP Agentic Security Initiative Top 10</span> — covering prompt injection, excessive agency, insecure tool integration, sensitive data exposure, and more.</>,
   },
   {
     icon: AlertTriangle,
     title: "The Problem It Solves",
-    description: <><span className="font-semibold bg-gradient-to-r from-red-400 to-amber-400 bg-clip-text text-transparent">41% of community AI skills have vulnerabilities.</span> <span className="font-semibold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">99.3% lack permission manifests.</span> <span className="font-semibold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">12% contain malware.</span> <span className="text-white font-semibold">Groovy Skills are the enterprise-grade antidote.</span> <span className="text-slate-500">— Groovy Security audit of community skill repositories, 2026</span></>,
+    description: <><span className="font-semibold text-[#B3261E]">41% of community AI skills have vulnerabilities.</span> <span className="font-semibold text-[#A05F00]">99.3% lack permission manifests.</span> <span className="font-semibold text-[#B3261E]">12% contain malware.</span> <span className="text-[#0F1B2D] font-semibold">Groovy Skills are the enterprise-grade antidote.</span> <span className="text-[#6E7B8C]">— Groovy Security audit of community skill repositories, 2026</span></>,
   },
   {
     icon: Award,
     title: "Production-Grade Quality",
-    description: <>Self-contained, <span className="text-white font-semibold">zero external dependencies.</span> Policy-driven configuration. <span className="text-white font-semibold">Critical vulnerability patches within 48 hours.</span> Built for enterprises, not hobbyists.</>,
+    description: <>Self-contained, <span className="text-[#0F1B2D] font-semibold">zero external dependencies.</span> Policy-driven configuration. <span className="text-[#0F1B2D] font-semibold">Critical vulnerability patches within 48 hours.</span> Built for enterprises, not hobbyists.</>,
   },
 ];
 
@@ -262,20 +262,16 @@ export default function Skills() {
 
   return (
     <PageTransition>
-      <AuroraBackground variant="green" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="green" className="min-h-screen">
         <Navigation />
 
         {/* Hero */}
         <section className="pt-32 pb-20 relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.03] via-transparent to-transparent" />
-          </div>
-
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <HeroTextReveal>
                 <HeroLine>
-                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0F1B2D] mb-6 leading-tight tracking-tight">
                     Secure AI Skills{" "}
                     <span className="block">
                       <GradientText from="from-emerald-400" to="to-teal-300" via="via-green-400">
@@ -286,10 +282,10 @@ export default function Skills() {
                 </HeroLine>
 
                 <HeroLine>
-                  <p className="text-xl lg:text-2xl text-slate-400 mb-10 leading-relaxed max-w-3xl mx-auto">
-                    The only <span className="text-white font-semibold">production-grade, security-audited</span> skill library for AI agents.
-                    111 skills across 14 categories — <span className="text-white font-semibold">purpose-built governance</span>, secure integrations,
-                    and <span className="text-white font-semibold">enterprise-ready alternatives to vulnerable community skills</span>.
+                  <p className="text-xl lg:text-2xl text-[#51617A] mb-10 leading-relaxed max-w-3xl mx-auto">
+                    The only <span className="text-[#0F1B2D] font-semibold">production-grade, security-audited</span> skill library for AI agents.
+                    111 skills across 14 categories — <span className="text-[#0F1B2D] font-semibold">purpose-built governance</span>, secure integrations,
+                    and <span className="text-[#0F1B2D] font-semibold">enterprise-ready alternatives to vulnerable community skills</span>.
                   </p>
                 </HeroLine>
               </HeroTextReveal>
@@ -299,17 +295,17 @@ export default function Skills() {
                   <GradientButton
                     onClick={() => setShowPurchaseModal(true)}
                     variant="default"
-                    className="min-w-0 px-8 py-4 text-base rounded-xl btn-animate-colors"
+                    className="min-w-0 px-8 py-4 text-base"
                   >
                     Request Access
                   </GradientButton>
                   <a href="#skill-library">
-                    <GradientButton variant="default" className="min-w-0 px-8 py-4 text-base rounded-xl btn-animate-colors brightness-125">
+                    <GradientButton variant="white" className="min-w-0 px-8 py-4 text-base">
                       <Search className="w-4 h-4 mr-2" /> Browse All Skills
                     </GradientButton>
                   </a>
                 </div>
-                <div className="mt-6 text-sm text-slate-500 text-center">
+                <div className="mt-6 text-sm text-[#6E7B8C] text-center">
                   Reviewed by Groovy Security &middot; Lifetime access &middot; No subscription
                 </div>
               </ScrollReveal>
@@ -323,10 +319,10 @@ export default function Skills() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Why Groovy Skills?
                 </h2>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Community skills are a liability. Groovy Skills are the paid antidote.
                 </p>
               </div>
@@ -335,9 +331,9 @@ export default function Skills() {
             <StaggerChildren className="grid md:grid-cols-3 gap-8">
               {highlights.map((item, i) => (
                 <StaggerItem key={i}>
-                  <div className="group rounded-2xl p-8 h-full bg-gradient-to-b from-emerald-500/15 via-emerald-500/5 to-transparent border border-emerald-500/20 backdrop-blur-xl transition-all duration-500 ease-out hover:scale-110 hover:from-emerald-500/25 hover:border-emerald-500/35 hover:shadow-2xl hover:shadow-emerald-500/10 cursor-default">
-                    <h3 className="text-xl lg:text-2xl font-bold text-white mb-3 transition-all duration-500 group-hover:text-emerald-300 group-hover:drop-shadow-[0_0_12px_rgba(16,185,129,0.5)]">{item.title}</h3>
-                    <p className="text-base lg:text-lg text-slate-400 leading-relaxed transition-colors duration-500 group-hover:text-slate-300">{item.description}</p>
+                  <div className="rounded-xl p-8 h-full bg-white border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] transition-colors duration-300 hover:border-[#0F1B2D]/20 cursor-default">
+                    <h3 className="text-xl lg:text-2xl font-bold text-[#0F1B2D] mb-3">{item.title}</h3>
+                    <p className="text-base lg:text-lg text-[#51617A] leading-relaxed">{item.description}</p>
                   </div>
                 </StaggerItem>
               ))}
@@ -351,27 +347,27 @@ export default function Skills() {
             <ScrollReveal>
               <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
                 <div>
-                  <h2 className="text-3xl lg:text-4xl font-bold text-white tracking-tight">
+                  <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] tracking-tight">
                     Explore All 111 Skills
                   </h2>
-                  <p className="text-slate-400 mt-1">
+                  <p className="text-[#51617A] mt-1">
                     Browse by category or search across the entire library.
                   </p>
                 </div>
                 {/* Search */}
                 <div className="relative w-full sm:w-72">
-                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6E7B8C]" />
                   <input
                     type="text"
                     placeholder="Search skills..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-10 py-2.5 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-emerald-500/40 focus:ring-1 focus:ring-emerald-500/20 transition-colors"
+                    className="w-full pl-10 pr-10 py-2.5 bg-white border border-[#0F1B2D]/15 rounded-md text-sm text-[#0F1B2D] placeholder:text-[#6E7B8C] focus:outline-none focus:border-[#2E7D32]/50 focus:ring-1 focus:ring-[#2E7D32]/20 transition-colors"
                   />
                   {searchQuery && (
                     <button
                       onClick={() => setSearchQuery("")}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6E7B8C] hover:text-[#0F1B2D] transition-colors"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
@@ -391,26 +387,26 @@ export default function Skills() {
                         <button
                           key={cat.id}
                           onClick={() => { setActiveCategory(cat.id); setSearchQuery(""); }}
-                          className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left text-sm font-medium transition-all duration-300 group ${
+                          className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-md text-left text-sm font-medium transition-all duration-300 group ${
                             isActive
-                              ? "bg-emerald-500/[0.1] border border-emerald-500/20 text-white"
-                              : "text-slate-400 hover:text-white hover:bg-white/[0.04] border border-transparent"
+                              ? "bg-[#2E7D32]/10 border border-[#2E7D32]/25 text-[#0F1B2D]"
+                              : "text-[#51617A] hover:text-[#0F1B2D] hover:bg-[#0F1B2D]/[0.04] border border-transparent"
                           }`}
                         >
-                          <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors ${
+                          <div className={`w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 transition-colors ${
                             isActive
-                              ? "bg-emerald-500/15 text-emerald-400"
-                              : "bg-white/[0.03] text-slate-500 group-hover:text-slate-300"
+                              ? "bg-[#2E7D32]/10 text-[#2E7D32]"
+                              : "bg-[#0F1B2D]/[0.04] text-[#6E7B8C] group-hover:text-[#51617A]"
                           }`}>
                             <cat.icon className="w-3.5 h-3.5" />
                           </div>
                           <span className="flex-1 truncate">{cat.label}</span>
                           <span className={`text-[10px] font-mono tabular-nums ${
-                            isActive ? "text-emerald-400" : "text-slate-600"
+                            isActive ? "text-[#2E7D32]" : "text-[#6E7B8C]"
                           }`}>
                             {cat.skills.length}
                           </span>
-                          {isActive && <ChevronRight className="w-3 h-3 text-emerald-400" />}
+                          {isActive && <ChevronRight className="w-3 h-3 text-[#2E7D32]" />}
                         </button>
                       );
                     })}
@@ -422,7 +418,7 @@ export default function Skills() {
               <div className="lg:hidden fixed bottom-6 right-6 z-50">
                 <button
                   onClick={() => setMobileNavOpen(true)}
-                  className="w-14 h-14 bg-emerald-500/90 backdrop-blur-lg rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/20 text-white"
+                  className="w-14 h-14 bg-[#2E7D32] rounded-full flex items-center justify-center shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] text-white"
                 >
                   <Menu className="w-5 h-5" />
                 </button>
@@ -437,17 +433,17 @@ export default function Skills() {
                     exit={{ opacity: 0 }}
                     className="fixed inset-0 z-[60] lg:hidden"
                   >
-                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setMobileNavOpen(false)} />
+                    <div className="absolute inset-0 bg-[#0F1B2D]/40" onClick={() => setMobileNavOpen(false)} />
                     <motion.div
                       initial={{ x: -280 }}
                       animate={{ x: 0 }}
                       exit={{ x: -280 }}
                       transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                      className="absolute left-0 top-0 bottom-0 w-72 bg-slate-900/95 backdrop-blur-xl border-r border-white/[0.06] p-4 pt-6 overflow-y-auto"
+                      className="absolute left-0 top-0 bottom-0 w-72 bg-white border-r border-[#0F1B2D]/10 shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] p-4 pt-6 overflow-y-auto"
                     >
                       <div className="flex items-center justify-between mb-4 px-2">
-                        <h3 className="text-sm font-semibold text-white">Categories</h3>
-                        <button onClick={() => setMobileNavOpen(false)} className="text-slate-400 hover:text-white">
+                        <h3 className="text-sm font-semibold text-[#0F1B2D]">Categories</h3>
+                        <button onClick={() => setMobileNavOpen(false)} className="text-[#51617A] hover:text-[#0F1B2D]">
                           <X className="w-4 h-4" />
                         </button>
                       </div>
@@ -458,15 +454,15 @@ export default function Skills() {
                             <button
                               key={cat.id}
                               onClick={() => { setActiveCategory(cat.id); setSearchQuery(""); setMobileNavOpen(false); }}
-                              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-sm font-medium transition-all ${
+                              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-left text-sm font-medium transition-all ${
                                 isActive
-                                  ? "bg-emerald-500/[0.1] border border-emerald-500/20 text-white"
-                                  : "text-slate-400 hover:text-white hover:bg-white/[0.04] border border-transparent"
+                                  ? "bg-[#2E7D32]/10 border border-[#2E7D32]/25 text-[#0F1B2D]"
+                                  : "text-[#51617A] hover:text-[#0F1B2D] hover:bg-[#0F1B2D]/[0.04] border border-transparent"
                               }`}
                             >
-                              <cat.icon className={`w-4 h-4 flex-shrink-0 ${isActive ? "text-emerald-400" : "text-slate-500"}`} />
+                              <cat.icon className={`w-4 h-4 flex-shrink-0 ${isActive ? "text-[#2E7D32]" : "text-[#6E7B8C]"}`} />
                               <span className="flex-1">{cat.label}</span>
-                              <span className={`text-[10px] font-mono ${isActive ? "text-emerald-400" : "text-slate-600"}`}>{cat.skills.length}</span>
+                              <span className={`text-[10px] font-mono ${isActive ? "text-[#2E7D32]" : "text-[#6E7B8C]"}`}>{cat.skills.length}</span>
                             </button>
                           );
                         })}
@@ -488,25 +484,25 @@ export default function Skills() {
                       transition={{ duration: 0.2 }}
                     >
                       <div className="flex items-center gap-2 mb-5">
-                        <Search className="w-4 h-4 text-slate-500" />
-                        <h3 className="text-lg font-bold text-white">{searchResults.length} results</h3>
-                        <span className="text-sm text-slate-500">for "{searchQuery}"</span>
+                        <Search className="w-4 h-4 text-[#6E7B8C]" />
+                        <h3 className="text-lg font-bold text-[#0F1B2D]">{searchResults.length} results</h3>
+                        <span className="text-sm text-[#6E7B8C]">for "{searchQuery}"</span>
                       </div>
                       {searchResults.length > 0 ? (
                         <div className="grid sm:grid-cols-2 gap-3">
                           {searchResults.map((skill) => (
                             <GlassCard key={skill.name} className="p-4">
                               <div className="flex items-center gap-2 mb-2">
-                                <code className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">{skill.name}</code>
-                                <span className="text-[10px] text-slate-600 font-medium">{skill.category}</span>
+                                <code className="text-xs font-mono text-[#2E7D32] bg-[#2E7D32]/10 px-2 py-0.5 rounded">{skill.name}</code>
+                                <span className="text-[10px] text-[#6E7B8C] font-medium">{skill.category}</span>
                               </div>
-                              <p className="text-sm text-slate-400 leading-relaxed">{skill.description}</p>
+                              <p className="text-sm text-[#51617A] leading-relaxed">{skill.description}</p>
                             </GlassCard>
                           ))}
                         </div>
                       ) : (
                         <div className="text-center py-16">
-                          <p className="text-slate-500">No skills match your search.</p>
+                          <p className="text-[#6E7B8C]">No skills match your search.</p>
                         </div>
                       )}
                     </motion.div>
@@ -519,12 +515,12 @@ export default function Skills() {
                       transition={{ duration: 0.2 }}
                     >
                       <div className="flex items-center gap-3 mb-6">
-                        <div className="w-10 h-10 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center justify-center">
-                          <activeData.icon className="w-5 h-5 text-emerald-400" />
+                        <div className="w-10 h-10 bg-[#2E7D32]/10 border border-[#2E7D32]/25 rounded-md flex items-center justify-center">
+                          <activeData.icon className="w-5 h-5 text-[#2E7D32]" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-bold text-white">{activeData.label}</h3>
-                          <p className="text-xs text-slate-500">{activeData.skills.length} skills</p>
+                          <h3 className="text-xl font-bold text-[#0F1B2D]">{activeData.label}</h3>
+                          <p className="text-xs text-[#6E7B8C]">{activeData.skills.length} skills</p>
                         </div>
                       </div>
                       <div className="grid sm:grid-cols-2 gap-3">
@@ -536,8 +532,8 @@ export default function Skills() {
                             transition={{ duration: 0.25, delay: i * 0.03 }}
                           >
                             <GlassCard className="p-4 h-full">
-                              <code className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded mb-2 inline-block">{skill.name}</code>
-                              <p className="text-sm text-slate-400 leading-relaxed">{skill.description}</p>
+                              <code className="text-xs font-mono text-[#2E7D32] bg-[#2E7D32]/10 px-2 py-0.5 rounded mb-2 inline-block">{skill.name}</code>
+                              <p className="text-sm text-[#51617A] leading-relaxed">{skill.description}</p>
                             </GlassCard>
                           </motion.div>
                         ))}
@@ -555,24 +551,24 @@ export default function Skills() {
         <section className="py-24">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
-              <GlassCard className="p-10 lg:p-14 text-center" glowColor="rgba(16,185,129,0.1)">
-                <div className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/[0.08] border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-6">
+              <GlassCard className="p-10 lg:p-14 text-center">
+                <div className="inline-flex items-center px-3 py-1 rounded-md bg-[#2E7D32]/10 border border-[#2E7D32]/25 text-[#2E7D32] text-xs font-semibold tracking-[0.18em] mb-6">
                   LIFETIME ACCESS
                 </div>
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   One Purchase. Unlimited Security.
                 </h2>
-                <p className="text-lg text-slate-400 mb-8 max-w-xl mx-auto">
+                <p className="text-lg text-[#51617A] mb-8 max-w-xl mx-auto">
                   Get lifetime access to all 111 Groovy Security Skills — including every future update, new skill, and security patch.
                 </p>
                 <GradientButton
                   onClick={() => setShowPurchaseModal(true)}
                   variant="default"
-                  className="min-w-0 px-10 py-4 text-lg rounded-xl btn-animate-colors"
+                  className="min-w-0 px-10 py-4 text-lg"
                 >
                   Request Access <ArrowRight className="w-5 h-5 ml-2" />
                 </GradientButton>
-                <p className="text-xs text-slate-600 mt-4">
+                <p className="text-xs text-[#6E7B8C] mt-4">
                   Reviewed and provisioned by Groovy Security
                 </p>
               </GlassCard>

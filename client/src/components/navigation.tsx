@@ -40,9 +40,9 @@ type NavMenu = {
 };
 
 const hoverText: Record<NonNullable<NavLink["hover"]>, string> = {
-  blue: "group-hover/item:text-blue-400",
-  orange: "group-hover/item:text-orange-400",
-  emerald: "group-hover/item:text-emerald-400",
+  blue: "group-hover/item:text-[#1A5FB4]",
+  orange: "group-hover/item:text-[#A05F00]",
+  emerald: "group-hover/item:text-[#2E7D32]",
 };
 
 const MENUS: NavMenu[] = [
@@ -215,7 +215,7 @@ export function Navigation() {
       transition={{ duration: 0.4, ease: "easeOut" }}
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-slate-950/80 backdrop-blur-xl border-b border-white/[0.06] shadow-lg shadow-black/20"
+          ? "bg-white border-b border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.06)]"
           : "bg-transparent"
       }`}
     >
@@ -235,10 +235,10 @@ export function Navigation() {
                   onClick={() =>
                     setOpenMenu(openMenu === menu.key ? null : menu.key)
                   }
-                  className={`flex items-center gap-1 px-4 py-2 rounded-lg transition-all duration-300 text-sm font-medium ${
+                  className={`flex items-center gap-1 px-4 py-2 rounded-md transition-all duration-300 text-sm font-medium ${
                     openMenu === menu.key || menuActive(menu)
-                      ? "text-white bg-white/[0.06]"
-                      : "text-slate-400 hover:text-white hover:bg-white/[0.04]"
+                      ? "text-[#0F1B2D] bg-[#0F1B2D]/[0.05]"
+                      : "text-[#51617A] hover:text-[#0F1B2D] hover:bg-[#0F1B2D]/[0.04]"
                   }`}
                 >
                   {menu.label}
@@ -261,7 +261,7 @@ export function Navigation() {
                       className="absolute top-full left-0 pt-2"
                     >
                       <div
-                        className={`${menu.width} bg-slate-900/95 backdrop-blur-xl rounded-xl border border-white/[0.08] shadow-2xl shadow-black/40 overflow-hidden`}
+                        className={`${menu.width} bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.12)] overflow-hidden`}
                       >
                         {menu.variant === "products" ? (
                           <div className="p-2">
@@ -269,7 +269,7 @@ export function Navigation() {
                               <Link
                                 key={link.label}
                                 href={link.href}
-                                className="flex items-start gap-3 px-3 py-3 rounded-lg hover:bg-white/[0.06] transition-colors group/item"
+                                className="flex items-start gap-3 px-3 py-3 rounded-md hover:bg-[#0F1B2D]/[0.04] transition-colors group/item"
                               >
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                                   {link.mark ? (
@@ -288,19 +288,19 @@ export function Navigation() {
                                 <div>
                                   <div className="flex items-center gap-2">
                                     <span
-                                      className={`font-medium text-white text-sm transition-colors ${
+                                      className={`font-medium text-[#0F1B2D] text-sm transition-colors ${
                                         link.hover ? hoverText[link.hover] : ""
                                       }`}
                                     >
                                       {link.label}
                                     </span>
                                     {link.badge && (
-                                      <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 rounded">
+                                      <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold bg-[#2E7D32]/10 text-[#2E7D32] border border-[#2E7D32]/25 rounded">
                                         {link.badge}
                                       </span>
                                     )}
                                   </div>
-                                  <span className="block text-xs text-slate-500 mt-0.5">
+                                  <span className="block text-xs text-[#51617A] mt-0.5">
                                     {link.description}
                                   </span>
                                 </div>
@@ -316,7 +316,7 @@ export function Navigation() {
                             {menu.columns.map((col, i) => (
                               <div key={col.heading ?? i}>
                                 {col.heading && (
-                                  <div className="px-3 pt-2 pb-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                                  <div className="px-3 pt-2 pb-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#6E7B8C]">
                                     {col.heading}
                                   </div>
                                 )}
@@ -326,13 +326,13 @@ export function Navigation() {
                                   <LinkComp
                                     key={`${link.label}-${link.href}`}
                                     href={link.href}
-                                    className="block px-3 py-2 rounded-lg hover:bg-white/[0.06] transition-colors group/item"
+                                    className="block px-3 py-2 rounded-md hover:bg-[#0F1B2D]/[0.04] transition-colors group/item"
                                   >
-                                    <span className="block font-medium text-white text-sm group-hover/item:text-blue-400 transition-colors">
+                                    <span className="block font-medium text-[#0F1B2D] text-sm group-hover/item:text-[#1A5FB4] transition-colors">
                                       {link.label}
                                     </span>
                                     {link.description && (
-                                      <span className="block text-xs text-slate-500 mt-0.5">
+                                      <span className="block text-xs text-[#51617A] mt-0.5">
                                         {link.description}
                                       </span>
                                     )}
@@ -350,10 +350,10 @@ export function Navigation() {
               </div>
             ))}
 
-            <div className="w-px h-6 bg-white/[0.08] mx-2" />
+            <div className="w-px h-6 bg-[#0F1B2D]/10 mx-2" />
 
             <Link href="/demo">
-              <GradientButton variant="blue" className="min-w-0 px-5 py-2 text-sm rounded-lg btn-animate-colors">
+              <GradientButton variant="blue" className="min-w-0 px-5 py-2 text-sm">
                 Request Demo
               </GradientButton>
             </Link>
@@ -364,7 +364,7 @@ export function Navigation() {
               variant="ghost"
               size="icon"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-white hover:bg-white/[0.06]"
+              className="text-[#0F1B2D] hover:bg-[#0F1B2D]/[0.05]"
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
@@ -381,7 +381,7 @@ export function Navigation() {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="md:hidden overflow-hidden"
             >
-              <div className="bg-slate-900/95 backdrop-blur-xl border-t border-white/[0.06] rounded-b-xl">
+              <div className="bg-white border-t border-[#0F1B2D]/10 rounded-b-xl shadow-[0_16px_40px_rgba(15,27,45,0.12)]">
                 <div className="px-4 py-4 space-y-1">
                   {MENUS.map((menu) => (
                     <div key={menu.key}>
@@ -391,7 +391,7 @@ export function Navigation() {
                             openMobileMenu === menu.key ? null : menu.key,
                           )
                         }
-                        className="flex items-center justify-between w-full px-3 py-2.5 text-slate-300 hover:text-white hover:bg-white/[0.04] rounded-lg transition-colors text-sm font-medium"
+                        className="flex items-center justify-between w-full px-3 py-2.5 text-[#51617A] hover:text-[#0F1B2D] hover:bg-[#0F1B2D]/[0.04] rounded-md transition-colors text-sm font-medium"
                       >
                         {menu.label}
                         <ChevronDown
@@ -412,7 +412,7 @@ export function Navigation() {
                             {menu.columns.map((col, i) => (
                               <div key={col.heading ?? i} className="space-y-0.5">
                                 {col.heading && (
-                                  <div className="px-3 pt-2 pb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-600">
+                                  <div className="px-3 pt-2 pb-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#6E7B8C]">
                                     {col.heading}
                                   </div>
                                 )}
@@ -423,11 +423,11 @@ export function Navigation() {
                                     key={`${link.label}-${link.href}`}
                                     href={link.href}
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="flex items-center gap-2 px-3 py-2 text-slate-400 hover:text-white rounded-lg transition-colors text-sm"
+                                    className="flex items-center gap-2 px-3 py-2 text-[#51617A] hover:text-[#0F1B2D] rounded-md transition-colors text-sm"
                                   >
                                     {link.label}
                                     {link.badge && (
-                                      <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 rounded">
+                                      <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold bg-[#2E7D32]/10 text-[#2E7D32] border border-[#2E7D32]/25 rounded">
                                         {link.badge}
                                       </span>
                                     )}
@@ -442,9 +442,9 @@ export function Navigation() {
                     </div>
                   ))}
 
-                  <div className="pt-3 border-t border-white/[0.06]">
+                  <div className="pt-3 border-t border-[#0F1B2D]/10">
                     <Link href="/demo" onClick={() => setIsMenuOpen(false)}>
-                      <Button className="w-full bg-white text-slate-900 hover:bg-slate-200 font-semibold">
+                      <Button className="w-full bg-[#1A5FB4] text-white hover:bg-[#164F96] font-semibold">
                         Request Demo
                       </Button>
                     </Link>

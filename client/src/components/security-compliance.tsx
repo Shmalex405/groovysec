@@ -7,10 +7,10 @@ export function SecurityCompliance() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
               Flexible Deployment Architecture
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
               Deploy Whiteout AI the way your organization needs — fully managed, in your cloud, or completely air-gapped on your own network.
             </p>
           </div>
@@ -20,7 +20,7 @@ export function SecurityCompliance() {
           <div className="relative flex flex-col items-center">
             {/* SVG Flow */}
             <svg
-              className="w-full text-slate-700"
+              className="w-full text-[#0F1B2D]"
               viewBox="0 0 800 380"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -175,28 +175,28 @@ export function SecurityCompliance() {
 
             {/* Who each deployment is for */}
             <div className="grid md:grid-cols-3 gap-4 mt-6 w-full">
-              <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl border border-[#1a5fb4]/20 p-5 text-center">
-                <div className="text-[10px] font-mono tracking-widest text-blue-400/70 mb-1.5">WHITEOUT-HOSTED</div>
-                <div className="text-sm font-bold text-white mb-1">The Classic SaaS Approach</div>
-                <p className="text-xs text-slate-500">
+              <div className="bg-white rounded-xl border border-[#1a5fb4]/20 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-5 text-center">
+                <div className="text-[10px] tracking-[0.18em] font-semibold text-[#1A5FB4] mb-1.5">WHITEOUT-HOSTED</div>
+                <div className="text-sm font-bold text-[#0F1B2D] mb-1">The Classic SaaS Approach</div>
+                <p className="text-xs text-[#6E7B8C]">
                   Sign up, set policies, done. Groovy carries the pager — dedicated,
                   isolated infrastructure with managed keys — so your team gets
                   governance without a single server to babysit.
                 </p>
               </div>
-              <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl border border-[#2e7d32]/20 p-5 text-center">
-                <div className="text-[10px] font-mono tracking-widest text-emerald-400/70 mb-1.5">CLIENT-HOSTED</div>
-                <div className="text-sm font-bold text-white mb-1">Maximum Data Control</div>
-                <p className="text-xs text-slate-500">
+              <div className="bg-white rounded-xl border border-[#2e7d32]/20 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-5 text-center">
+                <div className="text-[10px] tracking-[0.18em] font-semibold text-[#2E7D32] mb-1.5">CLIENT-HOSTED</div>
+                <div className="text-sm font-bold text-[#0F1B2D] mb-1">Maximum Data Control</div>
+                <p className="text-xs text-[#6E7B8C]">
                   Your cloud, your network, your keys. Whiteout runs entirely inside
                   your own account, so the answer to "where does our data go?" is
                   simple: nowhere. You own it.
                 </p>
               </div>
-              <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl border border-[#c77800]/20 p-5 text-center">
-                <div className="text-[10px] font-mono tracking-widest text-amber-400/70 mb-1.5">LAN-HOSTED</div>
-                <div className="text-sm font-bold text-white mb-1">For the Extremely Regulated</div>
-                <p className="text-xs text-slate-500">
+              <div className="bg-white rounded-xl border border-[#c77800]/20 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-5 text-center">
+                <div className="text-[10px] tracking-[0.18em] font-semibold text-[#A05F00] mb-1.5">LAN-HOSTED</div>
+                <div className="text-sm font-bold text-[#0F1B2D] mb-1">For the Extremely Regulated</div>
+                <p className="text-xs text-[#6E7B8C]">
                   For environments where nothing leaves the building. Fully air-gapped
                   on-premises operation with local GPU inference — built for defense,
                   government, and classified networks.

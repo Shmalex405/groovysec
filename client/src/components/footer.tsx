@@ -41,14 +41,14 @@ const footerLinks: Record<string, LinkItem[]> = {
 export function Footer() {
   return (
     <ScrollReveal>
-      <footer className="relative bg-slate-950 text-white overflow-hidden">
+      <footer className="relative bg-white border-t border-[#0F1B2D]/10 overflow-hidden">
 
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-10">
             <div className="col-span-2 md:col-span-3 lg:col-span-1 space-y-4">
               <GroovyLogo />
-              <p className="text-slate-500 text-sm leading-relaxed mt-4">
+              <p className="text-[#51617A] text-sm leading-relaxed mt-4">
                 Securing AI. Automating Security. Enterprise-grade cybersecurity
                 products for the AI era.
               </p>
@@ -56,7 +56,7 @@ export function Footer() {
 
             {Object.entries(footerLinks).map(([category, links]) => (
               <div key={category}>
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-5">
+                <h4 className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6E7B8C] mb-5">
                   {category}
                 </h4>
                 <ul className="space-y-3">
@@ -65,17 +65,17 @@ export function Footer() {
                       {link.external !== undefined && link.external === false && link.href.startsWith("/docs") ? (
                         <a
                           href={link.href}
-                          className="text-sm text-slate-500 hover:text-white transition-colors duration-300 flex items-center group"
+                          className="text-sm text-[#51617A] hover:text-[#1A5FB4] transition-colors duration-300 flex items-center group"
                         >
-                          <span className="w-0 group-hover:w-2 h-px bg-blue-400 mr-0 group-hover:mr-2 transition-all duration-300" />
+                          <span className="w-0 group-hover:w-2 h-px bg-[#1A5FB4] mr-0 group-hover:mr-2 transition-all duration-300" />
                           {link.label}
                         </a>
                       ) : link.href.startsWith("/") ? (
                         <Link
                           href={link.href}
-                          className="text-sm text-slate-500 hover:text-white transition-colors duration-300 flex items-center group"
+                          className="text-sm text-[#51617A] hover:text-[#1A5FB4] transition-colors duration-300 flex items-center group"
                         >
-                          <span className="w-0 group-hover:w-2 h-px bg-blue-400 mr-0 group-hover:mr-2 transition-all duration-300" />
+                          <span className="w-0 group-hover:w-2 h-px bg-[#1A5FB4] mr-0 group-hover:mr-2 transition-all duration-300" />
                           {link.label}
                         </Link>
                       ) : (
@@ -83,9 +83,9 @@ export function Footer() {
                           href={link.href}
                           target={link.external ? "_blank" : undefined}
                           rel={link.external ? "noopener noreferrer" : undefined}
-                          className="text-sm text-slate-500 hover:text-white transition-colors duration-300 flex items-center group"
+                          className="text-sm text-[#51617A] hover:text-[#1A5FB4] transition-colors duration-300 flex items-center group"
                         >
-                          <span className="w-0 group-hover:w-2 h-px bg-blue-400 mr-0 group-hover:mr-2 transition-all duration-300" />
+                          <span className="w-0 group-hover:w-2 h-px bg-[#1A5FB4] mr-0 group-hover:mr-2 transition-all duration-300" />
                           {link.label}
                         </a>
                       )}
@@ -96,10 +96,10 @@ export function Footer() {
             ))}
           </div>
 
-          <div className="mt-12 pt-8 border-t border-white/[0.06] space-y-8">
+          <div className="mt-12 pt-8 border-t border-[#0F1B2D]/10 space-y-8">
             {/* NVIDIA Inception Program membership */}
             <div className="flex flex-col items-center text-center gap-3">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-600">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E7B8C]">
                 Proud Member Of
               </span>
               <a
@@ -109,18 +109,21 @@ export function Footer() {
                 aria-label="NVIDIA Inception Program member"
                 className="inline-block opacity-90 hover:opacity-100 transition-opacity duration-300"
               >
-                <img
-                  src="/nvidia-inception-white.png"
-                  alt="NVIDIA Inception Program"
-                  className="h-10 w-auto"
-                  loading="lazy"
-                />
+                {/* White badge artwork needs a dark ground to stay legible on paper */}
+                <span className="inline-flex items-center bg-[#0B1218] rounded-md px-2.5 py-1.5">
+                  <img
+                    src="/nvidia-inception-white.png"
+                    alt="NVIDIA Inception Program"
+                    className="h-10 w-auto"
+                    loading="lazy"
+                  />
+                </span>
               </a>
             </div>
 
             {/* Bottom bar */}
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-slate-600">
+            <p className="text-xs text-[#6E7B8C]">
               &copy; 2026 Groovy Security. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
@@ -128,7 +131,7 @@ export function Footer() {
                 href="https://bsky.app/profile/groovysecurity.bsky.social"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-500 hover:text-white transition-colors duration-300"
+                className="text-[#51617A] hover:text-[#1A5FB4] transition-colors duration-300"
                 aria-label="Bluesky"
               >
                 <svg width="20" height="18" viewBox="0 0 600 530" fill="currentColor">
@@ -139,7 +142,7 @@ export function Footer() {
                 href="https://www.linkedin.com/company/groovy-security/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-500 hover:text-white transition-colors duration-300"
+                className="text-[#51617A] hover:text-[#1A5FB4] transition-colors duration-300"
                 aria-label="LinkedIn"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">

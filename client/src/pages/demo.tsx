@@ -40,7 +40,7 @@ export default function Demo() {
 
   return (
     <PageTransition>
-      <AuroraBackground variant="mixed" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="mixed" className="min-h-screen">
         <Navigation />
 
         {/* What to expect */}
@@ -48,10 +48,10 @@ export default function Demo() {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-10">
-                <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
+                <h1 className="text-4xl lg:text-5xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   See Groovy Security in Action
                 </h1>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Here's what to expect from your demo — no slide decks, just the
                   products working on problems like yours.
                 </p>
@@ -63,13 +63,13 @@ export default function Demo() {
                 const Icon = step.icon;
                 return (
                   <StaggerItem key={step.title}>
-                    <div className="h-full p-6 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] text-center">
-                      <div className="w-10 h-10 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <Icon className="w-5 h-5 text-blue-400" />
+                    <div className="h-full p-6 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] text-center">
+                      <div className="w-10 h-10 bg-[#1A5FB4]/10 border border-[#1A5FB4]/25 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <Icon className="w-5 h-5 text-[#1A5FB4]" />
                       </div>
-                      <div className="text-xs font-mono text-slate-600 mb-2">STEP {index + 1}</div>
-                      <h3 className="text-sm font-bold text-white mb-2">{step.title}</h3>
-                      <p className="text-xs text-slate-400 leading-relaxed">{step.description}</p>
+                      <div className="text-xs uppercase tracking-[0.18em] font-semibold text-[#6E7B8C] mb-2">STEP {index + 1}</div>
+                      <h3 className="text-sm font-bold text-[#0F1B2D] mb-2">{step.title}</h3>
+                      <p className="text-xs text-[#51617A] leading-relaxed">{step.description}</p>
                     </div>
                   </StaggerItem>
                 );
@@ -77,14 +77,14 @@ export default function Demo() {
             </StaggerChildren>
 
             <ScrollReveal>
-              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-slate-500">
+              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-[#6E7B8C]">
                 {[
                   "NVIDIA Inception member",
                   "SOC 2 Type II in progress",
                   "US & EU presence",
                 ].map((item) => (
                   <span key={item} className="flex items-center">
-                    <CheckCircle className="w-3.5 h-3.5 text-emerald-400 mr-1.5" />
+                    <CheckCircle className="w-3.5 h-3.5 text-[#2E7D32] mr-1.5" />
                     {item}
                   </span>
                 ))}

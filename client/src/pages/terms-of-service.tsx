@@ -12,13 +12,13 @@ export default function TermsOfService() {
   return (
     <PageTransition>
     <Navigation />
-    <main className="min-h-screen bg-slate-950 text-slate-100 px-6 pt-32 pb-20">
-      <div className="max-w-4xl mx-auto text-center mb-12">
-        <h1 className="text-4xl font-bold text-blue-400">Terms of Service</h1>
+    <main className="min-h-screen text-[#0F1B2D] px-6 pt-32 pb-20">
+      <div className="max-w-4xl mx-auto text-center mb-12 border-b border-[#0F1B2D]/10 pb-10">
+        <h1 className="text-4xl font-bold text-[#0F1B2D]">Terms of Service</h1>
       </div>
 
       <div className="max-w-4xl mx-auto">
-        <p className="text-slate-300 mb-6">
+        <p className="text-[#51617A] mb-6">
           Welcome to Groovy Security. By accessing or using our website and
           services (the “Service”), you agree to be bound by these Terms of
           Service. If you do not agree with these terms, you may not use the
@@ -27,10 +27,10 @@ export default function TermsOfService() {
 
         <section className="space-y-8 text-left">
           <div>
-            <h2 className="text-2xl font-semibold text-blue-300 mb-2">
+            <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
               Use of the Service
             </h2>
-            <p className="text-slate-300">
+            <p className="text-[#51617A]">
               You agree to use the Service only for lawful purposes and in
               accordance with these Terms. You may not attempt to interfere
               with, disrupt, or gain unauthorized access to any part of the
@@ -39,10 +39,10 @@ export default function TermsOfService() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold text-blue-300 mb-2">
+            <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
               Accounts &amp; Security
             </h2>
-            <p className="text-slate-300">
+            <p className="text-[#51617A]">
               If an account is created, you are responsible for maintaining the
               confidentiality of your login credentials and for all activity
               that occurs under your organization. You agree to notify us
@@ -52,10 +52,10 @@ export default function TermsOfService() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold text-blue-300 mb-2">
+            <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
               Intellectual Property
             </h2>
-            <p className="text-slate-300">
+            <p className="text-[#51617A]">
               All content, trademarks, and materials available through the
               Service are the property of Groovy Security or our licensors. You
               may not copy, modify, or distribute any part of the Service
@@ -64,10 +64,10 @@ export default function TermsOfService() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold text-blue-300 mb-2">
+            <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
               Disclaimer of Warranties
             </h2>
-            <p className="text-slate-300">
+            <p className="text-[#51617A]">
               The Service is provided on an “as is” and “as available” basis.
               Groovy Security disclaims all warranties of any kind, whether
               express or implied, including but not limited to implied
@@ -77,10 +77,10 @@ export default function TermsOfService() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold text-blue-300 mb-2">
+            <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
               Secure AI Skills — No Guarantee
             </h2>
-            <p className="text-slate-300 mb-3">
+            <p className="text-[#51617A] mb-3">
               The Groovy Secure AI Skills library (the “Skills”) is provided on
               an “as is” and “as available” basis. While the Skills are designed,
               audited, and maintained with security best practices in mind —
@@ -88,7 +88,7 @@ export default function TermsOfService() {
               10 — Groovy Security makes <strong>no guarantee, warranty, or
               representation</strong> that the Skills will:
             </p>
-            <ul className="list-disc list-inside text-slate-300 space-y-1 mb-3">
+            <ul className="list-disc list-inside text-[#51617A] space-y-1 mb-3">
               <li>
                 detect, prevent, or mitigate every security vulnerability,
                 prompt injection, data exfiltration attempt, or other attack
@@ -112,7 +112,7 @@ export default function TermsOfService() {
                 produce any specific business, security, or financial outcome.
               </li>
             </ul>
-            <p className="text-slate-300">
+            <p className="text-[#51617A]">
               You are solely responsible for evaluating the Skills, validating
               their suitability for your environment, and maintaining your own
               independent security controls, testing, monitoring, and human
@@ -125,10 +125,10 @@ export default function TermsOfService() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold text-blue-300 mb-2">
+            <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
               Limitation of Liability
             </h2>
-            <p className="text-slate-300">
+            <p className="text-[#51617A]">
               To the fullest extent permitted by law, Groovy Security will not
               be liable for any indirect, incidental, special, consequential, or
               punitive damages, or any loss of profits or data arising from your
@@ -137,10 +137,10 @@ export default function TermsOfService() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold text-blue-300 mb-2">
+            <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
               Updates to These Terms
             </h2>
-            <p className="text-slate-300">
+            <p className="text-[#51617A]">
               We may update these Terms from time to time. The most current
               version will always be posted on this page. Your continued use of
               the Service after any changes become effective constitutes
@@ -149,14 +149,14 @@ export default function TermsOfService() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold text-blue-300 mb-2">
+            <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
               Contact Us
             </h2>
-            <p className="text-slate-300">
+            <p className="text-[#51617A]">
               If you have any questions about these Terms, you can contact us at{" "}
               <a
                 href="mailto:support@groovysec.com"
-                className="text-blue-400 underline"
+                className="text-[#1A5FB4] underline hover:text-[#164F96]"
               >
                 support@groovysec.com
               </a>
@@ -165,7 +165,7 @@ export default function TermsOfService() {
           </div>
         </section>
 
-        <p className="text-slate-500 text-sm mt-12 text-center">
+        <p className="text-[#6E7B8C] text-sm mt-12 pt-8 border-t border-[#0F1B2D]/10 text-center">
           Last updated: November 2025
         </p>
       </div>

@@ -71,23 +71,24 @@ function ProductCardBody({
 }) {
   const textClass =
     tone === "front"
-      ? "text-slate-400"
+      ? "text-[#51617A]"
       : tone === "overlay-blue"
         ? "text-blue-100/80"
         : "text-orange-100/80";
   const listClass =
     tone === "front"
-      ? "text-slate-400"
+      ? "text-[#51617A]"
       : tone === "overlay-blue"
         ? "text-blue-100/70"
         : "text-orange-100/70";
-  const checkClass = tone === "front" ? "text-emerald-400" : "text-emerald-300";
+  const checkClass = tone === "front" ? "text-[#2E7D32]" : "text-emerald-300";
+  const titleClass = tone === "front" ? "text-[#0F1B2D]" : "text-white";
 
   return (
     <>
       <div className="flex items-center gap-3 mb-6">
         {logo}
-        <h3 className="text-2xl font-bold text-white">{product.name}</h3>
+        <h3 className={`text-2xl font-bold ${titleClass}`}>{product.name}</h3>
       </div>
       <p className={`${textClass} mb-6 leading-relaxed`}>{product.description}</p>
       <ul className="space-y-2.5 mb-8">
@@ -117,7 +118,7 @@ export default function CompanyHome() {
 
   return (
     <PageTransition>
-      <AuroraBackground variant="mixed" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="mixed" className="min-h-screen">
         <Navigation />
 
         {/* Hero Section */}
@@ -125,14 +126,14 @@ export default function CompanyHome() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <HeroTextReveal>
               <HeroLine>
-                <h1 className="text-5xl lg:text-8xl font-bold mb-6 leading-[1.1] tracking-tight text-gradient-hero animate-gradient-flow">
+                <h1 className="text-5xl lg:text-8xl font-bold mb-6 leading-[1.1] tracking-tight text-[#0F1B2D]">
                   The AI Era Demands
                   <br />
                   a New Kind of Security
                 </h1>
               </HeroLine>
               <HeroLine>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto mb-10 leading-relaxed">
                   Groovy Security gives enterprises the tools to govern AI usage, prevent
                   data leakage, and automate security testing — purpose-built for a world
                   where AI is both the innovator and the risk.
@@ -148,7 +149,7 @@ export default function CompanyHome() {
                   </GradientButton>
                 </a>
                 <Link href="/demo">
-                  <GradientButton variant="default">
+                  <GradientButton variant="white">
                     Request Demo
                   </GradientButton>
                 </Link>
@@ -162,10 +163,10 @@ export default function CompanyHome() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Our Products
                 </h2>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Two flagship platforms, one mission — giving organizations complete
                   control over AI security and automated defense.
                 </p>
@@ -190,7 +191,7 @@ export default function CompanyHome() {
                     </div>
                   }
                 >
-                  <div className="p-8 bg-white/[0.03] backdrop-blur-xl flex flex-col">
+                  <div className="p-8 flex flex-col">
                     <ProductCardBody
                       product={PRODUCTS.whiteout}
                       logo={<SpinningMark alt="Whiteout AI" className="w-10 h-10" />}
@@ -218,7 +219,7 @@ export default function CompanyHome() {
                     </div>
                   }
                 >
-                  <div className="p-8 bg-white/[0.03] backdrop-blur-xl flex flex-col">
+                  <div className="p-8 flex flex-col">
                     <ProductCardBody
                       product={PRODUCTS.maestro}
                       logo={<SpinningMark alt="Maestro" className="w-10 h-10 grayscale" />}
@@ -237,7 +238,7 @@ export default function CompanyHome() {
               <div className="mt-16 space-y-8 text-center">
                 <PromptInterceptionDemo />
                 <MaestroAssessmentDemo />
-                <p className="text-sm text-slate-500 max-w-2xl mx-auto">
+                <p className="text-sm text-[#51617A] max-w-2xl mx-auto">
                   The idea is simple. Whiteout AI governs every prompt before it
                   leaves your network. Maestro proves every vulnerability with
                   real exploitation. Defense and offense for the AI era.
@@ -254,10 +255,10 @@ export default function CompanyHome() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Built by Security Professionals
                 </h2>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Based in Utah, Groovy Security was founded by cybersecurity professionals
                   who saw the critical gaps in AI governance and opportunities in security testing firsthand
                   — and built the products to close them.
@@ -286,27 +287,12 @@ export default function CompanyHome() {
                   color: "emerald",
                 },
               ].map((item) => {
-                const glowColorMap: Record<string, string> = {
-                  blue: "#1a5fb4",
-                  orange: "#c77800",
-                  emerald: "#2e7d32",
-                };
-                const glowColor = glowColorMap[item.color];
                 return (
                   <StaggerItem key={item.title}>
-                    <div className="relative group">
-                      {/* Glow behind card */}
-                      <div
-                        className="absolute -inset-1 rounded-3xl blur-xl opacity-40 group-hover:opacity-70 transition-opacity duration-700 animate-pulse"
-                        style={{
-                          background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
-                        }}
-                      />
-                      <GlassCard className="relative p-6 text-center">
-                        <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
-                        <p className="text-sm text-slate-500">{item.description}</p>
-                      </GlassCard>
-                    </div>
+                    <GlassCard className="relative p-6 text-center">
+                      <h3 className="text-lg font-bold text-[#0F1B2D] mb-2">{item.title}</h3>
+                      <p className="text-sm text-[#51617A]">{item.description}</p>
+                    </GlassCard>
                   </StaggerItem>
                 );
               })}
@@ -318,10 +304,10 @@ export default function CompanyHome() {
         <section className="py-24">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <ScrollReveal>
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
                 Ready to Get Started?
               </h2>
-              <p className="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
+              <p className="text-lg text-[#51617A] mb-10 max-w-xl mx-auto">
                 See how Groovy Security's products can help your organization secure AI
                 usage and automate security testing.
               </p>

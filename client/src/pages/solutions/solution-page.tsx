@@ -34,7 +34,7 @@ function SolutionContent({
   usePageMeta(solution.metaTitle, solution.metaDescription);
 
   return (
-    <AuroraBackground variant="bluegreen" className="min-h-screen bg-slate-950">
+    <AuroraBackground variant="bluegreen" className="min-h-screen">
       <Navigation />
 
       <PageTransition>
@@ -42,11 +42,11 @@ function SolutionContent({
         <section className="pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="text-white">
-                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-blue-500/[0.08] border border-blue-500/20 text-sm mb-6">
-                  <span className="font-semibold text-white">Whiteout AI</span>
-                  <span className="w-px h-3.5 bg-blue-400/30" />
-                  <span className="text-blue-400 text-xs font-medium uppercase tracking-[0.16em]">
+              <div className="text-[#0F1B2D]">
+                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-md bg-[#1A5FB4]/10 border border-[#1A5FB4]/25 text-sm mb-6">
+                  <span className="font-semibold text-[#0F1B2D]">Whiteout AI</span>
+                  <span className="w-px h-3.5 bg-[#1A5FB4]/30" />
+                  <span className="text-[#1A5FB4] text-xs font-semibold uppercase tracking-[0.18em]">
                     {solution.eyebrow.replace(/^Solutions —\s*/, "")}
                   </span>
                 </div>
@@ -55,7 +55,7 @@ function SolutionContent({
                   <HeroLine>
                     <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight">
                       {solution.headline.lead}
-                      <span className="block bg-gradient-to-r from-blue-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">
+                      <span className="block text-[#1A5FB4]">
                         {solution.headline.gradient}
                       </span>
                       {solution.headline.tail}
@@ -63,7 +63,7 @@ function SolutionContent({
                   </HeroLine>
 
                   <HeroLine>
-                    <p className="text-lg text-slate-300 mb-8 leading-relaxed">
+                    <p className="text-lg text-[#51617A] mb-8 leading-relaxed">
                       {solution.intro}
                     </p>
                   </HeroLine>
@@ -79,7 +79,7 @@ function SolutionContent({
                     </Link>
                   </div>
 
-                  <div className="text-sm text-slate-400 flex items-center">
+                  <div className="text-sm text-[#51617A] flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
                     SOC 2 Type II in progress • NVIDIA Inception member
                   </div>
@@ -90,11 +90,11 @@ function SolutionContent({
               <StaggerChildren className="grid grid-cols-2 gap-4">
                 {solution.stats.map((stat) => (
                   <StaggerItem key={stat.label}>
-                    <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.08] text-center hover:border-blue-500/50 transition-all duration-300">
-                      <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent mb-2">
+                    <div className="bg-white rounded-xl p-6 border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] text-center hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300">
+                      <div className="text-3xl font-bold text-[#1A5FB4] mb-2">
                         {stat.value}
                       </div>
-                      <div className="text-sm text-slate-400">{stat.label}</div>
+                      <div className="text-sm text-[#51617A]">{stat.label}</div>
                     </div>
                   </StaggerItem>
                 ))}
@@ -108,7 +108,7 @@ function SolutionContent({
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <ScrollReveal>
               <PromptInterceptionDemo />
-              <p className="mt-5 text-sm text-slate-500 max-w-xl mx-auto">
+              <p className="mt-5 text-sm text-[#6E7B8C] max-w-xl mx-auto">
                 Every prompt intercepted, evaluated against 60+ policies, and
                 enforced in real time — before sensitive data ever leaves your network.
               </p>
@@ -121,10 +121,10 @@ function SolutionContent({
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   {solution.valuePropsHeading}
                 </h2>
-                <p className="text-lg text-slate-400 max-w-3xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
                   {solution.valuePropsSubheading}
                 </p>
               </div>
@@ -133,12 +133,12 @@ function SolutionContent({
             <StaggerChildren className="grid md:grid-cols-2 gap-8">
               {solution.valueProps.map((prop) => (
                 <StaggerItem key={prop.title}>
-                  <div className="p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 h-full">
-                    <h3 className="text-xl font-bold text-white mb-4">{prop.title}</h3>
+                  <div className="p-8 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300 h-full">
+                    <h3 className="text-xl font-bold text-[#0F1B2D] mb-4">{prop.title}</h3>
                     <ul className="space-y-3">
                       {prop.items.map((item) => (
-                        <li key={item} className="flex items-start text-sm text-slate-400">
-                          <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0 mt-0.5" />
+                        <li key={item} className="flex items-start text-sm text-[#51617A]">
+                          <CheckCircle className="w-4 h-4 text-[#2E7D32] mr-2 flex-shrink-0 mt-0.5" />
                           {item}
                         </li>
                       ))}
@@ -159,10 +159,10 @@ function SolutionContent({
         <ScrollReveal>
           <section className="py-24 relative overflow-hidden">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
                 Ready to Govern AI with Confidence?
               </h2>
-              <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
+              <p className="text-lg text-[#51617A] mb-8 max-w-2xl mx-auto">
                 See Whiteout AI inspect, evaluate, and enforce policy on real AI
                 traffic in a live walkthrough tailored to your requirements.
               </p>
@@ -174,7 +174,7 @@ function SolutionContent({
                   </GradientButton>
                 </Link>
                 <Link href="/whiteout-ai/security-whitepaper">
-                  <GradientButton variant="default">Read the Whitepaper</GradientButton>
+                  <GradientButton variant="white">Read the Whitepaper</GradientButton>
                 </Link>
               </div>
             </div>

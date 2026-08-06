@@ -164,39 +164,39 @@ function detectBrowser(): string {
 // ── Color helpers ───────────────────────────────────────────────────────
 const colorMap: Record<string, { bg: string; text: string; iconBg: string; border: string; hoverBorder: string }> = {
   blue: {
-    bg: "bg-blue-600",
-    text: "text-blue-400",
-    iconBg: "bg-blue-500/10",
-    border: "border-blue-500/20",
-    hoverBorder: "hover:border-blue-400",
+    bg: "bg-[#1A5FB4]",
+    text: "text-[#1A5FB4]",
+    iconBg: "bg-[#1A5FB4]/10",
+    border: "border-[#0F1B2D]/10",
+    hoverBorder: "hover:border-[#1A5FB4]/40",
   },
   green: {
-    bg: "bg-emerald-600",
-    text: "text-emerald-400",
-    iconBg: "bg-emerald-500/10",
-    border: "border-emerald-500/20",
-    hoverBorder: "hover:border-emerald-400",
+    bg: "bg-[#2E7D32]",
+    text: "text-[#2E7D32]",
+    iconBg: "bg-[#2E7D32]/10",
+    border: "border-[#0F1B2D]/10",
+    hoverBorder: "hover:border-[#2E7D32]/40",
   },
   purple: {
-    bg: "bg-purple-600",
-    text: "text-purple-400",
-    iconBg: "bg-purple-500/10",
-    border: "border-purple-500/20",
-    hoverBorder: "hover:border-purple-400",
+    bg: "bg-[#7C3AED]",
+    text: "text-[#6D28D9]",
+    iconBg: "bg-[#7C3AED]/10",
+    border: "border-[#0F1B2D]/10",
+    hoverBorder: "hover:border-[#7C3AED]/40",
   },
   orange: {
-    bg: "bg-orange-600",
-    text: "text-orange-400",
-    iconBg: "bg-orange-500/10",
-    border: "border-orange-500/20",
-    hoverBorder: "hover:border-orange-400",
+    bg: "bg-[#A05F00]",
+    text: "text-[#A05F00]",
+    iconBg: "bg-[#A05F00]/10",
+    border: "border-[#0F1B2D]/10",
+    hoverBorder: "hover:border-[#A05F00]/40",
   },
   slate: {
-    bg: "bg-slate-800",
-    text: "text-slate-300",
-    iconBg: "bg-slate-500/10",
-    border: "border-white/[0.08]",
-    hoverBorder: "hover:border-slate-500",
+    bg: "bg-[#0F1B2D]",
+    text: "text-[#51617A]",
+    iconBg: "bg-[#0F1B2D]/[0.04]",
+    border: "border-[#0F1B2D]/10",
+    hoverBorder: "hover:border-[#0F1B2D]/20",
   },
 };
 
@@ -221,7 +221,7 @@ export default function DownloadPage() {
 
   return (
     <PageTransition>
-      <AuroraBackground variant="bluegreen" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="bluegreen" className="min-h-screen">
         <Navigation />
 
         {/* Hero */}
@@ -229,15 +229,15 @@ export default function DownloadPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <HeroTextReveal>
               <HeroLine>
-                <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6">
+                <h1 className="text-4xl lg:text-6xl font-bold text-[#0F1B2D] mb-6">
                   Download{" "}
-                  <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">
+                  <span className="text-[#1A5FB4]">
                     Whiteout AI
                   </span>
                 </h1>
               </HeroLine>
               <HeroLine>
-                <p className="text-xl text-slate-300 max-w-2xl mb-8">
+                <p className="text-xl text-[#51617A] max-w-2xl mb-8">
                   Get your entire organization set up with secure AI governance.
                   Install individually or use the bundled setup to get everything at once.
                 </p>
@@ -247,11 +247,11 @@ export default function DownloadPage() {
             <ScrollReveal>
               {/* Platform selector */}
               <div className="flex items-center gap-4 mb-8">
-                <span className="text-sm text-slate-400">Detected platform:</span>
+                <span className="text-sm text-[#6E7B8C]">Detected platform:</span>
                 <div className="relative">
                   <button
                     onClick={() => setShowPlatformMenu(!showPlatformMenu)}
-                    className="flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm hover:bg-white/15 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 border border-[#0F1B2D]/25 rounded-md text-[#0F1B2D] text-sm hover:border-[#0F1B2D] hover:bg-[#0F1B2D]/[0.04] transition-colors"
                   >
                     {isMac ? (
                       <Apple className="w-4 h-4" />
@@ -263,7 +263,7 @@ export default function DownloadPage() {
                   </button>
 
                   {showPlatformMenu && (
-                    <div className="absolute top-full left-0 mt-2 w-56 bg-slate-800 rounded-lg shadow-xl border border-slate-700 py-1 z-50">
+                    <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-md shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] border border-[#0F1B2D]/10 py-1 z-50">
                       {(
                         [
                           ["macos-arm64", "macOS (Apple Silicon)"],
@@ -278,8 +278,8 @@ export default function DownloadPage() {
                           }}
                           className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
                             platform === key
-                              ? "text-blue-400 bg-blue-600/10"
-                              : "text-slate-300 hover:bg-white/5"
+                              ? "text-[#1A5FB4] bg-[#1A5FB4]/10"
+                              : "text-[#0F1B2D] hover:bg-[#0F1B2D]/[0.04]"
                           }`}
                         >
                           {platform === key && (
@@ -294,12 +294,12 @@ export default function DownloadPage() {
               </div>
 
               {/* Bundled installer CTA */}
-              <div className="bg-gradient-to-r from-blue-600/20 to-green-600/20 border border-blue-500/30 rounded-2xl p-6 max-w-2xl">
+              <div className="bg-[#1A5FB4]/[0.06] border border-[#1A5FB4]/25 rounded-xl p-6 max-w-2xl">
                 <div>
-                    <h3 className="text-lg font-semibold text-white mb-1">
+                    <h3 className="text-lg font-semibold text-[#0F1B2D] mb-1">
                       Install Everything at Once
                     </h3>
-                    <p className="text-sm text-slate-300 mb-4">
+                    <p className="text-sm text-[#51617A] mb-4">
                       The bundled setup installs Whiteout AI and Desktop Guard, then
                       guides you through browser and IDE extension setup.
                     </p>
@@ -329,10 +329,10 @@ export default function DownloadPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-white mb-4">
+                <h2 className="text-3xl font-bold text-[#0F1B2D] mb-4">
                   Individual Downloads
                 </h2>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Prefer to install components separately? Download each one individually below.
                 </p>
               </div>
@@ -376,7 +376,7 @@ export default function DownloadPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-10">
-                <h2 className="text-2xl font-bold text-white mb-3">
+                <h2 className="text-2xl font-bold text-[#0F1B2D] mb-3">
                   System Requirements
                 </h2>
               </div>
@@ -384,12 +384,12 @@ export default function DownloadPage() {
 
             <StaggerChildren className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               <StaggerItem>
-                <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl p-6 border border-white/[0.08]">
+                <div className="bg-white rounded-xl p-6 border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
                   <div className="flex items-center gap-3 mb-4">
-                    <Apple className="w-5 h-5 text-slate-300" />
-                    <h3 className="font-semibold text-white">macOS</h3>
+                    <Apple className="w-5 h-5 text-[#51617A]" />
+                    <h3 className="font-semibold text-[#0F1B2D]">macOS</h3>
                   </div>
-                  <ul className="space-y-2 text-sm text-slate-400">
+                  <ul className="space-y-2 text-sm text-[#51617A]">
                     <li>macOS 12 (Monterey) or later</li>
                     <li>Apple Silicon (M1 or later)</li>
                     <li>4 GB RAM minimum</li>
@@ -398,12 +398,12 @@ export default function DownloadPage() {
                 </div>
               </StaggerItem>
               <StaggerItem>
-                <div className="bg-white/[0.03] backdrop-blur-xl rounded-xl p-6 border border-white/[0.08]">
+                <div className="bg-white rounded-xl p-6 border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
                   <div className="flex items-center gap-3 mb-4">
-                    <Monitor className="w-5 h-5 text-slate-300" />
-                    <h3 className="font-semibold text-white">Windows</h3>
+                    <Monitor className="w-5 h-5 text-[#51617A]" />
+                    <h3 className="font-semibold text-[#0F1B2D]">Windows</h3>
                   </div>
-                  <ul className="space-y-2 text-sm text-slate-400">
+                  <ul className="space-y-2 text-sm text-[#51617A]">
                     <li>Windows 10 (64-bit) or later</li>
                     <li>x64 processor</li>
                     <li>4 GB RAM minimum</li>
@@ -419,16 +419,16 @@ export default function DownloadPage() {
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <ScrollReveal>
-              <h2 className="text-2xl font-bold text-white mb-3">
+              <h2 className="text-2xl font-bold text-[#0F1B2D] mb-3">
                 Need Help Getting Set Up?
               </h2>
-              <p className="text-slate-400 mb-6 max-w-lg mx-auto">
+              <p className="text-[#51617A] mb-6 max-w-lg mx-auto">
                 Our documentation covers installation, configuration, and troubleshooting
                 for all platforms.
               </p>
               <div className="flex justify-center gap-4">
                 <a href="/docs">
-                  <GradientButton variant="default">
+                  <GradientButton variant="white">
                     View Documentation
                   </GradientButton>
                 </a>
@@ -468,11 +468,11 @@ function DesktopDownloadCard({
 
   return (
     <div
-      className={`bg-white/[0.03] backdrop-blur-xl rounded-2xl border ${colors.border} ${colors.hoverBorder} p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-black/20 hover:-translate-y-1`}
+      className={`bg-white rounded-xl border ${colors.border} ${colors.hoverBorder} p-6 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] transition-all duration-300 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] hover:-translate-y-0.5`}
     >
       <div>
-          <h3 className="text-lg font-bold text-white mb-1">{product.name}</h3>
-          <p className="text-sm text-slate-400 mb-4">{product.description}</p>
+          <h3 className="text-lg font-bold text-[#0F1B2D] mb-1">{product.name}</h3>
+          <p className="text-sm text-[#51617A] mb-4">{product.description}</p>
           <a href={download.url}>
             <GradientButton variant={product.color === "green" ? "default" : "blue"}>
               <Download className="w-4 h-4 mr-2" />
@@ -501,11 +501,11 @@ function ExtensionCard({
 
   return (
     <div
-      className={`bg-white/[0.03] backdrop-blur-xl rounded-2xl border ${colors.border} ${colors.hoverBorder} p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-black/20 hover:-translate-y-1`}
+      className={`bg-white rounded-xl border ${colors.border} ${colors.hoverBorder} p-6 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] transition-all duration-300 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] hover:-translate-y-0.5`}
     >
       <div>
-          <h3 className="text-lg font-bold text-white mb-1">{product.name}</h3>
-          <p className="text-sm text-slate-400 mb-4">{product.description}</p>
+          <h3 className="text-lg font-bold text-[#0F1B2D] mb-1">{product.name}</h3>
+          <p className="text-sm text-[#51617A] mb-4">{product.description}</p>
 
           {/* Primary store button */}
           {primaryStore[1].available ? (
@@ -520,7 +520,7 @@ function ExtensionCard({
               </GradientButton>
             </a>
           ) : (
-            <Button disabled className="bg-slate-800 text-slate-500 cursor-not-allowed">
+            <Button disabled className="bg-[#0F1B2D]/[0.04] text-[#6E7B8C] border border-[#0F1B2D]/10 cursor-not-allowed">
               Coming Soon — {primaryStore[1].label}
             </Button>
           )}
@@ -532,7 +532,7 @@ function ExtensionCard({
               .map(([key, store]) => (
                 <span
                   key={key}
-                  className="text-xs text-slate-400 bg-white/[0.03] px-2 py-1 rounded"
+                  className="text-xs text-[#6E7B8C] bg-[#0F1B2D]/[0.04] px-2 py-1 rounded"
                 >
                   {store.label} — {store.available ? "Available" : "Coming Soon"}
                 </span>
@@ -553,11 +553,11 @@ function IdeExtensionCard({
 
   return (
     <div
-      className={`bg-white/[0.03] backdrop-blur-xl rounded-2xl border ${colors.border} ${colors.hoverBorder} p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-black/20 hover:-translate-y-1`}
+      className={`bg-white rounded-xl border ${colors.border} ${colors.hoverBorder} p-6 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] transition-all duration-300 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] hover:-translate-y-0.5`}
     >
       <div>
-          <h3 className="text-lg font-bold text-white mb-1">{product.name}</h3>
-          <p className="text-sm text-slate-400 mb-4">{product.description}</p>
+          <h3 className="text-lg font-bold text-[#0F1B2D] mb-1">{product.name}</h3>
+          <p className="text-sm text-[#51617A] mb-4">{product.description}</p>
 
           {/* VS Code */}
           <div className="space-y-2">
@@ -577,7 +577,7 @@ function IdeExtensionCard({
                 ) : (
                   <Button
                     disabled
-                    className="bg-slate-800 text-slate-500 cursor-not-allowed w-full justify-start"
+                    className="bg-[#0F1B2D]/[0.04] text-[#6E7B8C] border border-[#0F1B2D]/10 cursor-not-allowed w-full justify-start"
                   >
                     {store.label} — Coming Soon
                   </Button>

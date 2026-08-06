@@ -52,14 +52,14 @@ export default function Contact() {
   ];
 
   const colorMap: Record<string, { bg: string; icon: string; link: string }> = {
-    blue: { bg: "bg-blue-500/10 border-blue-500/20", icon: "text-blue-400", link: "text-blue-400 hover:text-blue-300" },
-    orange: { bg: "bg-orange-500/10 border-orange-500/20", icon: "text-orange-400", link: "text-orange-400 hover:text-orange-300" },
-    emerald: { bg: "bg-emerald-500/10 border-emerald-500/20", icon: "text-emerald-400", link: "text-emerald-400 hover:text-emerald-300" },
+    blue: { bg: "bg-[#1A5FB4]/10 border-[#1A5FB4]/25", icon: "text-[#1A5FB4]", link: "text-[#1A5FB4] hover:text-[#164F96]" },
+    orange: { bg: "bg-[#A05F00]/10 border-[#A05F00]/25", icon: "text-[#A05F00]", link: "text-[#A05F00] hover:text-[#A05F00]/80" },
+    emerald: { bg: "bg-[#2E7D32]/10 border-[#2E7D32]/25", icon: "text-[#2E7D32]", link: "text-[#2E7D32] hover:text-[#2E7D32]/80" },
   };
 
   return (
     <PageTransition>
-      <AuroraBackground variant="mixed" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="mixed" className="min-h-screen">
         <Navigation />
 
         {/* Hero */}
@@ -67,12 +67,12 @@ export default function Contact() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <HeroTextReveal>
               <HeroLine>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight text-gradient-hero animate-gradient-flow">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight text-[#0F1B2D]">
                   Let's Talk Security
                 </h1>
               </HeroLine>
               <HeroLine>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto leading-relaxed">
                   Whether you're evaluating AI governance, planning a penetration
                   test, or exploring a partnership — we'd love to hear from you.
                 </p>
@@ -90,12 +90,12 @@ export default function Contact() {
                 const colors = colorMap[channel.color];
                 return (
                   <StaggerItem key={channel.title}>
-                    <div className="h-full p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] text-center hover:shadow-2xl hover:shadow-black/20 transition-all duration-300">
+                    <div className="h-full p-8 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] text-center hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300">
                       <div className={`w-12 h-12 ${colors.bg} border rounded-xl flex items-center justify-center mx-auto mb-5`}>
                         <Icon className={`w-6 h-6 ${colors.icon}`} />
                       </div>
-                      <h3 className="text-lg font-bold text-white mb-2">{channel.title}</h3>
-                      <p className="text-sm text-slate-400 mb-5 leading-relaxed">{channel.description}</p>
+                      <h3 className="text-lg font-bold text-[#0F1B2D] mb-2">{channel.title}</h3>
+                      <p className="text-sm text-[#51617A] mb-5 leading-relaxed">{channel.description}</p>
                       <a
                         href={`mailto:${channel.email}`}
                         className={`text-sm font-medium ${colors.link} transition-colors`}
@@ -115,7 +115,7 @@ export default function Contact() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-12">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
                   Where We Are
                 </h2>
               </div>
@@ -127,11 +127,11 @@ export default function Contact() {
               ].map((office) => (
                 <div
                   key={office.region}
-                  className="p-6 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] text-center"
+                  className="p-6 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] text-center"
                 >
-                  <MapPin className="w-5 h-5 text-blue-400 mx-auto mb-3" />
-                  <h3 className="text-base font-bold text-white">{office.location}</h3>
-                  <p className="text-sm text-slate-500">{office.region}</p>
+                  <MapPin className="w-5 h-5 text-[#1A5FB4] mx-auto mb-3" />
+                  <h3 className="text-base font-bold text-[#0F1B2D]">{office.location}</h3>
+                  <p className="text-sm text-[#6E7B8C]">{office.region}</p>
                 </div>
               ))}
             </div>
@@ -142,10 +142,10 @@ export default function Contact() {
         <section className="pb-24">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <ScrollReveal>
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
                 Prefer to See It First?
               </h2>
-              <p className="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
+              <p className="text-lg text-[#51617A] mb-10 max-w-xl mx-auto">
                 Skip the email thread — book a live demo and we'll walk you
                 through the products on a call.
               </p>

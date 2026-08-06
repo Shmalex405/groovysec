@@ -6,11 +6,32 @@ interface AuroraBackgroundProps {
   variant?: "blue" | "orange" | "mixed" | "bluegreen" | "green";
 }
 
+/**
+ * Page-section wrapper. The drifting aurora field this used to render was
+ * retired in the light restyle — page grounds are plain paper now. The
+ * component and its `variant` prop survive so the twenty call sites keep
+ * working; the one place the aurora still exists is AuroraDrift below,
+ * inside the interception-flow diagram, where the drifting color reads as
+ * the ambient AI traffic the product tames.
+ */
 export function AuroraBackground({
   children,
   className,
-  variant = "blue",
 }: AuroraBackgroundProps) {
+  return <div className={cn("relative", className)}>{children}</div>;
+}
+
+interface AuroraDriftProps {
+  className?: string;
+  variant?: "blue" | "orange" | "mixed" | "bluegreen" | "green";
+}
+
+/**
+ * The original drifting aurora field, kept at its production geometry and
+ * timings. Render it inside a dark, overflow-clipped panel (the flow-diagram
+ * plate) — never page-wide.
+ */
+export function AuroraDrift({ className, variant = "mixed" }: AuroraDriftProps) {
   const gradients = {
     blue: [
       "from-[#1a5fb4]/40 via-[#0d4a8a]/25 to-transparent",
@@ -47,35 +68,32 @@ export function AuroraBackground({
   const colors = gradients[variant];
 
   return (
-    <div className={cn("relative overflow-clip", className)}>
-      <div className="absolute inset-0">
-        <div
-          className={cn(
-            "absolute -top-1/3 -left-1/3 w-2/3 h-2/3 bg-gradient-to-br rounded-full blur-[100px] animate-aurora-1",
-            colors[0]
-          )}
-        />
-        <div
-          className={cn(
-            "absolute -bottom-1/3 -right-1/3 w-2/3 h-2/3 bg-gradient-to-tl rounded-full blur-[100px] animate-aurora-2",
-            colors[1]
-          )}
-        />
-        <div
-          className={cn(
-            "absolute top-1/4 left-1/3 w-1/2 h-1/2 bg-gradient-to-r rounded-full blur-[80px] animate-aurora-3",
-            colors[2]
-          )}
-        />
-        <div
-          className={cn(
-            "absolute bottom-1/4 right-1/4 w-1/3 h-1/3 bg-gradient-to-bl rounded-full blur-[120px] animate-aurora-1",
-            colors[3]
-          )}
-          style={{ animationDelay: "3s", animationDuration: "18s" }}
-        />
-      </div>
-      <div className="relative z-10">{children}</div>
+    <div className={cn("absolute inset-0 pointer-events-none", className)} aria-hidden>
+      <div
+        className={cn(
+          "absolute -top-1/3 -left-1/3 w-2/3 h-2/3 bg-gradient-to-br rounded-full blur-[100px] animate-aurora-1",
+          colors[0]
+        )}
+      />
+      <div
+        className={cn(
+          "absolute -bottom-1/3 -right-1/3 w-2/3 h-2/3 bg-gradient-to-tl rounded-full blur-[100px] animate-aurora-2",
+          colors[1]
+        )}
+      />
+      <div
+        className={cn(
+          "absolute top-1/4 left-1/3 w-1/2 h-1/2 bg-gradient-to-r rounded-full blur-[80px] animate-aurora-3",
+          colors[2]
+        )}
+      />
+      <div
+        className={cn(
+          "absolute bottom-1/4 right-1/4 w-1/3 h-1/3 bg-gradient-to-bl rounded-full blur-[120px] animate-aurora-1",
+          colors[3]
+        )}
+        style={{ animationDelay: "3s", animationDuration: "18s" }}
+      />
     </div>
   );
 }

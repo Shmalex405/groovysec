@@ -284,7 +284,7 @@ export function SplashIntro({ onEnterStart, onDone }: SplashIntroProps) {
     >
       <div
         ref={bgRef}
-        className="absolute inset-0 bg-slate-950 bg-[radial-gradient(circle_at_50%_42%,#0d1e38_0%,#020617_72%)]"
+        className="absolute inset-0 bg-[#FBFCFE] bg-[radial-gradient(circle_at_50%_42%,#EAF2FA_0%,#FBFCFE_72%)]"
       />
 
       <div ref={stackRef} className="relative w-[200px] h-[200px] origin-top-left opacity-0">

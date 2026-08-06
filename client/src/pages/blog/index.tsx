@@ -15,9 +15,9 @@ import { usePageMeta } from "@/lib/use-page-meta";
 import { getAllPosts, getAllTags, formatDate } from "@/lib/blog";
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Research: "bg-blue-500/15 text-blue-400 border-blue-500/25",
-  Engineering: "bg-emerald-500/15 text-emerald-400 border-emerald-500/25",
-  News: "bg-amber-500/15 text-amber-400 border-amber-500/25",
+  Research: "bg-[#1A5FB4]/10 text-[#1A5FB4] border-[#1A5FB4]/25",
+  Engineering: "bg-[#2E7D32]/10 text-[#2E7D32] border-[#2E7D32]/25",
+  News: "bg-[#A05F00]/10 text-[#A05F00] border-[#A05F00]/25",
 };
 
 export default function Blog() {
@@ -34,7 +34,7 @@ export default function Blog() {
 
   return (
     <PageTransition>
-      <AuroraBackground variant="mixed" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="mixed" className="min-h-screen">
         <Navigation />
 
         {/* Hero */}
@@ -42,12 +42,12 @@ export default function Blog() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <HeroTextReveal>
               <HeroLine>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight text-gradient-hero animate-gradient-flow">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight text-[#0F1B2D]">
                   The Groovy Security Blog
                 </h1>
               </HeroLine>
               <HeroLine>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto leading-relaxed">
                   Engineering deep dives, original research, and product news on
                   securing AI and automating security.
                 </p>
@@ -62,10 +62,10 @@ export default function Blog() {
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center gap-2">
               <button
                 onClick={() => setActiveTag(null)}
-                className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${
+                className={`px-3 py-1.5 text-sm rounded-md border transition-colors ${
                   activeTag === null
-                    ? "bg-white/[0.08] text-white border-white/20"
-                    : "text-slate-400 border-white/[0.08] hover:text-white hover:border-white/20"
+                    ? "bg-[#0F1B2D]/[0.04] text-[#0F1B2D] border-[#0F1B2D]/30"
+                    : "text-[#51617A] border-[#0F1B2D]/10 hover:text-[#0F1B2D] hover:border-[#0F1B2D]/25"
                 }`}
               >
                 All
@@ -74,10 +74,10 @@ export default function Blog() {
                 <button
                   key={tag}
                   onClick={() => setActiveTag(tag)}
-                  className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${
+                  className={`px-3 py-1.5 text-sm rounded-md border transition-colors ${
                     activeTag === tag
-                      ? "bg-white/[0.08] text-white border-white/20"
-                      : "text-slate-400 border-white/[0.08] hover:text-white hover:border-white/20"
+                      ? "bg-[#0F1B2D]/[0.04] text-[#0F1B2D] border-[#0F1B2D]/30"
+                      : "text-[#51617A] border-[#0F1B2D]/10 hover:text-[#0F1B2D] hover:border-[#0F1B2D]/25"
                   }`}
                 >
                   {tag}
@@ -91,13 +91,13 @@ export default function Blog() {
         <section className="pb-24">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             {visible.length === 0 ? (
-              <p className="text-center text-slate-500">No posts yet — check back soon.</p>
+              <p className="text-center text-[#6E7B8C]">No posts yet — check back soon.</p>
             ) : (
               <StaggerChildren className="space-y-6">
                 {visible.map((post) => (
                   <StaggerItem key={post.slug}>
                     <Link href={`/blog/${post.slug}`}>
-                      <article className="group p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:border-blue-500/30 hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 cursor-pointer">
+                      <article className="group p-8 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] hover:border-[#1A5FB4]/40 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300 cursor-pointer">
                         <div className="flex items-center gap-3 mb-4">
                           <span
                             className={`px-2 py-0.5 text-[10px] font-mono font-bold border rounded ${
@@ -106,27 +106,27 @@ export default function Blog() {
                           >
                             {post.category.toUpperCase()}
                           </span>
-                          <span className="inline-flex items-center text-xs text-slate-500">
+                          <span className="inline-flex items-center text-xs text-[#6E7B8C]">
                             <CalendarDays className="w-3.5 h-3.5 mr-1.5" />
                             {formatDate(post.date)}
                           </span>
-                          <span className="inline-flex items-center text-xs text-slate-500">
+                          <span className="inline-flex items-center text-xs text-[#6E7B8C]">
                             <Clock className="w-3.5 h-3.5 mr-1.5" />
                             {post.readingTime}
                           </span>
                         </div>
-                        <h2 className="text-xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">
+                        <h2 className="text-xl font-bold text-[#0F1B2D] mb-3 group-hover:text-[#1A5FB4] transition-colors">
                           {post.title}
                         </h2>
-                        <p className="text-sm text-slate-400 leading-relaxed mb-5">
+                        <p className="text-sm text-[#51617A] leading-relaxed mb-5">
                           {post.excerpt}
                         </p>
                         <div className="flex items-center justify-between">
-                          <span className="text-xs text-slate-500">
+                          <span className="text-xs text-[#6E7B8C]">
                             By {post.author}
                             {post.role ? `, ${post.role}` : ""}
                           </span>
-                          <span className="inline-flex items-center text-sm text-blue-400 group-hover:text-blue-300 transition-colors">
+                          <span className="inline-flex items-center text-sm text-[#1A5FB4] group-hover:text-[#164F96] transition-colors">
                             Read more
                             <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
                           </span>

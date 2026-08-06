@@ -47,9 +47,9 @@ export function PlatformOverview() {
   ];
 
   const colorMap = {
-    blue: { icon: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/20" },
-    emerald: { icon: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/20" },
-    orange: { icon: "text-orange-400", bg: "bg-orange-500/10", border: "border-orange-500/20" },
+    blue: { icon: "text-[#1A5FB4]", bg: "bg-[#1A5FB4]/10", border: "border-[#1A5FB4]/25" },
+    emerald: { icon: "text-[#2E7D32]", bg: "bg-[#2E7D32]/10", border: "border-[#2E7D32]/25" },
+    orange: { icon: "text-[#A05F00]", bg: "bg-[#A05F00]/10", border: "border-[#A05F00]/25" },
   };
 
   return (
@@ -57,10 +57,10 @@ export function PlatformOverview() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
               Why Enterprises Choose Whiteout AI
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
               Complete AI governance solution designed for enterprise security, compliance, and operational excellence.
             </p>
           </div>
@@ -74,18 +74,18 @@ export function PlatformOverview() {
             return (
               <StaggerItem key={index}>
                 <SpotlightCard className="p-8 h-full" spotlightColor={feature.spotlightHue}>
-                  <h3 className="text-2xl font-bold text-white mb-4">
+                  <h3 className="text-2xl font-bold text-[#0F1B2D] mb-4">
                     {feature.title}
                   </h3>
 
-                  <p className="text-slate-400 mb-6 leading-relaxed">
+                  <p className="text-[#51617A] mb-6 leading-relaxed">
                     {feature.description}
                   </p>
 
                   <ul className="space-y-3">
                     {feature.benefits.map((benefit, benefitIndex) => (
-                      <li key={benefitIndex} className="flex items-center text-base text-slate-400">
-                        <CheckCircle className="w-4 h-4 text-emerald-400 mr-2.5 flex-shrink-0" />
+                      <li key={benefitIndex} className="flex items-center text-base text-[#51617A]">
+                        <CheckCircle className="w-4 h-4 text-[#2E7D32] mr-2.5 flex-shrink-0" />
                         {benefit}
                       </li>
                     ))}

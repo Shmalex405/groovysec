@@ -95,7 +95,7 @@ export default function Security() {
 
   return (
     <PageTransition>
-      <AuroraBackground variant="bluegreen" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="bluegreen" className="min-h-screen">
         <Navigation />
 
         {/* Hero */}
@@ -103,12 +103,12 @@ export default function Security() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <HeroTextReveal>
               <HeroLine>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight text-gradient-hero animate-gradient-flow">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight text-[#0F1B2D]">
                   Trust & Security
                 </h1>
               </HeroLine>
               <HeroLine>
-                <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-lg text-[#51617A] max-w-2xl mx-auto leading-relaxed">
                   We're a security company — so we hold our own products to the
                   standard we'd demand from any vendor. Here's how Groovy
                   Security protects your data across Whiteout AI, Maestro, and
@@ -118,14 +118,14 @@ export default function Security() {
             </HeroTextReveal>
 
             <ScrollReveal delay={0.4}>
-              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-8 text-sm text-slate-500">
+              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-8 text-sm text-[#6E7B8C]">
                 {[
                   "SOC 2 Type II in progress",
                   "Encryption in transit & at rest",
                   "48-hour critical patch commitment",
                 ].map((item) => (
                   <span key={item} className="flex items-center">
-                    <CheckCircle className="w-3.5 h-3.5 text-emerald-400 mr-1.5" />
+                    <CheckCircle className="w-3.5 h-3.5 text-[#2E7D32] mr-1.5" />
                     {item}
                   </span>
                 ))}
@@ -142,15 +142,15 @@ export default function Security() {
                 const Icon = pillar.icon;
                 return (
                   <StaggerItem key={pillar.title}>
-                    <div className="h-full p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300">
-                      <div className="w-10 h-10 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center mb-4">
-                        <Icon className="w-5 h-5 text-blue-400" />
+                    <div className="h-full p-8 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300">
+                      <div className="w-10 h-10 bg-[#1A5FB4]/10 border border-[#1A5FB4]/25 rounded-lg flex items-center justify-center mb-4">
+                        <Icon className="w-5 h-5 text-[#1A5FB4]" />
                       </div>
-                      <h3 className="text-lg font-bold text-white mb-4">{pillar.title}</h3>
+                      <h3 className="text-lg font-bold text-[#0F1B2D] mb-4">{pillar.title}</h3>
                       <ul className="space-y-2.5">
                         {pillar.items.map((item) => (
-                          <li key={item} className="flex items-start text-sm text-slate-400">
-                            <CheckCircle className="w-4 h-4 text-emerald-400 mr-2.5 flex-shrink-0 mt-0.5" />
+                          <li key={item} className="flex items-start text-sm text-[#51617A]">
+                            <CheckCircle className="w-4 h-4 text-[#2E7D32] mr-2.5 flex-shrink-0 mt-0.5" />
                             {item}
                           </li>
                         ))}
@@ -167,10 +167,10 @@ export default function Security() {
         <section className="pb-24">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <ScrollReveal>
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
                 Questions for Our Security Team?
               </h2>
-              <p className="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
+              <p className="text-lg text-[#51617A] mb-10 max-w-xl mx-auto">
                 Security questionnaires, architecture reviews, or compliance
                 mapping requests — we're happy to walk through any of it.
               </p>
@@ -182,7 +182,7 @@ export default function Security() {
                   </GradientButton>
                 </Link>
                 <Link href="/whiteout-ai/security-whitepaper">
-                  <GradientButton variant="default">
+                  <GradientButton variant="white">
                     <BookOpen className="w-4 h-4 mr-2" />
                     Product Whitepaper
                   </GradientButton>

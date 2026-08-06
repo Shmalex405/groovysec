@@ -83,22 +83,22 @@ export function LeadCapture() {
   };
 
   const inputClasses =
-    "bg-white/[0.03] border-white/[0.08] text-white placeholder:text-slate-600 focus:border-blue-500/40 focus:ring-blue-500/20 transition-colors";
-  const labelClasses = "text-sm font-medium text-slate-300";
-  const errorClasses = "border-red-500/50";
+    "bg-white border-[#0F1B2D]/15 text-[#0F1B2D] placeholder:text-[#6E7B8C] focus:border-[#1A5FB4]/50 focus:ring-[#1A5FB4]/20 transition-colors";
+  const labelClasses = "text-sm font-medium text-[#51617A]";
+  const errorClasses = "border-[#B3261E]/50";
 
   if (submitted) {
     return (
-      <section id="demo" className="py-24 bg-slate-950">
+      <section id="demo" className="py-24">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <GlassCard className="p-10 text-center" hover={false} glowColor="rgba(16,185,129,0.06)">
-            <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center">
-              <CheckCircle className="w-8 h-8 text-emerald-400" />
+            <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-[#2E7D32]/10 border border-[#2E7D32]/25 flex items-center justify-center">
+              <CheckCircle className="w-8 h-8 text-[#2E7D32]" />
             </div>
-            <h2 className="text-2xl font-bold text-white mb-3 tracking-tight">
+            <h2 className="text-2xl font-bold text-[#0F1B2D] mb-3 tracking-tight">
               Demo Request Submitted
             </h2>
-            <p className="text-slate-400 mb-8 max-w-md mx-auto">
+            <p className="text-[#51617A] mb-8 max-w-md mx-auto">
               Thanks — we've received your request. Pick a time that works for
               you and we'll take care of the rest.
             </p>
@@ -116,13 +116,13 @@ export function LeadCapture() {
   }
 
   return (
-    <section id="demo" className="py-24 bg-slate-950">
+    <section id="demo" className="py-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+          <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
             Request a Demo
           </h2>
-          <p className="text-lg text-slate-400 max-w-xl mx-auto">
+          <p className="text-lg text-[#51617A] max-w-xl mx-auto">
             Schedule a personalized demo and see how Groovy Security's products can help your organization.
           </p>
         </div>
@@ -189,7 +189,7 @@ export function LeadCapture() {
                   <SelectTrigger className={`mt-1.5 ${inputClasses} ${fieldErrors.role ? errorClasses : ""}`}>
                     <SelectValue placeholder="Select your role" />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-900 border-white/[0.08]">
+                  <SelectContent className="bg-white border-[#0F1B2D]/15 text-[#0F1B2D]">
                     <SelectItem value="cto">CTO</SelectItem>
                     <SelectItem value="ciso">CISO</SelectItem>
                     <SelectItem value="architect">Enterprise Architect</SelectItem>
@@ -199,7 +199,7 @@ export function LeadCapture() {
                   </SelectContent>
                 </Select>
                 {fieldErrors.role && (
-                  <p className="text-xs text-red-400 mt-1.5">Please select your role.</p>
+                  <p className="text-xs text-[#B3261E] mt-1.5">Please select your role.</p>
                 )}
               </div>
               <div>
@@ -211,7 +211,7 @@ export function LeadCapture() {
                   <SelectTrigger className={`mt-1.5 ${inputClasses} ${fieldErrors.companySize ? errorClasses : ""}`}>
                     <SelectValue placeholder="Select company size" />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-900 border-white/[0.08]">
+                  <SelectContent className="bg-white border-[#0F1B2D]/15 text-[#0F1B2D]">
                     <SelectItem value="1-50">1-50 employees</SelectItem>
                     <SelectItem value="50-100">50-100 employees</SelectItem>
                     <SelectItem value="100-500">100-500 employees</SelectItem>
@@ -222,7 +222,7 @@ export function LeadCapture() {
                   </SelectContent>
                 </Select>
                 {fieldErrors.companySize && (
-                  <p className="text-xs text-red-400 mt-1.5">Please select your company size.</p>
+                  <p className="text-xs text-[#B3261E] mt-1.5">Please select your company size.</p>
                 )}
               </div>
             </div>
@@ -258,7 +258,7 @@ export function LeadCapture() {
                   </>
                 )}
               </GradientButton>
-              <p className="text-xs text-slate-600 mt-4">
+              <p className="text-xs text-[#6E7B8C] mt-4">
                 By submitting, you agree to our privacy policy and terms of service.
               </p>
             </div>

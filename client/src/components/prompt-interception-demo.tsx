@@ -216,7 +216,7 @@ export function PromptInterceptionDemo() {
   return (
     <div
       ref={containerRef}
-      className="max-w-4xl mx-auto h-full flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-xl p-4 sm:p-6"
+      className="max-w-4xl mx-auto h-full flex flex-col rounded-xl border border-[#0F1B2D]/10 bg-[#0B1218] overflow-hidden shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-4 sm:p-6"
       role="img"
       aria-label="Animated diagram: Whiteout AI intercepts each prompt between your workforce and AI platforms, evaluates it against compliance policies, then redacts, blocks, or allows it — and logs every decision to the audit trail."
     >
@@ -309,7 +309,7 @@ export function PromptInterceptionDemo() {
         {/* Whiteout gate */}
         <div className="absolute left-1/2 -translate-x-1/2 inset-y-0 flex flex-col items-center justify-center">
           <div className="absolute inset-y-0 w-px bg-gradient-to-b from-transparent via-blue-400/50 to-transparent" />
-          <div className="relative w-12 h-12 rounded-full bg-slate-900/90 border border-blue-400/40 flex items-center justify-center">
+          <div className="relative w-12 h-12 rounded-full bg-[#0F171F] border border-blue-400/40 flex items-center justify-center">
             {atGate && (
               <motion.div
                 className="absolute inset-0 rounded-full border border-blue-400/60"
@@ -319,7 +319,7 @@ export function PromptInterceptionDemo() {
             )}
             <SpinningMark className="w-7 h-7" />
           </div>
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-slate-950/80 px-1.5 py-0.5 text-center leading-tight">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-[#0B1218] px-1.5 py-0.5 text-center leading-tight">
             <span className="block text-[10px] font-medium text-slate-300">
               Whiteout AI
             </span>
@@ -354,7 +354,7 @@ export function PromptInterceptionDemo() {
           className="absolute top-1/2 z-10 w-56 sm:w-72"
         >
           <div
-            className={`relative rounded-xl border bg-slate-900/90 backdrop-blur-md overflow-visible transition-colors duration-500 ${
+            className={`relative rounded-xl border bg-[#0F171F] overflow-visible transition-colors duration-500 ${
               atGate ? "border-blue-400/40" : "border-white/10"
             }`}
           >
@@ -410,7 +410,7 @@ export function PromptInterceptionDemo() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className={`absolute -top-2.5 right-2.5 flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-medium backdrop-blur-md ${verdictStyle.badge}`}
+                  className={`absolute -top-2.5 right-2.5 flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-medium ${verdictStyle.badge}`}
                 >
                   <VerdictIcon className="w-3 h-3" />
                   {verdictStyle.label}

@@ -53,11 +53,11 @@ export function FullLlmEngine() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
               A Full 27B-Parameter LLM.
-              <span className="block text-blue-400">Not a Lightweight Classifier.</span>
+              <span className="block text-[#1A5FB4]">Not a Lightweight Classifier.</span>
             </h2>
-            <p className="text-lg text-slate-400 max-w-3xl mx-auto">
+            <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
               Most AI data-protection tools rely on small classifier models or
               pattern matching that miss context. Whiteout AI evaluates every
               prompt with a full 27-billion-parameter LLM — accurate enough to
@@ -72,12 +72,12 @@ export function FullLlmEngine() {
             const Icon = item.icon;
             return (
               <StaggerItem key={item.title}>
-                <div className="h-full p-8 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:border-blue-500/30 transition-all duration-300">
-                  <div className="w-10 h-10 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5 text-blue-400" />
+                <div className="h-full p-8 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300">
+                  <div className="w-10 h-10 bg-[#1A5FB4]/10 border border-[#1A5FB4]/20 rounded-md flex items-center justify-center mb-4">
+                    <Icon className="w-5 h-5 text-[#1A5FB4]" />
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
-                  <p className="text-sm text-slate-400 leading-relaxed">{item.description}</p>
+                  <h3 className="text-lg font-bold text-[#0F1B2D] mb-3">{item.title}</h3>
+                  <p className="text-sm text-[#51617A] leading-relaxed">{item.description}</p>
                 </div>
               </StaggerItem>
             );
@@ -86,7 +86,7 @@ export function FullLlmEngine() {
 
         {/* Benchmark strip */}
         <ScrollReveal>
-          <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] p-8">
+          <div className="bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-8">
             <div className="grid sm:grid-cols-3 gap-8 text-center mb-6">
               {[
                 { value: ">99%", label: "Overall Accuracy" },
@@ -94,10 +94,10 @@ export function FullLlmEngine() {
                 { value: "9", label: "Policy Domains Covered" },
               ].map((stat) => (
                 <div key={stat.label}>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                  <div className="text-3xl font-bold text-[#1A5FB4]">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-slate-500 mt-1">{stat.label}</div>
+                  <div className="text-sm text-[#6E7B8C] mt-1">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -106,7 +106,7 @@ export function FullLlmEngine() {
                 href={BENCHMARK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                className="inline-flex items-center text-sm text-[#1A5FB4] hover:text-[#164F96] transition-colors"
               >
                 Explore the public benchmark dataset
                 <ExternalLink className="w-3.5 h-3.5 ml-1.5" />
@@ -122,10 +122,10 @@ export function FullLlmEngine() {
 /* ── Seven enforcement surfaces ─────────────────────────────────────── */
 
 const MODE_STYLES: Record<string, string> = {
-  Enforce: "bg-emerald-500/10 text-emerald-400 border-emerald-500/25",
-  Audit: "bg-blue-500/10 text-blue-400 border-blue-500/25",
-  Visibility: "bg-amber-500/10 text-amber-400 border-amber-500/25",
-  "In-Process": "bg-emerald-500/10 text-emerald-400 border-emerald-500/25",
+  Enforce: "bg-[#2E7D32]/10 text-[#2E7D32] border-[#2E7D32]/25",
+  Audit: "bg-[#1A5FB4]/10 text-[#1A5FB4] border-[#1A5FB4]/25",
+  Visibility: "bg-[#A05F00]/10 text-[#A05F00] border-[#A05F00]/25",
+  "In-Process": "bg-[#2E7D32]/10 text-[#2E7D32] border-[#2E7D32]/25",
 };
 
 export function EnforcementSurfaces() {
@@ -167,13 +167,13 @@ export function EnforcementSurfaces() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-500/[0.08] border border-blue-500/20 text-blue-400 text-sm mb-6">
+            <div className="inline-flex items-center px-4 py-1.5 rounded-md bg-[#1A5FB4]/10 border border-[#1A5FB4]/25 text-[#1A5FB4] text-sm mb-6">
               Whiteout AI Interceptor
             </div>
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
               One Policy Engine. Five Enforcement Surfaces.
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
               Policy enforcement everywhere your workforce uses AI — browser,
               desktop, IDE, and cloud — from a single policy engine.
             </p>
@@ -188,17 +188,17 @@ export function EnforcementSurfaces() {
                 key={surface.title}
                 className="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]"
               >
-                <div className="h-full p-6 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:border-blue-500/30 transition-all duration-300">
+                <div className="h-full p-6 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-9 h-9 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center">
-                      <Icon className="w-4 h-4 text-blue-400" />
+                    <div className="w-9 h-9 bg-[#1A5FB4]/10 border border-[#1A5FB4]/20 rounded-md flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-[#1A5FB4]" />
                     </div>
                     <span className={`px-2 py-0.5 text-[10px] font-mono font-bold border rounded ${MODE_STYLES[surface.mode]}`}>
                       {surface.mode.toUpperCase()}
                     </span>
                   </div>
-                  <h3 className="text-sm font-bold text-white mb-2">{surface.title}</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">{surface.description}</p>
+                  <h3 className="text-sm font-bold text-[#0F1B2D] mb-2">{surface.title}</h3>
+                  <p className="text-xs text-[#51617A] leading-relaxed">{surface.description}</p>
                 </div>
               </StaggerItem>
             );
@@ -250,10 +250,10 @@ export function EnterpriseIdentity() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
               Built for Your Identity Stack — and Your Auditors
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
               The enterprise plumbing is already done: provisioning, single
               sign-on, fleet deployment, and audit evidence that holds up.
             </p>
@@ -265,12 +265,12 @@ export function EnterpriseIdentity() {
             const Icon = item.icon;
             return (
               <StaggerItem key={item.title}>
-                <div className="h-full p-6 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:border-blue-500/30 transition-all duration-300">
-                  <div className="w-9 h-9 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center mb-4">
-                    <Icon className="w-4 h-4 text-blue-400" />
+                <div className="h-full p-6 bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] hover:border-[#0F1B2D]/20 hover:shadow-[0_2px_4px_rgba(15,27,45,0.06),0_16px_40px_rgba(15,27,45,0.10)] transition-all duration-300">
+                  <div className="w-9 h-9 bg-[#1A5FB4]/10 border border-[#1A5FB4]/20 rounded-md flex items-center justify-center mb-4">
+                    <Icon className="w-4 h-4 text-[#1A5FB4]" />
                   </div>
-                  <h3 className="text-sm font-bold text-white mb-2">{item.title}</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">{item.description}</p>
+                  <h3 className="text-sm font-bold text-[#0F1B2D] mb-2">{item.title}</h3>
+                  <p className="text-xs text-[#51617A] leading-relaxed">{item.description}</p>
                 </div>
               </StaggerItem>
             );

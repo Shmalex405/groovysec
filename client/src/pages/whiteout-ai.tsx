@@ -51,7 +51,7 @@ export default function WhiteoutAI() {
       )}
       {splash !== "active" && (
     <PageTransition>
-      <AuroraBackground variant="bluegreen" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="bluegreen" className="min-h-screen">
         <Navigation />
         <HeroSection />
         <ArchitectureFlow />
@@ -62,7 +62,7 @@ export default function WhiteoutAI() {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <ScrollReveal>
               <PromptInterceptionDemo />
-              <p className="mt-5 text-sm text-slate-500 max-w-xl mx-auto">
+              <p className="mt-5 text-sm text-[#6E7B8C] max-w-xl mx-auto">
                 The architecture above, running live — every prompt intercepted,
                 evaluated against 60+ policies, and enforced in real time.
               </p>
@@ -83,8 +83,8 @@ export default function WhiteoutAI() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-12">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">Learn More</h2>
-                <p className="text-base text-slate-400">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">Learn More</h2>
+                <p className="text-base text-[#51617A]">
                   Explore how Whiteout AI serves specific industries and use cases.
                 </p>
               </div>
@@ -115,20 +115,20 @@ export default function WhiteoutAI() {
               ].map((item) => {
                 const Icon = item.icon;
                 const colorMap = {
-                  blue: { icon: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/20", link: "text-blue-400" },
-                  emerald: { icon: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/20", link: "text-emerald-400" },
-                  orange: { icon: "text-orange-400", bg: "bg-orange-500/10", border: "border-orange-500/20", link: "text-orange-400" },
+                  blue: { icon: "text-[#1A5FB4]", bg: "bg-[#1A5FB4]/10", border: "border-[#1A5FB4]/20", link: "text-[#1A5FB4]" },
+                  emerald: { icon: "text-[#2E7D32]", bg: "bg-[#2E7D32]/10", border: "border-[#2E7D32]/20", link: "text-[#2E7D32]" },
+                  orange: { icon: "text-[#A05F00]", bg: "bg-[#A05F00]/10", border: "border-[#A05F00]/20", link: "text-[#A05F00]" },
                 };
                 const colors = colorMap[item.color];
                 return (
                   <StaggerItem key={item.href}>
                     <Link href={item.href}>
                       <GlassCard className="p-6 cursor-pointer h-full">
-                        <div className={`w-10 h-10 ${colors.bg} ${colors.border} border rounded-xl flex items-center justify-center mb-4`}>
+                        <div className={`w-10 h-10 ${colors.bg} ${colors.border} border rounded-md flex items-center justify-center mb-4`}>
                           <Icon className={`w-5 h-5 ${colors.icon}`} />
                         </div>
-                        <h3 className="text-base font-bold text-white mb-2">{item.title}</h3>
-                        <p className="text-sm text-slate-400 mb-4">{item.description}</p>
+                        <h3 className="text-base font-bold text-[#0F1B2D] mb-2">{item.title}</h3>
+                        <p className="text-sm text-[#51617A] mb-4">{item.description}</p>
                         <span className={`${colors.link} font-medium text-sm flex items-center`}>
                           Read More <ArrowRight className="w-3.5 h-3.5 ml-1" />
                         </span>
@@ -142,14 +142,14 @@ export default function WhiteoutAI() {
         </section>
 
         {/* Company trust strip — condensed; full story lives on /about */}
-        <section className="py-20 border-t border-white/[0.06]">
+        <section className="py-20 border-t border-[#0F1B2D]/10">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-10">
-                <h2 className="text-2xl lg:text-3xl font-bold text-white mb-3 tracking-tight">
+                <h2 className="text-2xl lg:text-3xl font-bold text-[#0F1B2D] mb-3 tracking-tight">
                   Built by Security Professionals
                 </h2>
-                <p className="text-base text-slate-400 max-w-2xl mx-auto">
+                <p className="text-base text-[#51617A] max-w-2xl mx-auto">
                   Groovy Security was founded by cybersecurity professionals who saw the
                   critical gaps in AI governance firsthand — and built Whiteout AI to close them.
                 </p>
@@ -177,11 +177,11 @@ export default function WhiteoutAI() {
                 return (
                   <StaggerItem key={item.title}>
                     <GlassCard className="p-5 text-center h-full">
-                      <div className="w-9 h-9 mx-auto bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center mb-3">
-                        <Icon className="w-4 h-4 text-blue-400" />
+                      <div className="w-9 h-9 mx-auto bg-[#1A5FB4]/10 border border-[#1A5FB4]/20 rounded-md flex items-center justify-center mb-3">
+                        <Icon className="w-4 h-4 text-[#1A5FB4]" />
                       </div>
-                      <h3 className="text-base font-bold text-white mb-1">{item.title}</h3>
-                      <p className="text-sm text-slate-500">{item.description}</p>
+                      <h3 className="text-base font-bold text-[#0F1B2D] mb-1">{item.title}</h3>
+                      <p className="text-sm text-[#51617A]">{item.description}</p>
                     </GlassCard>
                   </StaggerItem>
                 );
@@ -189,7 +189,7 @@ export default function WhiteoutAI() {
             </StaggerChildren>
             <ScrollReveal>
               <div className="text-center mt-8">
-                <Link href="/about" className="text-blue-400 font-medium text-sm inline-flex items-center hover:text-blue-300 transition-colors">
+                <Link href="/about" className="text-[#1A5FB4] font-medium text-sm inline-flex items-center hover:text-[#164F96] transition-colors">
                   Learn more about Groovy Security <ArrowRight className="w-3.5 h-3.5 ml-1" />
                 </Link>
               </div>
@@ -201,10 +201,10 @@ export default function WhiteoutAI() {
         <section className="py-24">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <ScrollReveal>
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
                 Ready to See It Live?
               </h2>
-              <p className="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
+              <p className="text-lg text-[#51617A] mb-10 max-w-xl mx-auto">
                 See Whiteout AI intercept, evaluate, and govern real AI traffic in
                 a live walkthrough tailored to your compliance requirements.
               </p>
@@ -216,7 +216,7 @@ export default function WhiteoutAI() {
                   </GradientButton>
                 </Link>
                 <Link href="/whiteout-ai/security-whitepaper">
-                  <GradientButton variant="default">
+                  <GradientButton variant="white">
                     Read the Whitepaper
                   </GradientButton>
                 </Link>

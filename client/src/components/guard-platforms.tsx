@@ -82,44 +82,47 @@ export function InterceptorPlatforms() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-4">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-500/[0.08] border border-blue-500/20 text-blue-400 text-sm mb-6">
+            <div className="inline-flex items-center px-4 py-1.5 rounded-md bg-[#1A5FB4]/10 border border-[#1A5FB4]/25 text-[#1A5FB4] text-sm mb-6">
               <Shield className="w-3.5 h-3.5 mr-2" />
               Multi-Surface Protection
             </div>
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
               Whiteout AI Interceptor
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
               Policy enforcement everywhere your workforce uses AI — browser,
               desktop, IDE, cloud, and mobile. Click any node to explore.
             </p>
           </div>
         </ScrollReveal>
 
-        <RadialOrbitalTimeline
-          timelineData={timelineData}
-          centerMark
-          centerLabel="Policy Engine"
-          variant="blue"
-        />
+        {/* Dark instrument plate — the orbital map's styling expects a dark ground */}
+        <div className="relative overflow-hidden rounded-xl border border-[#0F1B2D]/10 bg-[#0B1218] shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
+          <RadialOrbitalTimeline
+            timelineData={timelineData}
+            centerMark
+            centerLabel="Policy Engine"
+            variant="blue"
+          />
+        </div>
 
         <ScrollReveal>
           <GlassCard className="p-8 mt-4" hover={false}>
             <div className="text-center mb-6">
-              <h3 className="text-lg font-bold text-white mb-1">23+ AI Platforms Covered</h3>
-              <p className="text-xs text-slate-500">
+              <h3 className="text-lg font-bold text-[#0F1B2D] mb-1">23+ AI Platforms Covered</h3>
+              <p className="text-xs text-[#6E7B8C]">
                 Standalone AI, Microsoft 365 Copilot, Google Workspace Gemini,
                 and desktop applications — all governed by one policy engine.
               </p>
             </div>
             <div className="flex flex-wrap justify-center gap-2">
               {aiApps.map((app) => (
-                <div key={app} className="flex items-center px-3 py-1.5 bg-white/[0.03] rounded-lg border border-white/[0.06] text-xs text-slate-400">
-                  <CheckCircle className="w-3 h-3 text-emerald-400 mr-1.5" />
+                <div key={app} className="flex items-center px-3 py-1.5 bg-[#0F1B2D]/[0.02] rounded-md border border-[#0F1B2D]/10 text-xs text-[#51617A]">
+                  <CheckCircle className="w-3 h-3 text-[#2E7D32] mr-1.5" />
                   {app}
                 </div>
               ))}
-              <div className="flex items-center px-3 py-1.5 bg-blue-500/[0.06] rounded-lg border border-blue-500/[0.12] text-xs text-blue-400 font-medium">
+              <div className="flex items-center px-3 py-1.5 bg-[#1A5FB4]/10 rounded-md border border-[#1A5FB4]/25 text-xs text-[#1A5FB4] font-medium">
                 + 12 more platforms
               </div>
             </div>

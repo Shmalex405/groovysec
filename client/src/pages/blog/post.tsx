@@ -11,9 +11,9 @@ import { getPostBySlug, formatDate } from "@/lib/blog";
 import NotFound from "@/pages/not-found";
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Research: "bg-blue-500/15 text-blue-400 border-blue-500/25",
-  Engineering: "bg-emerald-500/15 text-emerald-400 border-emerald-500/25",
-  News: "bg-amber-500/15 text-amber-400 border-amber-500/25",
+  Research: "bg-[#1A5FB4]/10 text-[#1A5FB4] border-[#1A5FB4]/25",
+  Engineering: "bg-[#2E7D32]/10 text-[#2E7D32] border-[#2E7D32]/25",
+  News: "bg-[#A05F00]/10 text-[#A05F00] border-[#A05F00]/25",
 };
 
 export default function BlogPost({ slug }: { slug: string }) {
@@ -26,14 +26,14 @@ export default function BlogPost({ slug }: { slug: string }) {
 
   return (
     <PageTransition>
-      <AuroraBackground variant="mixed" className="min-h-screen bg-slate-950">
+      <AuroraBackground variant="mixed" className="min-h-screen">
         <Navigation />
 
         <article className="pt-32 pb-24">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <Link
               href="/blog"
-              className="inline-flex items-center text-sm text-slate-400 hover:text-white transition-colors mb-8"
+              className="inline-flex items-center text-sm text-[#51617A] hover:text-[#0F1B2D] transition-colors mb-8"
             >
               <ArrowLeft className="w-3.5 h-3.5 mr-1.5" />
               Back to Blog
@@ -49,36 +49,36 @@ export default function BlogPost({ slug }: { slug: string }) {
                 >
                   {post.category.toUpperCase()}
                 </span>
-                <span className="inline-flex items-center text-xs text-slate-500">
+                <span className="inline-flex items-center text-xs text-[#6E7B8C]">
                   <CalendarDays className="w-3.5 h-3.5 mr-1.5" />
                   {formatDate(post.date)}
                 </span>
-                <span className="inline-flex items-center text-xs text-slate-500">
+                <span className="inline-flex items-center text-xs text-[#6E7B8C]">
                   <Clock className="w-3.5 h-3.5 mr-1.5" />
                   {post.readingTime}
                 </span>
               </div>
-              <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4 leading-tight tracking-tight">
+              <h1 className="text-3xl sm:text-4xl font-bold text-[#0F1B2D] mb-4 leading-tight tracking-tight">
                 {post.title}
               </h1>
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-[#6E7B8C]">
                 By {post.author}
                 {post.role ? `, ${post.role}` : ""}
               </p>
             </header>
 
             {/* Body */}
-            <div className="prose prose-invert prose-slate max-w-none prose-headings:text-white prose-headings:font-bold prose-a:text-blue-400 hover:prose-a:text-blue-300 prose-strong:text-white prose-blockquote:border-l-blue-500/40 prose-blockquote:text-slate-300 prose-code:text-blue-300 prose-li:text-slate-300 prose-p:text-slate-300 prose-p:leading-relaxed">
+            <div className="prose prose-slate max-w-none prose-headings:text-[#0F1B2D] prose-headings:font-bold prose-a:text-[#1A5FB4] hover:prose-a:text-[#164F96] prose-strong:text-[#0F1B2D] prose-blockquote:border-l-[#1A5FB4]/40 prose-blockquote:text-[#51617A] prose-code:text-[#1A5FB4] prose-li:text-[#51617A] prose-p:text-[#51617A] prose-p:leading-relaxed">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
             </div>
 
             {/* Footer / tags */}
             {post.tags.length > 0 && (
-              <div className="mt-12 pt-8 border-t border-white/[0.08] flex flex-wrap gap-2">
+              <div className="mt-12 pt-8 border-t border-[#0F1B2D]/10 flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 text-xs rounded-full border border-white/[0.08] text-slate-400"
+                    className="px-3 py-1 text-xs rounded-md border border-[#0F1B2D]/10 text-[#51617A]"
                   >
                     {tag}
                   </span>

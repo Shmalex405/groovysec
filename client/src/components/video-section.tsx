@@ -23,18 +23,15 @@ export function VideoSection() {
   return (
     <section className="py-24">
       <div className="mx-auto max-w-5xl px-6 text-center">
-        <h2 className="text-3xl font-bold text-white mb-3 tracking-tight">
+        <h2 className="text-3xl font-bold text-[#0F1B2D] mb-3 tracking-tight">
           See Whiteout AI in Action
         </h2>
 
-        <p className="text-slate-400 text-base mb-10 max-w-lg mx-auto">
+        <p className="text-[#51617A] text-base mb-10 max-w-lg mx-auto">
           AI governance, prompt security, and auditability — built for enterprises in the modern world
         </p>
 
-        <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-slate-900/50 shadow-2xl shadow-black/40">
-          {/* Glow effect */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/10 via-transparent to-emerald-500/10 rounded-2xl blur-xl pointer-events-none" />
-
+        <div className="relative overflow-hidden rounded-xl border border-[#0F1B2D]/10 bg-[#0B1218] shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
           <div className="relative">
             <video
               ref={videoRef}
@@ -53,7 +50,7 @@ export function VideoSection() {
                 className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/20 transition-all duration-300 group"
                 aria-label="Play video"
               >
-                <div className="flex items-center justify-center w-16 h-16 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                <div className="flex items-center justify-center w-16 h-16 rounded-full bg-white/15 border border-white/25 group-hover:bg-white/25 group-hover:scale-110 transition-all duration-300 shadow-lg">
                   <svg
                     viewBox="0 0 24 24"
                     className="w-7 h-7 text-white ml-0.5"
