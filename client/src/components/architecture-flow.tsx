@@ -19,14 +19,14 @@ export function ArchitectureFlow() {
 
         <ScrollReveal>
           <div className="relative flex flex-col items-center">
-            {/* Dark instrument plate — the one place the aurora still lives,
-                drifting behind the interception flow as the ambient AI
-                traffic the product tames. The SVG itself is untouched. */}
-            <div className="relative w-full overflow-hidden rounded-xl border border-[#0F1B2D]/10 bg-[#0B1218] p-6 md:p-8 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
-              <AuroraDrift variant="mixed" />
+            {/* Light instrument panel — the one place the aurora still lives,
+                washed down to paper alphas, drifting behind the interception
+                flow as the ambient AI traffic the product tames. */}
+            <div className="relative w-full overflow-hidden rounded-xl border border-[#0F1B2D]/10 bg-white p-6 md:p-8 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
+              <AuroraDrift variant="mixed" className="opacity-30" />
               {/* SVG Flow Diagram */}
               <svg
-                className="relative z-10 w-full text-slate-700"
+                className="relative z-10 w-full text-[#51617A]"
                 viewBox="0 0 800 340"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -106,22 +106,22 @@ export function ArchitectureFlow() {
 
               {/* User Node */}
               <g>
-                <rect x="80" y="90" width="120" height="60" rx="12" fill="#0f1115" stroke="currentColor" strokeWidth="0.8" />
-                <svg x="110" y="100" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="80" y="90" width="120" height="60" rx="12" fill="#FFFFFF" stroke="currentColor" strokeWidth="0.8" />
+                <svg x="110" y="100" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#51617A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
-                <text x="132" y="113" fill="white" fontSize="13" fontWeight="600">User</text>
-                <text x="96" y="135" fill="#64748b" fontSize="9">AI prompt submitted</text>
+                <text x="132" y="113" fill="#0F1B2D" fontSize="13" fontWeight="600">User</text>
+                <text x="96" y="135" fill="#51617A" fontSize="9">AI prompt submitted</text>
               </g>
 
               {/* Whiteout AI Node — with logo */}
               <g>
-                <rect x="350" y="80" width="100" height="80" rx="14" fill="#0f1115" stroke="#1a5fb4" strokeWidth="1" />
+                <rect x="350" y="80" width="100" height="80" rx="14" fill="#FFFFFF" stroke="#1a5fb4" strokeWidth="1" />
                 {/* Logo image */}
                 <SpinningMarkSvg x={388} y={86} size={24} />
-                <text x="400" y="128" fill="white" fontSize="11" fontWeight="600" textAnchor="middle">Whiteout AI</text>
-                <text x="400" y="143" fill="#64748b" fontSize="8" textAnchor="middle">Policy verification</text>
+                <text x="400" y="128" fill="#0F1B2D" fontSize="11" fontWeight="600" textAnchor="middle">Whiteout AI</text>
+                <text x="400" y="143" fill="#51617A" fontSize="8" textAnchor="middle">Policy verification</text>
                 {/* Glow */}
                 <circle cx="400" cy="120" r="35" fill="url(#flow-orange)" opacity="0.12">
                   <animate attributeName="opacity" values="0.08;0.18;0.08" dur="3s" repeatCount="indefinite" />
@@ -130,42 +130,42 @@ export function ArchitectureFlow() {
 
               {/* External AI Node */}
               <g>
-                <rect x="640" y="32" width="130" height="56" rx="10" fill="#0f1115" stroke="#2e7d32" strokeWidth="0.8" />
+                <rect x="640" y="32" width="130" height="56" rx="10" fill="#FFFFFF" stroke="#2e7d32" strokeWidth="0.8" />
                 <circle cx="660" cy="52" r="4" fill="#2e7d32" opacity="0.8" />
                 <circle cx="660" cy="52" r="6" fill="none" stroke="#2e7d32" strokeWidth="0.5" opacity="0.4">
                   <animate attributeName="r" values="6;10;6" dur="2s" repeatCount="indefinite" />
                   <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite" />
                 </circle>
-                <text x="672" y="50" fill="white" fontSize="11" fontWeight="600">External AI</text>
-                <text x="672" y="64" fill="#4ade80" fontSize="8">Safe · Compliant</text>
+                <text x="672" y="50" fill="#0F1B2D" fontSize="11" fontWeight="600">External AI</text>
+                <text x="672" y="64" fill="#2E7D32" fontSize="8">Safe · Compliant</text>
               </g>
 
               {/* Blocked Node */}
               <g>
-                <rect x="640" y="152" width="130" height="56" rx="10" fill="#0f1115" stroke="#dc2626" strokeWidth="0.8" />
+                <rect x="640" y="152" width="130" height="56" rx="10" fill="#FFFFFF" stroke="#dc2626" strokeWidth="0.8" />
                 <circle cx="660" cy="172" r="4" fill="#dc2626" opacity="0.8" />
                 <circle cx="660" cy="172" r="6" fill="none" stroke="#dc2626" strokeWidth="0.5" opacity="0.4">
                   <animate attributeName="r" values="6;10;6" dur="3s" repeatCount="indefinite" />
                   <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite" />
                 </circle>
-                <text x="672" y="170" fill="white" fontSize="11" fontWeight="600">Blocked</text>
-                <text x="672" y="184" fill="#f87171" fontSize="8">Policy violation</text>
+                <text x="672" y="170" fill="#0F1B2D" fontSize="11" fontWeight="600">Blocked</text>
+                <text x="672" y="184" fill="#B3261E" fontSize="8">Policy violation</text>
               </g>
 
               {/* Internal AI Node */}
               <g>
-                <rect x="640" y="252" width="130" height="56" rx="10" fill="#0f1115" stroke="#c77800" strokeWidth="0.8" />
+                <rect x="640" y="252" width="130" height="56" rx="10" fill="#FFFFFF" stroke="#c77800" strokeWidth="0.8" />
                 <circle cx="660" cy="272" r="4" fill="#c77800" opacity="0.8" />
                 <circle cx="660" cy="272" r="6" fill="none" stroke="#c77800" strokeWidth="0.5" opacity="0.4">
                   <animate attributeName="r" values="6;10;6" dur="2.5s" repeatCount="indefinite" />
                   <animate attributeName="opacity" values="0.4;0;0.4" dur="2.5s" repeatCount="indefinite" />
                 </circle>
-                <text x="672" y="270" fill="white" fontSize="11" fontWeight="600">Internal AI</text>
-                <text x="672" y="284" fill="#fbbf24" fontSize="8">Sensitive · Isolated</text>
+                <text x="672" y="270" fill="#0F1B2D" fontSize="11" fontWeight="600">Internal AI</text>
+                <text x="672" y="284" fill="#A05F00" fontSize="8">Sensitive · Isolated</text>
               </g>
 
               {/* Label on the direct path */}
-              <text x="340" y="240" fill="#64748b" fontSize="7" fontStyle="italic">data-sensitive prompts</text>
+              <text x="340" y="240" fill="#51617A" fontSize="7" fontStyle="italic">data-sensitive prompts</text>
               </svg>
             </div>
 

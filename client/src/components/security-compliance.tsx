@@ -28,15 +28,15 @@ export function SecurityCompliance() {
               <defs>
                 <radialGradient id="deploy-blue" fx="0.5" fy="0.5">
                   <stop offset="0%" stopColor="#1a5fb4" />
-                  <stop offset="100%" stopColor="transparent" />
+                  <stop offset="100%" stopColor="#1a5fb4" stopOpacity="0" />
                 </radialGradient>
                 <radialGradient id="deploy-green" fx="0.5" fy="0.5">
                   <stop offset="0%" stopColor="#2e7d32" />
-                  <stop offset="100%" stopColor="transparent" />
+                  <stop offset="100%" stopColor="#2e7d32" stopOpacity="0" />
                 </radialGradient>
                 <radialGradient id="deploy-orange" fx="0.5" fy="0.5">
                   <stop offset="0%" stopColor="#c77800" />
-                  <stop offset="100%" stopColor="transparent" />
+                  <stop offset="100%" stopColor="#c77800" stopOpacity="0" />
                 </radialGradient>
 
                 <mask id="deploy-mask-1">
@@ -76,23 +76,23 @@ export function SecurityCompliance() {
 
               {/* Top center — Whiteout AI source */}
               <g>
-                <rect x="340" y="16" width="120" height="44" rx="10" fill="#0f1115" stroke="currentColor" strokeWidth="0.8" />
+                <rect x="340" y="16" width="120" height="44" rx="10" fill="#FFFFFF" stroke="#1a5fb4" strokeWidth="0.8" />
                 <SpinningMarkSvg x={352} y={22} size={24} />
-                <text x="382" y="39" fill="white" fontSize="12" fontWeight="600">Whiteout AI</text>
-                <text x="358" y="52" fill="#64748b" fontSize="8">Choose your deployment</text>
+                <text x="382" y="39" fill="#0F1B2D" fontSize="12" fontWeight="600">Whiteout AI</text>
+                <text x="358" y="52" fill="#51617A" fontSize="8">Choose your deployment</text>
               </g>
 
               {/* Left — Whiteout-Hosted */}
               <g>
-                <rect x="50" y="160" width="160" height="190" rx="12" fill="#0f1115" stroke="#1a5fb4" strokeWidth="1" />
+                <rect x="50" y="160" width="160" height="190" rx="12" fill="#FFFFFF" stroke="#1a5fb4" strokeWidth="1" />
                 {/* Status badge */}
-                <rect x="85" y="172" width="90" height="18" rx="9" fill="#1a5fb4" opacity="0.2" />
-                <circle cx="95" cy="181" r="3" fill="#4ade80" />
-                <text x="103" y="185" fill="#4ade80" fontSize="8" fontWeight="600">Production</text>
+                <rect x="85" y="172" width="90" height="18" rx="9" fill="#2E7D32" fillOpacity="0.1" stroke="#2E7D32" strokeOpacity="0.25" strokeWidth="1" />
+                <circle cx="95" cy="181" r="3" fill="#2E7D32" />
+                <text x="103" y="185" fill="#2E7D32" fontSize="8" fontWeight="600">Production</text>
 
-                <text x="130" y="210" fill="white" fontSize="13" fontWeight="700" textAnchor="middle">Whiteout-Hosted</text>
+                <text x="130" y="210" fill="#0F1B2D" fontSize="13" fontWeight="700" textAnchor="middle">Whiteout-Hosted</text>
 
-                <g fill="#94a3b8" fontSize="8">
+                <g fill="#51617A" fontSize="8">
                   <circle cx="72" cy="232" r="1.5" fill="#1a5fb4" />
                   <text x="80" y="235">Fully managed by Whiteout</text>
                   <circle cx="72" cy="248" r="1.5" fill="#1a5fb4" />
@@ -115,15 +115,15 @@ export function SecurityCompliance() {
 
               {/* Center — Client-Hosted */}
               <g>
-                <rect x="320" y="160" width="160" height="190" rx="12" fill="#0f1115" stroke="#2e7d32" strokeWidth="1" />
+                <rect x="320" y="160" width="160" height="190" rx="12" fill="#FFFFFF" stroke="#2e7d32" strokeWidth="1" />
                 {/* Status badge */}
-                <rect x="355" y="172" width="90" height="18" rx="9" fill="#2e7d32" opacity="0.2" />
-                <circle cx="365" cy="181" r="3" fill="#4ade80" />
-                <text x="373" y="185" fill="#4ade80" fontSize="8" fontWeight="600">Production</text>
+                <rect x="355" y="172" width="90" height="18" rx="9" fill="#2E7D32" fillOpacity="0.1" stroke="#2E7D32" strokeOpacity="0.25" strokeWidth="1" />
+                <circle cx="365" cy="181" r="3" fill="#2E7D32" />
+                <text x="373" y="185" fill="#2E7D32" fontSize="8" fontWeight="600">Production</text>
 
-                <text x="400" y="210" fill="white" fontSize="13" fontWeight="700" textAnchor="middle">Client-Hosted</text>
+                <text x="400" y="210" fill="#0F1B2D" fontSize="13" fontWeight="700" textAnchor="middle">Client-Hosted</text>
 
-                <g fill="#94a3b8" fontSize="8">
+                <g fill="#51617A" fontSize="8">
                   <circle cx="342" cy="232" r="1.5" fill="#2e7d32" />
                   <text x="350" y="235">Your cloud account</text>
                   <circle cx="342" cy="248" r="1.5" fill="#2e7d32" />
@@ -144,24 +144,24 @@ export function SecurityCompliance() {
 
               {/* Right — LAN-Hosted */}
               <g>
-                <rect x="590" y="160" width="160" height="190" rx="12" fill="#0f1115" stroke="#c77800" strokeWidth="1" />
+                <rect x="590" y="160" width="160" height="190" rx="12" fill="#FFFFFF" stroke="#c77800" strokeWidth="1" />
                 {/* Status badge */}
-                <rect x="621" y="172" width="98" height="18" rx="9" fill="#c77800" opacity="0.2" />
-                <circle cx="631" cy="181" r="3" fill="#fbbf24" />
-                <text x="639" y="185" fill="#fbbf24" fontSize="8" fontWeight="600">In Development</text>
+                <rect x="621" y="172" width="98" height="18" rx="9" fill="#A05F00" fillOpacity="0.1" stroke="#A05F00" strokeOpacity="0.25" strokeWidth="1" />
+                <circle cx="631" cy="181" r="3" fill="#A05F00" />
+                <text x="639" y="185" fill="#A05F00" fontSize="8" fontWeight="600">In Development</text>
 
-                <text x="670" y="210" fill="white" fontSize="13" fontWeight="700" textAnchor="middle">LAN-Hosted</text>
+                <text x="670" y="210" fill="#0F1B2D" fontSize="13" fontWeight="700" textAnchor="middle">LAN-Hosted</text>
 
-                <g fill="#94a3b8" fontSize="8">
-                  <circle cx="612" cy="232" r="1.5" fill="#c77800" />
+                <g fill="#51617A" fontSize="8">
+                  <circle cx="612" cy="232" r="1.5" fill="#A05F00" />
                   <text x="620" y="235">On-premises network</text>
-                  <circle cx="612" cy="248" r="1.5" fill="#c77800" />
+                  <circle cx="612" cy="248" r="1.5" fill="#A05F00" />
                   <text x="620" y="251">Fully air-gapped option</text>
-                  <circle cx="612" cy="264" r="1.5" fill="#c77800" />
+                  <circle cx="612" cy="264" r="1.5" fill="#A05F00" />
                   <text x="620" y="267">No cloud dependency</text>
-                  <circle cx="612" cy="280" r="1.5" fill="#c77800" />
+                  <circle cx="612" cy="280" r="1.5" fill="#A05F00" />
                   <text x="620" y="283">Local GPU inference</text>
-                  <circle cx="612" cy="296" r="1.5" fill="#c77800" />
+                  <circle cx="612" cy="296" r="1.5" fill="#A05F00" />
                   <text x="620" y="299">Offline license key</text>
                 </g>
 

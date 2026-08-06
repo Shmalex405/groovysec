@@ -96,8 +96,9 @@ export function InterceptorPlatforms() {
           </div>
         </ScrollReveal>
 
-        {/* Dark instrument plate — the orbital map's styling expects a dark ground */}
-        <div className="relative overflow-hidden rounded-xl border border-[#0F1B2D]/10 bg-[#0B1218] shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
+        {/* isolate traps the orbital nodes' inline z-index (up to 200) inside
+            their own stacking context so they can't paint over the nav dropdowns */}
+        <div className="relative isolate">
           <RadialOrbitalTimeline
             timelineData={timelineData}
             centerMark

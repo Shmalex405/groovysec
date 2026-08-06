@@ -122,15 +122,13 @@ export function HeroSection() {
           {/* isolate traps the orbital nodes' inline z-index (up to 200) inside
               their own stacking context so they can't paint over the nav dropdowns */}
           <ScrollReveal direction="right" delay={0.3} className="relative isolate">
-            <div className="relative overflow-hidden rounded-xl border border-[#0F1B2D]/10 bg-[#0B1218] shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
-              <RadialOrbitalTimeline
-                timelineData={interceptorData}
-                centerMark
-                centerLabel="Whiteout AI"
-                variant="blue"
-                className="scale-[0.85] lg:scale-100 -my-8"
-              />
-            </div>
+            <RadialOrbitalTimeline
+              timelineData={interceptorData}
+              centerMark
+              centerLabel="Whiteout AI"
+              variant="blue"
+              className="scale-[0.85] lg:scale-100 -my-8"
+            />
           </ScrollReveal>
         </div>
       </div>

@@ -99,22 +99,22 @@ const VERDICT_STYLE: Record<
   redact: {
     label: "Redacted",
     icon: ShieldAlert,
-    badge: "border-amber-400/40 bg-amber-500/15 text-amber-300",
-    text: "text-amber-300",
+    badge: "border-[#A05F00]/25 bg-[#A05F00]/10 text-[#A05F00]",
+    text: "text-[#A05F00]",
     enforcing: "Policy matched — redacting sensitive data…",
   },
   block: {
     label: "Blocked",
     icon: ShieldX,
-    badge: "border-red-400/40 bg-red-500/15 text-red-300",
-    text: "text-red-300",
+    badge: "border-[#B3261E]/25 bg-[#B3261E]/10 text-[#B3261E]",
+    text: "text-[#B3261E]",
     enforcing: "Policy matched — blocking transmission…",
   },
   allow: {
     label: "Allowed",
     icon: ShieldCheck,
-    badge: "border-emerald-400/40 bg-emerald-500/15 text-emerald-300",
-    text: "text-emerald-300",
+    badge: "border-[#2E7D32]/25 bg-[#2E7D32]/10 text-[#2E7D32]",
+    text: "text-[#2E7D32]",
     enforcing: "No violation found — releasing prompt…",
   },
 };
@@ -135,11 +135,11 @@ function statusFor(phase: Phase, scenario: Scenario): {
   switch (phase) {
     case "enter":
     case "travel":
-      return { text: "Intercepting prompt in transit…", className: "text-slate-400" };
+      return { text: "Intercepting prompt in transit…", className: "text-[#51617A]" };
     case "scan":
-      return { text: "Evaluating against 60+ compliance policies…", className: "text-blue-300" };
+      return { text: "Evaluating against 60+ compliance policies…", className: "text-[#1A5FB4]" };
     case "verdict":
-      return { text: verdictStyle.enforcing, className: "text-slate-300" };
+      return { text: verdictStyle.enforcing, className: "text-[#1A5FB4]" };
     default:
       return { text: scenario.result, className: verdictStyle.text };
   }
@@ -216,25 +216,25 @@ export function PromptInterceptionDemo() {
   return (
     <div
       ref={containerRef}
-      className="max-w-4xl mx-auto h-full flex flex-col rounded-xl border border-[#0F1B2D]/10 bg-[#0B1218] overflow-hidden shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-4 sm:p-6"
+      className="max-w-4xl mx-auto h-full flex flex-col rounded-xl border border-[#0F1B2D]/10 bg-white overflow-hidden shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-4 sm:p-6"
       role="img"
       aria-label="Animated diagram: Whiteout AI intercepts each prompt between your workforce and AI platforms, evaluates it against compliance policies, then redacts, blocks, or allows it — and logs every decision to the audit trail."
     >
       {/* Header row */}
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2 text-xs text-slate-400">
+        <div className="flex items-center gap-2 text-xs text-[#0F1B2D]">
           <span className="relative flex w-2 h-2">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+            <span className="absolute inline-flex h-full w-full rounded-full bg-[#2E7D32] opacity-60 animate-ping" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2E7D32]" />
           </span>
           Whiteout AI · Live policy enforcement
         </div>
-        <div className="text-xs text-slate-500">
+        <div className="text-xs text-[#51617A]">
           Audit trail ·{" "}
           <motion.span
             key={audited}
-            initial={{ scale: 1.4, color: "#34d399" }}
-            animate={{ scale: 1, color: "#94a3b8" }}
+            initial={{ scale: 1.4, color: "#2E7D32" }}
+            animate={{ scale: 1, color: "#51617A" }}
             transition={{ duration: 0.5 }}
             className="inline-block font-medium tabular-nums"
           >
@@ -252,22 +252,22 @@ export function PromptInterceptionDemo() {
             active && i === 2
               ? verdictStyle.text
               : active
-                ? "text-blue-300"
-                : "text-slate-600";
+                ? "text-[#1A5FB4]"
+                : "text-[#6E7B8C]";
           return (
             <div key={step} className="flex items-center gap-2 sm:gap-3">
               {i > 0 && (
-                <div className="w-5 sm:w-10 border-t border-dashed border-white/10" />
+                <div className="w-5 sm:w-10 border-t border-dashed border-[#0F1B2D]/25" />
               )}
               <div className={`flex items-center gap-1.5 ${stepColor}`}>
                 <span
                   className={`flex h-4 w-4 items-center justify-center rounded-full border text-[9px] ${
-                    active ? "border-current bg-current/10" : "border-slate-700"
+                    active ? "border-current bg-current/10" : "border-[#0F1B2D]/25"
                   }`}
                 >
                   {i + 1}
                 </span>
-                <span className="text-[10px] uppercase tracking-widest">
+                <span className="text-[10px] uppercase tracking-[0.18em] font-semibold">
                   {step}
                 </span>
               </div>
@@ -280,27 +280,27 @@ export function PromptInterceptionDemo() {
           Maestro demo when the two render side by side */}
       <div ref={trackRef} className="relative flex-1 min-h-[12rem] sm:min-h-[11rem]">
         {/* Connecting line */}
-        <div className="absolute left-0 right-0 top-1/2 border-t border-dashed border-white/10" />
+        <div className="absolute left-0 right-0 top-1/2 border-t border-dashed border-[#0F1B2D]/25" />
 
         {/* Endpoint nodes */}
         <div className="absolute left-0 top-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5 w-20">
-          <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-            <Users className="w-5 h-5 text-blue-400" />
+          <div className="w-10 h-10 rounded-xl bg-[#1A5FB4]/10 border border-[#1A5FB4]/25 flex items-center justify-center">
+            <Users className="w-5 h-5 text-[#1A5FB4]" />
           </div>
-          <div className="text-[10px] text-slate-400 text-center leading-tight">
+          <div className="text-[10px] text-[#0F1B2D] text-center leading-tight">
             Your workforce
-            <span className="hidden sm:block text-slate-600">
+            <span className="hidden sm:block text-[#51617A]">
               Browser · IDE · Desktop
             </span>
           </div>
         </div>
         <div className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5 w-20">
-          <div className="w-10 h-10 rounded-xl bg-slate-500/10 border border-white/10 flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-slate-300" />
+          <div className="w-10 h-10 rounded-xl bg-[#0F1B2D]/[0.06] border border-[#0F1B2D]/10 flex items-center justify-center">
+            <Sparkles className="w-5 h-5 text-[#51617A]" />
           </div>
-          <div className="text-[10px] text-slate-400 text-center leading-tight">
+          <div className="text-[10px] text-[#0F1B2D] text-center leading-tight">
             AI platforms
-            <span className="hidden sm:block text-slate-600">
+            <span className="hidden sm:block text-[#51617A]">
               ChatGPT · Claude · Gemini
             </span>
           </div>
@@ -308,22 +308,22 @@ export function PromptInterceptionDemo() {
 
         {/* Whiteout gate */}
         <div className="absolute left-1/2 -translate-x-1/2 inset-y-0 flex flex-col items-center justify-center">
-          <div className="absolute inset-y-0 w-px bg-gradient-to-b from-transparent via-blue-400/50 to-transparent" />
-          <div className="relative w-12 h-12 rounded-full bg-[#0F171F] border border-blue-400/40 flex items-center justify-center">
+          <div className="absolute inset-y-0 w-px bg-gradient-to-b from-transparent via-[#1A5FB4]/40 to-transparent" />
+          <div className="relative w-12 h-12 rounded-full bg-white border border-[#1A5FB4]/25 flex items-center justify-center">
             {atGate && (
               <motion.div
-                className="absolute inset-0 rounded-full border border-blue-400/60"
+                className="absolute inset-0 rounded-full border border-[#1A5FB4]/60"
                 animate={{ scale: [1, 1.7], opacity: [0.7, 0] }}
                 transition={{ duration: 1.1, repeat: Infinity, ease: "easeOut" }}
               />
             )}
             <SpinningMark className="w-7 h-7" />
           </div>
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-[#0B1218] px-1.5 py-0.5 text-center leading-tight">
-            <span className="block text-[10px] font-medium text-slate-300">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-white px-1.5 py-0.5 text-center leading-tight">
+            <span className="block text-[10px] font-medium text-[#0F1B2D]">
               Whiteout AI
             </span>
-            <span className="hidden sm:block text-[9px] text-slate-600">
+            <span className="hidden sm:block text-[9px] text-[#51617A]">
               Policy engine
             </span>
           </div>
@@ -336,7 +336,7 @@ export function PromptInterceptionDemo() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.35 }}
-                className="absolute top-0 whitespace-nowrap rounded-full border border-blue-400/30 bg-blue-500/10 px-2.5 py-0.5 text-[10px] text-blue-200"
+                className="absolute top-0 whitespace-nowrap rounded-md border border-[#1A5FB4]/25 bg-[#1A5FB4]/10 px-2.5 py-0.5 text-[10px] text-[#1A5FB4]"
               >
                 {phase === "scan" ? "Scanning…" : scenario.policy}
               </motion.div>
@@ -354,16 +354,16 @@ export function PromptInterceptionDemo() {
           className="absolute top-1/2 z-10 w-56 sm:w-72"
         >
           <div
-            className={`relative rounded-xl border bg-[#0F171F] overflow-visible transition-colors duration-500 ${
-              atGate ? "border-blue-400/40" : "border-white/10"
+            className={`relative rounded-xl border bg-white shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] overflow-visible transition-colors duration-500 ${
+              atGate ? "border-[#1A5FB4]/40" : "border-[#0F1B2D]/10"
             }`}
           >
             {/* Window title bar */}
-            <div className="flex items-center gap-1.5 rounded-t-xl border-b border-white/5 bg-white/[0.03] px-3 py-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-400/40" />
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400/40" />
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/40" />
-              <span className="ml-1.5 text-[10px] text-slate-500 truncate">
+            <div className="flex items-center gap-1.5 rounded-t-xl border-b border-[#0F1B2D]/10 bg-[#FBFCFE] px-3 py-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#B3261E]/70" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#A05F00]/70" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D32]/70" />
+              <span className="ml-1.5 text-[10px] text-[#6E7B8C] truncate">
                 {scenario.source}
               </span>
             </div>
@@ -372,33 +372,33 @@ export function PromptInterceptionDemo() {
             <div className="flex items-end gap-2 p-3">
               <div className="flex-1">
                 {scenario.attachment && (
-                  <div className="mb-2 inline-flex items-center gap-1.5 rounded-lg border border-amber-400/20 bg-amber-400/5 px-2 py-1">
-                    <FileText className="w-3.5 h-3.5 text-amber-300/80" />
-                    <span className="text-[10px] text-slate-300">
+                  <div className="mb-2 inline-flex items-center gap-1.5 rounded-md border border-[#A05F00]/25 bg-[#A05F00]/10 px-2 py-1">
+                    <FileText className="w-3.5 h-3.5 text-[#A05F00]" />
+                    <span className="text-[10px] text-[#0F1B2D]">
                       {scenario.attachment.name}
                     </span>
-                    <span className="text-[9px] text-slate-500">
+                    <span className="text-[9px] text-[#6E7B8C]">
                       {scenario.attachment.meta}
                     </span>
                   </div>
                 )}
-                <p className="text-[11px] sm:text-xs text-slate-300 leading-snug">
+                <p className="text-[11px] sm:text-xs text-[#0F1B2D] leading-snug">
                 {scenario.before}
                 {scenario.sensitive &&
                   (showRedacted ? (
-                    <span className="rounded bg-emerald-400/15 px-1 font-mono text-emerald-300">
+                    <span className="rounded bg-[#2E7D32]/10 px-1 font-mono text-[#2E7D32]">
                       {scenario.redacted}
                     </span>
                   ) : (
-                    <span className="rounded bg-amber-400/15 px-1 text-amber-200">
+                    <span className="rounded bg-[#A05F00]/10 px-1 text-[#8A5200]">
                       {scenario.sensitive}
                     </span>
                   ))}
                   {scenario.after}
                 </p>
               </div>
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/10">
-                <ArrowUp className="w-3.5 h-3.5 text-slate-300" />
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#1A5FB4]">
+                <ArrowUp className="w-3.5 h-3.5 text-white" />
               </div>
             </div>
 
@@ -410,7 +410,7 @@ export function PromptInterceptionDemo() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className={`absolute -top-2.5 right-2.5 flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-medium ${verdictStyle.badge}`}
+                  className={`absolute -top-2.5 right-2.5 flex items-center gap-1 rounded-md border px-2 py-0.5 text-[10px] font-medium ${verdictStyle.badge}`}
                 >
                   <VerdictIcon className="w-3 h-3" />
                   {verdictStyle.label}
@@ -438,15 +438,15 @@ export function PromptInterceptionDemo() {
       </div>
 
       {/* Stats footer */}
-      <div className="mt-5 grid grid-cols-3 gap-4 border-t border-white/5 pt-4">
+      <div className="mt-5 grid grid-cols-3 gap-4 border-t border-[#0F1B2D]/10 pt-4">
         {[
           { value: "60+", label: "AI Policies" },
           { value: "12", label: "Regulatory Frameworks" },
           { value: "23+", label: "AI Platforms" },
         ].map((stat) => (
           <div key={stat.label} className="text-center">
-            <div className="text-lg font-bold text-white">{stat.value}</div>
-            <div className="text-[10px] text-slate-500">{stat.label}</div>
+            <div className="text-lg font-bold text-[#0F1B2D]">{stat.value}</div>
+            <div className="text-[10px] text-[#6E7B8C]">{stat.label}</div>
           </div>
         ))}
       </div>

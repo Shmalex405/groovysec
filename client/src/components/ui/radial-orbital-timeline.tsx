@@ -108,33 +108,33 @@ export default function RadialOrbitalTimeline({
   const colors = {
     blue: {
       center: "from-blue-500 via-cyan-400 to-emerald-400",
-      centerGlow: "shadow-blue-500/40",
-      nodeActive: "bg-gradient-to-br from-blue-500 to-cyan-400 text-white border-blue-300 shadow-lg shadow-blue-500/40",
-      nodeHover: "bg-gradient-to-br from-blue-500/80 to-cyan-400/60 text-white border-blue-400/60 shadow-md shadow-blue-500/30",
-      nodeRelated: "bg-blue-500/30 text-white border-blue-400/50",
-      nodeDefault: "bg-white/[0.08] text-blue-200 border-blue-400/30 hover:border-blue-400/50 shadow-md shadow-blue-500/10",
-      card: "border-blue-500/30",
-      ring: "border-blue-400/15",
-      ring2: "border-blue-400/8",
-      tagBg: "bg-blue-500/15 text-blue-200 border-blue-400/25",
-      particle: "bg-blue-300",
-      labelGradient: "bg-gradient-to-r from-blue-200 to-emerald-200",
-      labelGradientHover: "bg-gradient-to-r from-blue-300 to-emerald-300",
+      centerGlow: "shadow-blue-500/20",
+      nodeActive: "bg-gradient-to-br from-blue-500 to-cyan-400 text-white border-blue-600 shadow-lg shadow-blue-500/20",
+      nodeHover: "bg-gradient-to-br from-blue-500 to-cyan-400 text-white border-blue-500 shadow-md shadow-blue-500/20",
+      nodeRelated: "bg-[#1A5FB4]/10 text-[#1A5FB4] border-[#1A5FB4]/40",
+      nodeDefault: "bg-white text-[#1A5FB4] border-[#1A5FB4]/30 hover:border-[#1A5FB4]/50 shadow-md shadow-blue-500/10",
+      card: "border-[#0F1B2D]/10",
+      ring: "border-[#0F1B2D]/15",
+      ring2: "border-[#0F1B2D]/10",
+      tagBg: "bg-[#1A5FB4]/10 text-[#1A5FB4] border-[#1A5FB4]/25",
+      particle: "bg-[#1A5FB4]",
+      label: "text-[#0F1B2D]",
+      labelHover: "text-[#1A5FB4]",
     },
     orange: {
       center: "from-orange-500 via-red-400 to-amber-400",
-      centerGlow: "shadow-orange-500/40",
-      nodeActive: "bg-gradient-to-br from-orange-500 to-red-400 text-white border-orange-300 shadow-lg shadow-orange-500/40",
-      nodeHover: "bg-gradient-to-br from-orange-500/80 to-red-400/60 text-white border-orange-400/60 shadow-md shadow-orange-500/30",
-      nodeRelated: "bg-orange-500/30 text-white border-orange-400/50",
-      nodeDefault: "bg-white/[0.08] text-orange-200 border-orange-400/30 hover:border-orange-400/50 shadow-md shadow-orange-500/10",
-      card: "border-orange-500/30",
-      ring: "border-orange-400/15",
-      ring2: "border-orange-400/8",
-      tagBg: "bg-orange-500/15 text-orange-200 border-orange-400/25",
-      particle: "bg-orange-300",
-      labelGradient: "bg-gradient-to-r from-orange-200 to-red-200",
-      labelGradientHover: "bg-gradient-to-r from-orange-300 to-red-300",
+      centerGlow: "shadow-orange-500/20",
+      nodeActive: "bg-gradient-to-br from-orange-500 to-red-400 text-white border-orange-600 shadow-lg shadow-orange-500/20",
+      nodeHover: "bg-gradient-to-br from-orange-500 to-red-400 text-white border-orange-500 shadow-md shadow-orange-500/20",
+      nodeRelated: "bg-[#A05F00]/10 text-[#A05F00] border-[#A05F00]/40",
+      nodeDefault: "bg-white text-[#A05F00] border-[#A05F00]/30 hover:border-[#A05F00]/50 shadow-md shadow-orange-500/10",
+      card: "border-[#0F1B2D]/10",
+      ring: "border-[#0F1B2D]/15",
+      ring2: "border-[#0F1B2D]/10",
+      tagBg: "bg-[#A05F00]/10 text-[#A05F00] border-[#A05F00]/25",
+      particle: "bg-[#A05F00]",
+      label: "text-[#0F1B2D]",
+      labelHover: "text-[#A05F00]",
     },
   };
 
@@ -268,9 +268,9 @@ export default function RadialOrbitalTimeline({
 
   const getStatusStyle = (status: TimelineItem["status"]) => {
     switch (status) {
-      case "completed": return "text-emerald-300 bg-emerald-500/15 border-emerald-400/25";
-      case "in-progress": return "text-amber-300 bg-amber-500/15 border-amber-400/25";
-      case "pending": return "text-slate-400 bg-white/[0.05] border-white/10";
+      case "completed": return "text-[#2E7D32] bg-[#2E7D32]/10 border-[#2E7D32]/25";
+      case "in-progress": return "text-[#A05F00] bg-[#A05F00]/10 border-[#A05F00]/25";
+      case "pending": return "text-[#51617A] bg-[#0F1B2D]/[0.04] border-[#0F1B2D]/15";
     }
   };
 
@@ -290,6 +290,10 @@ export default function RadialOrbitalTimeline({
           <div className="absolute flex items-center justify-center z-10">
             {centerMark ? (
               <div className="relative flex items-center justify-center">
+                <div
+                  className="absolute rounded-full bg-white border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]"
+                  style={{ width: 88, height: 88 }}
+                />
                 <div className={`absolute rounded-full border ${c.ring} animate-ping opacity-50`} style={{ width: 96, height: 96 }} />
                 <div className={`absolute rounded-full border ${c.ring2} animate-ping opacity-30`} style={{ width: 116, height: 116, animationDelay: "0.5s" }} />
                 <SpinningMark className={cn("w-20 h-20 drop-shadow-2xl", centerMarkClass)} />
@@ -303,11 +307,11 @@ export default function RadialOrbitalTimeline({
                 <CenterIcon className="w-7 h-7 text-white drop-shadow-lg" />
               </div>
             ) : (
-              <div className="w-7 h-7 rounded-full bg-white/80 backdrop-blur-md" />
+              <div className="w-7 h-7 rounded-full bg-white border border-[#0F1B2D]/15 shadow-sm" />
             )}
           </div>
           {centerLabel && (
-            <div className="absolute z-10 mt-24 text-sm font-bold text-white/70 tracking-widest uppercase">
+            <div className="absolute z-10 mt-24 text-sm font-semibold text-[#6E7B8C] tracking-[0.18em] uppercase">
               {centerLabel}
             </div>
           )}
@@ -351,7 +355,7 @@ export default function RadialOrbitalTimeline({
                   <div
                     className="absolute rounded-full animate-pulse pointer-events-none"
                     style={{
-                      background: `radial-gradient(circle, ${variant === "blue" ? "rgba(96,165,250,0.4)" : "rgba(251,146,60,0.4)"} 0%, transparent 70%)`,
+                      background: `radial-gradient(circle, ${variant === "blue" ? "rgba(26,95,180,0.22)" : "rgba(160,95,0,0.20)"} 0%, transparent 70%)`,
                       width: 90,
                       height: 90,
                       left: -19,
@@ -371,11 +375,11 @@ export default function RadialOrbitalTimeline({
                   <Icon size={24} className="drop-shadow-lg" />
                 </div>
 
-                {/* Label — gradient colored */}
+                {/* Label — solid ink, brand hue on focus */}
                 <div className={cn(
-                  "absolute top-[4.25rem] left-1/2 -translate-x-1/2 text-base font-bold tracking-wide transition-all duration-300 bg-clip-text text-transparent max-w-[240px] text-center leading-tight",
+                  "absolute top-[4.25rem] left-1/2 -translate-x-1/2 text-base font-bold tracking-wide transition-all duration-300 max-w-[240px] text-center leading-tight",
                   isExpanded && "scale-110",
-                  isExpanded || isHovered ? c.labelGradientHover : c.labelGradient,
+                  isExpanded || isHovered ? c.labelHover : c.label,
                 )}>
                   {item.title}
                 </div>
@@ -383,29 +387,29 @@ export default function RadialOrbitalTimeline({
                 {/* Expanded card */}
                 {isExpanded && (
                   <div className={cn(
-                    "absolute top-24 left-1/2 -translate-x-1/2 w-80 bg-slate-950/95 backdrop-blur-xl rounded-xl border shadow-2xl shadow-black/50 overflow-visible",
+                    "absolute top-24 left-1/2 -translate-x-1/2 w-80 bg-white rounded-xl border shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] overflow-visible",
                     c.card
                   )}>
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-white/30" />
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-[#0F1B2D]/25" />
 
                     <div className="p-5 pb-3">
                       <div className="flex justify-between items-center mb-3">
-                        <span className={cn("px-2.5 py-1 rounded-full text-[11px] font-bold border", getStatusStyle(item.status))}>
+                        <span className={cn("px-2.5 py-1 rounded-md text-[11px] font-bold border", getStatusStyle(item.status))}>
                           {getStatusLabel(item.status)}
                         </span>
-                        <span className="text-[11px] font-mono text-white/40 tracking-wider">{item.category}</span>
+                        <span className="text-[11px] font-mono text-[#6E7B8C] tracking-wider">{item.category}</span>
                       </div>
-                      <h4 className="text-base font-bold text-white">{item.title}</h4>
+                      <h4 className="text-base font-bold text-[#0F1B2D]">{item.title}</h4>
                     </div>
 
-                    <div className="px-5 pb-5 text-sm text-white/70 leading-relaxed">
+                    <div className="px-5 pb-5 text-sm text-[#51617A] leading-relaxed">
                       <p>{item.content}</p>
 
                       {/* Tags */}
                       {item.tags && item.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 mt-4">
                           {item.tags.map((tag) => (
-                            <span key={tag} className={cn("text-[11px] px-2 py-0.5 rounded-full border font-semibold", c.tagBg)}>
+                            <span key={tag} className={cn("text-[11px] px-2 py-0.5 rounded-md border font-semibold", c.tagBg)}>
                               {tag}
                             </span>
                           ))}
@@ -414,8 +418,8 @@ export default function RadialOrbitalTimeline({
 
                       {/* Related nodes */}
                       {item.relatedIds.length > 0 && (
-                        <div className="mt-4 pt-4 border-t border-white/[0.08]">
-                          <h5 className="text-[11px] uppercase tracking-wider font-bold text-white/50 mb-2">Connected Nodes</h5>
+                        <div className="mt-4 pt-4 border-t border-[#0F1B2D]/10">
+                          <h5 className="text-[11px] uppercase tracking-[0.18em] font-semibold text-[#6E7B8C] mb-2">Connected Nodes</h5>
                           <div className="flex flex-wrap gap-1.5">
                             {item.relatedIds.map((relId) => {
                               const related = timelineData.find((i) => i.id === relId);
@@ -423,13 +427,13 @@ export default function RadialOrbitalTimeline({
                                 <button
                                   key={relId}
                                   className={cn(
-                                    "flex items-center h-6 px-2 text-[11px] font-medium rounded-lg border transition-all duration-200",
-                                    "border-white/10 bg-white/[0.04] hover:bg-white/[0.1] text-white/70 hover:text-white"
+                                    "flex items-center h-6 px-2 text-[11px] font-medium rounded-md border transition-all duration-200",
+                                    "border-[#0F1B2D]/15 bg-[#0F1B2D]/[0.03] hover:bg-[#0F1B2D]/[0.06] text-[#51617A] hover:text-[#0F1B2D]"
                                   )}
                                   onClick={(e) => { e.stopPropagation(); toggleItem(relId); }}
                                 >
                                   {related?.title}
-                                  <ArrowRight size={10} className="ml-1 text-white/40" />
+                                  <ArrowRight size={10} className="ml-1 text-[#6E7B8C]" />
                                 </button>
                               );
                             })}
