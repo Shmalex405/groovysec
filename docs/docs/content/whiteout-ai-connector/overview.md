@@ -48,6 +48,14 @@ doors into the same room — Whiteout only guards its own.
 > **ungoverned path** and disable it for that source — otherwise the AI
 > keeps a direct, unvetted line to your data.
 
+**You don't have to police this by hand.** Whiteout can enforce it:
+turn on **Block External AI** for a source and its vendor-native
+connector is blocked on your users' machines; connections that already
+existed before you deployed Whiteout are surfaced as findings, and for
+Google Workspace and Microsoft 365 you can revoke the AI vendor's
+access at the source outright. See
+[Vendor-Native Connector Control](./whiteout-ai-connector/native-connector-control.md).
+
 ## The three connect models
 
 Every integration uses one of three models. Each source's guide tells
