@@ -1,6 +1,5 @@
 import { ScrollReveal } from "@/components/motion";
 import { SpinningMarkSvg } from "@/components/ui/spinning-mark";
-import { AuroraDrift } from "@/components/ui/aurora-background";
 
 export function ArchitectureFlow() {
   return (
@@ -19,11 +18,10 @@ export function ArchitectureFlow() {
 
         <ScrollReveal>
           <div className="relative flex flex-col items-center">
-            {/* Light instrument panel — the one place the aurora still lives,
-                washed down to paper alphas, drifting behind the interception
-                flow as the ambient AI traffic the product tames. */}
-            <div className="relative w-full overflow-hidden rounded-xl border border-[#0F1B2D]/10 bg-white p-6 md:p-8 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
-              <AuroraDrift variant="mixed" className="opacity-30" />
+            {/* The diagram sits directly on the page — no card frame, no
+                backdrop wash. The animated route lights alone carry the
+                "live traffic" feel. */}
+            <div className="relative w-full">
               {/* SVG Flow Diagram */}
               <svg
                 className="relative z-10 w-full text-[#51617A]"

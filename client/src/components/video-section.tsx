@@ -31,7 +31,7 @@ export function VideoSection() {
           AI governance, prompt security, and auditability — built for enterprises in the modern world
         </p>
 
-        <div className="relative overflow-hidden rounded-xl border border-[#0F1B2D]/10 bg-[#0B1218] shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
+        <div className="relative overflow-hidden rounded-xl border border-[#0F1B2D]/10 bg-white shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)]">
           <div className="relative">
             <video
               ref={videoRef}

@@ -132,20 +132,20 @@ const OUTCOME_STYLE: Record<
   critical: {
     label: "Exploited · Critical",
     icon: Crosshair,
-    badge: "border-red-400/40 bg-red-500/15 text-red-300",
-    text: "text-red-300",
+    badge: "border-[#B3261E]/40 bg-[#F9E7E5] text-[#B3261E]",
+    text: "text-[#B3261E]",
   },
   high: {
     label: "Exploited · High",
     icon: Crosshair,
-    badge: "border-orange-400/40 bg-orange-500/15 text-orange-300",
-    text: "text-orange-300",
+    badge: "border-[#A05F00]/40 bg-[#F6EDDE] text-[#A05F00]",
+    text: "text-[#A05F00]",
   },
   removed: {
     label: "False Positive",
     icon: ShieldCheck,
-    badge: "border-emerald-400/40 bg-emerald-500/15 text-emerald-300",
-    text: "text-emerald-300",
+    badge: "border-[#2E7D32]/40 bg-[#E6F0E7] text-[#2E7D32]",
+    text: "text-[#2E7D32]",
   },
 };
 
@@ -162,11 +162,11 @@ function statusFor(phase: Phase, scenario: Scenario): {
   const outcomeStyle = OUTCOME_STYLE[scenario.outcome];
   switch (phase) {
     case "discover":
-      return { text: "Mapping the attack surface…", className: "text-slate-400" };
+      return { text: "Mapping the attack surface…", className: "text-[#51617A]" };
     case "exploit":
-      return { text: "Controlled exploitation in progress…", className: "text-orange-300" };
+      return { text: "Controlled exploitation in progress…", className: "text-[#A05F00]" };
     case "validate":
-      return { text: "Validating impact — recalibrating severity…", className: "text-slate-300" };
+      return { text: "Validating impact — recalibrating severity…", className: "text-[#51617A]" };
     default:
       return { text: scenario.result, className: outcomeStyle.text };
   }
@@ -209,24 +209,24 @@ export function MaestroAssessmentDemo() {
   return (
     <div
       ref={containerRef}
-      className="max-w-4xl mx-auto h-full flex flex-col rounded-xl border border-[#0F1B2D]/10 bg-[#0B1218] shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] overflow-hidden p-4 sm:p-6"
+      className="max-w-4xl mx-auto h-full flex flex-col rounded-xl border border-[#0F1B2D]/10 bg-white shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] overflow-hidden p-4 sm:p-6"
       role="img"
       aria-label="Animated diagram: Maestro's AI agents discover a vulnerability, exploit it under controlled safety rules, validate real impact with recalibrated severity, and write evidence-backed findings to the report — eliminating false positives along the way."
     >
       {/* Header row */}
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2 text-xs text-slate-400">
+        <div className="flex items-center gap-2 text-xs text-[#51617A]">
           <span className="relative flex w-2 h-2">
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-400" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#A05F00]" />
           </span>
           Maestro · Autonomous pentest in progress
         </div>
-        <div className="text-xs text-slate-500">
+        <div className="text-xs text-[#6E7B8C]">
           Report ·{" "}
           <motion.span
             key={validated}
-            initial={{ scale: 1.4, color: "#fb923c" }}
-            animate={{ scale: 1, color: "#94a3b8" }}
+            initial={{ scale: 1.4, color: "#A05F00" }}
+            animate={{ scale: 1, color: "#51617A" }}
             transition={{ duration: 0.5 }}
             className="inline-block font-medium tabular-nums"
           >
@@ -244,17 +244,17 @@ export function MaestroAssessmentDemo() {
             active && i === STEPS.length - 1
               ? outcomeStyle.text
               : active
-                ? "text-orange-300"
-                : "text-slate-600";
+                ? "text-[#A05F00]"
+                : "text-[#6E7B8C]";
           return (
             <div key={step} className="flex items-center gap-2 sm:gap-3">
               {i > 0 && (
-                <div className="w-4 sm:w-8 border-t border-dashed border-white/10" />
+                <div className="w-4 sm:w-8 border-t border-dashed border-[#0F1B2D]/20" />
               )}
               <div className={`flex items-center gap-1.5 ${stepColor}`}>
                 <span
                   className={`flex h-4 w-4 items-center justify-center rounded-full border text-[9px] ${
-                    active ? "border-current bg-current/10" : "border-slate-700"
+                    active ? "border-current bg-current/10" : "border-[#0F1B2D]/25"
                   }`}
                 >
                   {i + 1}
@@ -279,8 +279,8 @@ export function MaestroAssessmentDemo() {
         <div
           className={`relative flex-1 flex flex-col rounded-xl border bg-[#0F171F] transition-colors duration-500 ${
             phase === "exploit" || phase === "validate"
-              ? "border-orange-400/40"
-              : "border-white/10"
+              ? "border-[#A05F00]/50"
+              : "border-[#0F1B2D]/15"
           }`}
         >
           {/* Window title bar */}
@@ -360,15 +360,15 @@ export function MaestroAssessmentDemo() {
       </div>
 
       {/* Stats footer */}
-      <div className="mt-5 grid grid-cols-3 gap-4 border-t border-white/5 pt-4">
+      <div className="mt-5 grid grid-cols-3 gap-4 border-t border-[#0F1B2D]/10 pt-4">
         {[
           { value: "21", label: "AI Agents" },
           { value: "213", label: "MCP Tools" },
           { value: "232", label: "Test Matrix" },
         ].map((stat) => (
           <div key={stat.label} className="text-center">
-            <div className="text-lg font-bold font-mono text-white">{stat.value}</div>
-            <div className="text-[10px] text-slate-500">{stat.label}</div>
+            <div className="text-lg font-bold font-mono text-[#0F1B2D]">{stat.value}</div>
+            <div className="text-[10px] text-[#6E7B8C]">{stat.label}</div>
           </div>
         ))}
       </div>
