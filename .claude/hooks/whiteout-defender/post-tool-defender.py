@@ -2,10 +2,13 @@
 # requires-python = ">=3.8"
 # dependencies = ["pyyaml"]
 # ///
+# whiteout-hook-version: 1.4.0
 """
-Whiteout AI - Claude Code Prompt Injection Defender (PostToolUse Hook)
-======================================================================
-Groovy Security / Whiteout AI customized defense layer for Claude Code.
+Whiteout AI - Prompt Injection Defender (PostToolUse Hook)
+==========================================================
+Groovy Security / Whiteout AI customized defense layer for Claude Code and
+OpenAI Codex (--agent, default "claude"; both hosts share this event name,
+the warning JSON shape, and the always-exit-0 contract).
 
 Built on the claude-hooks pattern by Lasso Security, extended with:
   - Enterprise data exfiltration detection
@@ -24,7 +27,21 @@ Note: In PostToolUse, "block" doesn't prevent execution (tool already ran),
 but sends the reason message to Claude as a warning.
 """
 
-import fcntl
+try:
+    import fcntl  # POSIX advisory file locking (Unix only)
+except ImportError:  # Windows has no fcntl
+    # The event log is a best-effort single-writer append; a no-op lock keeps
+    # this script cross-platform without changing macOS/Linux behavior — the
+    # log write still happens, only advisory locking is skipped on Windows.
+    class _FcntlNoop:
+        LOCK_EX = 0
+        LOCK_UN = 0
+
+        @staticmethod
+        def flock(*_args, **_kwargs):
+            return None
+
+    fcntl = _FcntlNoop()  # type: ignore[assignment]
 import json
 import os
 import re
@@ -39,39 +56,112 @@ except ImportError:
     yaml = None
 
 
+# Host agent — see the module docstring. Set from --agent by main().
+AGENT = "claude"
+HOOK_VERSION = "1.4.0"
+_AGENT_AI_TOOL = {"claude": "claude_code", "codex": "codex_cli"}
+
+# Session/cwd for this invocation (env on Claude Code, stdin payload on Codex).
+SESSION_ID = ""
+PROJECT_DIR = ""
+
+# Tools whose output this hook scans, in Claude Code's vocabulary.
+MONITORED_TOOLS = {
+    "Read", "WebFetch", "Bash", "Grep", "Glob",
+    "Task", "Edit", "Write", "NotebookEdit",
+}
+
+# Codex names the same capabilities differently and the set moves between
+# releases; unknown names fall back to inference from the input shape. Kept in
+# step with pre-tool-defender.py's table.
+_TOOL_ALIASES = {
+    "bash": "Bash", "shell": "Bash", "local_shell": "Bash",
+    "exec_command": "Bash", "run_command": "Bash", "container_exec": "Bash",
+    "apply_patch": "Write", "write_file": "Write", "create_file": "Write",
+    "edit_file": "Edit", "str_replace": "Edit", "patch_file": "Edit",
+    "read_file": "Read", "view_file": "Read", "view_image": "Read",
+    "web_search": "WebFetch", "web_fetch": "WebFetch", "fetch": "WebFetch",
+    "grep": "Grep", "search": "Grep", "glob": "Glob", "find": "Glob",
+    "update_plan": "Task", "task": "Task",
+}
+
+_INPUT_SHAPE = (
+    ("command", "Bash"),
+    ("new_string", "Edit"),
+    ("new_source", "NotebookEdit"),
+    ("content", "Write"),
+    ("url", "WebFetch"),
+    ("pattern", "Grep"),
+    ("file_path", "Read"),
+    ("path", "Read"),
+    ("prompt", "Task"),
+)
+
+
+def normalize_tool_name(tool_name: str, tool_input: Dict[str, Any]) -> str:
+    """Map a host-specific tool name onto Claude Code's vocabulary."""
+    if tool_name in MONITORED_TOOLS:
+        return tool_name
+    if tool_name.startswith("mcp__") or tool_name.startswith("mcp_"):
+        return tool_name
+
+    low = tool_name.strip().lower()
+    if low in _TOOL_ALIASES:
+        return _TOOL_ALIASES[low]
+
+    if isinstance(tool_input, dict):
+        for key, mapped in _INPUT_SHAPE:
+            if key in tool_input:
+                return mapped
+    return tool_name
+
+
+def _parse_agent(argv: List[str]) -> str:
+    """Read --agent from argv without argparse (keeps hook startup cheap)."""
+    for i, arg in enumerate(argv):
+        value = None
+        if arg == "--agent" and i + 1 < len(argv):
+            value = argv[i + 1]
+        elif arg.startswith("--agent="):
+            value = arg.split("=", 1)[1]
+        if value and value.strip().lower() in _AGENT_AI_TOOL:
+            return value.strip().lower()
+    return "claude"
+
+
 def load_config() -> Dict[str, Any]:
-    """Load patterns from patterns.yaml.
+    """Load patterns, preferring patterns.json over patterns.yaml.
 
     Checks multiple locations in order:
     1. Script's own directory (installed location)
     2. Project .claude/hooks directory
     3. Home directory global config
+
+    patterns.json is the dependency-free format: it loads with the stdlib only,
+    so scanning works on a minimal/embedded Python that has no PyYAML. patterns.yaml
+    remains the human-editable source and is used only where PyYAML is importable.
     """
     script_dir = Path(__file__).parent
 
-    # 1. Check script's own directory (installed location)
-    local_config = script_dir / "patterns.yaml"
-    if local_config.exists():
-        return _load_yaml(local_config)
-
-    # 2. Check project hooks directory
+    search_dirs = [script_dir]
     project_dir = os.environ.get("CLAUDE_PROJECT_DIR")
     if project_dir:
-        project_config = (
-            Path(project_dir)
-            / ".claude"
-            / "hooks"
-            / "whiteout-defender"
-            / "patterns.yaml"
+        search_dirs.append(
+            Path(project_dir) / ".claude" / "hooks" / "whiteout-defender"
         )
-        if project_config.exists():
-            return _load_yaml(project_config)
+    search_dirs.append(Path.home() / ".claude" / "hooks" / "whiteout-defender")
 
-    # 3. Check global config
-    home = Path.home()
-    global_config = home / ".claude" / "hooks" / "whiteout-defender" / "patterns.yaml"
-    if global_config.exists():
-        return _load_yaml(global_config)
+    for directory in search_dirs:
+        json_config = directory / "patterns.json"
+        if json_config.exists():
+            try:
+                with open(json_config, "r", encoding="utf-8") as f:
+                    return json.loads(f.read()) or {}
+            except Exception:
+                return {}
+        yaml_config = directory / "patterns.yaml"
+        if yaml_config.exists():
+            return _load_yaml(yaml_config)
 
     return {}
 
@@ -124,7 +214,9 @@ def _find_config_file(filename: str) -> Optional[Path]:
     if candidate.exists():
         return candidate
 
-    project_dir = os.environ.get("CLAUDE_PROJECT_DIR")
+    # PROJECT_DIR is CLAUDE_PROJECT_DIR on Claude Code and the payload's `cwd`
+    # on Codex (which exports no environment to hooks).
+    project_dir = PROJECT_DIR or os.environ.get("CLAUDE_PROJECT_DIR")
     if project_dir:
         candidate = Path(project_dir) / ".claude" / "hooks" / "whiteout-defender" / filename
         if candidate.exists():
@@ -173,15 +265,19 @@ def log_hook_event(
         "tool_name": tool_name,
         "decision": decision,
         "source": source,
-        "session_id": os.environ.get("CLAUDE_SESSION_ID", ""),
-        "project_dir": os.environ.get("CLAUDE_PROJECT_DIR", ""),
+        # Codex passes no environment to hooks — session/cwd arrive in the
+        # stdin payload instead, captured into these globals by main().
+        "session_id": SESSION_ID or os.environ.get("CLAUDE_SESSION_ID", ""),
+        "project_dir": PROJECT_DIR or os.environ.get("CLAUDE_PROJECT_DIR", ""),
         "detections": detections,
         "max_severity": max_severity,
         "detection_count": len(detections),
         "policy_block": False,
         "violated_policies": [],
         "policy_descriptions": [],
-        "defender_version": "1.1.0",
+        "defender_version": HOOK_VERSION,
+        "agent": AGENT,
+        "ai_tool": _AGENT_AI_TOOL.get(AGENT, "claude_code"),
         "scan_phase": "local",
     }
 
@@ -470,7 +566,8 @@ def build_structured_output(
             "max_severity": max_severity,
             "detection_count": len(detections),
             "detections": detection_records,
-            "defender_version": "1.1.0",
+            "defender_version": HOOK_VERSION,
+            "agent": AGENT,
         },
     }
 
@@ -503,6 +600,9 @@ def is_excluded_path(tool_name: str, tool_input: Dict[str, Any]) -> bool:
 
 def main() -> None:
     """Main entry point for the PostToolUse hook."""
+    global AGENT, SESSION_ID, PROJECT_DIR
+    AGENT = _parse_agent(sys.argv[1:])
+
     config = load_config()
 
     # Read hook input from stdin
@@ -513,27 +613,21 @@ def main() -> None:
     except Exception:
         sys.exit(0)
 
-    tool_name = input_data.get("tool_name", "")
-    tool_input = input_data.get("tool_input", {})
-    tool_result = input_data.get("tool_response", input_data.get("tool_result", None))
+    SESSION_ID = str(input_data.get("session_id") or os.environ.get("CLAUDE_SESSION_ID", ""))
+    PROJECT_DIR = str(input_data.get("cwd") or os.environ.get("CLAUDE_PROJECT_DIR", ""))
 
-    # Monitored tools
-    monitored_tools = {
-        "Read",
-        "WebFetch",
-        "Bash",
-        "Grep",
-        "Glob",
-        "Task",
-        "Edit",
-        "Write",
-        "NotebookEdit",
-    }
+    tool_input = input_data.get("tool_input", {})
+    if not isinstance(tool_input, dict):
+        tool_input = {}
+    # Host-specific names (Codex `shell`, `apply_patch`, …) become Claude's
+    # so one scanning implementation serves both.
+    tool_name = normalize_tool_name(input_data.get("tool_name", ""), tool_input)
+    tool_result = input_data.get("tool_response", input_data.get("tool_result", None))
 
     # Also monitor MCP tools
     is_mcp_tool = tool_name.startswith("mcp__") or tool_name.startswith("mcp_")
 
-    if tool_name not in monitored_tools and not is_mcp_tool:
+    if tool_name not in MONITORED_TOOLS and not is_mcp_tool:
         sys.exit(0)
 
     # Self-exclusion: skip scanning files inside the whiteout-defender directory
@@ -557,8 +651,24 @@ def main() -> None:
     else:
         text = extract_text_content(tool_name, tool_result)
 
+    # Command-side exfil is judged on the COMMAND, never on its output, so it
+    # has to be computed BEFORE the short-output early exit below. An exfil
+    # `curl -d @~/.aws/credentials` prints little or nothing, so gating this
+    # check on output length skipped the warning in exactly the case it exists
+    # for — and since PreToolUse deliberately does not hard-block exfil (only
+    # self-protection), this warning is the whole compensating control.
+    if tool_name == "Bash":
+        cmd_text = tool_input.get("command", "")
+    elif is_mcp_tool:
+        cmd_text = json.dumps(tool_input)
+    else:
+        cmd_text = ""
+    command_exfil = bool(cmd_text) and command_looks_like_exfil(cmd_text)
+
     if not text or len(text) < 10:
-        sys.exit(0)
+        if not command_exfil:
+            sys.exit(0)
+        text = ""  # nothing to pattern-scan; the command warning still stands
 
     # Scan for injection patterns
     detections = scan_for_injections(text, config)
@@ -611,13 +721,8 @@ def main() -> None:
     # command already ran — this is a warning, not a block — but it prompts the
     # model to verify a sensitive-data egress was intended. Bypasses the
     # low-confidence demotion above so a genuine exfil command always surfaces.
-    if tool_name == "Bash":
-        cmd_text = tool_input.get("command", "")
-    elif is_mcp_tool:
-        cmd_text = json.dumps(tool_input)
-    else:
-        cmd_text = ""
-    if cmd_text and command_looks_like_exfil(cmd_text):
+    # (command_exfil was computed before the short-output early exit.)
+    if command_exfil:
         detections.append((
             "Data Exfiltration",
             "_behavioral_exfil",

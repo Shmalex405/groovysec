@@ -340,6 +340,18 @@ policyBypassPatterns:
     reason: "Defender self-protection: tampering with own hook config"
     severity: critical
 
+  # Directory-level self-disable: shell-destructive ops targeting the defender
+  # DIR itself (not just a named file), the parent hooks dir, a glob, or a
+  # rename — `rm -rf .../whiteout-defender`, `chmod -R 000 .../whiteout-defender`,
+  # `mv .../whiteout-defender x`, `rm -rf ~/.claude/hooks`. Shell tokens ONLY
+  # (no English "delete"/"edit") so Read-output prose that merely names the dir
+  # does not warn. Mirrors pre-tool-defender.py `_DEFENDER_MUTATION`; this arm
+  # is also what the extension-only condensed hook relies on to hard-block,
+  # since that variant has no behavioral gate.
+  - pattern: '(?i)(?:\b(?:rm|unlink|mv|dd|shred|truncate|chmod|chown|tee|cp|ln)\b[^\n]{0,80}?|>>?\s*\S*?)(?:whiteout-defender\b|\.claude/hooks(?:/|\b)|\.whiteout-desktop/hook-secret)'
+    reason: "Defender self-protection: destructive op on the hook directory"
+    severity: critical
+
   - pattern: '(?i)\b(kill|stop|terminate)\s+.*(whiteout|governance|compliance|audit)\s*(process|service|daemon)'
     reason: "Governance service termination attempt"
     severity: critical

@@ -2,10 +2,12 @@
 # requires-python = ">=3.8"
 # dependencies = ["pyyaml"]
 # ///
+# whiteout-hook-version: 1.4.0
 """
-Whiteout AI - Claude Code Policy Compliance Gate (PreToolUse Hook)
-==================================================================
-Groovy Security / Whiteout AI pre-execution governance layer for Claude Code.
+Whiteout AI - Policy Compliance Gate (PreToolUse Hook)
+======================================================
+Groovy Security / Whiteout AI pre-execution governance layer for Claude Code
+and OpenAI Codex.
 
 Scans tool inputs BEFORE execution using local pattern matching:
   - Catches data exfiltration, policy bypass via regex on Bash/MCP tools.
@@ -16,16 +18,39 @@ Backend policy compliance is handled exclusively by prompt-defender.py
 (UserPromptSubmit hook). This keeps pre-tool scanning fast (~10ms).
 
 Exit codes:
-  0 = Always (hook contract)
+  0 = Always (hook contract on BOTH hosts)
 
-JSON output to block:
-  {"decision": "block", "reason": "Human-readable block reason"}
+JSON output to deny:
+  {"hookSpecificOutput": {"hookEventName": "PreToolUse",
+                          "permissionDecision": "deny", ...}}
 
-Note: In PreToolUse, "block" PREVENTS the tool from executing.
-This is the governance gate — use it to enforce org policy.
+Note: In PreToolUse, denying PREVENTS the tool from executing. This is the
+governance gate — use it to enforce org policy.
+
+Host agents (--agent, default "claude"): Claude Code and OpenAI Codex share
+this event name, the deny JSON shape, and the always-exit-0 contract, so the
+enforcement path is identical. The flag only changes attribution (`ai_tool`,
+event `agent` field) and where session/cwd come from — Codex passes no
+environment to hooks and supplies them in the stdin payload instead.
+Codex tool names differ from Claude's (`shell` rather than `Bash`, etc.), so
+tool identification is capability-based; see _normalize_tool_name.
 """
 
-import fcntl
+try:
+    import fcntl  # POSIX advisory file locking (Unix only)
+except ImportError:  # Windows has no fcntl
+    # The event log is a best-effort single-writer append; a no-op lock keeps
+    # this script cross-platform without changing macOS/Linux behavior — the
+    # log write still happens, only advisory locking is skipped on Windows.
+    class _FcntlNoop:
+        LOCK_EX = 0
+        LOCK_UN = 0
+
+        @staticmethod
+        def flock(*_args, **_kwargs):
+            return None
+
+    fcntl = _FcntlNoop()  # type: ignore[assignment]
 import json
 import os
 import re
@@ -49,40 +74,111 @@ MIN_SCAN_LENGTH = 10
 # Severity levels that warrant blocking (PreToolUse = hard block)
 BLOCKING_SEVERITIES = {"critical", "high"}
 
+# Host agent — see the module docstring. Set from --agent by main().
+AGENT = "claude"
+HOOK_VERSION = "1.4.0"
+_AGENT_AI_TOOL = {"claude": "claude_code", "codex": "codex_cli"}
+
+# Session/cwd for this invocation (env on Claude Code, stdin payload on Codex).
+SESSION_ID = ""
+PROJECT_DIR = ""
+
+# Tools whose input this hook scans, in Claude Code's vocabulary.
+MONITORED_TOOLS = {
+    "Read", "WebFetch", "Bash", "Grep", "Glob",
+    "Task", "Edit", "Write", "NotebookEdit",
+}
+
+# Codex names the same capabilities differently, and the set has moved across
+# releases (the 2026-04 docs described a single "Bash" tool; 0.145.0 ships a
+# richer set). Pinning a version-specific table would silently stop scanning
+# the day Codex renames a tool, so unknown names fall back to inference from
+# the INPUT SHAPE — which is what the scanners actually consume.
+_TOOL_ALIASES = {
+    "bash": "Bash", "shell": "Bash", "local_shell": "Bash",
+    "exec_command": "Bash", "run_command": "Bash", "container_exec": "Bash",
+    "apply_patch": "Write", "write_file": "Write", "create_file": "Write",
+    "edit_file": "Edit", "str_replace": "Edit", "patch_file": "Edit",
+    "read_file": "Read", "view_file": "Read", "view_image": "Read",
+    "web_search": "WebFetch", "web_fetch": "WebFetch", "fetch": "WebFetch",
+    "grep": "Grep", "search": "Grep", "glob": "Glob", "find": "Glob",
+    "update_plan": "Task", "task": "Task",
+}
+
+# Input keys that identify a capability when the tool name is unrecognized.
+# Ordered: the first match wins, most specific first.
+_INPUT_SHAPE = (
+    ("command", "Bash"),
+    ("new_string", "Edit"),
+    ("new_source", "NotebookEdit"),
+    ("content", "Write"),
+    ("url", "WebFetch"),
+    ("pattern", "Grep"),
+    ("file_path", "Read"),
+    ("path", "Read"),
+    ("prompt", "Task"),
+)
+
+
+def normalize_tool_name(tool_name: str, tool_input: Dict[str, Any]) -> str:
+    """Map a host-specific tool name onto Claude Code's vocabulary.
+
+    Everything downstream (extract_input_text, the Bash/MCP gating, the
+    exclusion checks) is written against Claude's names, so normalizing here
+    keeps one scanning implementation for both hosts.
+    """
+    if tool_name in MONITORED_TOOLS:
+        return tool_name
+    if tool_name.startswith("mcp__") or tool_name.startswith("mcp_"):
+        return tool_name
+
+    low = tool_name.strip().lower()
+    if low in _TOOL_ALIASES:
+        return _TOOL_ALIASES[low]
+
+    if isinstance(tool_input, dict):
+        for key, mapped in _INPUT_SHAPE:
+            if key in tool_input:
+                return mapped
+    return tool_name
+
 
 # ---------------------------------------------------------------------------
 # Config loading
 # ---------------------------------------------------------------------------
 def load_patterns() -> Dict[str, Any]:
-    """Load injection patterns from patterns.yaml.
+    """Load injection patterns, preferring patterns.json over patterns.yaml.
 
     Checks multiple locations in order:
     1. Script's own directory (installed location)
     2. Project .claude/hooks directory
     3. Home directory global config
+
+    patterns.json is the dependency-free format: it loads with the stdlib only,
+    so scanning works on a minimal/embedded Python that has no PyYAML. patterns.yaml
+    remains the human-editable source and is used only where PyYAML is importable.
     """
     script_dir = Path(__file__).parent
 
-    local_config = script_dir / "patterns.yaml"
-    if local_config.exists():
-        return _load_yaml(local_config)
-
+    search_dirs = [script_dir]
     project_dir = os.environ.get("CLAUDE_PROJECT_DIR")
     if project_dir:
-        project_config = (
-            Path(project_dir)
-            / ".claude"
-            / "hooks"
-            / "whiteout-defender"
-            / "patterns.yaml"
+        search_dirs.append(
+            Path(project_dir) / ".claude" / "hooks" / "whiteout-defender"
         )
-        if project_config.exists():
-            return _load_yaml(project_config)
+    search_dirs.append(Path.home() / ".claude" / "hooks" / "whiteout-defender")
 
-    home = Path.home()
-    global_config = home / ".claude" / "hooks" / "whiteout-defender" / "patterns.yaml"
-    if global_config.exists():
-        return _load_yaml(global_config)
+    for directory in search_dirs:
+        json_config = directory / "patterns.json"
+        if json_config.exists():
+            try:
+                with open(json_config, "r", encoding="utf-8") as f:
+                    return json.loads(f.read()) or {}
+            except Exception:
+                return {}
+        yaml_config = directory / "patterns.yaml"
+        if yaml_config.exists():
+            return _load_yaml(yaml_config)
 
     return {}
 
@@ -95,7 +191,9 @@ def _find_config_file(filename: str) -> Optional[Path]:
     if candidate.exists():
         return candidate
 
-    project_dir = os.environ.get("CLAUDE_PROJECT_DIR")
+    # PROJECT_DIR is CLAUDE_PROJECT_DIR on Claude Code and the payload's `cwd`
+    # on Codex (which exports no environment to hooks).
+    project_dir = PROJECT_DIR or os.environ.get("CLAUDE_PROJECT_DIR")
     if project_dir:
         candidate = Path(project_dir) / ".claude" / "hooks" / "whiteout-defender" / filename
         if candidate.exists():
@@ -190,15 +288,19 @@ def log_hook_event(
         "tool_name": tool_name,
         "decision": decision,
         "source": source,
-        "session_id": os.environ.get("CLAUDE_SESSION_ID", ""),
-        "project_dir": os.environ.get("CLAUDE_PROJECT_DIR", ""),
+        # Codex passes no environment to hooks — session/cwd arrive in the
+        # stdin payload instead, captured into these globals by main().
+        "session_id": SESSION_ID or os.environ.get("CLAUDE_SESSION_ID", ""),
+        "project_dir": PROJECT_DIR or os.environ.get("CLAUDE_PROJECT_DIR", ""),
         "detections": detections,
         "max_severity": max_severity,
         "detection_count": len(detections),
         "policy_block": policy_block,
         "violated_policies": violated_policies or [],
         "policy_descriptions": policy_descriptions or [],
-        "defender_version": "1.0.0",
+        "defender_version": HOOK_VERSION,
+        "agent": AGENT,
+        "ai_tool": _AGENT_AI_TOOL.get(AGENT, "claude_code"),
         "scan_phase": scan_phase,
     }
 
@@ -370,18 +472,38 @@ _OUTBOUND_VECTOR = re.compile(
     r")"
 )
 
-# The defender's own files / process. Mutating these = self-disable.
-_DEFENDER_TARGET = re.compile(
-    r"(?i)("
-    r"whiteout-defender/(pre-tool-defender|post-tool-defender|prompt-defender)\.py|"
-    r"whiteout-defender/patterns\.yaml|"
-    r"whiteout-defender/defender-config\.yaml|"
-    r"\.whiteout-desktop/hook-secret"
+# A destructive/redirect op operating ON the defender's own files, its
+# directory, or its parent hooks dir — the op must sit ADJACENT to the path
+# (within ~80 chars), not merely both be present somewhere in the text.
+# Proximity is what stops prose that names a defender path (a PR description,
+# a git diff, this very comment) from tripping the self-protection block: a
+# real self-disable command is `rm <path>` / `sed -i <path>` / `> <path>`,
+# with the op right on the path. `sed` requires `-i` (a bare `sed` only reads);
+# `install` was dropped — far too common in ordinary English ("install",
+# "InstallCursorHooks") to carry as a lone mutation signal.
+#
+# The path arm matches the defender DIR itself, not just the three specific
+# script filenames — so a wholesale `rm -rf .../whiteout-defender`, a glob
+# (`.../whiteout-defender/*.py`), a `chmod -R 000 .../whiteout-defender`, a
+# rename (`mv .../whiteout-defender .../whiteout-defender.bak`), or nuking the
+# `.claude/hooks` parent are all caught. (Before 2026-07-22 the arm required a
+# specific filename after `whiteout-defender/`, so every directory-level
+# self-disable slipped straight through the only remaining hard pre-block.)
+_DEFENDER_MUTATION = re.compile(
+    r"(?i)"
+    r"(?:"
+    # a destructive command word, then the defender path within ~80 chars
+    r"(?:\brm\b|\bunlink\b|\bsed\b\s+-i|\bperl\b\s+-i|\btee\b|\btruncate\b|"
+    r"\bcp\b|\bmv\b|\bchmod\b|\bchown\b|\bln\b|\bdd\b|\bshred\b)"
+    r"[^\n]{0,80}?"
+    # OR a redirect whose TARGET is a defender path (`: > .../prompt-defender.py`).
+    # `\S*?` keeps the match inside the single redirect-target token, so an
+    # unrelated `echo x > /tmp/y; ls .../whiteout-defender` does NOT match.
+    r"|>>?\s*\S*?"
     r")"
-)
-_MUTATING_OP = re.compile(
-    r"(?i)(\brm\b|\bunlink\b|\bsed\b|\bperl\b\s+-i|\btee\b|\btruncate\b|\bcp\b|"
-    r"\bmv\b|\bchmod\b|\bchown\b|\bln\b|\bdd\b|\binstall\b|>>?)"
+    r"(?:whiteout-defender\b"          # the defender dir, any file/glob under it, or a rename target
+    r"|\.claude/hooks(?:/|\b)"         # the parent hooks dir (rm -rf ~/.claude/hooks)
+    r"|\.whiteout-desktop/hook-secret)"
 )
 # Killing the Desktop Guard / governance process is also self-disable.
 _DEFENDER_KILL = re.compile(
@@ -410,10 +532,16 @@ def has_sensitive_material(text: str) -> bool:
 
 
 def targets_defender_files(text: str) -> bool:
-    """True if the command mutates the defender's own files or kills it."""
+    """True if the command mutates the defender's own files or kills it.
+
+    A destructive op must sit ADJACENT to the defender path (see
+    _DEFENDER_MUTATION) — prose that merely names defender files without an op
+    operating on them (a PR description, a git diff) no longer trips this.
+    Killing the DG process is also self-disable.
+    """
     if _DEFENDER_KILL.search(text):
         return True
-    return bool(_DEFENDER_TARGET.search(text) and _MUTATING_OP.search(text))
+    return bool(_DEFENDER_MUTATION.search(text))
 
 
 def is_allowlisted_local(text: str) -> bool:
@@ -526,32 +654,51 @@ def is_excluded_path(tool_name: str, tool_input: Dict[str, Any]) -> bool:
     return False
 
 
+def _parse_agent(argv: List[str]) -> str:
+    """Read --agent from argv without argparse (keeps hook startup cheap)."""
+    for i, arg in enumerate(argv):
+        value = None
+        if arg == "--agent" and i + 1 < len(argv):
+            value = argv[i + 1]
+        elif arg.startswith("--agent="):
+            value = arg.split("=", 1)[1]
+        if value and value.strip().lower() in _AGENT_AI_TOOL:
+            return value.strip().lower()
+    return "claude"
+
+
 def main() -> None:
     """Main entry point for the PreToolUse hook.
 
     Flow:
       1. Parse tool_name + tool_input from stdin
-      2. Extract scannable text from the input
-      3. Local pattern scan — block immediately on critical/high
-      4. Allow if scan passes
+      2. Normalize the tool name onto Claude Code's vocabulary
+      3. Extract scannable text from the input
+      4. Local pattern scan — block immediately on critical/high
+      5. Allow if scan passes
     """
+    global AGENT, SESSION_ID, PROJECT_DIR
+    AGENT = _parse_agent(sys.argv[1:])
+
     # Read hook input
     try:
         input_data = json.load(sys.stdin)
     except (json.JSONDecodeError, Exception):
         sys.exit(0)
 
-    tool_name = input_data.get("tool_name", "")
-    tool_input = input_data.get("tool_input", {})
+    SESSION_ID = str(input_data.get("session_id") or os.environ.get("CLAUDE_SESSION_ID", ""))
+    PROJECT_DIR = str(input_data.get("cwd") or os.environ.get("CLAUDE_PROJECT_DIR", ""))
 
-    # Check if this tool should be scanned
-    monitored = {
-        "Read", "WebFetch", "Bash", "Grep", "Glob",
-        "Task", "Edit", "Write", "NotebookEdit",
-    }
+    tool_input = input_data.get("tool_input", {})
+    if not isinstance(tool_input, dict):
+        tool_input = {}
+    # Host-specific names (Codex `shell`, `apply_patch`, …) become Claude's
+    # so one scanning implementation serves both.
+    tool_name = normalize_tool_name(input_data.get("tool_name", ""), tool_input)
+
     is_mcp = tool_name.startswith("mcp__") or tool_name.startswith("mcp_")
 
-    if tool_name not in monitored and not is_mcp:
+    if tool_name not in MONITORED_TOOLS and not is_mcp:
         sys.exit(0)
 
     # Self-exclusion: skip scanning files inside the whiteout-defender directory

@@ -2,11 +2,12 @@
 # requires-python = ">=3.8"
 # dependencies = ["pyyaml"]
 # ///
-# whiteout-hook-version: 1.3.0
+# whiteout-hook-version: 1.4.0
 """
-Whiteout AI - Claude Code Prompt Compliance Gate (UserPromptSubmit Hook)
-=======================================================================
-Groovy Security / Whiteout AI pre-prompt governance layer for Claude Code.
+Whiteout AI - Prompt Compliance Gate (UserPromptSubmit Hook)
+============================================================
+Groovy Security / Whiteout AI pre-prompt governance layer for Claude Code
+and OpenAI Codex.
 
 Evaluates user prompts BEFORE Claude processes them using backend policy
 compliance only. Content is sent to the Whiteout backend for LLM-based
@@ -42,25 +43,51 @@ messages and behavior are unchanged. Overriding is never fail-open: if
 the backend is unreachable, the override command reports an error and
 consumes nothing.
 
-Exit codes:
-  0 = Allow (prompt proceeds)
-  2 = Block (prompt rejected, erased from context)
+Host agents (--agent, default "claude"):
 
-Blocking uses TWO signals for maximum compatibility:
-  - Exit code 2 + stderr message (primary — works on all Claude Code versions)
-  - JSON stdout with {"decision": "block"} (secondary — newer versions)
+  claude  Claude Code. Blocking uses TWO signals for maximum compatibility:
+          exit code 2 + stderr message (primary — works on all versions), and
+          JSON stdout {"decision": "block"} (secondary — newer versions).
+
+  codex   OpenAI Codex CLI/TUI/IDE-extension (hooks GA since 2026-05).
+          Blocking is JSON stdout {"decision": "block"} with EXIT CODE 0.
+          A non-zero exit is NOT a block on Codex: it marks the hook "Failed"
+          and Codex fails open, so the prompt reaches the model anyway.
+          Verified empirically on Codex 0.145.0 (2026-07-26) — exit 2 with
+          identical JSON was allowed through, exit 0 with the same JSON
+          blocked. See docs/feature-specs/codex-hooks-defender-parity.md §2.
+
+Exit codes:
+  0 = Allow (prompt proceeds) — and, on Codex, also the BLOCK exit code
+  2 = Block (Claude Code only; on Codex this silently fails open)
 
 Note: In UserPromptSubmit, "block" PREVENTS the prompt from being processed.
 The prompt is erased from context entirely.
 """
 
-import fcntl
+try:
+    import fcntl  # POSIX advisory file locking (Unix only)
+except ImportError:  # Windows has no fcntl
+    # The event log is a best-effort single-writer append; a no-op lock keeps
+    # this script cross-platform without changing macOS/Linux behavior — the
+    # log write still happens, only advisory locking is skipped on Windows.
+    class _FcntlNoop:
+        LOCK_EX = 0
+        LOCK_UN = 0
+
+        @staticmethod
+        def flock(*_args, **_kwargs):
+            return None
+
+    fcntl = _FcntlNoop()  # type: ignore[assignment]
 import hashlib
 import json
 import os
 import re
 import signal
+import socket
 import sys
+import threading
 import urllib.request
 import urllib.error
 from datetime import datetime, timezone
@@ -68,11 +95,51 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 
+# ---------------------------------------------------------------------------
+# Host agent adaptation
+# ---------------------------------------------------------------------------
+# Set from --agent before anything else runs. The two supported hosts share the
+# UserPromptSubmit event name and the {"decision": "block"} stdout contract but
+# disagree on the exit code (see module docstring), so every exit path routes
+# through the helpers below rather than calling sys.exit directly.
+AGENT = "claude"
+
+# Version stamped into every hook-events.jsonl record. Kept in step with the
+# `whiteout-hook-version` marker above (they drifted before 1.4.0).
+HOOK_VERSION = "1.4.0"
+
+# Session/working directory for this invocation. Claude Code exports these as
+# environment variables; Codex passes no environment at all and supplies them
+# in the stdin payload, so main() populates these from whichever is available.
+SESSION_ID = ""
+PROJECT_DIR = ""
+
+# Per-agent judge attribution. Both are in the backend's _CLI_AI_TOOLS set, so
+# allowed prompts are judge-only (no PromptLog row) on either host.
+_AGENT_AI_TOOL = {"claude": "claude_code", "codex": "codex_cli"}
+_AGENT_DISPLAY = {"claude": "Claude Code", "codex": "Codex"}
+
+
+def _block_exit_code() -> int:
+    """Exit code that signals a block on the current host.
+
+    Claude Code: 2 (primary signal, with the JSON as a secondary).
+    Codex: 0 — the JSON is the ONLY block signal there; a non-zero exit marks
+    the hook Failed and Codex fails open (verified on 0.145.0). Returning 2 on
+    Codex would turn every block into a silent allow.
+    """
+    return 0 if AGENT == "codex" else 2
+
+
 def _sigterm_handler(signum: int, frame: Any) -> None:
-    """Flush buffers on SIGTERM so block signals reach Claude Code."""
+    """Flush buffers on SIGTERM so block signals reach the host agent."""
     sys.stdout.flush()
     sys.stderr.flush()
-    sys.exit(2)
+    # On Claude Code a SIGTERM near the hook timeout still emits the block
+    # code. On Codex there is no such signal — exiting non-zero would only be
+    # recorded as a hook failure — so fail open, matching Codex's own doctrine
+    # for crashed/timed-out hooks.
+    sys.exit(0 if AGENT == "codex" else 2)
 
 
 signal.signal(signal.SIGTERM, _sigterm_handler)
@@ -89,7 +156,36 @@ except ImportError:
 # Backend HTTP timeout — must leave headroom within the hook timeout (60s).
 # Budget: ~1s uv startup + ~1s YAML/config + backend call + ~1s output/log.
 # PHI/PII analysis by the backend LLM can take 15-20s for complex prompts.
+# NOTE: urllib applies this per socket operation (connect / each recv) —
+# it bounds neither getaddrinfo nor total wall time. The absolute caps
+# live in the transport hardening section below.
 BACKEND_TIMEOUT_SECONDS = 25
+
+
+def _env_float(name: str, default: float) -> float:
+    """Read a float env override; fall back to default on absent/garbage."""
+    try:
+        return float(os.environ.get(name) or default)
+    except (TypeError, ValueError):
+        return default
+
+
+# Total wall-clock budget for one backend HTTP exchange, DNS included. On
+# networks with black-holed IPv6 paths (NAT64/DNS64 cellular routers) a
+# judge call was observed to stall 85s while the server processed it in
+# <1s once it arrived (docs/incidents/2026-07-21-claude-hook-timeout-
+# cold-start.md): Python has no happy-eyeballs, so each dead address
+# burns a full BACKEND_TIMEOUT_SECONDS before the next is tried, and
+# Claude Code then kills the hook at its own limit (default 60s) with a
+# red "output discarded" error on every prompt. 28s preserves the full
+# 25s server-side evaluation budget above while staying under the hook
+# cap; expiry maps onto the existing backend-unreachable fail-open path,
+# so decision semantics are unchanged.
+BACKEND_TOTAL_DEADLINE_SECONDS = _env_float("WHITEOUT_HOOK_DEADLINE_SECONDS", 28.0)
+
+# Cap for a single getaddrinfo() call, which urllib's timeout never
+# covers — a stalled resolver otherwise hangs the hook indefinitely.
+DNS_RESOLVE_TIMEOUT_SECONDS = 5.0
 
 # Minimum text length to bother scanning
 MIN_SCAN_LENGTH = 10
@@ -99,6 +195,78 @@ MIN_SCAN_LENGTH = 10
 OVERRIDE_COMMAND_RE = re.compile(
     r"^\s*whiteout override:\s*(.+)$", re.IGNORECASE | re.DOTALL
 )
+
+
+# ---------------------------------------------------------------------------
+# Transport hardening (NAT64 / stalled-resolver networks)
+# ---------------------------------------------------------------------------
+# Pure transport-level bounds — no change to what is sent, received, or
+# decided. Verdicts are identical; the only new outcome is that a hang
+# which previously ended with Claude Code killing the hook now ends as a
+# clean in-hook fail-open (the same path as any backend error).
+_SYSTEM_GETADDRINFO = socket.getaddrinfo
+
+
+def _bounded_v4first_getaddrinfo(*args, **kwargs):
+    """socket.getaddrinfo with a hard timeout and IPv4-preferred ordering.
+
+    * getaddrinfo is a blocking C call urllib's timeout does not cover;
+      run it on a daemon thread and give up after
+      DNS_RESOLVE_TIMEOUT_SECONDS (callers see a normal resolution
+      failure → existing fail-open path).
+    * Python tries addresses strictly in getaddrinfo order, so a
+      black-holed IPv6 first hop costs a full per-address timeout before
+      IPv4 is ever attempted. A stable sort putting AF_INET first makes
+      the working path the first attempt on NAT64/DNS64 networks and is
+      harmless elsewhere: v6-only hosts fail the v4 attempt instantly
+      (no route) and fall through to v6 as before.
+    """
+    box: Dict[str, Any] = {}
+
+    def _resolve() -> None:
+        try:
+            box["result"] = _SYSTEM_GETADDRINFO(*args, **kwargs)
+        except Exception as exc:  # gaierror/OSError — re-raised below
+            box["error"] = exc
+
+    worker = threading.Thread(target=_resolve, daemon=True)
+    worker.start()
+    worker.join(DNS_RESOLVE_TIMEOUT_SECONDS)
+    if worker.is_alive():
+        raise socket.gaierror(
+            getattr(socket, "EAI_AGAIN", -3),
+            "DNS resolution exceeded %.0fs (Whiteout defender bound)"
+            % DNS_RESOLVE_TIMEOUT_SECONDS,
+        )
+    if "error" in box:
+        raise box["error"]
+    return sorted(
+        box["result"], key=lambda info: 0 if info[0] == socket.AF_INET else 1
+    )
+
+
+socket.getaddrinfo = _bounded_v4first_getaddrinfo
+
+
+def _run_with_deadline(operation, deadline_seconds):
+    """Run `operation` on a daemon thread; give up after `deadline_seconds`.
+
+    Returns (finished, result). `operation` must do its own exception
+    handling (both backend callers here catch everything and return a
+    value). An attempt still wedged in connect/recv when the hook exits
+    dies with the process instead of keeping it alive.
+    """
+    box: Dict[str, Any] = {}
+
+    def _invoke() -> None:
+        box["result"] = operation()
+
+    worker = threading.Thread(target=_invoke, daemon=True)
+    worker.start()
+    worker.join(deadline_seconds)
+    if worker.is_alive():
+        return False, None
+    return True, box.get("result")
 
 
 def _is_token_expired(token: str) -> bool:
@@ -132,7 +300,16 @@ def _fetch_from_broker() -> Optional[Dict[str, str]]:
     Tight timeout so a missing/down DG doesn't slow the hook fire.
     """
     try:
-        secret = _BROKER_HOOK_SECRET_PATH.read_text(encoding="utf-8").strip()
+        # utf-8-sig, not utf-8: Desktop Guard has written this file with a
+        # UTF-8 BOM (observed on Windows, 2026-07-15). Plain utf-8 keeps the
+        # BOM as U+FEFF, str.strip() does not remove it (it is not whitespace
+        # in Python), and urllib then fails to latin-1 encode the header —
+        # raising UnicodeEncodeError, a ValueError subclass that the except
+        # below swallows. The result was a silently dead broker path that fell
+        # back to the short-lived config token and, once that expired, stopped
+        # calling the backend at all. utf-8-sig strips a BOM when present and
+        # is identical to utf-8 otherwise.
+        secret = _BROKER_HOOK_SECRET_PATH.read_text(encoding="utf-8-sig").strip()
     except (FileNotFoundError, PermissionError, OSError):
         return None
     if not secret:
@@ -223,7 +400,9 @@ def _find_config_file(filename: str) -> Optional[Path]:
     if candidate.exists():
         return candidate
 
-    project_dir = os.environ.get("CLAUDE_PROJECT_DIR")
+    # PROJECT_DIR is CLAUDE_PROJECT_DIR on Claude Code and the payload's `cwd`
+    # on Codex (which exports no environment to hooks).
+    project_dir = PROJECT_DIR or os.environ.get("CLAUDE_PROJECT_DIR")
     if project_dir:
         candidate = Path(project_dir) / ".claude" / "hooks" / "whiteout-defender" / filename
         if candidate.exists():
@@ -311,15 +490,21 @@ def log_hook_event(
         "tool_name": "UserPrompt",
         "decision": decision,
         "source": source,
-        "session_id": os.environ.get("CLAUDE_SESSION_ID", ""),
-        "project_dir": os.environ.get("CLAUDE_PROJECT_DIR", ""),
+        # Codex passes no environment to hooks — session/cwd arrive in the
+        # stdin payload instead, captured into these module globals by main().
+        "session_id": SESSION_ID or os.environ.get("CLAUDE_SESSION_ID", ""),
+        "project_dir": PROJECT_DIR or os.environ.get("CLAUDE_PROJECT_DIR", ""),
         "detections": detections,
         "max_severity": max_severity,
         "detection_count": len(detections),
         "policy_block": policy_block,
         "violated_policies": violated_policies or [],
         "policy_descriptions": policy_descriptions or [],
-        "defender_version": "1.3.0",
+        "defender_version": HOOK_VERSION,
+        # Which agent produced this event — consumers (VS Code hookEventWatcher,
+        # DG ClaudeHookEventWatcher / AuditWatchers) attribute the row with it.
+        "agent": AGENT,
+        "ai_tool": _AGENT_AI_TOOL.get(AGENT, "claude_code"),
         "scan_phase": scan_phase,
     }
 
@@ -389,7 +574,7 @@ def check_backend_compliance(
     payload: Dict[str, Any] = {
         "text": text,
         "group_id": group_id,
-        "ai_tool": "claude_code",
+        "ai_tool": _AGENT_AI_TOOL.get(AGENT, "claude_code"),
         "force": False,
     }
     if override_token:
@@ -531,6 +716,21 @@ def format_policy_block(
     }
 
 
+def emit_block(reason: str) -> None:
+    """Emit a block for the current host agent and exit. Never returns.
+
+    Both hosts read {"decision": "block"} from stdout; they differ only in the
+    exit code (see _block_exit_code). stdout is flushed BEFORE anything else
+    because it is fully buffered when piped — if the process is killed near the
+    timeout boundary, a buffered block signal is a silent allow.
+    """
+    print(json.dumps({"decision": "block", "reason": reason}))
+    sys.stdout.flush()
+    print(reason, file=sys.stderr)
+    sys.stderr.flush()
+    sys.exit(_block_exit_code())
+
+
 def emit_override_block(message: str) -> None:
     """Block the current submission with an Accountable Override result.
 
@@ -548,12 +748,7 @@ def emit_override_block(message: str) -> None:
         "Powered by Whiteout AI (Groovy Security)",
         "=" * 64,
     ]
-    reason = "\n".join(lines)
-    print(json.dumps({"decision": "block", "reason": reason}))
-    sys.stdout.flush()
-    print(reason, file=sys.stderr)
-    sys.stderr.flush()
-    sys.exit(2)
+    emit_block("\n".join(lines))
 
 
 def handle_override_command(justification: str) -> None:
@@ -592,7 +787,21 @@ def handle_override_command(justification: str) -> None:
 
     decision_id = pending.get("decision_id")
     prompt_text = pending.get("prompt_text") if not decision_id else None
-    result = call_override_endpoint(backend_config, justification, decision_id, prompt_text)
+    # Same absolute bound as the judge call. Overrides stay never-fail-open:
+    # deadline expiry reports the existing network-failure message and
+    # consumes nothing.
+    finished, result = _run_with_deadline(
+        lambda: call_override_endpoint(
+            backend_config, justification, decision_id, prompt_text
+        ),
+        BACKEND_TOTAL_DEADLINE_SECONDS,
+    )
+    if not finished:
+        result = {
+            "ok": False,
+            "error": "Could not reach the compliance service — try again.",
+            "network": True,
+        }
 
     if not result.get("ok"):
         # State file is left untouched — the user can fix and retry.
@@ -619,6 +828,23 @@ def get_prompt_preview(text: str, max_len: int = 80) -> str:
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+def _parse_agent(argv: List[str]) -> str:
+    """Read --agent from argv without argparse (keeps hook startup cheap).
+
+    Accepts `--agent codex` and `--agent=codex`. Anything unrecognized falls
+    back to "claude", which preserves the pre-1.4.0 behavior exactly.
+    """
+    for i, arg in enumerate(argv):
+        value = None
+        if arg == "--agent" and i + 1 < len(argv):
+            value = argv[i + 1]
+        elif arg.startswith("--agent="):
+            value = arg.split("=", 1)[1]
+        if value and value.strip().lower() in _AGENT_AI_TOOL:
+            return value.strip().lower()
+    return "claude"
+
+
 def main() -> None:
     """Main entry point for the UserPromptSubmit hook.
 
@@ -627,11 +853,19 @@ def main() -> None:
       2. Backend policy compliance — block if policy violated (fail-open)
       3. Allow if backend passes or is unreachable
     """
+    global AGENT, SESSION_ID, PROJECT_DIR
+    AGENT = _parse_agent(sys.argv[1:])
+
     # Read hook input
     try:
         input_data = json.load(sys.stdin)
     except (json.JSONDecodeError, Exception):
         sys.exit(0)
+
+    # Session + project context. Claude Code exports these as env vars; Codex
+    # supplies them only here, so prefer the payload and fall back to the env.
+    SESSION_ID = str(input_data.get("session_id") or os.environ.get("CLAUDE_SESSION_ID", ""))
+    PROJECT_DIR = str(input_data.get("cwd") or os.environ.get("CLAUDE_PROJECT_DIR", ""))
 
     prompt = input_data.get("prompt", "")
     if not prompt or len(prompt) < MIN_SCAN_LENGTH:
@@ -675,9 +909,24 @@ def main() -> None:
     backend_config = load_backend_config()
 
     if backend_config is not None:
-        compliance = check_backend_compliance(
-            prompt, backend_config, override_token=override_token
+        # Absolute wall-clock bound (DNS + connect + TLS + response). On
+        # expiry the verdict is simply "unreachable" — the same fail-open
+        # branch as any backend error — but decided inside the hook instead
+        # of by Claude Code's hook killer, so the prompt is neither delayed
+        # past the deadline nor flagged with a timeout error.
+        finished, compliance = _run_with_deadline(
+            lambda: check_backend_compliance(
+                prompt, backend_config, override_token=override_token
+            ),
+            BACKEND_TOTAL_DEADLINE_SECONDS,
         )
+        if not finished:
+            print(
+                "[Whiteout] Backend call exceeded %.0fs deadline — fail-open"
+                % BACKEND_TOTAL_DEADLINE_SECONDS,
+                file=sys.stderr,
+            )
+            compliance = None
 
         if (
             override_token
@@ -740,8 +989,12 @@ def main() -> None:
 
             # CRITICAL: Output block signal FIRST, flush IMMEDIATELY.
             # stdout is fully buffered when piped — if we log first and the
-            # process is killed near the timeout boundary, Claude Code never
+            # process is killed near the timeout boundary, the host agent never
             # sees the block JSON even though the log file records it.
+            #
+            # NOTE: unlike every other block path this one does NOT exit here —
+            # the override context and the audit event still have to be written
+            # first, so the exit happens at the end of the branch.
             output = format_policy_block(compliance, prompt_preview)
             print(json.dumps(output))
             sys.stdout.flush()
@@ -783,7 +1036,7 @@ def main() -> None:
                 policy_descriptions=p_descriptions,
                 scan_phase="backend",
             )
-            sys.exit(2)
+            sys.exit(_block_exit_code())
 
         # compliance is None → fail-open (backend unreachable), continue
 
