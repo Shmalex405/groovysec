@@ -47,12 +47,13 @@ const PRODUCTS = {
     name: "Maestro",
     href: "/maestro",
     description:
-      "AI-driven automated penetration testing platform that deploys 21 specialized agents to find vulnerabilities and validate them through real red team-style exploitation — proving actual impact, not just scanner output.",
+      "Free autonomous penetration testing platform that deploys 24 specialized agents to find vulnerabilities and validate them through real red team-style exploitation — proving actual impact, not just scanner output.",
     bullets: [
+      "Free to use, with the source public and auditable",
       "Red team exploitation that tests and validates every finding",
-      "21 AI agents with 213 MCP tools covering the full pentest lifecycle",
-      "232-test assessment matrix for consistent, deterministic coverage",
-      "Locally deployed — all data and vulnerability info stays on your network",
+      "24 AI agents with 227 MCP tools covering the full pentest lifecycle",
+      "234-test assessment matrix for consistent, deterministic coverage",
+      "Runs on your machine — findings and target data never leave it",
       "Assess vulnerability findings from other ASPM tools already implemented",
     ],
   },
