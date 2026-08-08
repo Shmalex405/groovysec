@@ -6,6 +6,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { Crosshair, ShieldCheck } from "lucide-react";
+import { MAESTRO_AGENTS, MAESTRO_TOOLS, MAESTRO_TESTS } from "@/lib/maestro-release";
 
 type Outcome = "critical" | "high" | "removed";
 type StepPhase = "discover" | "exploit" | "validate" | "report";
@@ -362,9 +363,12 @@ export function MaestroAssessmentDemo() {
       {/* Stats footer */}
       <div className="mt-5 grid grid-cols-3 gap-4 border-t border-[#0F1B2D]/10 pt-4">
         {[
-          { value: "24", label: "AI Agents" },
-          { value: "227", label: "MCP Tools" },
-          { value: "234", label: "Test Matrix" },
+          // Derived, not typed. This block is the one that carried 21/213/232 for
+          // several releases: it lives here rather than in pages/maestro.tsx, so
+          // grepping the page came back clean while the page contradicted itself.
+          { value: String(MAESTRO_AGENTS), label: "AI Agents" },
+          { value: String(MAESTRO_TOOLS), label: "MCP Tools" },
+          { value: String(MAESTRO_TESTS), label: "Test Matrix" },
         ].map((stat) => (
           <div key={stat.label} className="text-center">
             <div className="text-lg font-bold font-mono text-[#0F1B2D]">{stat.value}</div>

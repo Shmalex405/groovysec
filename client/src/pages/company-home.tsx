@@ -26,6 +26,7 @@ import { ComplianceFrameworksCompact } from "@/components/compliance-frameworks"
 import { PromptInterceptionDemo } from "@/components/prompt-interception-demo";
 import { MaestroAssessmentDemo } from "@/components/maestro-assessment-demo";
 import { SpinningMark } from "@/components/ui/spinning-mark";
+import { MAESTRO_AGENTS, MAESTRO_TOOLS, MAESTRO_TESTS } from "@/lib/maestro-release";
 
 // Single source for product card copy — rendered on both the card front and
 // its reveal overlay so the two can never drift apart.
@@ -47,12 +48,12 @@ const PRODUCTS = {
     name: "Maestro",
     href: "/maestro",
     description:
-      "Free autonomous penetration testing platform that deploys 24 specialized agents to find vulnerabilities and validate them through real red team-style exploitation — proving actual impact, not just scanner output.",
+      `Free autonomous penetration testing platform that deploys ${MAESTRO_AGENTS} specialized agents to find vulnerabilities and validate them through real red team-style exploitation — proving actual impact, not just scanner output.`,
     bullets: [
       "Free to use, with the source public and auditable",
       "Red team exploitation that tests and validates every finding",
-      "24 AI agents with 227 MCP tools covering the full pentest lifecycle",
-      "234-test assessment matrix for consistent, deterministic coverage",
+      `${MAESTRO_AGENTS} AI agents with ${MAESTRO_TOOLS} MCP tools covering the full pentest lifecycle`,
+      `${MAESTRO_TESTS}-test assessment matrix for consistent, deterministic coverage`,
       "Runs on your machine — findings and target data never leave it",
       "Assess vulnerability findings from other ASPM tools already implemented",
     ],

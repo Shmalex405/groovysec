@@ -51,13 +51,22 @@ import {
 } from "@/components/motion";
 import { MaestroAssessmentDemo } from "@/components/maestro-assessment-demo";
 import { usePageMeta } from "@/lib/use-page-meta";
+import {
+  MAESTRO_REPO,
+  MAESTRO_VERSION,
+  MAESTRO_AGENTS,
+  MAESTRO_TOOLS,
+  MAESTRO_TESTS,
+  MAESTRO_TOOLKIT_IMAGE,
+} from "@/lib/maestro-release";
 
-const MAESTRO_REPO = "https://github.com/Shmalex405/maestro";
+// Version, counts, download URLs and the toolkit tag all come from here, and the
+// Maestro release workflow regenerates it — see the module for why.
 
 export default function Maestro() {
   usePageMeta(
     "Maestro — Free Autonomous Penetration Testing",
-    "Maestro is a free, open-core autonomous penetration testing platform — 24 specialized AI agents driving 227 security tools through a 234-test assessment matrix, across web, API, cloud, Kubernetes, identity providers and AI/LLM systems. Every exploitable finding is re-proven under a deterministic oracle."
+    `Maestro is a free, open-core autonomous penetration testing platform — ${MAESTRO_AGENTS} specialized AI agents driving ${MAESTRO_TOOLS} security tools through a ${MAESTRO_TESTS}-test assessment matrix, across web, API, cloud, Kubernetes, identity providers and AI/LLM systems. Every exploitable finding is re-proven under a deterministic oracle.`
   );
   const [expandedDomain, setExpandedDomain] = useState<number | null>(null);
 
@@ -147,7 +156,7 @@ export default function Maestro() {
 
                   <HeroLine>
                     <p className="text-lg text-[#51617A] mb-8 leading-relaxed max-w-lg">
-                      Maestro deploys 24 specialized AI agents to autonomously discover
+                      Maestro deploys {MAESTRO_AGENTS} specialized AI agents to autonomously discover
                       vulnerabilities across web apps, APIs, cloud, identity
                       providers, and AI/LLM systems — then validates them through real
                       red team-style exploitation. Every exploitable finding is
@@ -228,7 +237,7 @@ export default function Maestro() {
             <ScrollReveal>
               <div className="text-center mb-12">
                 <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
-                  24 Specialized AI Agents
+                  {MAESTRO_AGENTS} Specialized AI Agents
                 </h2>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Each agent is purpose-built for a specific phase of the penetration
@@ -748,7 +757,7 @@ export default function Maestro() {
 
             <ScrollReveal delay={0.4}>
               <div className="p-8 rounded-xl bg-white border border-[#E4E9F0]">
-                <h3 className="font-bold text-[#0F1B2D] mb-4 text-center">Get Maestro {"v1.13.0"}</h3>
+                <h3 className="font-bold text-[#0F1B2D] mb-4 text-center">Get Maestro v{MAESTRO_VERSION}</h3>
                 <p className="text-sm text-[#51617A] text-center mb-6 max-w-xl mx-auto">
                   Signed builds for macOS, Windows and Linux. The install guide walks
                   through Docker, the toolkit image and connecting your LLM account.
@@ -766,7 +775,7 @@ export default function Maestro() {
                   <p>
                     <span className="font-semibold text-[#0F1B2D]">Also needs:</span>{" "}
                     Docker, and the toolkit image
-                    (<code className="text-xs font-mono">docker pull ghcr.io/shmalex405/docker-kali:v1.13.0</code>) —
+                    (<code className="text-xs font-mono">docker pull {MAESTRO_TOOLKIT_IMAGE}</code>) —
                     roughly 15&nbsp;GB.
                   </p>
                   <p>

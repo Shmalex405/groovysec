@@ -15,6 +15,10 @@
  * Keep ROUTES in sync with client/src/App.tsx and each page's usePageMeta call.
  */
 import { execSync } from "node:child_process";
+// Route meta duplicates each page's usePageMeta copy, so the Maestro counts live
+// in two places by construction. Reading the generated facts means at least the
+// numbers cannot disagree — they were 21/213/232 here while the page said 24.
+import MAESTRO from "../client/src/lib/maestro-release.json" with { type: "json" };
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -45,13 +49,13 @@ const ROUTES = [
     path: "/maestro",
     title: `Maestro — Free Autonomous Penetration Testing | ${SITE_NAME}`,
     description:
-      "Maestro is a free, open-core autonomous penetration testing platform — 24 specialized AI agents driving 227 security tools through a 234-test assessment matrix, across web, API, cloud, Kubernetes, identity providers and AI/LLM systems. Every exploitable finding is re-proven under a deterministic oracle.",
+      `Maestro is a free, open-core autonomous penetration testing platform — ${MAESTRO.agents} specialized AI agents driving ${MAESTRO.tools} security tools through a ${MAESTRO.tests}-test assessment matrix, across web, API, cloud, Kubernetes, identity providers and AI/LLM systems. Every exploitable finding is re-proven under a deterministic oracle.`,
   },
   {
     path: "/maestro/install",
     title: `Install Maestro — Free Autonomous Penetration Testing | ${SITE_NAME}`,
     description:
-      "Install Maestro free on macOS, Windows or Linux. Signed builds, no account and no licence key — it runs entirely on your machine. Source is public and auditable.",
+      `Install Maestro ${MAESTRO.version} free on macOS, Windows or Linux. Signed builds, no account and no licence key — it runs entirely on your machine. Source is public and auditable.`,
   },
   // TEMP: Skills page unpublished 2026-07-16 — excluded from docs build + sitemap; restore to relist.
   // {

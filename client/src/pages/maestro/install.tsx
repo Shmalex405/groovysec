@@ -21,44 +21,28 @@ import { GradientButton } from "@/components/ui/gradient-button";
 import { usePageMeta } from "@/lib/use-page-meta";
 
 // ── Release pinning ─────────────────────────────────────────────────────────
-// Bump VERSION on each Maestro release. The toolkit image tag MUST match: the app
-// resolves its container image by tag, so a mismatched pull leaves a
-// byte-identical image under a name the app never looks for, and it reports the
-// toolkit missing after a 15 GB download.
-//
-// Artifacts come from the `free` channel — the open-core build, which defaults to
-// local mode with no account and no licence key. The `latest` channel on the same
-// host is the commercial build and expects an org login; never link to it here.
-const VERSION = "1.13.0";
-const CDN = "https://updates.maestro.groovysec.com/maestro/free";
-const REPO = "https://github.com/Shmalex405/maestro";
+// Nothing to bump by hand: version, download URLs, toolkit tag and the three
+// headline counts all come from @/lib/maestro-release, which the Maestro release
+// workflow regenerates. The rationale for pinning the toolkit tag to the app
+// version, and for never linking the `latest` channel here, lives in that module.
+import {
+  MAESTRO_VERSION as VERSION,
+  MAESTRO_REPO as REPO,
+  MAESTRO_PLATFORMS,
+  MAESTRO_AGENTS,
+  MAESTRO_TOOLS,
+  MAESTRO_TESTS,
+  MAESTRO_TOOLKIT_IMAGE,
+} from "@/lib/maestro-release";
 
-const platforms = [
-  {
-    name: "macOS",
-    detail: "Apple Silicon",
-    ext: ".dmg",
-    icon: Apple,
-    url: `${CDN}/macos-aarch64/Maestro_${VERSION}_aarch64.dmg`,
-    testid: "link-install-macos",
-  },
-  {
-    name: "Windows",
-    detail: "x64",
-    ext: ".msi",
-    icon: MonitorSmartphone,
-    url: `${CDN}/windows-x64/Maestro_${VERSION}_x64_en-US.msi`,
-    testid: "link-install-windows",
-  },
-  {
-    name: "Linux",
-    detail: "x64 · Debian / Ubuntu",
-    ext: ".deb",
-    icon: Terminal,
-    url: `${CDN}/linux-x64/Maestro_${VERSION}_amd64.deb`,
-    testid: "link-install-linux",
-  },
-];
+// Icons are the only presentational bit, so they stay here; URLs and labels come
+// from the shared module and update themselves on release.
+const PLATFORM_ICONS = {
+  macos: Apple,
+  windows: MonitorSmartphone,
+  linux: Terminal,
+} as const;
+const platforms = MAESTRO_PLATFORMS.map((p) => ({ ...p, icon: PLATFORM_ICONS[p.id] }));
 
 export default function MaestroInstall() {
   usePageMeta(
@@ -197,7 +181,7 @@ export default function MaestroInstall() {
                   , start it, then run:
                 </p>
                 <pre className="overflow-x-auto rounded-lg bg-[#0F1B2D] text-[#E4E9F0] px-4 py-3 text-sm font-mono">
-                  docker pull ghcr.io/shmalex405/docker-kali:v{VERSION}
+                  docker pull {MAESTRO_TOOLKIT_IMAGE}
                 </pre>
               </div>
 
@@ -335,9 +319,9 @@ export default function MaestroInstall() {
               </h2>
               <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
                 {[
-                  "All 24 agents, across every surface",
-                  "227 security tools in the Kali container",
-                  "The full 234-test assessment matrix",
+                  `All ${MAESTRO_AGENTS} agents, across every surface`,
+                  `${MAESTRO_TOOLS} security tools in the Kali container`,
+                  `The full ${MAESTRO_TESTS}-test assessment matrix`,
                   "Oracle verification on every exploitable finding",
                   "Severity calibration from real outcomes",
                   "Reports with evidence, in Markdown and PDF",
