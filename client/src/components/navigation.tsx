@@ -179,6 +179,13 @@ export function Navigation() {
   const [location] = useLocation();
   const navRef = useRef<HTMLDivElement>(null);
 
+  // Maestro is free to download, so "Request Demo" is the wrong ask on its pages —
+  // it routes someone who could just install it into a sales conversation instead.
+  // Whiteout still needs the demo, hence per-route rather than a global change.
+  const navCta = location.startsWith("/maestro")
+    ? { href: "/maestro/install", label: "Get Maestro Free" }
+    : { href: "/demo", label: "Request Demo" };
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (navRef.current && !navRef.current.contains(event.target as Node)) {
@@ -352,9 +359,9 @@ export function Navigation() {
 
             <div className="w-px h-6 bg-[#0F1B2D]/10 mx-2" />
 
-            <Link href="/demo">
+            <Link href={navCta.href}>
               <GradientButton variant="blue" className="min-w-0 px-5 py-2 text-sm">
-                Request Demo
+                {navCta.label}
               </GradientButton>
             </Link>
           </div>
@@ -443,9 +450,9 @@ export function Navigation() {
                   ))}
 
                   <div className="pt-3 border-t border-[#0F1B2D]/10">
-                    <Link href="/demo" onClick={() => setIsMenuOpen(false)}>
+                    <Link href={navCta.href} onClick={() => setIsMenuOpen(false)}>
                       <Button className="w-full bg-[#1A5FB4] text-white hover:bg-[#164F96] font-semibold">
-                        Request Demo
+                        {navCta.label}
                       </Button>
                     </Link>
                   </div>

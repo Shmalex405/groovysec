@@ -52,6 +52,8 @@ import {
 import { MaestroAssessmentDemo } from "@/components/maestro-assessment-demo";
 import { usePageMeta } from "@/lib/use-page-meta";
 
+const MAESTRO_REPO = "https://github.com/Shmalex405/maestro";
+
 export default function Maestro() {
   usePageMeta(
     "Maestro — Free Autonomous Penetration Testing",
@@ -167,7 +169,7 @@ export default function Maestro() {
                       </GradientButton>
                     </Link>
                     <a
-                      href="https://github.com/Shmalex405/maestro"
+                      href={MAESTRO_REPO}
                       target="_blank"
                       rel="noopener noreferrer"
                       data-testid="link-github-source"
@@ -226,7 +228,7 @@ export default function Maestro() {
             <ScrollReveal>
               <div className="text-center mb-12">
                 <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
-                  21 Specialized AI Agents
+                  24 Specialized AI Agents
                 </h2>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Each agent is purpose-built for a specific phase of the penetration
@@ -606,19 +608,26 @@ export default function Maestro() {
 
             {/* CTA */}
             <ScrollReveal delay={0.4}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
-                <Link href="/demo">
-                  <GradientButton variant="orange">
-                    Request a Demo
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </GradientButton>
-                </Link>
-                <Link href="/demo">
-                  <GradientButton variant="white">
-                    <FileText className="w-4 h-4 mr-2" />
-                    Request a Sample Report
-                  </GradientButton>
-                </Link>
+              <div className="flex flex-col items-center gap-4 mt-12">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link href="/maestro/install">
+                    <GradientButton variant="orange">
+                      <Download className="w-4 h-4 mr-2" />
+                      Install it free
+                    </GradientButton>
+                  </Link>
+                  <a href={MAESTRO_REPO} target="_blank" rel="noopener noreferrer">
+                    <GradientButton variant="white">
+                      Read the source
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </GradientButton>
+                  </a>
+                </div>
+                <p className="text-sm text-[#51617A] text-center max-w-lg">
+                  No demo to sit through and no sales call in the way — the tool is
+                  free, so the fastest way to judge it is to point it at something
+                  you own.
+                </p>
               </div>
             </ScrollReveal>
           </div>
@@ -774,13 +783,13 @@ export default function Maestro() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-                  <a href="https://github.com/Shmalex405/maestro" target="_blank" rel="noopener noreferrer">
+                  <a href={MAESTRO_REPO} target="_blank" rel="noopener noreferrer">
                     <GradientButton variant="orange">
                       Source on GitHub
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </GradientButton>
                   </a>
-                  <a href="https://github.com/Shmalex405/maestro/discussions" target="_blank" rel="noopener noreferrer">
+                  <a href={`${MAESTRO_REPO}/discussions`} target="_blank" rel="noopener noreferrer">
                     <GradientButton variant="white">
                       Feedback &amp; Ideas
                     </GradientButton>

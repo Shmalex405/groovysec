@@ -362,9 +362,9 @@ export function MaestroAssessmentDemo() {
       {/* Stats footer */}
       <div className="mt-5 grid grid-cols-3 gap-4 border-t border-[#0F1B2D]/10 pt-4">
         {[
-          { value: "21", label: "AI Agents" },
-          { value: "213", label: "MCP Tools" },
-          { value: "232", label: "Test Matrix" },
+          { value: "24", label: "AI Agents" },
+          { value: "227", label: "MCP Tools" },
+          { value: "234", label: "Test Matrix" },
         ].map((stat) => (
           <div key={stat.label} className="text-center">
             <div className="text-lg font-bold font-mono text-[#0F1B2D]">{stat.value}</div>
