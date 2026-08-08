@@ -38,6 +38,7 @@ import {
   FileCheck,
   Printer,
   ChevronRight,
+  Download,
 } from "lucide-react";
 import {
   PageTransition,
@@ -53,8 +54,8 @@ import { usePageMeta } from "@/lib/use-page-meta";
 
 export default function Maestro() {
   usePageMeta(
-    "Maestro — AI-Driven Penetration Testing",
-    "Maestro deploys 21 specialized AI agents with 213 MCP tools through a 232-test assessment matrix — autonomous red team exploitation across web, API, cloud, Kubernetes, identity providers, and AI/LLM systems with proof of impact."
+    "Maestro — Free Autonomous Penetration Testing",
+    "Maestro is a free, open-core autonomous penetration testing platform — 24 specialized AI agents driving 227 security tools through a 234-test assessment matrix, across web, API, cloud, Kubernetes, identity providers and AI/LLM systems. Every exploitable finding is re-proven under a deterministic oracle."
   );
   const [expandedDomain, setExpandedDomain] = useState<number | null>(null);
 
@@ -73,21 +74,24 @@ export default function Maestro() {
     { num: "09", icon: CloudCog, title: "Cloud Exploit Agent", description: "Cloud-native red team exploitation — IAM privilege escalation chains, storage abuse, Kubernetes attacks, serverless exploitation, and metadata probing with validated proof of impact.", color: "amber" as const },
     { num: "10", icon: Lock, title: "Identity Exploit Agent", description: "Lockout-governed identity exploitation — Kerberoasting, password spraying, token replay, and ADCS ESC abuse across Active Directory, Entra ID, M365, Okta, Google Workspace, and Ping, with validated privilege escalation.", color: "orange" as const },
     { num: "11", icon: BrainCircuit, title: "AI Red Team Agent", description: "AI/LLM exploitation against the OWASP Top 10 for LLM Applications (2025) — prompt injection, jailbreak, system-prompt extraction, sensitive disclosure, excessive agency, and RAG isolation, with capture-not-execute safety controls.", color: "red" as const },
-    { num: "12", icon: Layers, title: "Chain Analysis Agent", description: "Two-pass attack-chain analysis — hypothesizes multi-step exploit paths, then validates them against real exploitation results with severity recalculation and defense-in-depth analysis.", color: "amber" as const },
-    { num: "13", icon: CheckCircle, title: "Cross-Validation & QA Agent", description: "Cross-validates static findings against live endpoints, scores confidence, eliminates false positives, and flags coverage gaps so every reported finding is reproducible.", color: "orange" as const },
-    { num: "14", icon: Gauge, title: "Severity Calibration Agent", description: "Re-rates every finding's severity from actual exploitation outcomes — exploited, partial, or not exploitable — using reachability evidence and attack-chain context.", color: "red" as const },
-    { num: "15", icon: Share2, title: "Cloud Analysis Agent", description: "Synthesizes the cloud companion report and builds an escalation graph, rendering validated cloud attack chains from posture and IAM data.", color: "amber" as const },
-    { num: "16", icon: Share2, title: "Identity Analysis Agent", description: "Synthesizes the Identity Companion Report and builds the privilege-escalation graph, rendering validated identity attack chains across on-prem Active Directory and cloud identity providers.", color: "orange" as const },
-    { num: "17", icon: Share2, title: "AI Analysis Agent", description: "Synthesizes the AI Security Assessment Report — builds the excessive-agency graph from injection to tool to system, mapped to the OWASP LLM Top 10 and MITRE ATLAS.", color: "red" as const },
-    { num: "18", icon: Scale, title: "Compliance Agent", description: "Automated mapping to OWASP Top 10, OWASP API Top 10, OWASP LLM Top 10, NIST 800-53, PCI-DSS, MITRE ATLAS, and CWE standards, with CVSS v3.1 scoring for every finding.", color: "amber" as const },
-    { num: "19", icon: FileText, title: "Report Agent", description: "Professional report generation with executive summaries, technical detail, original and calibrated severity, full test-coverage checklists, and prioritized remediation guidance.", color: "orange" as const },
-    { num: "20", icon: FileCheck, title: "Report Enrichment Agent", description: "Validates each report against rigorous quality checks, re-runs tools to fill any gaps, and enforces complete coverage before the report is finalized.", color: "red" as const },
-    { num: "21", icon: Printer, title: "PDF Rendering Agent", description: "Converts the finished assessment into a polished, styled PDF and registers it for delivery to stakeholders — the final step of every engagement.", color: "amber" as const },
+    { num: "12", icon: Container, title: "Post-Exploitation Operator", description: "Runs the plan-execute-deposit-replan loop from a confirmed foothold — pivoting, looting, and escalating across surfaces. Fires only when a foothold was actually established, so the campaign starts from proven access rather than assumption.", color: "amber" as const },
+    { num: "13", icon: Layers, title: "Chain Analysis Agent", description: "Two-pass attack-chain analysis — hypothesizes multi-step exploit paths, then validates them against real exploitation results with severity recalculation and defense-in-depth analysis.", color: "amber" as const },
+    { num: "14", icon: CheckCircle, title: "Cross-Validation & QA Agent", description: "Cross-validates static findings against live endpoints, scores confidence, eliminates false positives, and flags coverage gaps so every reported finding is reproducible.", color: "orange" as const },
+    { num: "15", icon: ShieldCheck, title: "Verification Agent", description: "The verdict gate. Every exploitable candidate is re-proven under one of six deterministic oracles, each with a mandatory control. The agent supplies the experiment and never the verdict — the model structurally cannot mark a finding verified.", color: "orange" as const },
+    { num: "16", icon: Gauge, title: "Severity Calibration Agent", description: "Re-rates every finding's severity from actual exploitation outcomes — exploited, partial, or not exploitable — using reachability evidence and attack-chain context.", color: "red" as const },
+    { num: "17", icon: Share2, title: "Cloud Analysis Agent", description: "Synthesizes the cloud companion report and builds an escalation graph, rendering validated cloud attack chains from posture and IAM data.", color: "amber" as const },
+    { num: "18", icon: Share2, title: "Identity Analysis Agent", description: "Synthesizes the Identity Companion Report and builds the privilege-escalation graph, rendering validated identity attack chains across on-prem Active Directory and cloud identity providers.", color: "orange" as const },
+    { num: "19", icon: Share2, title: "AI Analysis Agent", description: "Synthesizes the AI Security Assessment Report — builds the excessive-agency graph from injection to tool to system, mapped to the OWASP LLM Top 10 and MITRE ATLAS.", color: "red" as const },
+    { num: "20", icon: Share2, title: "Post-Exploitation Analysis Agent", description: "Synthesizes the Post-Exploitation Campaign Report — the from-foothold-to-crown-jewels narrative and campaign graph, with per-edge receipts so each step of the path is traversable rather than asserted.", color: "amber" as const },
+    { num: "21", icon: Scale, title: "Compliance Agent", description: "Automated mapping to OWASP Top 10, OWASP API Top 10, OWASP LLM Top 10, NIST 800-53, PCI-DSS, MITRE ATLAS, and CWE standards, with CVSS v3.1 scoring for every finding.", color: "amber" as const },
+    { num: "22", icon: FileText, title: "Report Agent", description: "Professional report generation with executive summaries, technical detail, original and calibrated severity, full test-coverage checklists, and prioritized remediation guidance.", color: "orange" as const },
+    { num: "23", icon: FileCheck, title: "Report Enrichment Agent", description: "Validates each report against rigorous quality checks, re-runs tools to fill any gaps, and enforces complete coverage before the report is finalized.", color: "red" as const },
+    { num: "24", icon: Printer, title: "PDF Rendering Agent", description: "Converts the finished assessment into a polished, styled PDF and registers it for delivery to stakeholders — the final step of every engagement.", color: "amber" as const },
   ];
 
   const features = [
     { icon: Bug, title: "Full-Spectrum Red Team", description: "Controlled exploitation across web applications, APIs, cloud infrastructure, Kubernetes, and identity providers — from OWASP Top 10 through IAM privilege escalation, container escapes, and Active Directory / Entra ID attack paths. Proven impact, not theoretical risk." },
-    { icon: Layers, title: "232-Test Assessment Matrix", description: "Structured assessment framework with 73 DAST tests, 60 identity tests, 29 cloud security tests, 24 SAST tests, 23 AI/LLM tests, 15 cross-validation tests, and 8 chain analysis tests — ensuring consistent, deterministic coverage across every engagement." },
+    { icon: Layers, title: "234-Test Assessment Matrix", description: "Structured assessment framework with 73 DAST tests, 60 identity tests, 29 cloud security tests, 24 SAST tests, 25 AI/LLM tests, 15 cross-validation tests, and 8 chain analysis tests — ensuring consistent, deterministic coverage across every engagement." },
     { icon: SplitSquareVertical, title: "Multi-Track Analysis", description: "Parallel dynamic, static, cloud, and identity analysis with cross-validation. Findings enriched with source code context, cloud posture, and identity graph data, then validated against live endpoints." },
     { icon: Zap, title: "Autonomous Testing", description: "Deploy agents and let them work autonomously — Maestro coordinates the full pentest lifecycle from reconnaissance through exploitation to reporting." },
     { icon: FileText, title: "Report Generation", description: "Evidence-based reporting in HTML, PDF, and Markdown with executive summaries, technical breakdowns, complete reproduction steps, and prioritized remediation guidance — ready for stakeholders." },
@@ -99,7 +103,6 @@ export default function Maestro() {
     { name: "SharePoint", description: "Publish reports to document libraries" },
     { name: "Email", description: "Stakeholder notifications and summaries" },
     { name: "ASPM", description: "Import static analysis findings for dynamic validation" },
-    { name: "N8N", description: "Workflow automation and orchestration" },
   ];
 
   const colorMap = {
@@ -142,27 +145,42 @@ export default function Maestro() {
 
                   <HeroLine>
                     <p className="text-lg text-[#51617A] mb-8 leading-relaxed max-w-lg">
-                      Maestro deploys 21 specialized AI agents to autonomously discover
+                      Maestro deploys 24 specialized AI agents to autonomously discover
                       vulnerabilities across web apps, APIs, cloud, identity
                       providers, and AI/LLM systems — then validates them through real
-                      red team-style exploitation. Every finding comes with proof of
-                      impact, not just scanner output.
+                      red team-style exploitation. Every exploitable finding is
+                      re-proven under a deterministic oracle, so what you get is proof
+                      of impact, not scanner output.
+                      <span className="block mt-4 font-medium text-[#0F1B2D]">
+                        Free to use. Source public and auditable.
+                      </span>
                     </p>
                   </HeroLine>
                 </HeroTextReveal>
 
                 <ScrollReveal delay={0.5}>
                   <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                    <Link href="/demo">
+                    <Link href="/maestro/install">
                       <GradientButton variant="orange">
-                        Request Demo
+                        Get Maestro Free
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </GradientButton>
                     </Link>
+                    <a
+                      href="https://github.com/Shmalex405/maestro"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-testid="link-github-source"
+                    >
+                      <GradientButton variant="white">
+                        View the Source
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </GradientButton>
+                    </a>
                   </div>
 
                   <div className="text-sm text-[#6E7B8C] flex items-center font-mono">
-                    Built on Kali Linux · AWS / Azure / GCP · Enterprise-ready
+                    Free · macOS, Windows, Linux · Built on Kali Linux
                   </div>
                 </ScrollReveal>
               </div>
@@ -194,7 +212,7 @@ export default function Maestro() {
               <div className="mt-12">
                 <MaestroAssessmentDemo />
                 <p className="mt-5 text-sm text-[#6E7B8C] max-w-xl mx-auto text-center">
-                  Discover, exploit, validate, report — every one of the 232 tests
+                  Discover, exploit, validate, report — every one of the 234 tests
                   runs the same evidence pipeline.
                 </p>
               </div>
@@ -298,7 +316,7 @@ export default function Maestro() {
               <div>
                 <ScrollReveal>
                   <h3 className="text-lg font-mono tracking-wider mb-4 px-1">
-                    <span className="text-[#A05F00] font-bold">213</span>{" "}
+                    <span className="text-[#A05F00] font-bold">227</span>{" "}
                     <span className="text-[#6E7B8C]">MCP TOOLS</span>
                   </h3>
                 </ScrollReveal>
@@ -313,13 +331,13 @@ export default function Maestro() {
               <div>
                 <ScrollReveal>
                   <h3 className="text-lg font-mono tracking-wider mb-4 px-1">
-                    <span className="text-[#A05F00] font-bold">232</span>{" "}
+                    <span className="text-[#A05F00] font-bold">234</span>{" "}
                     <span className="text-[#6E7B8C]">TEST MATRIX</span>
                   </h3>
                 </ScrollReveal>
                 <GlassCard className="p-8">
                   <BlurredStaggerText
-                    text="Maestro's structured assessment framework — a deterministic checklist ensuring every engagement covers the same 232 tests across DAST, SAST, cloud security, identity, AI/LLM, cross-validation, and chain analysis. No tester variance, no missed coverage. Every run produces consistent, comparable results."
+                    text="Maestro's structured assessment framework — a deterministic checklist ensuring every engagement covers the same 234 tests across DAST, SAST, cloud security, identity, AI/LLM, cross-validation, and chain analysis. No tester variance, no missed coverage. Every run produces consistent, comparable results."
                     className="text-lg text-[#51617A] leading-relaxed"
 
                   />
@@ -601,6 +619,173 @@ export default function Maestro() {
                     Request a Sample Report
                   </GradientButton>
                 </Link>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* Why free — the reasoning, not a pitch */}
+        <section className="py-24">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ScrollReveal>
+              <div className="mb-10">
+                <div className="inline-flex items-center px-4 py-1.5 rounded-md bg-[#A05F00]/10 border border-[#A05F00]/25 text-[#A05F00] text-sm mb-6 font-mono">
+                  Why we made it free
+                </div>
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
+                  The tooling was never the bottleneck.
+                </h2>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.1}>
+              <div className="space-y-6 text-lg text-[#51617A] leading-relaxed">
+                <p>
+                  A serious penetration test costs five figures and takes weeks to
+                  schedule. That arithmetic works for a bank. It does not work for the
+                  clinic, the school district, the two-person startup holding real
+                  customer data, or the non-profit running something critical on a
+                  volunteer budget — and those are precisely the organizations an
+                  attacker finds easiest.
+                </p>
+                <p>
+                  Meanwhile the actual instruments have been free for decades.{" "}
+                  <span className="font-mono text-base text-[#0F1B2D]">nmap</span>,{" "}
+                  <span className="font-mono text-base text-[#0F1B2D]">sqlmap</span>,{" "}
+                  <span className="font-mono text-base text-[#0F1B2D]">semgrep</span>,{" "}
+                  <span className="font-mono text-base text-[#0F1B2D]">nuclei</span> —
+                  excellent, open, and sitting right there. What has never been
+                  accessible is the expertise to orchestrate them, chase down what they
+                  surface, prove which findings are real, and tell you which of four
+                  hundred alerts actually matters on a Tuesday morning.
+                </p>
+                <p className="text-[#0F1B2D] font-medium">
+                  That orchestration is what Maestro is. We could not find a good reason
+                  to lock it behind an enterprise contract, so we did not.
+                </p>
+                <p>
+                  Run it on your own machine, for free, against systems you are
+                  authorized to test. Read the source first if you would rather not take
+                  our word for it — that is why it is public. If you eventually need a
+                  human-signed attestation for an auditor, or a shared backend so a whole
+                  team sees the same findings, that is what we sell. The tool itself is
+                  yours.
+                </p>
+                <p className="text-base text-[#6E7B8C] pt-2 border-t border-[#E4E9F0]">
+                  Enterprise-grade security testing should not be a function of your
+                  budget. If this helps you find something before someone else does, it
+                  has done its job.
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* Free & Open Core — the release the product is now distributed under */}
+        <section className="py-24 bg-white/40">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ScrollReveal>
+              <div className="text-center mb-14">
+                <div className="inline-flex items-center px-4 py-1.5 rounded-md bg-[#A05F00]/10 border border-[#A05F00]/25 text-[#A05F00] text-sm mb-6 font-mono">
+                  Free to use
+                </div>
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
+                  Read the code. Then run it.
+                </h2>
+                <p className="text-lg text-[#51617A] max-w-3xl mx-auto leading-relaxed">
+                  Maestro executes real attacks from your machine. You shouldn&apos;t take
+                  that on trust from a binary — so the source is public. Read the tool
+                  handlers, the container definition, the scope guard and the agent
+                  instructions, then install the signed build.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <div className="grid md:grid-cols-3 gap-6 mb-12">
+              <ScrollReveal delay={0.1}>
+                <div className="h-full p-6 rounded-xl bg-white border border-[#E4E9F0]">
+                  <Download className="w-6 h-6 text-[#A05F00] mb-4" />
+                  <h3 className="font-bold text-[#0F1B2D] mb-2">Nothing to provision</h3>
+                  <p className="text-sm text-[#51617A] leading-relaxed">
+                    Runs entirely on your machine with findings in a local database. No
+                    account, no licence key, no cloud backend. Add a shared team backend
+                    later if several people need one view.
+                  </p>
+                </div>
+              </ScrollReveal>
+              <ScrollReveal delay={0.2}>
+                <div className="h-full p-6 rounded-xl bg-white border border-[#E4E9F0]">
+                  <Code className="w-6 h-6 text-[#A05F00] mb-4" />
+                  <h3 className="font-bold text-[#0F1B2D] mb-2">Auditable, not just open</h3>
+                  <p className="text-sm text-[#51617A] leading-relaxed">
+                    Apache-2.0 across the platform — 227 tool handlers, the Kali image,
+                    the desktop app and the deployment terraform. A small, listed set of
+                    components stays commercially licensed.
+                  </p>
+                </div>
+              </ScrollReveal>
+              <ScrollReveal delay={0.3}>
+                <div className="h-full p-6 rounded-xl bg-white border border-[#E4E9F0]">
+                  <KeyRound className="w-6 h-6 text-[#A05F00] mb-4" />
+                  <h3 className="font-bold text-[#0F1B2D] mb-2">Your own LLM account</h3>
+                  <p className="text-sm text-[#51617A] leading-relaxed">
+                    Sign in with an existing Claude or ChatGPT subscription, or use an
+                    API key. Credentials stay on your machine. Nothing about your targets
+                    is sent to us.
+                  </p>
+                </div>
+              </ScrollReveal>
+            </div>
+
+            <ScrollReveal delay={0.4}>
+              <div className="p-8 rounded-xl bg-white border border-[#E4E9F0]">
+                <h3 className="font-bold text-[#0F1B2D] mb-4 text-center">Get Maestro {"v1.13.0"}</h3>
+                <p className="text-sm text-[#51617A] text-center mb-6 max-w-xl mx-auto">
+                  Signed builds for macOS, Windows and Linux. The install guide walks
+                  through Docker, the toolkit image and connecting your LLM account.
+                </p>
+                <div className="flex justify-center mb-8">
+                  <Link href="/maestro/install">
+                    <GradientButton variant="orange">
+                      Install guide
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </GradientButton>
+                  </Link>
+                </div>
+
+                <div className="text-sm text-[#51617A] space-y-2 border-t border-[#E4E9F0] pt-6">
+                  <p>
+                    <span className="font-semibold text-[#0F1B2D]">Also needs:</span>{" "}
+                    Docker, and the toolkit image
+                    (<code className="text-xs font-mono">docker pull ghcr.io/shmalex405/docker-kali:v1.13.0</code>) —
+                    roughly 15&nbsp;GB.
+                  </p>
+                  <p>
+                    <span className="font-semibold text-[#0F1B2D]">Before your first run:</span>{" "}
+                    request enrollment in Anthropic&apos;s Cyber Verification Program.
+                    Without it, exploitation agents may decline partway through a run —
+                    quietly, so you get a thinner report rather than an error.
+                  </p>
+                  <p>
+                    <span className="font-semibold text-[#0F1B2D]">Authorized use only.</span>{" "}
+                    Maestro sends real payloads and reads real data to prove impact. You
+                    must hold documented authorization for every target you assess.
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                  <a href="https://github.com/Shmalex405/maestro" target="_blank" rel="noopener noreferrer">
+                    <GradientButton variant="orange">
+                      Source on GitHub
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </GradientButton>
+                  </a>
+                  <a href="https://github.com/Shmalex405/maestro/discussions" target="_blank" rel="noopener noreferrer">
+                    <GradientButton variant="white">
+                      Feedback &amp; Ideas
+                    </GradientButton>
+                  </a>
+                </div>
               </div>
             </ScrollReveal>
           </div>

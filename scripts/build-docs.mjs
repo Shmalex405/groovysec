@@ -43,9 +43,15 @@ const ROUTES = [
   },
   {
     path: "/maestro",
-    title: `Maestro — AI-Driven Penetration Testing | ${SITE_NAME}`,
+    title: `Maestro — Free Autonomous Penetration Testing | ${SITE_NAME}`,
     description:
-      "Maestro deploys 21 specialized AI agents with 213 MCP tools through a 232-test assessment matrix — autonomous red team exploitation across web, API, cloud, Kubernetes, identity providers, and AI/LLM systems with proof of impact.",
+      "Maestro is a free, open-core autonomous penetration testing platform — 24 specialized AI agents driving 227 security tools through a 234-test assessment matrix, across web, API, cloud, Kubernetes, identity providers and AI/LLM systems. Every exploitable finding is re-proven under a deterministic oracle.",
+  },
+  {
+    path: "/maestro/install",
+    title: `Install Maestro — Free Autonomous Penetration Testing | ${SITE_NAME}`,
+    description:
+      "Install Maestro free on macOS, Windows or Linux. Signed builds, no account and no licence key — it runs entirely on your machine. Source is public and auditable.",
   },
   // TEMP: Skills page unpublished 2026-07-16 — excluded from docs build + sitemap; restore to relist.
   // {

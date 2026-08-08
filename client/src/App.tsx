@@ -17,6 +17,7 @@ import WhiteoutAI from "@/pages/whiteout-ai";
 import SolutionPage from "@/pages/solutions/solution-page";
 import Maestro from "@/pages/maestro";
 import About from "@/pages/about";
+import MaestroInstall from "@/pages/maestro/install";
 import WhiteoutGovernment from "@/pages/whiteout-ai/government";
 import WhiteoutAcademicIntegrity from "@/pages/whiteout-ai/academic-integrity";
 import WhiteoutSecurityWhitepaper from "@/pages/whiteout-ai/security-whitepaper";
@@ -62,6 +63,7 @@ function Router() {
           {(params) => <BlogPost slug={params.slug} />}
         </Route>
         <Route path="/security" component={Security} />
+        <Route path="/maestro/install" component={MaestroInstall} />
         <Route path="/whiteout-ai/government" component={WhiteoutGovernment} />
         <Route path="/whiteout-ai/academic-integrity" component={WhiteoutAcademicIntegrity} />
         <Route path="/whiteout-ai/security-whitepaper" component={WhiteoutSecurityWhitepaper} />
