@@ -41,7 +41,43 @@ export default function PrivacyPolicy() {
               Payment information in connection with purchases, subscriptions or
               other paid services.
             </li>
+            <li>
+              Job title, where you choose to give it. This is optional and the form
+              works without it.
+            </li>
+            <li>
+              For Maestro downloads: the IP address the request came from, the
+              version and platform you were offered, and the fact and time that you
+              accepted these terms.
+            </li>
           </ul>
+        </section>
+
+        {/* Specific because the download form asks people to accept this policy,
+            so the policy has to actually describe what that form does. */}
+        <section>
+          <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
+            Downloading Maestro
+          </h2>
+          <p className="text-[#51617A] mb-2">
+            Maestro is free, and the form before the download asks for your name,
+            work email and — optionally — your job title. We use it to understand who
+            is using Maestro and to tell you about releases that matter. We do not
+            sell it, and we do not share it with third parties for their own
+            marketing.
+          </p>
+          <p className="text-[#51617A] mb-2">
+            Alongside what you type we record the IP address of the request, the
+            version and platform offered to you, and that you accepted these terms.
+            The IP address is kept so we can investigate abuse of a public form.
+            Records are stored in our own AWS account, encrypted at rest.
+          </p>
+          <p className="text-[#51617A]">
+            Maestro itself sends us nothing. It runs on your machine, and your
+            assessment findings, target details and credentials stay there — the form
+            is the only point at which we learn anything, and it happens before you
+            have run the tool at all.
+          </p>
         </section>
 
         {/* How do we collect your data */}

@@ -19,6 +19,7 @@ import { AuroraBackground } from "@/components/ui/aurora-background";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { usePageMeta } from "@/lib/use-page-meta";
+import { MaestroInstallGate } from "@/components/maestro-install-gate";
 
 // ── Release pinning ─────────────────────────────────────────────────────────
 // Nothing to bump by hand: version, download URLs, toolkit tag and the three
@@ -108,28 +109,33 @@ export default function MaestroInstall() {
                 </div>
               </div>
 
-              <div className="grid sm:grid-cols-3 gap-4">
-                {platforms.map((p) => {
-                  const Icon = p.icon;
-                  return (
-                    <a
-                      key={p.name}
-                      href={p.url}
-                      data-testid={p.testid}
-                      className="flex flex-col items-center p-6 rounded-xl bg-white border border-[#E4E9F0] hover:border-[#A05F00]/40 transition-colors"
-                    >
-                      <Icon className="w-7 h-7 text-[#A05F00] mb-3" />
-                      <span className="font-semibold text-[#0F1B2D]">{p.name}</span>
-                      <span className="text-xs text-[#6E7B8C] font-mono mt-1">
-                        {p.detail}
-                      </span>
-                      <span className="text-xs text-[#A05F00] font-mono mt-2">
-                        {p.ext}
-                      </span>
-                    </a>
-                  );
-                })}
-              </div>
+              {/* Only the artifact links sit behind the form. The note below about
+                  building from source stays visible: it is context rather than a
+                  download, and the repository is public regardless. */}
+              <MaestroInstallGate>
+                <div className="grid sm:grid-cols-3 gap-4">
+                  {platforms.map((p) => {
+                    const Icon = p.icon;
+                    return (
+                      <a
+                        key={p.name}
+                        href={p.url}
+                        data-testid={p.testid}
+                        className="flex flex-col items-center p-6 rounded-xl bg-white border border-[#E4E9F0] hover:border-[#A05F00]/40 transition-colors"
+                      >
+                        <Icon className="w-7 h-7 text-[#A05F00] mb-3" />
+                        <span className="font-semibold text-[#0F1B2D]">{p.name}</span>
+                        <span className="text-xs text-[#6E7B8C] font-mono mt-1">
+                          {p.detail}
+                        </span>
+                        <span className="text-xs text-[#A05F00] font-mono mt-2">
+                          {p.ext}
+                        </span>
+                      </a>
+                    );
+                  })}
+                </div>
+              </MaestroInstallGate>
 
               <p className="text-sm text-[#6E7B8C] mt-6">
                 macOS is Apple Silicon only. Prefer to build it yourself? Everything you
