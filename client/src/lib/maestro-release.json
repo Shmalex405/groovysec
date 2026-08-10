@@ -1,7 +1,7 @@
 {
   "version": "1.13.0",
   "agents": 24,
-  "agentsTotal": 99,
+  "agentsTotal": 25,
   "tools": 227,
   "tests": 234
 }
