@@ -570,7 +570,7 @@ title: "Why We Publish Our Compliance Benchmark in the Open"
 slug: publishing-our-compliance-benchmark
 date: 2026-06-29
 author: Alex Flowers
-role: Co-Founder
+role: CEO & Founder
 excerpt: "Most AI-governance vendors ask you to trust a marketing number. We published the full 15,915-prompt benchmark behind Whiteout AI — every prompt, every label — so you can verify our accuracy yourself."
 tags: [AI Governance, Compliance, Research]
 category: Research
@@ -606,7 +606,7 @@ title: "We Made Our Penetration Testing Platform Free"
 slug: why-maestro-is-free
 date: 2026-08-11
 author: Alex Flowers
-role: Founder & CEO
+role: CEO & Founder
 excerpt: "Maestro started as the tooling I built to do my own security assessments. It is now free, with the source public — because the scanners were never the expensive part, and the orchestration should not be either."
 tags: [Maestro, Open Source, Penetration Testing, Security]
 category: Product

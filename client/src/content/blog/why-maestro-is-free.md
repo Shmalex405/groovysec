@@ -3,7 +3,7 @@ title: "We Made Our Penetration Testing Platform Free"
 slug: why-maestro-is-free
 date: 2026-08-11
 author: Alex Flowers
-role: Founder & CEO
+role: CEO & Founder
 excerpt: "Maestro started as the tooling I built to do my own security assessments. It is now free, with the source public — because the scanners were never the expensive part, and the orchestration should not be either."
 tags: [Maestro, Open Source, Penetration Testing, Security]
 category: Product

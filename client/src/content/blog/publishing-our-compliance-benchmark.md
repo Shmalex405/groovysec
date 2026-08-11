@@ -3,7 +3,7 @@ title: "Why We Publish Our Compliance Benchmark in the Open"
 slug: publishing-our-compliance-benchmark
 date: 2026-06-29
 author: Alex Flowers
-role: Co-Founder
+role: CEO & Founder
 excerpt: "Most AI-governance vendors ask you to trust a marketing number. We published the full 15,915-prompt benchmark behind Whiteout AI — every prompt, every label — so you can verify our accuracy yourself."
 tags: [AI Governance, Compliance, Research]
 category: Research
