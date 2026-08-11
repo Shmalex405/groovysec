@@ -88,7 +88,7 @@ export default function About() {
                   name: "Alex Flowers",
                   role: "CEO & Founder",
                   color: "blue" as const,
-                  bio: "Cybersecurity professional who founded Groovy Security in March 2025, driven by firsthand experience with the industry's critical AI security gaps and a vision for Groovy Security to be a leader in AI governance and broader cybersecurity innovation.",
+                  bio: "MSc in Information &amp; Cyber Security from the National College of Ireland, and former Head of Application Security. Founded Groovy Security in March 2025, driven by firsthand experience with the industry's critical AI security gaps and a vision for Groovy Security to be a leader in AI governance and broader cybersecurity innovation.",
                 },
                 {
                   img: "/joel-flowers.png",

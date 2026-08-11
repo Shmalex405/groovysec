@@ -11,6 +11,7 @@ import {
   AlertTriangle,
   Apple,
   MonitorSmartphone,
+  ShieldCheck,
 } from "lucide-react";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
@@ -136,6 +137,39 @@ export default function MaestroInstall() {
                   })}
                 </div>
               </MaestroInstallGate>
+
+              {/* Outside the gate on purpose: this is the reassurance someone wants
+                  BEFORE deciding to hand over an email, not after. Claims are
+                  deliberately per-platform — .deb has no OS-level signing equivalent,
+                  and overstating a trust signal is worse than not making one. */}
+              <div className="mt-6 p-5 rounded-xl bg-white border border-[#E4E9F0]">
+                <div className="flex items-center gap-2 mb-3">
+                  <ShieldCheck className="w-4 h-4 text-[#2E7D32]" />
+                  <span className="text-sm font-semibold text-[#0F1B2D]">
+                    Every build is code-signed
+                  </span>
+                </div>
+                <ul className="space-y-1.5 text-sm text-[#51617A]">
+                  <li>
+                    <strong className="text-[#0F1B2D]">macOS</strong> — signed with an
+                    Apple Developer ID and notarized by Apple, so Gatekeeper opens it
+                    without an unidentified-developer warning.
+                  </li>
+                  <li>
+                    <strong className="text-[#0F1B2D]">Windows</strong> — signed via
+                    Azure Trusted Signing, which requires a validated organisation.
+                  </li>
+                  <li>
+                    <strong className="text-[#0F1B2D]">All platforms</strong> — each
+                    release is cryptographically signed for the auto-updater, and the app
+                    verifies that signature before applying an update.
+                  </li>
+                </ul>
+                <p className="text-xs text-[#6E7B8C] mt-3">
+                  The Linux <code className="font-mono">.deb</code> has no OS-level
+                  signing equivalent, so it carries the updater signature only.
+                </p>
+              </div>
 
               <p className="text-sm text-[#6E7B8C] mt-6">
                 macOS is Apple Silicon only. Prefer to build it yourself? Everything you

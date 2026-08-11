@@ -689,6 +689,16 @@ export default function Maestro() {
                   team sees the same findings, that is what we sell. The tool itself is
                   yours.
                 </p>
+                {/* The credential belongs here, not only on the About page: this is the
+                    paragraph where a reader decides whether the attestation is worth
+                    paying for, and a signature is worth exactly what the signer is. */}
+                <p>
+                  Attestations are signed by <strong>Alex Flowers</strong> — MSc in
+                  Information &amp; Cyber Security from the National College of Ireland,
+                  former Head of Application Security, and Groovy Security's CEO. An
+                  auditor wants a named practitioner standing behind a report, and that is
+                  the one thing no tool can supply for you.
+                </p>
                 <p className="text-base text-[#6E7B8C] pt-2 border-t border-[#E4E9F0]">
                   Enterprise-grade security testing should not be a function of your
                   budget. If this helps you find something before someone else does, it
