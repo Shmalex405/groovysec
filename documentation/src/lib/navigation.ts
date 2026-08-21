@@ -26,6 +26,13 @@ export const navigation: NavSection[] = [
     ],
   },
   {
+    title: 'Infrastructure Agents',
+    items: [
+      { title: 'Agent Quickstart', href: '/admin-guides/infrastructure/agent-quickstart' },
+      { title: 'Tool-Activity Governance', href: '/admin-guides/infrastructure/tool-activity-governance' },
+    ],
+  },
+  {
     title: 'Whiteout AI Connector',
     items: [
       { title: 'Overview', href: '/admin-guides/whiteout-ai-connector/overview' },
