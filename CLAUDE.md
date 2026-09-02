@@ -39,7 +39,7 @@ npm run check            # Run TypeScript compiler
 |-------|------|------|
 | `/` | Company landing | `client/src/pages/company-home.tsx` |
 | `/whiteout-ai` | Whiteout AI product | `client/src/pages/whiteout-ai.tsx` |
-| `/maestro` | Maestro product | `client/src/pages/maestro.tsx` |
+| ~~`/maestro`~~ | Maestro product — **unpublished 2026-09-02** | `client/src/pages/maestro.tsx` |
 | `/about` | About / Founders | `client/src/pages/about.tsx` |
 | `/demo` | Request Demo form | `client/src/pages/demo.tsx` |
 | `/whiteout-ai/government` | Government sector | `client/src/pages/whiteout-ai/government.tsx` |
@@ -49,6 +49,25 @@ npm run check            # Run TypeScript compiler
 | `/skills` | Secure AI Skills product | `client/src/pages/skills.tsx` |
 | `/skills/success` | Post-purchase success | `client/src/pages/skills/success.tsx` |
 | `/privacy-policy` | Privacy Policy | `client/src/pages/privacy-policy.tsx` |
+
+### Unpublished surfaces
+
+Two products are built but not currently listed on the site. Both follow the same
+pattern: page files and components stay in the tree, and every entry point is
+commented out with a `TEMP: <name> unpublished <date>` marker — routes in
+`client/src/App.tsx`, menu entries in `navigation.tsx` and `footer.tsx`, and the
+route meta in `scripts/build-docs.mjs` (which also controls the sitemap). Grep for
+`TEMP:` to find every hold before relisting.
+
+- **Maestro** (2026-09-02) — also: `/maestro/install`, the blog post
+  `why-maestro-is-free.md.unpublished`, and Maestro clauses trimmed from copy on
+  about / demo / contact / partners / review / security / privacy-policy.
+  `company-home.tsx` still contains Maestro content but is **not routed**.
+- **Secure AI Skills** (2026-07-16) — `/skills`, `/skills/success`.
+
+A blog post is unpublished by renaming it to `*.md.unpublished`; both the glob in
+`client/src/lib/blog.ts` and the readdir filter in `scripts/build-docs.mjs` key off
+the `.md` extension.
 
 ### Path Aliases
 - `@/*` → `client/src/*`

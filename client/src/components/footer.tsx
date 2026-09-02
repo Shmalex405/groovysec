@@ -11,7 +11,8 @@ type LinkItem = {
 const footerLinks: Record<string, LinkItem[]> = {
   Products: [
     { label: "Whiteout AI", href: "/" },
-    { label: "Maestro", href: "/maestro" },
+    // TEMP: Maestro unpublished 2026-09-02 — restore to relist in footer.
+    // { label: "Maestro", href: "/maestro" },
     // TEMP: Skills page unpublished 2026-07-16 — restore to relist in footer.
     // { label: "Secure AI Skills", href: "/skills" },
     { label: "Downloads", href: "/download" },

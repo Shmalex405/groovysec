@@ -3,7 +3,7 @@ import { useEffect } from "react";
 const SITE_NAME = "Groovy Security";
 const DEFAULT_TITLE = "Groovy Security - Securing AI, Automating Security";
 const DEFAULT_DESCRIPTION =
-  "Groovy Security builds Whiteout AI (enterprise AI governance), Maestro (AI-driven penetration testing), and Secure AI Skills. Govern AI usage, prove compliance, and validate your defenses.";
+  "Groovy Security builds Whiteout AI (enterprise AI governance) and Secure AI Skills. Govern AI usage, prove compliance, and validate your defenses.";
 
 function setMeta(selector: string, attribute: string, content: string) {
   const el = document.head.querySelector<HTMLMetaElement>(selector);

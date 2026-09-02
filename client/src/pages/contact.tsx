@@ -31,7 +31,7 @@ export default function Contact() {
     {
       icon: Mail,
       title: "Sales & Demos",
-      description: "Talk to us about Whiteout AI, Maestro, or Secure AI Skills for your organization.",
+      description: "Talk to us about Whiteout AI or Secure AI Skills for your organization.",
       email: "alex@groovysec.com",
       color: "blue",
     },

@@ -15,10 +15,12 @@
  * Keep ROUTES in sync with client/src/App.tsx and each page's usePageMeta call.
  */
 import { execSync } from "node:child_process";
+// TEMP: Maestro unpublished 2026-09-02 — routes below are commented out, so the
+// generated release facts are no longer read here. Restore with the routes.
 // Route meta duplicates each page's usePageMeta copy, so the Maestro counts live
 // in two places by construction. Reading the generated facts means at least the
 // numbers cannot disagree — they were 21/213/232 here while the page said 24.
-import MAESTRO from "../client/src/lib/maestro-release.json" with { type: "json" };
+// import MAESTRO from "../client/src/lib/maestro-release.json" with { type: "json" };
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -37,7 +39,7 @@ const ROUTES = [
     path: "/",
     title: DEFAULT_TITLE,
     description:
-      "Groovy Security builds Whiteout AI (enterprise AI governance), Maestro (AI-driven penetration testing), and Secure AI Skills. Govern AI usage, prove compliance, and validate your defenses.",
+      "Groovy Security builds Whiteout AI (enterprise AI governance) and Secure AI Skills. Govern AI usage, prove compliance, and validate your defenses.",
   },
   {
     path: "/whiteout-ai",
@@ -45,18 +47,19 @@ const ROUTES = [
     description:
       "Intercept and govern every AI interaction across browser, desktop, IDE, infrastructure, and cloud. A full 27B-parameter LLM compliance engine with 60+ policies across 9 domains and greater than 99% benchmark accuracy.",
   },
-  {
-    path: "/maestro",
-    title: `Maestro — Free Autonomous Penetration Testing | ${SITE_NAME}`,
-    description:
-      `Maestro is a free, open-core autonomous penetration testing platform — ${MAESTRO.agents} specialized AI agents driving ${MAESTRO.tools} security tools through a ${MAESTRO.tests}-test assessment matrix, across web, API, cloud, Kubernetes, identity providers and AI/LLM systems. Every exploitable finding is re-proven under a deterministic oracle.`,
-  },
-  {
-    path: "/maestro/install",
-    title: `Install Maestro — Free Autonomous Penetration Testing | ${SITE_NAME}`,
-    description:
-      `Install Maestro ${MAESTRO.version} free on macOS, Windows or Linux. Signed builds, no account and no licence key — it runs entirely on your machine. Source is public and auditable.`,
-  },
+  // TEMP: Maestro unpublished 2026-09-02 — excluded from docs build + sitemap; restore to relist.
+  // {
+  //   path: "/maestro",
+  //   title: `Maestro — Free Autonomous Penetration Testing | ${SITE_NAME}`,
+  //   description:
+  //     `Maestro is a free, open-core autonomous penetration testing platform — ${MAESTRO.agents} specialized AI agents driving ${MAESTRO.tools} security tools through a ${MAESTRO.tests}-test assessment matrix, across web, API, cloud, Kubernetes, identity providers and AI/LLM systems. Every exploitable finding is re-proven under a deterministic oracle.`,
+  // },
+  // {
+  //   path: "/maestro/install",
+  //   title: `Install Maestro — Free Autonomous Penetration Testing | ${SITE_NAME}`,
+  //   description:
+  //     `Install Maestro ${MAESTRO.version} free on macOS, Windows or Linux. Signed builds, no account and no licence key — it runs entirely on your machine. Source is public and auditable.`,
+  // },
   // TEMP: Skills page unpublished 2026-07-16 — excluded from docs build + sitemap; restore to relist.
   // {
   //   path: "/skills",
@@ -98,7 +101,7 @@ const ROUTES = [
     path: "/demo",
     title: `Request a Demo | ${SITE_NAME}`,
     description:
-      "Schedule a personalized demo of Whiteout AI, Maestro, or Secure AI Skills — a 30-minute walkthrough tailored to your stack and compliance requirements.",
+      "Schedule a personalized demo of Whiteout AI or Secure AI Skills — a 30-minute walkthrough tailored to your stack and compliance requirements.",
   },
   {
     path: "/download",
@@ -110,7 +113,7 @@ const ROUTES = [
     path: "/partners",
     title: `Partners | ${SITE_NAME}`,
     description:
-      "Partner with Groovy Security — reseller, referral, and technology partnerships for Whiteout AI and Maestro.",
+      "Partner with Groovy Security — reseller, referral, and technology partnerships for Whiteout AI.",
   },
   {
     path: "/contact",
@@ -188,6 +191,8 @@ function blogRoutes() {
   if (!fs.existsSync(BLOG_DIR)) return [];
   const posts = fs
     .readdirSync(BLOG_DIR)
+    // A post is unpublished by renaming it to *.md.unpublished, which this filter
+    // and the import.meta.glob in client/src/lib/blog.ts both skip. See that file.
     .filter((f) => f.endsWith(".md"))
     .map((f) => {
       const fm = parseFrontmatter(fs.readFileSync(path.join(BLOG_DIR, f), "utf8"));

@@ -10,7 +10,7 @@ import { Quote } from "lucide-react";
 export default function Review() {
   usePageMeta(
     "Leave a Review",
-    "Share your experience with Groovy Security. Your review helps other security and compliance teams evaluate Whiteout AI, Maestro, and our Secure AI Skills."
+    "Share your experience with Groovy Security. Your review helps other security and compliance teams evaluate Whiteout AI and our Secure AI Skills."
   );
 
   // Unlisted collection page — keep it out of search results for crawlers

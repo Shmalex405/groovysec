@@ -63,7 +63,7 @@ const partnerTracks = [
   {
     name: "Reseller",
     description:
-      "Sell Whiteout AI and Maestro directly to your customers with full margin and deal protection.",
+      "Sell Whiteout AI directly to your customers with full margin and deal protection.",
     features: [
       "Tiered discount structure",
       "Deal registration & protection",
@@ -125,7 +125,7 @@ const colorMap: Record<string, { bg: string; border: string; text: string; icon:
 export default function Partners() {
   usePageMeta(
     "Partners",
-    "Partner with Groovy Security — reseller, referral, and technology partnerships for Whiteout AI and Maestro."
+    "Partner with Groovy Security — reseller, referral, and technology partnerships for Whiteout AI."
   );
   return (
     <PageTransition>

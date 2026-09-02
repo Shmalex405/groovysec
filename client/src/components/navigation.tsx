@@ -61,14 +61,15 @@ const MENUS: NavMenu[] = [
             mark: true,
             hover: "blue",
           },
-          {
-            label: "Maestro",
-            href: "/maestro",
-            description: "AI-Driven Penetration Testing",
-            mark: true,
-            imageClass: "grayscale",
-            hover: "orange",
-          },
+          // TEMP: Maestro unpublished 2026-09-02 — restore to relist in Products menu.
+          // {
+          //   label: "Maestro",
+          //   href: "/maestro",
+          //   description: "AI-Driven Penetration Testing",
+          //   mark: true,
+          //   imageClass: "grayscale",
+          //   hover: "orange",
+          // },
           // TEMP: Skills page unpublished 2026-07-16 — restore to relist in Products menu.
           // {
           //   label: "Secure AI Skills",
@@ -86,7 +87,7 @@ const MENUS: NavMenu[] = [
     key: "solutions",
     label: "Solutions",
     variant: "columns",
-    width: "w-[44rem]",
+    width: "w-[22rem]",
     columns: [
       {
         heading: "By Use Case · Whiteout AI",
@@ -113,27 +114,30 @@ const MENUS: NavMenu[] = [
           },
         ],
       },
-      {
-        heading: "Offense & Validation · Maestro",
-        links: [
-          {
-            label: "AI Penetration Testing",
-            href: "/maestro",
-            description: "Validate every finding by real exploitation",
-          },
-          {
-            label: "ASPM Findings Triage",
-            href: "/maestro",
-            description: "Confirm findings from your existing tools",
-          },
-          // TEMP: Skills page unpublished 2026-07-16 — restore to relist in Solutions menu.
-          // {
-          //   label: "Secure AI Skills",
-          //   href: "/skills",
-          //   description: "111 enterprise-grade security skills",
-          // },
-        ],
-      },
+      // TEMP: Maestro unpublished 2026-09-02 — restore this column (and widen the
+      // menu back to w-[44rem]) to relist. The Skills links inside it are held by
+      // their own 2026-07-16 unpublish.
+      // {
+      //   heading: "Offense & Validation · Maestro",
+      //   links: [
+      //     {
+      //       label: "AI Penetration Testing",
+      //       href: "/maestro",
+      //       description: "Validate every finding by real exploitation",
+      //     },
+      //     {
+      //       label: "ASPM Findings Triage",
+      //       href: "/maestro",
+      //       description: "Confirm findings from your existing tools",
+      //     },
+      //     // TEMP: Skills page unpublished 2026-07-16 — restore to relist in Solutions menu.
+      //     // {
+      //     //   label: "Secure AI Skills",
+      //     //   href: "/skills",
+      //     //   description: "111 enterprise-grade security skills",
+      //     // },
+      //   ],
+      // },
     ],
   },
   {
@@ -179,12 +183,15 @@ export function Navigation() {
   const [location] = useLocation();
   const navRef = useRef<HTMLDivElement>(null);
 
-  // Maestro is free to download, so "Request Demo" is the wrong ask on its pages —
-  // it routes someone who could just install it into a sales conversation instead.
-  // Whiteout still needs the demo, hence per-route rather than a global change.
-  const navCta = location.startsWith("/maestro")
-    ? { href: "/maestro/install", label: "Get Maestro Free" }
-    : { href: "/demo", label: "Request Demo" };
+  // TEMP: Maestro unpublished 2026-09-02 — with no /maestro routes mounted the
+  // per-route branch below is unreachable, so the CTA is the demo everywhere.
+  // Restore it alongside the routes: Maestro is free to download, so "Request
+  // Demo" is the wrong ask on its pages — it routes someone who could just
+  // install it into a sales conversation instead.
+  // const navCta = location.startsWith("/maestro")
+  //   ? { href: "/maestro/install", label: "Get Maestro Free" }
+  //   : { href: "/demo", label: "Request Demo" };
+  const navCta = { href: "/demo", label: "Request Demo" };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

@@ -45,17 +45,25 @@ export default function PrivacyPolicy() {
               Job title, where you choose to give it. This is optional and the form
               works without it.
             </li>
-            <li>
+            {/* TEMP: Maestro unpublished 2026-09-02 — the download form is off, so
+                this describes collection that no longer happens. Restore with the
+                form. See the note on the "Downloading Maestro" section below. */}
+            {/* <li>
               For Maestro downloads: the IP address the request came from, the
               version and platform you were offered, and the fact and time that you
               accepted these terms.
-            </li>
+            </li> */}
           </ul>
         </section>
 
+        {/* TEMP: Maestro unpublished 2026-09-02 — the /maestro/install form this
+            section documents is no longer reachable, so it is hidden with the rest.
+            NOTE: records collected while the form was live still exist; if that
+            retention needs to stay disclosed, restore a trimmed past-tense version
+            of this section rather than leaving it hidden. Flagged for Alex. */}
         {/* Specific because the download form asks people to accept this policy,
             so the policy has to actually describe what that form does. */}
-        <section>
+        {/* <section>
           <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
             Downloading Maestro
           </h2>
@@ -78,7 +86,7 @@ export default function PrivacyPolicy() {
             is the only point at which we learn anything, and it happens before you
             have run the tool at all.
           </p>
-        </section>
+        </section> */}
 
         {/* How do we collect your data */}
         <section>

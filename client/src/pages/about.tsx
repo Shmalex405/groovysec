@@ -170,9 +170,12 @@ export default function About() {
               <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-6 tracking-tight">
                 See What We're Building
               </h2>
+              {/* TEMP: Maestro unpublished 2026-09-02 — copy trimmed to one product.
+                  Restore the second button and the "and automated security testing"
+                  clause together, or the sentence promises a product with no link. */}
               <p className="text-lg text-[#51617A] mb-10 max-w-xl mx-auto">
-                Explore our products and see how Groovy Security is shaping the future
-                of AI governance and automated security testing.
+                Explore our platform and see how Groovy Security is shaping the future
+                of AI governance.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/whiteout-ai">
@@ -180,11 +183,11 @@ export default function About() {
                     Whiteout AI <ArrowRight className="w-4 h-4 ml-2" />
                   </GradientButton>
                 </Link>
-                <Link href="/maestro">
+                {/* <Link href="/maestro">
                   <GradientButton variant="orange">
                     Maestro <ArrowRight className="w-4 h-4 ml-2" />
                   </GradientButton>
-                </Link>
+                </Link> */}
               </div>
             </ScrollReveal>
           </div>

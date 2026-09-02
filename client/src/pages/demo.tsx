@@ -14,7 +14,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function Demo() {
   usePageMeta(
     "Request a Demo",
-    "Schedule a personalized demo of Whiteout AI, Maestro, or Secure AI Skills — a 30-minute walkthrough tailored to your stack and compliance requirements."
+    "Schedule a personalized demo of Whiteout AI or Secure AI Skills — a 30-minute walkthrough tailored to your stack and compliance requirements."
   );
 
   const steps = [
@@ -28,7 +28,7 @@ export default function Demo() {
       icon: MonitorPlay,
       title: "See It Live",
       description:
-        "A 30-minute walkthrough — watch Whiteout AI intercept real prompts, or see a Maestro assessment report end to end.",
+        "A 30-minute walkthrough — watch Whiteout AI intercept real prompts and follow a compliance decision end to end.",
     },
     {
       icon: Rocket,

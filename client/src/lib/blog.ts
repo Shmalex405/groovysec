@@ -21,6 +21,10 @@ export type BlogPost = {
   content: string; // markdown body
 };
 
+// TEMP: a post is unpublished by renaming it to *.md.unpublished — the glob below
+// and the readdir filter in scripts/build-docs.mjs both key off the .md extension,
+// so the rename drops it from the site and the sitemap together. Currently held:
+// why-maestro-is-free.md.unpublished (2026-09-02).
 const rawModules = import.meta.glob("../content/blog/*.md", {
   eager: true,
   query: "?raw",

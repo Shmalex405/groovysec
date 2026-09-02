@@ -57,7 +57,6 @@ export default function Security() {
       items: [
         "Per-organization isolated infrastructure stacks",
         "Self-hosted option runs in your own cloud account",
-        "Maestro findings stay in the customer's data plane",
         "Private networking for inference workloads",
       ],
     },
@@ -77,7 +76,6 @@ export default function Security() {
       items: [
         "Critical Secure AI Skills patches within 48 hours",
         "Continuous dependency and supply-chain scanning",
-        "Our own products are tested with Maestro",
         "Coordinated disclosure welcomed",
       ],
     },
@@ -111,8 +109,8 @@ export default function Security() {
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto leading-relaxed">
                   We're a security company — so we hold our own products to the
                   standard we'd demand from any vendor. Here's how Groovy
-                  Security protects your data across Whiteout AI, Maestro, and
-                  Secure AI Skills.
+                  Security protects your data across Whiteout AI and Secure AI
+                  Skills.
                 </p>
               </HeroLine>
             </HeroTextReveal>

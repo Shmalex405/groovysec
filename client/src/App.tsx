@@ -15,9 +15,10 @@ function ScrollToTop() {
 }
 import WhiteoutAI from "@/pages/whiteout-ai";
 import SolutionPage from "@/pages/solutions/solution-page";
-import Maestro from "@/pages/maestro";
 import About from "@/pages/about";
-import MaestroInstall from "@/pages/maestro/install";
+// TEMP: Maestro unpublished 2026-09-02 — page files kept; re-enable imports + routes below to relist.
+// import Maestro from "@/pages/maestro";
+// import MaestroInstall from "@/pages/maestro/install";
 import WhiteoutGovernment from "@/pages/whiteout-ai/government";
 import WhiteoutAcademicIntegrity from "@/pages/whiteout-ai/academic-integrity";
 import WhiteoutSecurityWhitepaper from "@/pages/whiteout-ai/security-whitepaper";
@@ -48,7 +49,8 @@ function Router() {
         <Route path="/review" component={Review} />
         <Route path="/download" component={Download} />
         <Route path="/whiteout-ai" component={WhiteoutAI} />
-        <Route path="/maestro" component={Maestro} />
+        {/* TEMP: Maestro unpublished 2026-09-02 — re-enable to relist. */}
+        {/* <Route path="/maestro" component={Maestro} /> */}
         {/* TEMP: Skills page unpublished 2026-07-16 — re-enable to relist. */}
         {/* <Route path="/skills" component={Skills} /> */}
         {/* <Route path="/skills/success" component={SkillsSuccess} /> */}
@@ -63,7 +65,7 @@ function Router() {
           {(params) => <BlogPost slug={params.slug} />}
         </Route>
         <Route path="/security" component={Security} />
-        <Route path="/maestro/install" component={MaestroInstall} />
+        {/* <Route path="/maestro/install" component={MaestroInstall} /> */}
         <Route path="/whiteout-ai/government" component={WhiteoutGovernment} />
         <Route path="/whiteout-ai/academic-integrity" component={WhiteoutAcademicIntegrity} />
         <Route path="/whiteout-ai/security-whitepaper" component={WhiteoutSecurityWhitepaper} />
