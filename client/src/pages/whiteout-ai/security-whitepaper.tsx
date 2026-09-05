@@ -41,15 +41,15 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function SecurityWhitepaper() {
   usePageMeta(
     "Whiteout AI Security Whitepaper",
-    "How Whiteout AI enables safe enterprise adoption of generative AI — 60+ policies across 9 compliance domains, 99.59% validated accuracy on the public compliance benchmark, prompt-injection defense for agentic AI, MCP governance, and security-first architecture."
+    "How Whiteout AI enables safe enterprise adoption of generative AI — 54 policies across 8 compliance domains, 96.8% corrected accuracy and a 99.9% everyday-prompt pass rate on the public 100,000-prompt benchmark, a 20B-parameter US-developed LLM run locally, prompt-injection defense for agentic AI, MCP governance, and security-first architecture."
   );
   const demoHref = "/demo";
 
   const stats = [
-    { value: "60+", label: "Built-in Policies" },
+    { value: "54", label: "Built-in Policies" },
     { value: "40+", label: "AI Platforms & Providers" },
-    { value: "9", label: "Compliance Domains" },
-    { value: "99.59%", label: "Validated Accuracy" },
+    { value: "8", label: "Compliance Domains" },
+    { value: "96.8%", label: "Corrected Accuracy" },
   ];
 
   const challenges = [
@@ -419,7 +419,7 @@ const useCases = [
                       </GradientButton>
                     </Link>
                     <a
-                      href="/WHITEOUT_AI_WHITEPAPER.pdf?v=4.1.2"
+                      href="/WHITEOUT_AI_WHITEPAPER.pdf?v=4.3"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -432,7 +432,7 @@ const useCases = [
 
                   <div className="text-sm text-[#51617A] flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    Whiteout AI by Groovy Security — Version 4.1 | July 2026
+                    Whiteout AI by Groovy Security — Version 4.2 | August 2026
                   </div>
                 </ScrollReveal>
               </div>
@@ -699,9 +699,9 @@ const useCases = [
 
                 <div className="space-y-3">
                   {[
-                    "60+ built-in policies across 9 compliance domains",
-                    "99.59% validated accuracy on the public 15,915-prompt benchmark \u2014 re-validated on the production engine with every flagged miss expert-adjudicated",
-                    "Near-zero false positives: 6 across 14,799 prompts, so legitimate work is never interrupted",
+                    "54 built-in policies across 8 compliance domains",
+                    "96.8% corrected accuracy on the public 100,000-prompt benchmark \u2014 every residual miss adjudicated against the deployed rule text by independent readers",
+                    "99.9% pass rate on everyday work prompts: 40 false blocks in 36,416, so legitimate work is never interrupted",
                     "Request custom policies tailored to your organization\u2019s specific rules",
                     "Group-based enforcement throughout — policies, custom rules, override rights, and connector exposure all scoped per group for full customizable control",
                     "Supports both cloud and self-hosted LLM evaluation",
