@@ -34,7 +34,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function Government() {
   usePageMeta(
     "Whiteout AI for Government & Public Sector",
-    "AI governance built for the public sector — 60+ pre-built policies across 9 domains, greater than 99% benchmark accuracy, SSO/MDM/SIEM integration, and audit-ready proof of every AI control."
+    "AI governance built for the public sector — 50+ pre-built policies across 8 domains, 96.8% corrected accuracy on a 100,000-prompt public benchmark with a 99.9% pass rate on everyday prompts, SSO/MDM/SIEM integration, and audit-ready proof of every AI control."
   );
   const demoHref = "/demo";
 
@@ -120,7 +120,7 @@ export default function Government() {
       icon: Zap,
       title: "Contextual Intelligence",
       description:
-        'LLM-based evaluation understands context, not just keywords. It distinguishes between "aggregate hospital statistics" and actual patient data\u2014greater than 99% accuracy across a 15,915-prompt public benchmark, calibrated to allow legitimate work through.',
+        'LLM-based evaluation understands context, not just keywords. It distinguishes between "aggregate hospital statistics" and actual patient data\u201496.8% corrected accuracy across a 100,000-prompt public benchmark, with a 99.9% pass rate on everyday prompts so legitimate work is never interrupted',
     },
     {
       icon: Server,
@@ -344,7 +344,7 @@ export default function Government() {
                 <div className="mt-6 text-center">
                   <div className="text-[#2E7D32] font-semibold text-sm flex items-center justify-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    Greater Than 99% Accuracy on a 15,915-Prompt Public Benchmark
+                    96.8% Corrected Accuracy on a 100,000-Prompt Public Benchmark
                   </div>
                 </div>
               </div>

@@ -18,6 +18,7 @@ import {
   ExternalLink,
   ArrowRight,
   BookOpen,
+  FileText,
 } from "lucide-react";
 import { usePageMeta } from "@/lib/use-page-meta";
 
@@ -33,20 +34,33 @@ type Resource = {
 export default function Resources() {
   usePageMeta(
     "News & Research",
-    "News and research from Groovy Security — NVIDIA Inception membership, the public 15,915-prompt Whiteout AI compliance benchmark, and our audit of community AI skill security."
+    "News and research from Groovy Security — NVIDIA Inception membership, the public 100,000-prompt Whiteout AI compliance benchmark, and our audit of community AI skill security."
   );
 
   const resources: Resource[] = [
+    {
+      icon: FileText,
+      tag: "TECHNICAL REPORT",
+      tagColor: "bg-[#1A5FB4]/10 text-[#1A5FB4] border-[#1A5FB4]/25",
+      title: "Whiteout AI Compliance Benchmark — Technical Report TR-2026-09",
+      description:
+        "The reference for what an AI compliance engine should allow and block: 100,000 prompts across PII, PHI, GDPR, Legal, Code, Confidential, Security, and Finance, each labelled against the written policy that governs it. The report documents the engine as deployed, the corrected-accuracy protocol in which every residual miss is adjudicated against the rule text, per-band and per-category results, throughput and latency, fail-closed validation, and the Admin Autonomy Property. 96.8% corrected accuracy, 99.9% pass rate on everyday prompts, sub-two-second verdicts.",
+      link: {
+        label: "Read the technical report (PDF)",
+        href: "/Whiteout_AI_Compliance_Benchmark_TR-2026-09.pdf",
+        external: true,
+      },
+    },
     {
       icon: BarChart3,
       tag: "RESEARCH",
       tagColor: "bg-[#1A5FB4]/10 text-[#1A5FB4] border-[#1A5FB4]/25",
       title: "Whiteout AI Compliance Benchmark — Published Openly",
       description:
-        "We published the full 15,915-prompt benchmark used to evaluate Whiteout AI's compliance engine — spanning all nine policy domains, from short prompts to long-form documents, with safe, violation, and edge-case scenarios. The engine scores greater than 99% overall. The dataset is open so customers and researchers can verify the results themselves.",
+        "We published the full 100,000-prompt benchmark used to evaluate Whiteout AI's compliance engine — six bands across all eight policy domains, from one-line prompts to long-form documents, with safe, violation, edge-case, adversarial, and multilingual scenarios. The engine scores 96.8% corrected accuracy with a 99.9% pass rate on everyday prompts, and every miss is adjudicated against the deployed rule text.",
       link: {
         label: "Explore the dataset on Hugging Face",
-        href: "https://huggingface.co/datasets/ShmalexFlow/whiteout-compliance-benchmark",
+        href: "https://huggingface.co/datasets/ShmalexFlow/enterprise-ai-prompt-compliance-100k",
         external: true,
       },
     },
