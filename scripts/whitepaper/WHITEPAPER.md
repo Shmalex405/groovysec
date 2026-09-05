@@ -6,14 +6,15 @@ Generative AI has become the fastest-adopted workplace technology in history —
 
 **Whiteout AI**, by Groovy Security, is an enterprise AI governance and security platform that closes this gap. It intercepts and evaluates every AI interaction — prompts, file uploads, pastes, tool calls, and connector reads — against your organization's policies **before** data reaches an external AI service, across every surface where employees touch AI: the browser, native desktop apps, IDEs and coding agents, cloud infrastructure, mobile devices, and the MCP connectors that wire AI assistants into business systems.
 
-The platform's verdicts come from a dedicated semantic compliance engine — a full 27-billion-parameter LLM, self-hosted on your infrastructure — governed by 60 expert-authored policies across 9 regulated data classes, every one of them enabled **group by group**, so each department gets exactly the guardrails its work requires. On the public 15,915-prompt Whiteout AI Compliance Benchmark, the engine's production configuration achieves **99.59% validated accuracy**, with near-zero false positives and a complete, exportable audit trail of every decision.
+The platform's verdicts come from a dedicated semantic compliance engine — a full 20-billion-parameter, US-developed LLM, self-hosted inside your deployment boundary and never a third-party model provider — governed by 54 expert-authored policies across 8 regulated data classes, every one of them enabled **group by group**, so each department gets exactly the guardrails its work requires. On the public 100,000-prompt Whiteout AI Compliance Benchmark, the deployed engine achieves **96.8% corrected accuracy** with a **99.9% pass rate on everyday prompts**, sub-two-second median verdicts, and a complete, exportable audit trail of every decision.
 
 ### Platform at a glance
 
 | | |
 |---|---|
-| **60** | Expert-authored policies across **9** regulated data classes |
-| **99.59%** | Validated compliance-engine accuracy (99.00% measured gate) |
+| **54** | Expert-authored policies across **8** regulated data classes |
+| **96.8%** | Corrected compliance-engine accuracy on the public 100,000-prompt benchmark (96.53% raw) |
+| **99.9%** | Pass rate on everyday work prompts — 40 false blocks in 36,416 |
 | **40+** | AI assistants and model providers governed |
 | **7** | Enforcement surfaces — browser, desktop, IDE, infrastructure, SDK, MCP connector, mobile |
 | **23** | Governed data-source integrations behind one AI connector |
@@ -59,7 +60,7 @@ Lightweight enforcement runs at every endpoint for instant local checks — prov
 
 ### Data residency by design
 
-The authoritative judge is a **self-hosted model served on your own infrastructure** (vLLM, OpenAI-compatible wire format, schema-constrained JSON output, temperature 0 for reproducible verdicts). Customers in healthcare, finance, legal, and government can check whether content is safe to send to external AI **without sending that content to external AI**. A vendor-LLM fallback exists for organizations that opt in — it is never required.
+The authoritative judge is a **self-hosted model served on your own infrastructure** (an OpenAI-compatible inference server, schema-constrained JSON output, temperature 0 for reproducible verdicts). Customers in healthcare, finance, legal, and government can check whether content is safe to send to external AI **without sending that content to external AI**. A vendor-LLM fallback exists for organizations that opt in — it is never required.
 
 ### Direction-aware policy
 
@@ -156,41 +157,57 @@ Most governance vendors publish adjectives. Whiteout AI publishes a benchmark.
 
 ### The public benchmark
 
-The **Whiteout AI Compliance Benchmark** is a 15,915-prompt evaluation corpus spanning all nine policy domains — safe prompts, genuine violations, and deliberately adversarial edge cases (keyword-in-safe-context traps, test-card numbers, sanitized wrappers), from one-line prompts to 12,000-character documents. The dataset is **published on Hugging Face** (`ShmalexFlow/whiteout-compliance-benchmark`) so customers and researchers can verify results themselves.
+The **Whiteout AI Compliance Benchmark** is a 100,000-prompt evaluation corpus across all eight policy domains — PII, PHI, GDPR, Legal, Code, Confidential, Security, and Finance — in six bands: **core** violations, safe prompts, and edge cases (36,095); **benign** everyday work prompts that must pass (36,416); **mixed** requests that pair a real task with sensitive or masked content (9,920); **multilingual** prompts across six languages (7,548); **adversarial** prompts using thirteen obfuscation techniques (6,673); and **long** documents of 1,000 to 7,800 characters with buried and split payloads (3,348). Every prompt carries a ground-truth verdict and the policy facet it exercises. The dataset is **published on Hugging Face** ([`ShmalexFlow/enterprise-ai-prompt-compliance-100k`](https://huggingface.co/datasets/ShmalexFlow/enterprise-ai-prompt-compliance-100k)) under Apache 2.0, so customers and researchers can verify every number below themselves.
 
-On initial publication (April 2026), the engine scored **99.19%** across the full corpus — including **99.91% on long-form documents**, demonstrating that accuracy is length-invariant.
+### How the number is scored — and why we report the stricter one
 
-### Production re-validation — and the number that survived scrutiny
+Raw accuracy is easy to compute and easy to inflate. Whiteout AI publishes **corrected accuracy**: after a run, every residual miss is checked against the written text of the deployed policy that governs it. If the rule's own wording disagrees with the corpus label, the label is wrong and the score is adjusted; if the rule agrees with the label, the engine is wrong and nothing is adjusted. Crediting an engine defect as a bad label would inflate the headline by exactly the work still owed, so we do not. Eight independent readers adjudicated a random sample of misses under that standard; the correction is reported with a 95% confidence interval.
 
-In June 2026 we re-ran the benchmark against the **production engine configuration** — the same self-hosted vLLM stack that serves customer traffic — sweeping **14,799 expert-authored prompts across all 9 data classes**, and then did what benchmark tables usually skip: we manually adjudicated **every single flagged miss**.
-
-| Validated result | Value |
+| Result — deployed engine, September 2026 | Value |
 |---|---|
-| **Validated accuracy** | **99.59%** |
-| GDPR data class | **100.00%** — zero misses, identical measured and validated |
-| Long-form documents (1,000–12,000 chars) | **99.91%** |
-| False positives | **6** across 14,799 prompts — zero outside deliberately adversarial PII edge-case traps |
-| Hallucinated blocks on admin-disabled rules | **0** |
-
-The adjudication reviewed all 154 flagged misses. **102 of them proved not to be data-leakage violations at all** — they are cases where the engine's restraint is the correct behavior: an employee sharing *their own code* for review flagged as "IP leakage," a public IP address in a legitimate firewall task, an asset serial number in routine IT inventory, academic-integrity intent questions that contain no protected data. Crediting only those 102 (and conservatively retaining 52 as genuine misses — named emails, patient names, M&A material, credentials), validated accuracy is **99.59%**. The engine is above 99% no matter how the gray zone is scored.
+| **Corrected accuracy** | **96.78%** (95% CI 96.65–96.95) |
+| Raw accuracy | 96.53% on 99,959 scored prompts |
+| Violations blocked (recall) | 96.43% |
+| Pass-expected prompts allowed (specificity) | 96.59% |
+| **Everyday prompts allowed** | **99.89%** — 40 false blocks in 36,416 |
+| Prompts that fell through to fail-open | **0** of 100,000 |
 
 ### The per-class pattern
 
-The validated view is consistent across all nine data classes. On **canonical regulated-data fingerprints** — SSNs, IBANs, medical record numbers, password hashes, docket numbers — the engine rarely slips: GDPR scored a perfect 100%, and Legal, PHI, and Finance all validated at or above 99.5%. The classes that measured lower before adjudication were precisely the **judgment-boundary policies** (is an employee's own source code a secret? is an asset serial personal data? is exam-help misconduct a *data* leak?) — and those are exactly the misses the expert review credited as correct restraint, because whether they are in scope is properly a per-organization, per-group configuration decision, not an engine limitation.
+| Data class | Prompts | Accuracy |
+|---|---|---|
+| PHI | 15,031 | 97.94% |
+| Security | 11,322 | 97.77% |
+| Finance | 9,256 | 97.23% |
+| Legal | 10,978 | 96.73% |
+| Code | 12,153 | 96.64% |
+| GDPR | 11,909 | 96.60% |
+| PII | 16,701 | 96.43% |
+| Confidential | 12,609 | 93.01% |
 
-### Why near-zero false positives is the headline
+On **canonical regulated-data fingerprints** — card numbers, SSNs, IBANs, medical record numbers, credentials — the engine rarely slips. The residual error mass is **judgment-shaped**: violations of meaning rather than of token (roadmaps, board minutes, incident narratives) and over-caution on masked or placeholder values. Those are documented, sized, and on the fine-tuning roadmap in the technical report; none of them are label errors we have credited ourselves for.
 
-A governance tool that cries wolf gets disabled. Six false positives across 14,799 prompts — all inside adversarial PII traps designed to bait over-blocking — means Whiteout essentially **never interrupts legitimate work**. That property, more than any accuracy decimal, is what makes enterprise-wide enforcement politically deployable.
+### Why the everyday pass rate is the headline
+
+A governance tool that cries wolf gets disabled. Forty false blocks across 36,416 everyday work prompts — a 99.89% pass rate on the traffic that actually fills an employee's day — means Whiteout essentially **never interrupts legitimate work**. That property, more than any accuracy decimal, is what makes enterprise-wide enforcement politically deployable.
 
 ### Speed
 
+Speed is measured on the same run as accuracy, not in a separate demo.
+
 | Path | Median | What the user experiences |
 |---|---|---|
-| Approved / clean pass-through | ~2.2 s | Prompt clears; no interruption |
-| Blocked — verdict + sanitized rewrite (one call) | ~3–5 s | Block shown with the safe rewrite ready |
-| Repeat / cached verdict | ~0.03 s | Instant |
+| Approved / clean pass-through | ~1.1 s | Prompt clears; no interruption |
+| Blocked — verdict, cited rules, and sanitized rewrite | ~2.7 s | Block shown with the safe rewrite ready |
+| Sustained throughput | 9.6 prompts/s on two engines | 100,000 prompts in under three hours |
 
----
+Verdicts are produced on a forced answer channel with schema-constrained decoding, so the model never spends time reasoning out loud; only about 3% of prompts, where a deterministic pre-analysis disagrees with the first verdict, take a second, fuller look.
+
+### Fail-closed by design
+
+A verdict the engine cannot finish or cannot express is **held**, never allowed: the user sees a "compliance incomplete" reason instead of a silent pass. The 100,000-prompt run surfaced one path that violated this rule, and it was closed and re-verified: 0 of 100,000 prompts now fall through to fail-open. Administrator configuration is enforced mechanically for identifier-class policies — a policy an administrator switches off contributes nothing to a verdict — and the full validation, including its current limits, is in the technical report.
+
+The complete methodology, per-band and per-category tables, latency distributions, error analysis, and roadmap are in the **[Whiteout AI Compliance Benchmark — Technical Report TR-2026-09](https://groovysec.com/Whiteout_AI_Compliance_Benchmark_TR-2026-09.pdf)**.
 
 ## Coverage: Everywhere Employees Touch AI
 
@@ -212,7 +229,7 @@ A Manifest V3 extension for **Chrome, Edge, Firefox, and Safari** from a single 
 
 A native endpoint guard with feature parity across **Windows** and **macOS**, governing the desktop AI apps that never touch a browser. It is also the device's identity broker and the owner of the prompt-injection defender hooks.
 
-- **Watched apps:** ChatGPT Desktop · Claude Desktop · Claude for Chrome · OpenAI Codex · Microsoft Copilot · Microsoft 365 Copilot · Office Copilot in Excel/Word/PowerPoint/Outlook/Teams · Perplexity Desktop *(macOS)* · Gemini Desktop
+- **Watched apps:** ChatGPT Desktop · Claude Desktop · Claude for Chrome · OpenAI Codex · Microsoft Copilot · Microsoft 365 Copilot · Office Copilot in Excel/Word/PowerPoint/Outlook/Teams · Perplexity Desktop · Gemini Desktop
 - **Pre-send prompt gate** — a system-level keyboard tap holds Enter in a watched app, extracts the composer text via the OS accessibility layer, scans it, and re-synthesizes the send only if allowed.
 - **Large-paste DLP** — clipboard text over the attachment-conversion threshold is scanned *before* paste, closing the "PASTED as attachment" bypass.
 - **File-drop overlay & guarded attach** — dropped files are scanned before they attach, every attach-menu path routes through a guarded picker, and after a pass the attachment chip is verified in the app's accessibility tree — because field testing proved synthetic attaches can silently fail.
@@ -224,9 +241,9 @@ A native endpoint guard with feature parity across **Windows** and **macOS**, go
 
 Coverage across the **VS Code family** (VS Code, Cursor, Windsurf) and the **JetBrains** IDEs (IntelliJ, PyCharm, WebStorm, GoLand, DataGrip, and more), published on both marketplaces.
 
-- **Assistants covered:** Claude Code · GitHub Copilot · OpenAI Codex · Cursor built-in AI · Windsurf · Gemini CLI · Aider · terminal AI CLIs
-- **Intercept** — a `@whiteout` chat participant provides an opt-in pre-send policy gate for Copilot Chat and Codex; transparent pre-send enforcement for Claude Code and Cursor is delivered by managed defender hooks (next section).
-- **Audit** — post-hoc transcript monitoring for Claude Code, Codex, Cursor, Gemini CLI, Aider, and terminal AI usage, from the artifacts these tools already write.
+- **Assistants covered:** Claude Code · GitHub Copilot · OpenAI Codex · Cursor built-in AI · Windsurf · VS Code built-in Chat (native agent mode) · Gemini CLI · Aider · terminal AI CLIs
+- **Intercept** — a `@whiteout` chat participant provides an opt-in pre-send policy gate for Copilot Chat and Codex; transparent pre-send enforcement for Claude Code, Cursor, and OpenAI Codex is delivered by managed defender hooks (next section).
+- **Audit** — post-hoc transcript monitoring for Claude Code, Codex, Cursor, VS Code's built-in chat/agent sessions, Gemini CLI, Aider, and terminal AI usage, from the artifacts these tools already write — including injection scanning of the AI instruction files agent modes generate and auto-inject (`AGENTS.md`, `.github/copilot-instructions.md`).
 - **Detect** — enumerates which AI tools and extensions are present on each developer machine, feeding the organization-wide AI footprint.
 - **Defend** — real-time prompt-injection scanning of AI tool outputs, plus installation and healing of the defender hooks when Desktop Guard isn't present.
 - **Honest scoping:** the JetBrains plugin is post-hoc audit today (transcript monitoring, status, offline queue); pre-send enforcement there is on the roadmap — stated plainly rather than implied.
@@ -258,7 +275,7 @@ AI governance for managed **iOS and Android** — **audit-only by design**, beca
 
 Agentic coding tools execute shell commands, edit files, and read whatever their tools return. That makes **prompt injection** — malicious instructions smuggled into tool output, web content, or repository files — a first-class enterprise threat: an injected instruction can turn a developer's own AI agent into an exfiltration channel.
 
-Whiteout AI ships a layered defense, centrally installed and tamper-protected by Desktop Guard (or by the IDE extension when Desktop Guard isn't present).
+Whiteout AI ships a layered defense, centrally installed and tamper-protected by Desktop Guard (or by the IDE extension when Desktop Guard isn't present). The same managed hooks run under **Claude Code, Cursor, and OpenAI Codex** — one pattern library, one enforcement contract, every governed coding agent.
 
 ### Three interception points
 
@@ -290,6 +307,8 @@ AI assistants are most useful when they can touch business systems — and most 
 ### Blocking the ungoverned paths
 
 Vendor-native connectors (ChatGPT's and Claude's own integrations) and their OAuth grants are **blocked at the endpoint** for disallowed sources — the browser extension disables connector rows and stops grants before a token is minted; Desktop Guard enforces the same posture in native apps. Employees aren't left to decide which AI may read the corporate drive.
+
+Blocking new grants isn't enough on day one: Whiteout also **discovers the connector grants that already exist** — including which were authorized by personal rather than corporate accounts — pins vendor-verified OAuth client identities, and gives administrators **central revocation** that takes effect across every device, with resolved findings tracked to closure.
 
 ### The governed alternative: Whiteout as the AI connector
 
@@ -362,7 +381,7 @@ You cannot govern what you cannot see. Whiteout maintains a live, organization-w
 - **Open-world detection** — beyond fixed signatures: local model servers are found by probing loopback listeners on any port, unknown AI SDKs by package-keyword scanning — surfacing genuinely new AI the day it appears, not the day a catalog updates.
 - **Coverage envelope** — an honest panel reporting how much of the estate discovery can currently see, so "no findings" is never confused with "no visibility."
 - **Governed-vs-shadow split** — ungoverned tools become severity-scored findings with a review workflow and SOC deep-links; an admin can promote a discovered unknown into the catalog once and have it recognized fleet-wide with no client redeploy.
-- **Usage, people & spend views** — AI Activity (which tools, by whom, on what surface), People (per-user usage, data-class exposure, shadow-AI use, and a transparent risk score), and Token Usage (organizational consumption and estimated spend by model) — all from the same audit stores, so the numbers never disagree.
+- **Usage, people & spend views** — AI Activity (which tools, by whom, on what surface), People (per-user usage, data-class exposure, shadow-AI use, and a transparent risk score), Token Usage (organizational consumption and estimated spend by model), and an **AI Connector dashboard** (who pulls what corporate data through the governed connector, allowed vs. blocked, by integration and calling client) — all from the same audit stores, so the numbers never disagree.
 
 ---
 
@@ -373,6 +392,7 @@ You cannot govern what you cannot see. Whiteout maintains a live, organization-w
 - **Hardened software supply chain** — desktop and extension clients update over signed channels; the Windows updater double-verifies SHA-512 **and** Authenticode pinned to the Groovy Security signing identity, re-checked at install time — a compromised CDN cannot push a malicious build.
 - **Enterprise distribution** — VS Code & JetBrains marketplaces, notarized macOS DMG, per-user Windows installers (NSIS and MSI), Docker/Helm for the agent, Python/Node SDKs, a Lambda layer, and MDM-driven mass deployment.
 - **Abuse protection** — token-bucket rate limiting on sensitive endpoints and streaming-concurrency controls protect the engine under load.
+- **Supportability without data access** — self-hosted deployments stay supportable without weakening the residency promise: application logs are **content-free by contract** (a CI gate verifies no prompt or document content can reach them), a customer-run bundle collects diagnostics for support, and remote access exists only as a **dormant, customer-controlled break-glass** the vendor cannot open alone.
 - **Fail-safe by design** — distinct visual states for approved, blocked, and degraded; graceful degradation with user notification; and the explicit, per-organization fail-open/fail-closed choice described above.
 
 ---
@@ -404,7 +424,7 @@ Whiteout AI's policy library maps to the frameworks enterprises are audited agai
 
 Enterprises do not get to choose whether employees use AI. They choose whether that use is visible, governed, and defensible — or invisible, ungoverned, and discoverable only in the breach report.
 
-Whiteout AI makes the governed path the productive path: real-time semantic policy enforcement with validated 99.59% accuracy and near-zero false positives; coverage across the browser, desktop, IDE, infrastructure, mobile, and the AI connectors in between; prompt-injection defense for the agentic tools now writing your code; a governed MCP gateway for the data your assistants read; and an audit trail built to satisfy the regulator who asks *prove it*.
+Whiteout AI makes the governed path the productive path: real-time semantic policy enforcement with 96.8% corrected accuracy on a public 100,000-prompt benchmark and a 99.9% pass rate on everyday prompts; coverage across the browser, desktop, IDE, infrastructure, mobile, and the AI connectors in between; prompt-injection defense for the agentic tools now writing your code; a governed MCP gateway for the data your assistants read; and an audit trail built to satisfy the regulator who asks *prove it*.
 
 **See it on your own traffic.** Deploy in Audit-Only mode and discover your organization's real AI footprint in days — then turn on enforcement policy by policy.
 
@@ -412,4 +432,4 @@ Whiteout AI makes the governed path the productive path: real-time semantic poli
 
 ---
 
-*Whiteout AI is built by **Groovy Security**. The compliance benchmark dataset is public at [huggingface.co/datasets/ShmalexFlow/whiteout-compliance-benchmark](https://huggingface.co/datasets/ShmalexFlow/whiteout-compliance-benchmark). Benchmark figures: initial publication April 2026 (99.19%, 15,915 prompts); production re-validation June 2026 (99.00% measured / 99.59% validated after expert adjudication of all flagged misses, 14,799 prompts, 9 data classes, self-hosted production engine). Platform capabilities described reflect the shipped product as of July 2026; roadmap items are identified as such. © 2026 Groovy Security. All product names and trademarks are the property of their respective owners.*
+*Whiteout AI is built by **Groovy Security**. The compliance benchmark dataset is public at [huggingface.co/datasets/ShmalexFlow/enterprise-ai-prompt-compliance-100k](https://huggingface.co/datasets/ShmalexFlow/enterprise-ai-prompt-compliance-100k) under Apache 2.0, and the accompanying technical report (TR-2026-09) is at [groovysec.com](https://groovysec.com/Whiteout_AI_Compliance_Benchmark_TR-2026-09.pdf). Benchmark figures: 100,000 prompts, deployed engine, September 2026 — 96.53% raw, 96.78% corrected after adjudication of residual misses against the deployed rule text. Platform capabilities described reflect the shipped product as of September 2026; roadmap items are identified as such. © 2026 Groovy Security. All product names and trademarks are the property of their respective owners.*
