@@ -39,7 +39,7 @@ For the full walkthrough — prerequisites, IAM setup, provisioning, and update 
 
 ### 3. LAN-Hosted (Air-Gapped On-Premises)
 
-For regulated environments that cannot use cloud infrastructure at all, Whiteout AI can be deployed entirely on your premises — including fully air-gapped networks with no cloud dependency. Policy evaluation, including the platform's dedicated 27B-parameter compliance model, runs locally on your hardware.
+For regulated environments that cannot use cloud infrastructure at all, Whiteout AI can be deployed entirely on your premises — including fully air-gapped networks with no cloud dependency. Policy evaluation, including the platform's dedicated 20-billion-parameter, US-developed compliance model, runs locally on your hardware.
 
 LAN-Hosted deployments are scoped individually because hardware, network, and update logistics vary by environment. If you operate in a classified, air-gapped, or otherwise disconnected environment, [contact us](https://groovysec.com/demo) to discuss requirements and scoping.
 

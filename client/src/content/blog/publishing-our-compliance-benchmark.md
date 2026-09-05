@@ -9,6 +9,9 @@ tags: [AI Governance, Compliance, Research]
 category: Research
 ---
 
+> **Update, September 2026:** this post describes the original 15,915-prompt release. It has been superseded by the [100,000-prompt benchmark](/blog/the-100k-compliance-benchmark), which is now the benchmark behind Whiteout AI's published accuracy. The dataset link below points to the new release.
+
+
 Every AI data-protection vendor publishes an accuracy number. Almost none of them publish the test.
 
 That asymmetry is a problem. An accuracy figure with no dataset behind it is unfalsifiable — you can't reproduce it, you can't probe its weak spots, and you can't tell whether it was measured on a hand-picked set of easy cases. For a control that sits between your workforce and every AI tool they touch, "trust us" is not good enough.

@@ -22,7 +22,7 @@ import {
 } from "@/components/motion";
 
 const BENCHMARK_URL =
-  "https://huggingface.co/datasets/ShmalexFlow/whiteout-compliance-benchmark";
+  "https://huggingface.co/datasets/ShmalexFlow/enterprise-ai-prompt-compliance-100k";
 
 /* ── Full-LLM compliance engine ─────────────────────────────────────── */
 
@@ -44,7 +44,7 @@ export function FullLlmEngine() {
       icon: BarChart3,
       title: "Benchmarked in Public",
       description:
-        "Greater than 99% accuracy across a 15,915-prompt benchmark spanning all nine policy domains — and calibrated to flag genuine violations without interrupting legitimate work. Published openly so you can verify it yourself, not take our word for it.",
+        "96.8% corrected accuracy across a 100,000-prompt benchmark spanning all eight policy domains, with a 99.9% pass rate on everyday work prompts — calibrated to flag genuine violations without interrupting legitimate work. Published openly, prompts and labels, so you can verify it yourself rather than take our word for it.",
     },
   ];
 
@@ -54,15 +54,17 @@ export function FullLlmEngine() {
         <ScrollReveal>
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
-              A Full 27B-Parameter LLM.
+              A Full 20B-Parameter LLM, Run Locally.
               <span className="block text-[#1A5FB4]">Not a Lightweight Classifier.</span>
             </h2>
             <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
               Most AI data-protection tools rely on small classifier models or
               pattern matching that miss context. Whiteout AI evaluates every
-              prompt with a full 27-billion-parameter LLM — accurate enough to
-              catch real violations on a public benchmark, calibrated enough to
-              wave legitimate work straight through.
+              prompt with a full 20-billion-parameter, US-developed LLM running
+              inside your deployment boundary — never a third-party model
+              provider — accurate enough to catch real violations on a public
+              100,000-prompt benchmark, calibrated enough to wave legitimate
+              work straight through.
             </p>
           </div>
         </ScrollReveal>
@@ -89,9 +91,9 @@ export function FullLlmEngine() {
           <div className="bg-white rounded-xl border border-[#0F1B2D]/10 shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-8">
             <div className="grid sm:grid-cols-3 gap-8 text-center mb-6">
               {[
-                { value: ">99%", label: "Overall Accuracy" },
-                { value: "15,915", label: "Benchmark Prompts" },
-                { value: "9", label: "Policy Domains Covered" },
+                { value: "96.8%", label: "Corrected Accuracy" },
+                { value: "100,000", label: "Benchmark Prompts" },
+                { value: "99.9%", label: "Everyday Prompts Pass" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <div className="text-3xl font-bold text-[#1A5FB4]">
