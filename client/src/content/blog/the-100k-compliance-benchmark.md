@@ -36,6 +36,6 @@ Accuracy at a latency people will not tolerate is not governance, it is friction
 
 ## What is left
 
-The remaining error mass is judgment-shaped: semantic violations with no lexical shape, and over-blocks on content where sensitive values are masked. Prompt and rule engineering have reached their plateau there. The path forward is fine-tuning the engine on adjudicated verdicts, with the benign band as the guardrail that must not move. The technical report that accompanies this release documents every table, the adjudication protocol, and that roadmap.
+The remaining error mass is judgment-shaped: semantic violations with no lexical shape, and over-blocks on content where sensitive values are masked. Prompt and rule engineering have reached their plateau there. The path forward is fine-tuning the engine on adjudicated verdicts, with the benign band as the guardrail that must not move. The [technical report that accompanies this release](/Whiteout_AI_Compliance_Benchmark_TR-2026-09.pdf) documents every table, the adjudication protocol, the fail-closed validation, and that roadmap. Read it as the standard we hold ourselves to: for each policy, what a compliant prompt looks like, what a violation looks like, and how close the engine gets.
 
 Run your own prompts against it. Check our labels. Good governance should survive scrutiny.

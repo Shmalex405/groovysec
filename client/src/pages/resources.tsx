@@ -18,6 +18,7 @@ import {
   ExternalLink,
   ArrowRight,
   BookOpen,
+  FileText,
 } from "lucide-react";
 import { usePageMeta } from "@/lib/use-page-meta";
 
@@ -37,6 +38,19 @@ export default function Resources() {
   );
 
   const resources: Resource[] = [
+    {
+      icon: FileText,
+      tag: "TECHNICAL REPORT",
+      tagColor: "bg-[#1A5FB4]/10 text-[#1A5FB4] border-[#1A5FB4]/25",
+      title: "Whiteout AI Compliance Benchmark — Technical Report TR-2026-09",
+      description:
+        "The reference for what an AI compliance engine should allow and block: 100,000 prompts across PII, PHI, GDPR, Legal, Code, Confidential, Security, and Finance, each labelled against the written policy that governs it. The report documents the engine as deployed, the corrected-accuracy protocol in which every residual miss is adjudicated against the rule text, per-band and per-category results, throughput and latency, fail-closed validation, and the Admin Autonomy Property. 96.8% corrected accuracy, 99.9% pass rate on everyday prompts, sub-two-second verdicts.",
+      link: {
+        label: "Read the technical report (PDF)",
+        href: "/Whiteout_AI_Compliance_Benchmark_TR-2026-09.pdf",
+        external: true,
+      },
+    },
     {
       icon: BarChart3,
       tag: "RESEARCH",
