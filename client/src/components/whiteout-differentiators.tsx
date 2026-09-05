@@ -54,15 +54,17 @@ export function FullLlmEngine() {
         <ScrollReveal>
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
-              A Full 27B-Parameter LLM.
+              A Full 20B-Parameter LLM, Run Locally.
               <span className="block text-[#1A5FB4]">Not a Lightweight Classifier.</span>
             </h2>
             <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
               Most AI data-protection tools rely on small classifier models or
               pattern matching that miss context. Whiteout AI evaluates every
-              prompt with a full 27-billion-parameter LLM — accurate enough to
-              catch real violations on a public benchmark, calibrated enough to
-              wave legitimate work straight through.
+              prompt with a full 20-billion-parameter, US-developed LLM running
+              inside your deployment boundary — never a third-party model
+              provider — accurate enough to catch real violations on a public
+              100,000-prompt benchmark, calibrated enough to wave legitimate
+              work straight through.
             </p>
           </div>
         </ScrollReveal>
