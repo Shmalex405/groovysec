@@ -22,7 +22,7 @@ import {
 } from "@/components/motion";
 
 const BENCHMARK_URL =
-  "https://huggingface.co/datasets/ShmalexFlow/whiteout-compliance-benchmark-100k";
+  "https://huggingface.co/datasets/ShmalexFlow/enterprise-ai-prompt-compliance-100k";
 
 /* ── Full-LLM compliance engine ─────────────────────────────────────── */
 

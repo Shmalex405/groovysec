@@ -60,7 +60,7 @@ export default function Resources() {
         "We published the full 100,000-prompt benchmark used to evaluate Whiteout AI's compliance engine — six bands across all eight policy domains, from one-line prompts to long-form documents, with safe, violation, edge-case, adversarial, and multilingual scenarios. The engine scores 96.8% corrected accuracy with a 99.9% pass rate on everyday prompts, and every miss is adjudicated against the deployed rule text.",
       link: {
         label: "Explore the dataset on Hugging Face",
-        href: "https://huggingface.co/datasets/ShmalexFlow/whiteout-compliance-benchmark-100k",
+        href: "https://huggingface.co/datasets/ShmalexFlow/enterprise-ai-prompt-compliance-100k",
         external: true,
       },
     },

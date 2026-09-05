@@ -22,7 +22,7 @@ The new release is **100,000 prompts** across all eight policy domains, in six b
 - **adversarial** (6,673): thirteen obfuscation techniques, from reversed text to homoglyphs, applied to real violations and to decoys
 - **long** (3,348): documents of 1,000 to 7,800 characters with buried, split, and decoy payloads
 
-Every prompt carries a ground-truth verdict and the policy facet it exercises. All of it is on [Hugging Face](https://huggingface.co/datasets/ShmalexFlow/whiteout-compliance-benchmark-100k) under Apache 2.0.
+Every prompt carries a ground-truth verdict and the policy facet it exercises. All of it is on [Hugging Face](https://huggingface.co/datasets/ShmalexFlow/enterprise-ai-prompt-compliance-100k) under Apache 2.0.
 
 ## How we score it
 
