@@ -2,10 +2,13 @@
 
 Every read that flows through the Whiteout AI Connector is vetted
 against a **dedicated connector policy set** before any AI sees the
-content — org-wide by default, with individual rules optionally
-**scoped to user groups**. This page explains where that policy lives,
-how it relates to the rest of Whiteout, and how an admin turns rules on
-and off.
+content. Each source (Gmail, Google Drive, Slack, Jira, …) is governed
+by exactly one **named policy set** — every org has a **Default** set,
+and you can create more and assign them per source — with individual
+rules inside a set optionally **exempted for user groups**. This page
+explains where that policy lives, how it relates to the rest of
+Whiteout, how policy sets work, and how an admin turns rules on and
+off.
 
 ## The connector has its own dedicated policy
 
@@ -19,43 +22,85 @@ and off.
 This is deliberate. Interception policy answers *"what may this user
 send to an AI?"* and is naturally per-group. Connector policy answers
 *"what content may leave a source through the connector?"* — a property
-of the **content**, so it lives in one org-wide profile rather than
-being scattered across group policy sets. Where permissions genuinely
-differ by team, you narrow an individual rule's **scope** on that same
-profile (see below) instead of maintaining a policy set per group.
+of the **content and the source**, so it is organized as **policy
+sets assigned per source** rather than being scattered across user
+group policies. Where permissions genuinely differ by team, you
+**exempt** groups from an individual rule inside a set (see below)
+instead of maintaining a policy set per group.
 
-Under the hood this is a single hidden, per-org policy profile
-(Whiteout seeds it from your **Default** group the first time you open
-the connector's policy view). You don't manage it as a group — you edit
-it directly on the connector card, described below.
+Every org starts with one set, **Default**. It governs every source
+that has not been given its own set, and it is what the connector
+enforced before policy sets existed — so nothing changes until you
+decide to create another set.
 
 ## View, enable, and disable rules
 
 1. In the Whiteout desktop app, open **Integrations → Whiteout AI
    Connector**.
-2. Open the connector card's **Policies** surface. It lists every rule
-   in the policy library with an on/off state **for the connector**.
-3. Toggle a rule **on** to have the connector enforce it on every read;
-   toggle it **off** to stop enforcing it. Changes apply to all
-   connector traffic (or to the rule's scope, if you've narrowed one —
-   see the next section) — they do not touch your interception group
-   policies, and your group policies do not touch this list.
+2. Open the connector card's **Policies** surface. Each policy set has
+   its own tab; the tab lists every rule in the policy library with an
+   on/off state **for that set**.
+3. Toggle a rule **on** to have the connector enforce it on every read
+   of a source governed by that set; toggle it **off** to stop
+   enforcing it. Changes apply to all connector traffic for those
+   sources (or to the rule's scope, if you've narrowed one — see
+   *Exempt groups from a rule*) — they do not touch your interception
+   group policies, and your group policies do not touch this list.
+4. Save. Enforcement is decided at read time against the
+   already-classified corpus, so the change applies on the very next
+   query — **no re-scan**.
 
 > Edits here affect the connector **only**. If you want the same rule
 > enforced on browser/desktop/IDE traffic too, enable it in the
 > relevant group policy separately — the two surfaces are configured
 > independently by design.
 
+## Policy sets: different rules per source
+
+One rule set rarely fits every system. A mailbox search may not need
+the finance rules that the finance drive absolutely does; a support
+tool may need a lighter set than the code host. **Policy sets** let
+you express that without duplicating your policy library:
+
+- **Default** always exists. It governs every source that has not been
+  assigned its own set. It cannot be deleted or renamed (its
+  description can be edited).
+- **Create more sets** from the **New set** button on the Policies
+  surface. Start blank (nothing enforced) or **copy an existing set**
+  — copying brings over the enforcement toggles *and* the group
+  exemptions, so a "Gmail policy" can be Default minus two rules.
+- **Assign a set from the source's card.** On the Integrations page,
+  open the source under the Whiteout AI Connector card and pick the
+  set in its **Policy set** control. That is the only place assignment
+  is made; the Policies surface shows where each set is applied but
+  does not change it. Sources you never touch stay on Default.
+- **Rename, describe, duplicate, or delete** a set from its tab menu.
+  A set that is still assigned to a source can't be deleted — move
+  those sources to another set first. This is deliberate: a security
+  control should never loosen or tighten a source as a side effect.
+- **Takes effect immediately.** Content is classified against the full
+  policy library independently of any set, and the set is applied
+  when a read is served — so reassigning a source changes its verdicts
+  on the next query with no re-scan.
+
+A few things policy sets do **not** do: they are not tied to user
+groups (use exemptions for that), they do not change which sources are
+exposed to the connector at all (that stays on the exposure toggle),
+and they do not depend on which AI assistant is asking — every
+assistant reading a source gets that source's set.
+
 ## Exempt groups from a rule
 
-By default an enforced rule fires for **every** connector query. When
-permissions genuinely differ by team — the finance group may retrieve
-financial statements through the connector while everyone else may not —
-exempt that team from the rule instead of inverting your whole policy
-set:
+By default an enforced rule fires for **every** connector query to the
+sources its set governs. When permissions genuinely differ by team —
+the finance group may retrieve financial statements through the
+connector while everyone else may not — exempt that team from the rule
+instead of inverting your whole policy set. Exemptions belong to the
+set they are made in: exempting Finance from a rule in the Default set
+does not exempt them from the same rule in another set.
 
-1. On the **Policies** surface, every enforced rule shows a scope chip
-   (**All users** by default).
+1. On the **Policies** surface, open the set's tab; every enforced rule
+   shows a scope chip (**All users** by default).
 2. Click it and pick the groups to **exempt**. The rule then applies to
    everyone *except* those groups — the chip reads e.g.
    **Exempt: Finance**. Deselect every group to return to **All users**.
@@ -124,9 +169,15 @@ it can explain *that* something was withheld without leaking *what*.
 Connector reads that block or omit any item are recorded and fanned out
 to your configured SOC/SIEM destinations. Find the trail in **Admin →
 Audit → MCP Activity**; each row shows the tool, the requesting user,
-and the policies that fired. Reads served under a group-scope exemption
-carry the exempted policies too (`scope_exempted_policies`), so
-carve-out use is as auditable as a block.
+the policies that fired, and the **policy set that governed the read**
+(`policy_set` — its name and whether it was Default), so "why was this
+served?" is answerable after the fact. Reads served under a group-scope
+exemption carry the exempted policies too (`scope_exempted_policies`),
+so carve-out use is as auditable as a block.
+
+Every change to a policy set — creating, renaming, duplicating,
+deleting, saving its rules, or assigning it to a source — is written to
+the admin **Audit Log** with the actor and the before/after values.
 
 ## Related
 
