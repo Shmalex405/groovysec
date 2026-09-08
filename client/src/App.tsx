@@ -34,6 +34,7 @@ import Partners from "@/pages/partners";
 // import SkillsSuccess from "@/pages/skills/success";
 import Contact from "@/pages/contact";
 import Resources from "@/pages/resources";
+import Talks from "@/pages/talks";
 import Security from "@/pages/security";
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog/post";
@@ -60,6 +61,7 @@ function Router() {
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         <Route path="/resources" component={Resources} />
+        <Route path="/talks" component={Talks} />
         <Route path="/blog" component={Blog} />
         <Route path="/blog/:slug">
           {(params) => <BlogPost slug={params.slug} />}
