@@ -149,6 +149,7 @@ const MENUS: NavMenu[] = [
       {
         links: [
           { label: "News & Research", href: "/resources" },
+          { label: "Talks", href: "/talks" },
           { label: "Blog", href: "/blog" },
           { label: "Documentation", href: "/docs", hardNav: true },
           { label: "Security Whitepaper", href: "/whiteout-ai/security-whitepaper" },

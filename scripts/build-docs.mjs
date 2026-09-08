@@ -47,6 +47,12 @@ const ROUTES = [
     description:
       "Intercept and govern every AI interaction across browser, desktop, IDE, infrastructure, and cloud. A full 27B-parameter LLM compliance engine with 60+ policies across 9 domains and greater than 99% benchmark accuracy.",
   },
+  {
+    path: "/talks",
+    title: `Talks — Shadow AI and the Data You're Already Losing | ${SITE_NAME}`,
+    description:
+      "Slides, sources and the 30-day checklist from Groovy Security's conference talk on shadow AI and enterprise data egress — Containerkonferansen 2026 (Trondheim) and BSides København 2026.",
+  },
   // TEMP: Maestro unpublished 2026-09-02 — excluded from docs build + sitemap; restore to relist.
   // {
   //   path: "/maestro",

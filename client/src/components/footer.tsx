@@ -26,6 +26,7 @@ const footerLinks: Record<string, LinkItem[]> = {
   ],
   Resources: [
     { label: "News & Research", href: "/resources" },
+    { label: "Talks", href: "/talks" },
     { label: "Blog", href: "/blog" },
     { label: "Security Whitepaper", href: "/whiteout-ai/security-whitepaper" },
   ],
