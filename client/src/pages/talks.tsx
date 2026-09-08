@@ -327,6 +327,15 @@ export default function Talks() {
                     alex@groovysec.com
                   </GradientButton>
                 </a>
+                <a
+                  href="https://www.linkedin.com/in/alexander-flowers-a233ba207/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center text-sm text-[#1A5FB4] hover:text-[#164F96] transition-colors px-4 py-2"
+                >
+                  Connect on LinkedIn
+                  <ExternalLink className="w-3.5 h-3.5 ml-1.5" />
+                </a>
                 <Link
                   href="/whiteout-ai/security-whitepaper"
                   className="inline-flex items-center justify-center text-sm text-[#1A5FB4] hover:text-[#164F96] transition-colors px-4 py-2"
