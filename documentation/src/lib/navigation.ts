@@ -115,6 +115,7 @@ export const navigation: NavSection[] = [
     items: [
       { title: 'Microsoft Intune', href: '/admin-guides/mdm-providers/microsoft-intune' },
       { title: 'Jamf', href: '/admin-guides/mdm-providers/jamf' },
+      { title: 'NinjaOne', href: '/admin-guides/mdm-providers/ninjaone' },
       { title: 'VMware Workspace ONE', href: '/admin-guides/mdm-providers/vmware-workspace-one' },
       { title: 'Kandji', href: '/admin-guides/mdm-providers/kandji' },
       { title: 'Mosyle', href: '/admin-guides/mdm-providers/mosyle' },
