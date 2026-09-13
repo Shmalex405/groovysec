@@ -89,7 +89,7 @@ Before you begin, ensure you have:
 |-------|-------------|
 | **Display Name** | A friendly name, e.g. `Production Intune` |
 | **Azure AD Tenant ID** | Directory (tenant) ID from Step 1 |
-| **Client ID** | Application (client) ID from Step 1 |
+| **Client ID (Application ID)** | Application (client) ID from Step 1 |
 | **Client Secret** | Client secret value from Step 2 |
 
 5. Click **Connect**
@@ -136,7 +136,7 @@ Each entry in the payload becomes its **own** configuration profile in Intune, a
 **The Desktop Guard configuration:**
 
 1. Intune admin center > **Apps** > **App configuration policies** > **Add** > **Managed devices**
-2. Target the Whiteout Desktop Guard app
+2. Target the Whiteout Desktop Guard app — the payload names it by bundle identifier for macOS and by package family name for Windows
 3. Supply the configuration from `appConfigurationProfile`
 
 **The browser extension profiles**, for each entry in `additionalProfiles`:

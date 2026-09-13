@@ -113,7 +113,9 @@ Whiteout validates the credentials against Jamf before saving, so a failure here
 2. On the Jamf integration row, click the **download** icon
 3. Review the device count in the dialog, then click **Generate & Download**
 
-You receive a property list (`.plist`) with each device's enrollment credential already filled in, plus the browser extension profile content.
+You receive a property list (`.plist`) with each device's enrollment credential already filled in.
+
+> **This file covers Desktop Guard only.** Unlike the Intune payload, the Jamf download does not currently include the browser extension profiles — you create those by hand in Step 8. Skipping Step 8 leaves Desktop Guard enrolled and the browsers with no Whiteout coverage.
 
 > If you have generated credentials for this integration before, the dialog warns that unredeemed ones already exist. Tick **Replace existing live tokens** to revoke them and issue fresh — use this when rotating before a re-rollout, not on a routine retry.
 
@@ -126,9 +128,27 @@ You receive a property list (`.plist`) with each device's enrollment credential 
 3. Use the Whiteout Desktop Guard preference domain and the supplied plist content
 4. Set **Scope** to the same group of Macs as the package in Step 5
 
-**The browser extension profiles:** repeat the above for each browser entry in the generated payload, each as its own Application & Custom Settings profile targeting that browser's preference domain.
+### Step 8: Create the browser extension profiles
 
-Without the browser profiles, Desktop Guard will enroll silently and the browsers will have no Whiteout coverage.
+These force-install the Whiteout extension. Create one Application & Custom Settings profile per browser, each scoped to the same group of Macs, using these preference domains and keys. Ask your Whiteout contact for the current extension identifiers rather than copying them from an older runbook — the Chrome and Edge stores issue separate identifiers, and an Edge profile carrying the Chrome one installs nothing.
+
+| Browser | Preference domain | Key |
+|---------|-------------------|-----|
+| Chrome | `com.google.Chrome` | `ExtensionInstallForcelist` — one entry, `<extension id>;<update URL>` |
+| Edge | `com.microsoft.Edge` | `ExtensionInstallForcelist` as above, plus `ExtensionAllowedTypes` set to `extension` |
+| Firefox | `org.mozilla.firefox` | `EnterprisePoliciesEnabled` = true, and `ExtensionSettings` with the extension set to `force_installed` |
+
+Optional, for private-window coverage:
+
+| Browser | Setting | Effect |
+|---------|---------|--------|
+| Edge | `MandatoryExtensionsForInPrivateNavigation` | Blocks InPrivate until the extension is allowed to run in it. Requires Edge 139 or later. |
+| Firefox | `private_browsing` on the extension's `ExtensionSettings` entry | Genuinely enables the extension in private windows. Requires Firefox 136 or ESR 128.8 or later. |
+| Chrome | `IncognitoModeAvailability` = 1 | Chrome cannot force an extension on in Incognito, so the only way to cover it is to turn Incognito off. Visible to your users — decide deliberately. |
+
+> Firefox on macOS reads policy through managed preferences, so the domain above is the correct delivery path. The `policies.json` file used on Windows and Linux is ignored on macOS.
+
+Without these profiles, Desktop Guard will enroll silently and the browsers will have no Whiteout coverage.
 
 > **Automating this for a large fleet.** A per-device credential means one configuration profile scoped to one Smart Group per device, which is impractical by hand beyond a pilot. Whiteout ships a fanout tool that creates the profiles and their Smart Groups through the Jamf API. It needs write privileges the integration itself does not: create and update Smart Computer Groups, and create and update macOS Configuration Profiles. Ask your Whiteout contact for it — it is not required for a pilot of a few Macs.
 
