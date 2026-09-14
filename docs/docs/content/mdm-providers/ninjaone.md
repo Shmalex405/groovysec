@@ -1,6 +1,6 @@
 # NinjaOne Setup Guide
 
-This guide walks you through connecting NinjaOne to Whiteout AI and rolling Whiteout out to your managed Windows fleet with no end-user interaction.
+This guide walks you through connecting NinjaOne to Whiteout AI and rolling Whiteout out to your managed Windows and macOS fleet with no end-user interaction.
 
 ## Overview
 
@@ -29,10 +29,27 @@ The integration gives Whiteout AI the ability to:
 
 - **NinjaOne** account with administrator access
 - **Whiteout AI Admin** privileges
-- Windows endpoints with the NinjaOne agent installed
+- Endpoints with the NinjaOne agent installed
 - Your NinjaOne console URL — the region is part of your credential (see Step 1)
+- **An identity provider already connected and synced in Whiteout** (Okta, Entra ID, Google Workspace, JumpCloud…). This is a hard requirement, not a convenience: each device's credential is issued *for a specific person*, so Whiteout has to know who your people are before it can issue anything. Connect your IdP and run a user sync first.
 
-> **Platform support:** this integration covers **Windows**. NinjaOne also manages macOS, but Whiteout's macOS enforcement requires a managed preference that a script cannot set in a tamper-resistant way. Use Jamf or Intune for Macs.
+> **How devices get matched to people.** NinjaOne has no user directory, so Whiteout matches each device using the last signed-in account NinjaOne reports. It handles the common shapes automatically:
+>
+> | What NinjaOne reports | Example | Matched? |
+> |---|---|---|
+> | A full address | `AzureAD\alex@company.com` | Yes, directly |
+> | A display name | `AzureAD\AlexFlowers` | Yes, if it resolves to exactly one person |
+> | An AD login | `CORP\aflowers` | Yes, if it resolves to exactly one person |
+> | A Mac short name | `alex` | Yes, if it resolves to exactly one person |
+>
+> Matching checks both the address and any alternate addresses synced from your identity provider, so `alex@company.com` and `aflowers@company.onmicrosoft.com` resolve to the same person.
+>
+> **When a login could belong to more than one person, Whiteout refuses to choose.** Issuing one person's credential to another person's device is worse than leaving the device unmapped, so those devices are skipped and reported. Set the `whiteoutUserEmail` custom field (Step 2) on them and re-sync. The Provision step names every device that needs it, so there is nothing to audit up front.
+
+> **Platform support:** **Windows and macOS.** They are two separate NinjaOne scripts sharing one integration, one set of custom fields, and one provisioning step — add whichever platforms you manage. Two macOS caveats before you start:
+>
+> - The macOS release channel currently publishes **Apple silicon** builds only. On an Intel Mac the script applies all configuration and deliberately skips the app install, reporting `configured-no-app` rather than leaving a broken app behind.
+> - **Don't target Macs already enrolled in Jamf or Intune** for the same browser settings. Those tools own the same preference files and will overwrite this on their next check-in.
 
 ---
 
@@ -97,29 +114,37 @@ In NinjaOne, go to **Administration** > **Devices** > **Custom Fields** and crea
 | **Gate Edge InPrivate** | On | Blocks Edge InPrivate until the Whiteout extension is allowed to run in it. Requires Edge 139 or later. Costs users nothing. |
 | **Disable Chrome Incognito** | **Off** | Chrome provides no way to force an extension on in Incognito, so the only way to cover it is to turn Incognito off. This is visible to your users — opt in deliberately. |
 
-3. Click **Download deploy script**, and also **Download rollback script**
-4. In NinjaOne, go to **Administration** > **Library** > **Automation** > **Add** > **New Script**
-5. Paste the deploy script and configure it:
+3. Choose the **Platform** — Windows or macOS. If you manage both, work through this section twice; they are separate NinjaOne scripts.
+4. Click **Download deploy script**, and also **Download rollback script**
+5. In NinjaOne, go to **Administration** > **Library** > **Automation** > **Add** > **New Script**
+6. Paste the deploy script and configure it for the platform you chose:
 
-| Setting | Value |
-|---------|-------|
-| **Language** | PowerShell |
-| **Architecture** | 64-bit |
-| **Run As** | **System** |
-| **Name** | `Whiteout AI — Deploy` |
+| Setting | Windows | macOS |
+|---------|---------|-------|
+| **Language** | PowerShell | ShellScript |
+| **Architecture / OS** | 64-bit | Mac |
+| **Run As** | **System** | **System** |
+| **Name** | `Whiteout AI — Deploy (Windows)` | `Whiteout AI — Deploy (macOS)` |
 
-6. Repeat for the rollback script, named `Whiteout AI — Remove`
-7. Attach the deploy script to your Windows policy under **Scheduled Scripts**, on an hourly or daily schedule
+7. Repeat for the rollback script, named `Whiteout AI — Remove (…)`
+8. Attach each deploy script to the matching policy under **Scheduled Scripts**, on an hourly or daily schedule
 
 > **Add the rollback script even if you never plan to use it.** It removes everything the deploy script configured, which is what makes a limited pilot a reversible change rather than a commitment.
 
 ### Step 5: First run — the device reports its hardware identifier
 
-Run the script once. **Run Now** on a single device is the fastest way to check. Expected output:
+Run the script once. **Run Now** on a single device is the fastest way to check. Expected output on Windows:
 
 ```
 [Whiteout] MachineGuid = 8f14e45f-ceea-467a-9f4e-0d0a6a3f37b1
 [Whiteout] no enrollment token yet — reported MachineGuid and stopping here.
+```
+
+and on macOS:
+
+```
+[Whiteout] IOPlatformUUID = f290f11f-1a2b-4c3d-9e8f-0a1b2c3d4e5f
+[Whiteout] no enrollment token yet — reported hardware UUID and stopping here.
 ```
 
 `whiteoutHardwareUuid` is now populated on that device and `whiteoutDeviceStatus` reads `awaiting-token`. Nothing has been installed yet — that is correct at this stage.
@@ -157,7 +182,11 @@ Run the script again. Expected output:
 
 Desktop Guard signs in silently as the mapped user, and the browser extension and IDE plugins sign in through it. The user sees no prompts.
 
-> Desktop Guard installs per-user, and NinjaOne scripts run as the System account. The script handles this by staging the verified installer and scheduling it to run in the user's own session — immediately if someone is signed in, otherwise at their next sign-in. A device with nobody logged in will show as configured before the app appears; that's expected.
+> **Windows:** Desktop Guard installs per-user while NinjaOne scripts run as the System account, so the script stages the verified installer and schedules it to run in the user's own session — immediately if someone is signed in, otherwise at their next sign-in.
+>
+> **macOS:** the app is machine-wide in `/Applications`, so the script installs it directly, then launches it once in the signed-in user's session so it can register itself to start at login.
+>
+> Either way, a device with nobody logged in shows as configured before the app appears. That's expected.
 
 ---
 
@@ -195,6 +224,14 @@ The device is reporting its identifier but never receiving a credential. Check t
 ### Desktop Guard doesn't appear after a successful run
 
 The install runs in the user's session, not the System account's. If nobody has signed in since the script ran, it is still pending. Sign in and allow a few minutes.
+
+### macOS: status reads `configured-no-app`
+
+That Mac is an Intel machine, and the macOS release channel currently publishes Apple silicon builds only. All configuration was applied; only the app install was skipped. Deploy Desktop Guard to Intel Macs by another route, or ask your Whiteout contact about an Intel build.
+
+### macOS: configuration applied but Desktop Guard doesn't pick it up
+
+macOS caches managed preferences. The script flushes that cache after writing, but an app that was already running may need a restart — quit and reopen Desktop Guard.
 
 ### The extension installs but isn't covered in private windows
 
