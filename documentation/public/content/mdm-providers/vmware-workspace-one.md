@@ -1,149 +1,151 @@
 # VMware Workspace ONE MDM Setup Guide
 
-This guide walks you through connecting VMware Workspace ONE (formerly AirWatch) to Whiteout AI, enabling cross-platform device compliance management and automated deployment of AI governance agents.
+This guide walks you through connecting Workspace ONE to Whiteout AI so your
+managed devices and the AI applications on them appear in Whiteout.
 
 ## Overview
 
-The VMware Workspace ONE integration allows Whiteout AI to:
-- Query device inventory and compliance status across Windows, macOS, iOS, and Android
-- Deploy the Whiteout AI Desktop Guard and browser extension to managed devices
-- Enforce AI governance policies based on Workspace ONE compliance state
-- Sync organization groups and Smart Groups for targeted policy enforcement
+The Workspace ONE integration allows Whiteout AI to:
+- Query device inventory and compliance status across Windows, macOS, iOS, iPadOS and Android
+- Detect AI applications installed across the fleet
+- Map each managed device to a person, so device activity is attributable
+
+> **What this integration does today.** Whiteout reads your Workspace ONE device
+> inventory — device, platform, serial, device UDID, assigned user, compliance
+> state — and detects AI applications installed on those devices. That is the
+> whole of it.
+>
+> Whiteout does **not** push apps or profiles into Workspace ONE, and does not mirror
+> organization groups or Smart Groups. Deploying Desktop Guard and the browser extension is done from your
+> Workspace ONE console using its own app and profile deployment, exactly as you
+> would deploy any other software. Per-device zero-touch enrollment profiles —
+> the ones Whiteout generates for Intune and Jamf — are not generated for
+> Workspace ONE yet; enroll from Whiteout's **Enrollment** page instead.
 
 ## Prerequisites
 
 Before you begin, ensure you have:
 - **VMware Workspace ONE UEM** console access
-- **Administrator** role with API access permissions
+- **Administrator** role with API access
 - **Whiteout AI Admin** privileges
 - Devices enrolled in Workspace ONE UEM
 
 ---
 
-## Setup Process
+## Setup
 
-### Step 1: Enable API Access in Workspace ONE
+### Step 1: Create API credentials in Workspace ONE
 
-1. Log in to your Workspace ONE UEM console
-2. Navigate to **Groups & Settings** > **All Settings** > **System** > **Advanced** > **API** > **REST API**
+1. Log in to the Workspace ONE UEM console
+2. Navigate to **Groups & Settings** → **All Settings** → **System** →
+   **Advanced** → **API** → **REST API**
 3. Ensure the REST API is **Enabled**
+4. Copy the **API Key** — this is the `aw-tenant-code` value
+5. Create or identify an admin account for the integration and give it
+   **Device Details: Read** and **Device Application List: Read**
 
-### Step 2: Generate an API Key
 
-1. In the REST API settings, click **Add**
-2. Configure the API key:
+### Step 2: Connect in Whiteout AI
 
-| Field | Value |
-|-------|-------|
-| **Service** | `Whiteout AI Integration` |
-| **Description** | REST API key for Whiteout AI MDM integration |
-| **Account Type** | Admin |
-
-3. Click **Save**
-4. Copy the generated **API Key**
-
-### Step 3: Create a Service Account
-
-1. Navigate to **Accounts** > **Administrators** > **List View**
-2. Click **Add** > **Add Admin**
-3. Configure the account:
+1. Open the Whiteout AI admin dashboard
+2. Go to **Integrations** → **Mobile Device Management (MDM)**
+3. Click **Connect MDM** and choose **Workspace ONE**
+4. Enter:
 
 | Field | Value |
 |-------|-------|
-| **Username** | `whiteout-ai-service` |
-| **Password** | Generate a strong password |
-| **Role** | API role with read access to devices and groups |
+| **Workspace ONE API URL** | Your tenant host, e.g. `https://as123.awmdm.com`. The `as###` prefix is tenant-specific |
+| **API Admin Username** | An admin account with API access |
+| **API Admin Password** | That account's password |
+| **API Tenant Code** | The `aw-tenant-code` key from **Groups & Settings → All Settings → System → Advanced → API** |
 
-4. Click **Save**
+> **The tenant code is required.** Without it the API returns `401` with a
+> message about credentials — which reads as a wrong password and sends you
+> looking in the wrong place. If the connection test fails, check the tenant
+> code before the password.
 
-### Step 4: Note Your Console URL
-
-Your Workspace ONE UEM console URL is typically:
-- `https://asXXXX.awmdm.com` (SaaS)
-- `https://uem.yourcompany.com` (on-premise)
-
-### Step 5: Configure Whiteout AI
-
-1. Log in to Whiteout AI as an administrator
-2. Navigate to **Settings** > **MDM Providers**
-3. Find **VMware Workspace ONE** and click **Connect**
-4. Enter the following credentials:
-
-| Field | Description |
-|-------|-------------|
-| **Server URL** | Workspace ONE UEM console URL |
-| **API Key** | REST API key from Step 2 |
-| **Username** | Service account username from Step 3 |
-| **Password** | Service account password from Step 3 |
-
-5. Click **Save & Test Connection**
+5. Click **Connect**. The form validates with a live connection test before
+   saving, so a credential problem is caught here rather than at the first sync.
 
 ---
 
-## Post-Setup Configuration
+## Post-setup: deploying the Whiteout clients
 
-### Deploy Whiteout AI Desktop Guard
+Whiteout does not push software into Workspace ONE. You deploy from your Workspace ONE
+console, then enroll from Whiteout.
 
-1. In Whiteout AI, go to **Settings** > **MDM Providers** > **Workspace ONE** > **Deploy**
-2. Select the target platform (Windows or macOS)
-3. Whiteout AI will push an application to Workspace ONE that includes:
-   - The Desktop Guard installer
-   - Pre-configuration with your Whiteout AI endpoint
-4. Choose the target Organization Group or Smart Group
-5. Confirm the deployment
+### 1. Deploy Desktop Guard
 
-### Organization Group Mapping
+Add the Desktop Guard installer to Workspace ONE as you would any other package,
+using Workspace ONE's Apps & Books deployment, and assign it to the devices in scope.
 
-Map Workspace ONE Organization Groups to Whiteout AI governance policies:
+### 2. Force-install the browser extension
 
-| Example Organization Group | Whiteout AI Policy |
-|----------------------------|-------------------|
-| Global | Standard AI governance |
-| Engineering | Permissive AI governance |
-| Finance | Strict AI governance |
-| Contractors | Restricted AI governance |
+Whiteout generates the browser force-install and private-browsing payloads as
+standard Apple configuration profiles (`.mobileconfig`). Download them from
+**Integrations → MDM → Generate Deployment Payload** on an Intune or Jamf
+integration, then upload the macOS entries to Workspace ONE as custom profiles.
+They are plain Apple profiles and are not Intune- or Jamf-specific.
+
+Without them Desktop Guard runs but the browser extension never installs,
+which is a silent failure — the dashboard looks healthy.
+
+### 3. Enroll users
+
+Mint enrollment tokens from **Enrollment** in the Whiteout admin UI and deliver
+them with your Desktop Guard deployment. **On Windows, read the anchor note below before relying on
+hardware-bound tokens.**
 
 ---
 
 ## Verification
 
-Test your integration:
-
-1. **Connection Test**: Click **Test Connection** in the MDM provider settings
-2. **Device Sync**: Verify enrolled devices appear in the Whiteout AI device inventory
-3. **Group Sync**: Confirm Organization Groups and Smart Groups are visible
-4. **Compliance Status**: Check that device compliance statuses are reflected correctly
-5. **Deployment Test**: Deploy the Desktop Guard to a test group and verify installation
+1. **Connection test** — click **Test Connection** when saving the integration.
+   It probes the device listing itself, so a token that authenticates but
+   cannot list devices fails here rather than looking healthy and syncing
+   nothing.
+2. **Device sync** — run a sync and confirm your devices appear under
+   **Devices**, with the right platform and assigned user.
+3. **AI app detection** — confirm detected AI applications appear against
+   those devices.
 
 ---
 
 ## Troubleshooting
 
-### "401 Unauthorized" Error
+### "401 Unauthorized"
 
-- Verify the API Key, Username, and Password are correct
-- Ensure the service account is active and not locked
-- Check that the REST API is enabled in the console settings
-- Confirm the server URL is correct (include `https://`)
+Check **both** the admin credentials and the `aw-tenant-code`. A missing or
+wrong tenant code fails identically to a wrong password.
 
-### Devices Not Appearing
+### Windows devices enrol but hardware-bound tokens are rejected
 
-- Confirm devices are enrolled in Workspace ONE
-- Verify the service account has read access to devices
-- Allow up to 10 minutes for the initial device sync
+Expected, and worth understanding before a Windows rollout. Workspace ONE
+reports a UEM-generated device UDID, which is **not** the `MachineGuid` that
+Desktop Guard reports as its hardware anchor on Windows. A token bound to the
+Workspace ONE identifier therefore cannot be redeemed by the client.
 
-### API Key Issues
+Apple platforms are unaffected — there the UDID is the same value macOS and
+iOS report natively.
 
-- API keys can be revoked or regenerated in the REST API settings
-- Ensure the key is associated with the correct Organization Group
-- Check that the API key has not expired
+For Windows fleets managed by Workspace ONE, use unbound enrollment tokens
+from the **Enrollment** page rather than hardware-bound ones.
+
+### Devices appear but have no user
+
+Whiteout maps a device to a person by email. If Workspace ONE has no
+enrollment user email for a device, or that address does not match anyone in
+your directory, the device syncs unmapped. Connect and sync your identity
+provider first.
 
 ---
 
-## Security Considerations
+## Security considerations
 
-- **Password Rotation**: Rotate the service account password regularly (recommended: every 90 days)
-- **Least Privilege**: Grant only the minimum API permissions needed
-- **Dedicated Account**: Use a dedicated service account for Whiteout AI
-- **Network Security**: For on-premise deployments, ensure the console is accessible from Whiteout AI's network
-- **Audit Logging**: Monitor Workspace ONE admin audit logs for API activity
+- **Credential storage** — Whiteout encrypts Workspace ONE credentials at rest
+- **Read-only** — the integration only reads. No deployment or write
+  permissions are needed, so grant none
+- **Dedicated credentials** — use a dedicated API account or token for
+  Whiteout so its activity is separately auditable
+- **Rotation** — establish a rotation schedule; these credentials do not
+  expire on their own
