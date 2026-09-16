@@ -18,7 +18,7 @@ Microsoft Entra ID integration provides:
 | SAML Authentication | No (use Generic SAML) |
 | Group Synchronization | Yes |
 | Just-in-Time Provisioning | Yes |
-| SCIM Provisioning | Coming Soon |
+| SCIM Provisioning | Yes (see the SCIM setup guide) |
 
 ## Prerequisites
 
@@ -42,10 +42,19 @@ Before you begin, ensure you have:
 |-------|-------|
 | **Name** | `Whiteout AI` |
 | **Supported account types** | Accounts in this organizational directory only |
-| **Redirect URI** | Web: `https://your-whiteout-instance.com/api/auth/callback/azure-ad` |
+| **Redirect URI** | Web: `https://<your-whiteout-api-host>/auth/idp/callback` |
 
 5. Click **Register**
 6. Note the **Application (client) ID** and **Directory (tenant) ID**
+
+> **Get the redirect URI exactly right.** It is your Whiteout **API** host
+> (the same base URL your clients talk to) followed by `/auth/idp/callback` —
+> for example `https://api.whiteout.example.com/auth/idp/callback`. It is not
+> the admin dashboard URL, and it has no `/api` prefix. A mismatch fails at
+> sign-in with `AADSTS50011: The reply URL specified in the request does not
+> match the reply URLs configured for the application`. Self-hosted
+> deployments: this must match the `APP_BASE_URL` your backend is configured
+> with, including scheme and any non-default port.
 
 ### Step 2: Configure Authentication
 
@@ -74,21 +83,48 @@ Before you begin, ensure you have:
 
 ### Step 4: Configure API Permissions
 
+Whiteout uses Entra in **two different ways**, and each needs its own kind of
+permission. Granting only the first is the most common setup mistake: users can
+sign in, but user and group sync silently returns nothing.
+
+**a. Delegated permissions — interactive sign-in**
+
 1. Go to **API permissions**
 2. Click **Add a permission** > **Microsoft Graph**
 3. Select **Delegated permissions**
-4. Add these permissions:
+4. Add:
 
 | Permission | Purpose |
 |------------|---------|
 | `openid` | Basic sign-in |
 | `profile` | User profile information |
 | `email` | User email address |
-| `User.Read` | Read user profile |
-| `GroupMember.Read.All` | Read group memberships (for group sync) |
+| `User.Read` | Read the signed-in user's profile |
+| `GroupMember.Read.All` | Read the signed-in user's group memberships |
 
-5. Click **Grant admin consent for [Your Organization]**
-6. Verify all permissions show green checkmarks
+**b. Application permissions — directory sync**
+
+Sync runs as a background job with no user present, using the client-credentials
+flow. Delegated permissions do not apply to it, **even ones with the same name**.
+
+5. Click **Add a permission** > **Microsoft Graph** > **Application permissions**
+6. Add:
+
+| Permission | Purpose |
+|------------|---------|
+| `User.Read.All` | Enumerate directory users during **Sync Users** |
+| `Group.Read.All` | Enumerate groups and their members during **Sync Groups** |
+
+7. Click **Grant admin consent for [Your Organization]**
+8. Verify every permission shows a green checkmark under **Status** — an added
+   but unconsented permission fails exactly like a missing one
+
+> **Why this matters beyond group sync.** Zero-touch MDM enrollment maps each
+> managed device to a user by email. If directory sync never populated your
+> users, every device fails that mapping and token minting skips your entire
+> fleet — with no error on the MDM side. Whiteout's **Test Connection** button
+> probes both directory endpoints and fails loudly if these Application
+> permissions are missing, so run it after granting consent.
 
 ### Step 5: Configure Token Claims (Optional)
 
@@ -219,9 +255,12 @@ Test your SSO configuration:
 
 ### "AADSTS50011" - Reply URL Mismatch
 
-- Verify redirect URI in Azure AD matches exactly
-- Check for trailing slashes
-- Ensure protocol is HTTPS
+- The redirect URI must be `https://<your-whiteout-api-host>/auth/idp/callback`
+  — the API host, with no `/api` prefix
+- It must match your backend's configured `APP_BASE_URL` exactly: scheme, host,
+  port, and no trailing slash
+- Compare it character-for-character against the value in **Authentication** >
+  **Redirect URIs**; Entra does no normalisation
 
 ### "AADSTS700016" - Application Not Found
 
@@ -235,10 +274,15 @@ Test your SSO configuration:
 - Go to API permissions and grant admin consent
 - Or have user consent during first login
 
-### Groups Not Syncing
+### Groups or Users Not Syncing
 
-- Verify `GroupMember.Read.All` permission is granted
-- Check group filter isn't too restrictive
+- Verify `User.Read.All` and `Group.Read.All` are granted as **Application**
+  permissions, with admin consent. This is the usual cause: the Delegated
+  permissions of the same name cover interactive sign-in only, so users can log
+  in normally while sync returns nothing
+- Click **Test Connection** — it probes both directory endpoints and names any
+  permission that is missing
+- Check the group filter isn't too restrictive
 - Ensure groups exist and have members
 - Review sync logs for errors
 
