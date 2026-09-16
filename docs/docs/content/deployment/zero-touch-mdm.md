@@ -30,12 +30,24 @@ Before you begin, ensure you have:
 
 ### Device-attested enrollment tokens
 
-Whiteout AI mints a **per-device, single-use enrollment token** for every managed device. Each token is bound to the device's hardware identifier:
+Whiteout AI mints a **per-device enrollment token** for every managed device, bound to that device's hardware identifier so it is worthless anywhere else:
 
-| Platform | Hardware anchor |
-|----------|-----------------|
-| macOS | `IOPlatformUUID` |
-| Windows | `MachineGuid` |
+| Platform | Anchor Desktop Guard reports | Anchor your MDM reports |
+|----------|------------------------------|-------------------------|
+| macOS | `IOPlatformUUID` | Intune `udid` / Jamf UDID — the same value |
+| Windows via Intune | `MachineGuid` | `azureADDeviceId` (the Entra device object ID) — a **different** value |
+| Windows via NinjaOne | `MachineGuid` | `MachineGuid`, self-reported by the deploy script |
+
+The Windows/Intune row is the one to know about. Microsoft Graph does not expose
+`MachineGuid` on managed devices at all, so an Intune-minted token is bound to the
+Entra device ID instead. Desktop Guard therefore reports **both** identifiers at
+enrollment — `MachineGuid` plus the Entra device ID it reads from the same place
+`dsregcmd /status` does — and the token matches on either.
+
+> **Requires Desktop Guard 1.8.40 or later on Windows.** Earlier builds report
+> `MachineGuid` only, and every Intune-bound enrollment fails with a hardware
+> identifier mismatch. The device must also be Entra **joined**, not merely
+> Entra registered — confirm with `dsregcmd /status` > `AzureAdJoined : YES`.
 
 The hardware anchor survives app reinstalls. It does not survive a disk wipe and re-image — which is fine, because a re-imaged device re-enrolls into your MDM and a fresh token is minted.
 
@@ -265,7 +277,8 @@ On a pilot device, confirm:
 | Check | What it means | Fix |
 |-------|---------------|-----|
 | `mdm_device_exists: false` | The device hasn't synced from your MDM yet | Run an MDM sync, or wait for the next scheduled sync |
-| `hardware_uuid_present: false` | The MDM didn't report a hardware identifier for the device | Re-enroll the device in MDM; for older Windows devices, install the Microsoft Intune Management Extension |
+| `hardware_uuid_present: false` | The MDM didn't report a hardware identifier for the device | Re-enroll the device in MDM. On Windows/Intune this means the device has no `azureADDeviceId` — it is not Entra-joined. No Intune component surfaces `MachineGuid`; Graph has no such field |
+| `enroll_anchor_compatible: false` | Windows + Intune, where the MDM's identifier and the client's differ | Ensure Desktop Guard **1.8.40+** is installed, and that the device is Entra-joined (`dsregcmd /status` > `AzureAdJoined : YES`) |
 | `hardware_uuid_unique: false` | Two devices share a hardware identifier (VDI clone, missed sysprep) | Re-image with sysprep generalize, or remove the duplicate device record. Minting refuses to proceed for colliding devices — it cannot safely determine which user's token belongs on which machine |
 | `user_mapping_resolved: false` ("User exists but…") | The user exists but the device record isn't linked to them | Run an MDM resync to re-link the device |
 | `user_mapping_resolved: false` ("No User found…") | The device's email doesn't match any user in your organization | Check email alias coverage between your IdP and MDM. Common case: Intune reports `jdoe@company.onmicrosoft.com` while your IdP has `jane@company.com`. Alias sources such as Entra `proxyAddresses` and Okta `secondEmail` are synced automatically — run a fresh IdP sync |
@@ -303,8 +316,9 @@ Forward these to Splunk, Datadog, or your SIEM via a [SOC destination](./soc-des
 
 ## Security Considerations
 
-- **Single-use tokens**: enrollment tokens can be redeemed exactly once, and are bound to a specific device's hardware identifier
-- **Token TTL**: tokens expire after 30 days by default. To mint non-expiring (still single-use) tokens for slow rollouts, pass `expires_in_days: null` in the mint request
+- **Hardware-bound tokens**: an MDM-minted token is bound to one device's hardware identifier and is rejected on any other machine. Within that binding it is **re-redeemable by design** — it is the recovery credential Desktop Guard falls back on when its session is invalidated server-side (a password reset, a revoked session, a backend rotation), which is what keeps a managed device from silently dropping out of governance and needing a desk visit. The binding is the access control, not one-time use
+- **Single-use tokens**: tokens minted *without* a hardware binding — the manual, one-off recovery tokens an admin generates from the Enrollment page — are strictly single-use and are burned on first redemption
+- **Token TTL**: tokens expire after 30 days by default. To mint non-expiring tokens for slow rollouts, pass `expires_in_days: null` in the mint request
 - **Token rotation**: use **Replace existing live tokens** (or `replace_existing: true`) to revoke outstanding unredeemed tokens and mint fresh ones before a re-rollout
 - **Credential encryption**: MDM provider credentials (Intune client secret, Jamf API credentials) are encrypted at rest
 - **Sync freshness**: IdP sync defaults to every 24 hours and MDM sync to every 60 minutes; adjust per integration in the admin UI to balance freshness against API quota
