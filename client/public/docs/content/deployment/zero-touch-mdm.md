@@ -44,7 +44,7 @@ Entra device ID instead. Desktop Guard therefore reports **both** identifiers at
 enrollment — `MachineGuid` plus the Entra device ID it reads from the same place
 `dsregcmd /status` does — and the token matches on either.
 
-> **Requires Desktop Guard 1.8.39 or later on Windows.** Earlier builds report
+> **Requires Desktop Guard 1.8.40 or later on Windows.** Earlier builds report
 > `MachineGuid` only, and every Intune-bound enrollment fails with a hardware
 > identifier mismatch. The device must also be Entra **joined**, not merely
 > Entra registered — confirm with `dsregcmd /status` > `AzureAdJoined : YES`.
@@ -278,7 +278,7 @@ On a pilot device, confirm:
 |-------|---------------|-----|
 | `mdm_device_exists: false` | The device hasn't synced from your MDM yet | Run an MDM sync, or wait for the next scheduled sync |
 | `hardware_uuid_present: false` | The MDM didn't report a hardware identifier for the device | Re-enroll the device in MDM. On Windows/Intune this means the device has no `azureADDeviceId` — it is not Entra-joined. No Intune component surfaces `MachineGuid`; Graph has no such field |
-| `enroll_anchor_compatible: false` | Windows + Intune, where the MDM's identifier and the client's differ | Ensure Desktop Guard **1.8.39+** is installed, and that the device is Entra-joined (`dsregcmd /status` > `AzureAdJoined : YES`) |
+| `enroll_anchor_compatible: false` | Windows + Intune, where the MDM's identifier and the client's differ | Ensure Desktop Guard **1.8.40+** is installed, and that the device is Entra-joined (`dsregcmd /status` > `AzureAdJoined : YES`) |
 | `hardware_uuid_unique: false` | Two devices share a hardware identifier (VDI clone, missed sysprep) | Re-image with sysprep generalize, or remove the duplicate device record. Minting refuses to proceed for colliding devices — it cannot safely determine which user's token belongs on which machine |
 | `user_mapping_resolved: false` ("User exists but…") | The user exists but the device record isn't linked to them | Run an MDM resync to re-link the device |
 | `user_mapping_resolved: false` ("No User found…") | The device's email doesn't match any user in your organization | Check email alias coverage between your IdP and MDM. Common case: Intune reports `jdoe@company.onmicrosoft.com` while your IdP has `jane@company.com`. Alias sources such as Entra `proxyAddresses` and Okta `secondEmail` are synced automatically — run a fresh IdP sync |
