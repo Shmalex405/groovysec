@@ -165,6 +165,38 @@ able to sign in later, and is not governed until you say so.
 Repeat the same four steps. Selective onboarding is additive — it never removes
 anyone, so you can grow the pilot a person at a time.
 
+### Or let auto-sync do it
+
+Most organisations want everyone in their directory governed eventually, and
+for them the manual step above is only for the first group. Whiteout syncs your
+directory on a schedule — **Configure → Settings → Auto-sync**, every 24 hours
+by default — so new hires appear without anyone remembering to click anything,
+and people who leave your directory are deprovisioned.
+
+That is usually what you want. It is worth understanding one thing about it
+though:
+
+> **Auto-sync provisions your whole directory, not just your selection.** It
+> runs the same operation as **Sync entire directory**. If you have
+> deliberately onboarded twelve people out of ten thousand, the next scheduled
+> run will onboard the other nine thousand nine hundred and eighty-eight.
+>
+> The control is **JIT provisioning** on the Settings tab, which also gates the
+> scheduler despite its name. To keep a pilot limited to the people you chose,
+> turn it off — and turn it back on when you are ready for everyone.
+>
+> Group sync has the same effect, because group membership needs the user rows
+> to exist first.
+
+So there are two working models, and they are both legitimate:
+
+| | |
+|---|---|
+| **Everyone, kept current** | Leave auto-sync on. Your whole directory is governed and stays in step, new hires included. This is the common case |
+| **A chosen subset** | Turn JIT provisioning and group sync off, and onboard people deliberately. Nothing arrives that you did not pick |
+
+Pilots usually start in the second and move to the first.
+
 ---
 
 ## Step 4 — Connect your device management platform
