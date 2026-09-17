@@ -14,6 +14,7 @@ export const navigation: NavSection[] = [
     title: 'Getting Started',
     items: [
       { title: 'Overview', href: '/admin-guides/overview' },
+      { title: 'Onboarding Walkthrough', href: '/admin-guides/onboarding/overview' },
     ],
   },
   {
