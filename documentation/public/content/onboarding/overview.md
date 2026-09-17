@@ -99,11 +99,31 @@ credentials authenticate; it reads your directory the way sync will. If it
 reports a missing permission, fix that first. A green result here means sync
 will work.
 
-### Then sync
+### Then confirm Whiteout can read your directory
 
-Once connected, click **Sync Users** on the provider card. Confirm the user
-count is what you expect. This pulls your directory into Whiteout so you can
-choose from it — it does not yet govern anyone.
+Open **Configure → Users** on the provider card. Your directory is listed
+there, read live from your provider — there is no import step, and nothing is
+governed by looking at it.
+
+If the list is populated, directory access is working and you can move on. If
+it is empty or errors, that is the permissions problem described above, and
+**Test connection** on the Settings tab will name what is missing.
+
+### Checking a connection later
+
+**Configure → Settings** on the provider card is where you go afterwards. It
+shows JIT provisioning, group sync, default role, sync cadence and the last
+sync time, along with any error from the most recent sync.
+
+**Test connection** there re-checks the credentials *and* whether they can
+still read your directory — the two fail differently, and a credential that
+authenticates while having lost directory access is the one that produces a
+sync returning nobody. If the test fails it names the specific permission or
+scope to fix.
+
+A provider with no directory at all shows a **sign-in only** notice here, and
+its group-sync settings read **Unavailable — no directory** rather than On or
+Off, because those toggles cannot do anything for it.
 
 ---
 
@@ -112,15 +132,19 @@ choose from it — it does not yet govern anyone.
 This is the step that keeps a pilot a pilot.
 
 1. On the connected provider card, click **Configure**.
-2. You land on the **Users** tab — your whole directory, with everyone not yet
-   onboarded marked **Not onboarded**.
-3. Tick the people in your pilot group. Filter or search to find them.
+2. You land on the **Users** tab — your whole directory, read live from your
+   provider. Anyone already
+   onboarded shows **In Whiteout**; everyone else shows **Not onboarded**.
+   The filter chips along the top split the list into **All**, **Not
+   onboarded** and **Onboarded**, and there is a search box for name or
+   email.
+3. Tick the people in your pilot group.
 4. Click **Onboard *n* selected**.
 
 Only those people become Whiteout users. Everyone else stays in your directory,
 able to sign in later, and is not governed until you say so.
 
-> **Do not use "Sync all users" for a pilot.** It provisions your entire
+> **Do not use "Sync entire directory" for a pilot.** It provisions your whole
 > directory *and removes any Whiteout user who is no longer in it*. That is the
 > right tool for steady-state operation once you are rolling out broadly; it is
 > the wrong one when you have deliberately onboarded twelve people out of
@@ -246,6 +270,67 @@ working until one of them needs to recover and cannot.
 
 Scope to the new devices and none of this arises.
 
+### Windows only: allowlist the publisher first
+
+**Do this before you deploy, not after a user reports a block.** It takes a few
+minutes and removes a whole class of problem.
+
+Windows decides whether to trust an unfamiliar binary partly on *reputation* —
+how many machines have run it, for how long. A newly released build has none,
+regardless of how it is signed. Microsoft removed the automatic reputation
+grant for EV certificates in 2024, so there is no certificate you can buy that
+skips this.
+
+If your organisation runs **WDAC** or **AppLocker**, do not depend on
+reputation at all. Create a **publisher rule** instead. It is deterministic: it
+matches on the signing identity rather than on any particular file, so it
+survives every version bump, needs no waiting period, and covers every Whiteout
+Windows binary — Desktop Guard, its ETW service, the desktop app and the
+bundled installer — because all of them are signed under one identity.
+
+Our signing subject is:
+
+```
+CN=Groovy Security, O=Groovy Security, L=St. George, S=Utah, C=US
+```
+
+> **Do not pin a certificate thumbprint.** We sign with Azure Artifact Signing,
+> which rotates the leaf certificate roughly daily. A thumbprint rule works
+> today and blocks every install by next week. Pin the publisher.
+>
+> One more gotcha: PowerShell renders the state as `S=Utah` while some .NET
+> APIs emit `ST=Utah`. If you are hand-writing a rule, generate it from a
+> signed binary instead of typing the DN.
+
+**AppLocker** — generate the rule from a signed file so the publisher string is
+exactly right, then widen it to all versions:
+
+```powershell
+Get-AppLockerFileInformation -Path "C:\Path\To\Whiteout.DesktopGuard.exe" |
+  New-AppLockerPolicy -RuleType Publisher -User Everyone -Optimize |
+  Set-AppLockerPolicy -Merge
+```
+
+Then edit the resulting rule so the version range is `*` to `*` and the product
+and file names are `*`. That single rule then covers current and future
+releases of all four binaries.
+
+**WDAC** — a publisher-level rule does the same thing:
+
+```powershell
+$rules = New-CIPolicyRule -Level Publisher `
+  -DriverFilePath "C:\Path\To\Whiteout.DesktopGuard.exe"
+```
+
+Use `-Level Publisher`, not `-Level SignedVersion` or `-Level Hash`. The first
+is version-independent; the other two pin to a build and break on the next
+update.
+
+**If you do not run application control**, deploying through your MDM already
+avoids most of this — files delivered by MDM do not carry the Mark of the Web
+that triggers SmartScreen on a manual download. Reputation then builds on its
+own over the first weeks.
+
 ### Upload it
 
 The downloaded file carries its own instructions in a header comment — which
@@ -301,9 +386,10 @@ exactly — scheme, host, and path, with no trailing slash. Your provider's guid
 gives the exact value. Providers do not normalise it, so compare it character
 by character.
 
-**Sign-in works but Sync Users returns nothing.** Almost always the directory
-permissions from step 2 rather than anything about sign-in. Click **Test
-Connection** — it names the specific permission that is missing.
+**Sign-in works but the Users tab is empty.** Almost always the directory
+permissions from step 2 rather than anything about sign-in — a credential can
+authenticate perfectly and still be unable to enumerate. **Configure →
+Settings → Test connection** names the specific permission or scope missing.
 
 **A device shows in your MDM but not in Whiteout.** Run a device sync. If it
 still does not appear, the device may not be enrolled in the MDM in the way the
@@ -321,8 +407,8 @@ than only registered. The Intune guide covers the distinction.
 ## After the pilot
 
 Broadening from a pilot to the whole organisation is the same steps at a larger
-scale, with one change of tool: once you intend to govern everyone, **Sync all
-users** becomes the right control, because keeping Whiteout's user list in step
+scale, with one change of tool: once you intend to govern everyone, **Sync entire
+directory** becomes the right control, because keeping Whiteout's user list in step
 with your directory — including removals — is what you want in steady state.
 
 For devices, the pattern is the reverse: keep scoping each generation to the
