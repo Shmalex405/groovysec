@@ -46,20 +46,30 @@ Steps 2 and 3 are separate on purpose. Connecting your directory lets people
 
 ---
 
-## Step 1 — First sign-in
+## Step 1 — Claim the admin account
 
-1. Open the tenant URL Groovy sent you.
-2. Sign in with the first admin credentials.
-3. **Change the password immediately.** This account is created during
-   provisioning and is the only way in until your identity provider is
-   connected.
-4. Go to **Profile** and set a recovery email if the admin address is a shared
-   mailbox.
+There is no initial password to be sent one. When Groovy provisions your
+tenant, an administrator account is created in a pending state with no
+password, and a **one-time setup link** is emailed to the contact address you
+gave us.
 
-> **Keep this account.** After SSO is connected your team signs in through your
-> identity provider, but this local admin remains your way back in if the IdP
-> connection breaks — an expired client secret, a revoked consent, a tenant
-> migration. Do not delete it.
+1. Find the setup email. The account is `admin@<your-domain>` unless you asked
+   for something else.
+2. Follow the link and set a password.
+3. Sign in at your tenant URL.
+4. Go to **Profile** and set a recovery email — particularly if the admin
+   address is a shared mailbox rather than a person.
+
+> **The setup link expires after 48 hours.** If provisioning and your first
+> sign-in are a few days apart, expect it to have lapsed. That is not a
+> problem — ask your Groovy contact to reissue it, which takes a moment and
+> creates no duplicate account.
+
+> **Keep this account after SSO is connected.** Your team will sign in through
+> your identity provider, but this local admin is your way back in if that
+> connection breaks — an expired client secret, revoked consent, a tenant
+> migration. It exists precisely for the case where SSO is the thing that is
+> broken, so do not delete it once SSO works.
 
 ---
 
