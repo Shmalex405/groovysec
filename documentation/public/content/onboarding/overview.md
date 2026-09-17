@@ -35,7 +35,7 @@ point of the steps below is that you choose exactly who is covered.
         ↓
   4. Connect your MDM           ← pick your platform
         ↓
-  5. Deploy to chosen devices   only the devices you select
+  5. Generate credentials       Whiteout mints; your MDM distributes
         ↓
   6. Verify coverage            confirm each person is actually protected
 ```
@@ -169,7 +169,7 @@ its activity to. The usual causes:
 
 ---
 
-## Step 5 — Deploy to your chosen devices
+## Step 5 — Generate credentials and hand them to your MDM
 
 ### Dry-run first
 
@@ -182,20 +182,41 @@ Every step should pass. Read the `enroll_anchor_compatible` step carefully on
 Windows: it names the minimum Desktop Guard version and whether the device is
 joined to your directory in the way enrollment requires.
 
-### Generate the deployment payload
+### Who decides what gets installed
+
+**Your MDM does.** Whiteout never installs software and never pushes anything
+to a device. Your IT team deploys Desktop Guard through your MDM's own app
+deployment and scopes it however they normally scope software.
+
+What Whiteout produces is the *credential* that lets those devices sign
+themselves in — one per device, bound to that device's hardware identifier so
+it is worthless anywhere else. That binding is why there is no single shared
+connection string to paste: each device needs its own, and the payload below
+carries one entry per device.
+
+So the selection you make here is not "who gets Whiteout". It is "who has a
+credential waiting". Distribution stays entirely yours.
+
+### Generate the payload
 
 **Integrations → MDM → the download icon on your integration row.**
 
-The dialog opens on **Deploy to all *n* eligible devices**, which is what you
-want for a full rollout. For a pilot, click **Choose specific devices** and
-tick only the people in your group. Filter by name or address to find them.
+The dialog opens on **Deploy to all *n* eligible devices**. For a first
+generation that is usually what you want — mint for the whole directory, then
+let your rollout happen at whatever pace suits you. To narrow it, click
+**Choose specific devices** and filter by name or address.
 
-Whiteout then issues enrollment credentials for exactly those machines. This
-matters beyond tidiness: credentials issued for devices you are not deploying
-to sit unredeemed, and every unredeemed credential is surface area you did not
-need.
+### Set the credential lifetime deliberately
 
-Two things the list tells you:
+The dialog defaults to **30 days**, which suits deploying now. If you are
+generating for the whole organisation ahead of a rollout that runs over months,
+choose **Never expires** instead.
+
+This is worth getting right: an expired credential produces a profile that
+installs cleanly and silently signs nobody in. There is no error — the device
+simply never appears as enrolled.
+
+Two things the device list tells you:
 
 - **Already deployed** marks a device that still holds a live credential from
   an earlier run. Including it again asks you to confirm replacement first, and
@@ -208,6 +229,22 @@ Two things the list tells you:
 
 If someone in your pilot is missing from the list, they will be in it greyed
 out with the reason. That is the answer to "why isn't Dana here?".
+
+### Adding devices later
+
+New hires and replacement laptops are the normal case, and there is one trap.
+
+When you generate again, **select just the new devices**. Whiteout then issues
+credentials for those alone and leaves every existing one untouched.
+
+If you instead generate across the whole integration, it will refuse — the
+devices from your first run already hold live credentials. The only way past
+that refusal is to reissue for everything, which revokes the credential each
+already-deployed device uses to recover a broken session. Nothing breaks
+immediately, which is exactly what makes it easy to miss: those devices keep
+working until one of them needs to recover and cannot.
+
+Scope to the new devices and none of this arises.
 
 ### Upload it
 
@@ -288,5 +325,11 @@ scale, with one change of tool: once you intend to govern everyone, **Sync all
 users** becomes the right control, because keeping Whiteout's user list in step
 with your directory — including removals — is what you want in steady state.
 
-Grow in stages. Each stage is a fresh pass through steps 3 and 5 with a larger
-selection.
+For devices, the pattern is the reverse: keep scoping each generation to the
+devices that do not yet have a credential. There is no point at which
+generating across the whole integration becomes the right move, because by then
+most devices already hold one.
+
+A common shape is to generate for the whole directory once, with **Never
+expires**, so every employee has a credential waiting — and then let IT roll
+out to groups on their own schedule without coming back to Whiteout at all.
