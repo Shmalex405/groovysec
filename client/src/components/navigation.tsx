@@ -153,7 +153,8 @@ const MENUS: NavMenu[] = [
           { label: "Blog", href: "/blog" },
           { label: "Documentation", href: "/docs", hardNav: true },
           { label: "Security Whitepaper", href: "/whiteout-ai/security-whitepaper" },
-          { label: "Downloads", href: "/download" },
+          // TEMP: Downloads page unpublished 2026-09-17 — restore to relist in Resources menu.
+          // { label: "Downloads", href: "/download" },
         ],
       },
     ],

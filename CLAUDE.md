@@ -49,10 +49,11 @@ npm run check            # Run TypeScript compiler
 | `/skills` | Secure AI Skills product | `client/src/pages/skills.tsx` |
 | `/skills/success` | Post-purchase success | `client/src/pages/skills/success.tsx` |
 | `/privacy-policy` | Privacy Policy | `client/src/pages/privacy-policy.tsx` |
+| ~~`/download`~~ | Downloads — **unpublished 2026-09-17** | `client/src/pages/download.tsx` |
 
 ### Unpublished surfaces
 
-Two products are built but not currently listed on the site. Both follow the same
+Three surfaces are built but not currently listed on the site. All follow the same
 pattern: page files and components stay in the tree, and every entry point is
 commented out with a `TEMP: <name> unpublished <date>` marker — routes in
 `client/src/App.tsx`, menu entries in `navigation.tsx` and `footer.tsx`, and the
@@ -64,6 +65,9 @@ route meta in `scripts/build-docs.mjs` (which also controls the sitemap). Grep f
   about / demo / contact / partners / review / security / privacy-policy.
   `company-home.tsx` still contains Maestro content but is **not routed**.
 - **Secure AI Skills** (2026-07-16) — `/skills`, `/skills/success`.
+- **Downloads** (2026-09-17) — `/download`. Held back because the installers are
+  an enterprise-only distribution; the binaries themselves still live on the
+  `updates.groovysec.com` CDN and are **not** gated by hiding this page.
 
 A blog post is unpublished by renaming it to `*.md.unpublished`; both the glob in
 `client/src/lib/blog.ts` and the readdir filter in `scripts/build-docs.mjs` key off

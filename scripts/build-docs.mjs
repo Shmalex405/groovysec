@@ -109,12 +109,13 @@ const ROUTES = [
     description:
       "Schedule a personalized demo of Whiteout AI or Secure AI Skills — a 30-minute walkthrough tailored to your stack and compliance requirements.",
   },
-  {
-    path: "/download",
-    title: `Download Whiteout AI | ${SITE_NAME}`,
-    description:
-      "Download Whiteout AI for macOS and Windows, plus Desktop Guard, browser extensions for Chrome and Firefox, and IDE extensions for VS Code and JetBrains.",
-  },
+  // TEMP: Downloads page unpublished 2026-09-17 — excluded from docs build + sitemap; restore to relist.
+  // {
+  //   path: "/download",
+  //   title: `Download Whiteout AI | ${SITE_NAME}`,
+  //   description:
+  //     "Download Whiteout AI for macOS and Windows, plus Desktop Guard, browser extensions for Chrome and Firefox, and IDE extensions for VS Code and JetBrains.",
+  // },
   {
     path: "/partners",
     title: `Partners | ${SITE_NAME}`,

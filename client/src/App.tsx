@@ -27,7 +27,8 @@ import TermsOfService from "@/pages/terms-of-service";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import Demo from "@/pages/demo";
 import Review from "@/pages/review";
-import Download from "@/pages/download";
+// TEMP: Downloads page unpublished 2026-09-17 — page file kept; re-enable import + route below to relist.
+// import Download from "@/pages/download";
 import Partners from "@/pages/partners";
 // TEMP: Skills page unpublished 2026-07-16 — page files kept; re-enable import + routes below to relist.
 // import Skills from "@/pages/skills";
@@ -48,7 +49,8 @@ function Router() {
         <Route path="/" component={WhiteoutAI} />
         <Route path="/demo" component={Demo} />
         <Route path="/review" component={Review} />
-        <Route path="/download" component={Download} />
+        {/* TEMP: Downloads page unpublished 2026-09-17 — re-enable to relist. */}
+        {/* <Route path="/download" component={Download} /> */}
         <Route path="/whiteout-ai" component={WhiteoutAI} />
         {/* TEMP: Maestro unpublished 2026-09-02 — re-enable to relist. */}
         {/* <Route path="/maestro" component={Maestro} /> */}
