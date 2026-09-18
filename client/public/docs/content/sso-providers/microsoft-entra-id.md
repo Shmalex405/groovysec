@@ -142,8 +142,8 @@ To include additional claims in the ID token:
 ### Step 6: Configure Whiteout AI
 
 1. Log in to Whiteout AI as an administrator
-2. Navigate to **Settings** > **Identity Provider**
-3. Click **Add Identity Provider**
+2. Navigate to **Integrations** > **Identity Providers (SSO)**
+3. Click **Add Provider**
 4. Select **Microsoft Entra ID**
 5. Enter:
 
@@ -162,7 +162,7 @@ To include additional claims in the ID token:
 
 ### Enable Group Sync
 
-1. In Whiteout AI, go to **Identity Provider** > **Microsoft Entra ID** > **Configure**
+1. In Whiteout AI, go to **Integrations** > **Identity Providers (SSO)** > **Microsoft Entra ID** > **Manage**
 2. Enable **Sync Groups**
 3. Configure sync settings:
 
@@ -336,7 +336,7 @@ Default attribute mapping:
 To disconnect Microsoft Entra ID:
 
 1. **In Whiteout AI:**
-   - **Settings** > **Identity Provider** > **Microsoft Entra ID** > **Remove**
+   - **Integrations** > **Identity Providers (SSO)** > **Microsoft Entra ID** > **Disconnect**
 
 2. **In Azure AD:**
    - Go to **App registrations** > **Whiteout AI**

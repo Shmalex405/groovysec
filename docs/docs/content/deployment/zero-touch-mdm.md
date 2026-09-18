@@ -66,7 +66,9 @@ The payload you generate from Whiteout AI contains more than the Desktop Guard e
 - **App configuration profile** — the per-device Desktop Guard enrollment payload (an App Configuration Policy in Intune, a Configuration Profile in Jamf)
 - **Six browser force-install profiles** — Chrome, Edge, and Firefox, each for macOS and Windows
 
-Each browser profile must be delivered as its own configuration profile in your MDM. If you skip them, Desktop Guard enrolls silently but the browser extensions do **not** auto-install on enrolled devices. The fanout scripts (below) handle all of them for you.
+Each browser profile must be delivered as its own configuration profile in your MDM. If you skip them, Desktop Guard enrolls silently but the browser extensions do **not** auto-install on enrolled devices — and nothing in the console flags it.
+
+The Intune fanout script creates them for you when you pass `--browser-group` (see [Step 3](#step-3-fan-out-the-per-device-profiles)); without that flag it prints them for manual upload. For Jamf, they are a one-time manual upload.
 
 > **Firefox on Windows** requires Mozilla's Firefox ADMX templates to be ingested into Intune first (**Devices** > **Configuration** > **Import ADMX** > upload `firefox.admx` + `firefox.adml`). If you can't use ADMX, see [Firefox force-install fallback](#firefox-force-install-fallback).
 
@@ -78,7 +80,7 @@ Run all of these before a mass deployment. If any fails, fix it first.
 
 1. **SSO configured and tested** — in Whiteout AI, confirm your identity provider connection passes **Test Connection**
 2. **IdP user sync run at least once** — click **Sync Users** and confirm the user count is greater than zero. After the initial sync, the scheduler re-syncs automatically
-3. **MDM integration connected** — confirm Intune or Jamf Pro shows as connected under **Settings** > **MDM Providers**
+3. **MDM integration connected** — confirm Intune or Jamf Pro shows as connected under **Integrations** > **Mobile Device Management (MDM)**
 4. **MDM device sync run at least once** — run a sync and confirm the device count is greater than zero. The sync maps each device to a user from your IdP; devices without a mapped user are skipped during payload generation
 5. **Spot-check five representative devices** with the dry-run endpoint:
 
@@ -96,7 +98,7 @@ All seven checks in the response should show `passed: true`. Any failure means f
 
 **Recommended: use the Whiteout AI admin UI.**
 
-1. Navigate to **Settings** > **MDM Providers**
+1. Navigate to **Integrations** > **Mobile Device Management (MDM)**
 2. On the connected integration, click the **Download** icon to open the **Generate Deployment Payload** dialog
 3. Review the device count and token type summary
 4. Click **Generate & Download**
@@ -152,15 +154,35 @@ export AZURE_CLIENT_ID=<your-client-id>
 export AZURE_CLIENT_SECRET=<your-client-secret>
 
 # Dry-run first — validates payload and authentication, makes no changes
-./intune-fanout.py intune-payload.json --dry-run
+./intune-fanout.py intune-payload.json \
+    --platform windows \
+    --browser-group "<your device group>" \
+    --dry-run
 
 # Real run
-./intune-fanout.py intune-payload.json --out fanout-results.json
+./intune-fanout.py intune-payload.json \
+    --platform windows \
+    --browser-group "<your device group>" \
+    --out fanout-results.json
 ```
 
-The script also walks the browser force-install profiles and creates one Configuration Profile per entry, all targeting the same device group as the Desktop Guard profile. It is idempotent (safe to re-run) and resilient (a per-device failure doesn't abort the rest).
+Two flags decide what the run actually covers:
 
-> **Windows devices**: Desktop Guard enrollment configuration on Windows is delivered as registry policy keys, which Intune applies via **Custom OMA-URI** configuration profiles rather than App Configuration Policies. Create these profiles manually from the payload's per-device entries.
+| Flag | Why it matters |
+|------|----------------|
+| `--platform windows` | **Defaults to `macos`.** On a Windows fleet, omitting it builds the wrong profile type for every device |
+| `--browser-group` | Creates and assigns the org-wide browser force-install profiles too, targeting the group you name — normally the same group the Desktop Guard app is assigned to. **Without it, only the per-device enrollment profiles are created**; the browser profiles are printed for you to upload by hand |
+
+The script is idempotent (safe to re-run) and resilient (a per-device failure doesn't abort the rest). Run it once per platform for a mixed fleet.
+
+Two profiles are deliberately never created for you, and the run says so at the end:
+
+- **Chrome Incognito kill-switch** — Chrome cannot force an extension on in Incognito, so turning Incognito off is the only lever, and it is the one profile users notice. Add `--chrome-incognito-off` if that is your intent. The Edge InPrivate coverage profile is created either way, since it costs users nothing.
+- **Safari private browsing (macOS)** — delivered as a declarative configuration, which needs a supervised enrollment and a different Intune surface. Upload that one by hand.
+
+> **Adding browser coverage to a fleet that already enrolled?** Run with `--browser-profiles-only --browser-group "<group>"` to create just the browser profiles, without touching the per-device ones.
+
+> **Windows devices**: Desktop Guard enrollment configuration on Windows is delivered as registry policy keys, which Intune applies via **Custom OMA-URI** configuration profiles rather than App Configuration Policies. The script builds these for you when you pass `--platform windows`.
 
 ### Step 4: Verify
 
@@ -266,7 +288,7 @@ On a pilot device, confirm:
 1. **Desktop Guard**: appears in the menu bar / system tray and shows as signed in (right-click > **Status**)
 2. **Browser extension**: open Chrome — the Whiteout AI extension popup should show the user's email
 3. **IDE plugin**: open VS Code — the **Whiteout: Show Status** command should show the user's email
-4. **Admin UI**: in Whiteout AI, open the **Devices** page, filter by the pilot user, and confirm three active sessions (Desktop Guard, browser extension, IDE extension) all sharing the same hardware UUID
+4. **Admin UI**: in Whiteout AI, open the **Enrollment** page, filter by the pilot user, and confirm three active sessions (Desktop Guard, browser extension, IDE extension) all sharing the same hardware UUID
 
 ---
 
@@ -288,7 +310,7 @@ On a pilot device, confirm:
 
 ### User shows as signed in but not enforcing policy
 
-Check the Whiteout AI **Devices** page for an active session on the device. If none exists, Desktop Guard never completed enrollment — verify the device received its `enrollment.json` (macOS) or registry policy keys (Windows).
+Check the Whiteout AI **Enrollment** page for an active session on the device. If none exists, Desktop Guard never completed enrollment — verify the device received its `enrollment.json` (macOS) or registry policy keys (Windows).
 
 ### Browser extension still shows a login prompt
 
@@ -296,7 +318,7 @@ Check that the extension has permission to reach `http://127.0.0.1:18444/*`. Cur
 
 ### All three surfaces signed in but no enforcement events in the dashboard
 
-Verify a SOC destination is configured (**Settings** > **SOC Destinations** — see the [SOC/SIEM destination guides](./soc-destinations/webhook.md)). Silent-approval audit events confirm the broker path is working; if those are present but enforcement events are not, check the destination configuration.
+Verify a SOC destination is configured (**Integrations** > **Security Ops Destinations** — see the [SOC/SIEM destination guides](./soc-destinations/webhook.md)). Silent-approval audit events confirm the broker path is working; if those are present but enforcement events are not, check the destination configuration.
 
 ---
 

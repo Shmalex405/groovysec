@@ -151,7 +151,9 @@ Two things to know before you skip this step:
 - **Without the browser profiles, the extension does not install.** Desktop Guard will enroll silently and the browsers will have no Whiteout coverage at all.
 - **Firefox on Windows requires Mozilla's ADMX templates** ingested into Intune first (**Devices** > **Configuration** > **Import ADMX**). Without them, the Firefox Windows entry cannot apply.
 
-> **Automating this for a large fleet.** Intune assigns one configuration profile to one group, so a per-device credential means one profile and one device group per device. Doing that by hand is impractical beyond a pilot. Whiteout ships a fanout tool that creates them through Microsoft Graph, and it needs two permissions beyond the three in Step 3: `DeviceManagementApps.ReadWrite.All` and `Group.ReadWrite.All`. Ask your Whiteout contact for it — it is not required for a pilot of a few devices.
+> **Automating this for a large fleet.** Intune assigns one configuration profile to one group, so a per-device credential means one profile and one device group per device. Doing that by hand is impractical beyond a pilot. Whiteout ships a fanout tool that creates them through Microsoft Graph — including the browser profiles above, when you point it at a device group — and it needs two permissions beyond the three in Step 3: `DeviceManagementApps.ReadWrite.All` and `Group.ReadWrite.All`. Ask your Whiteout contact for it — it is not required for a pilot of a few devices. Full usage is in the [Zero-Touch MDM Deployment guide](../deployment/zero-touch-mdm.md#step-3-fan-out-the-per-device-profiles).
+>
+> Note that the per-device dynamic groups it creates require **Microsoft Entra ID P1 or higher** (included with Microsoft 365 E3/E5). Free-tier Entra cannot create dynamic groups, so those tenants create the profiles manually.
 
 ### Step 8: Push AI blocking policies (optional)
 
