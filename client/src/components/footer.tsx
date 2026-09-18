@@ -15,7 +15,8 @@ const footerLinks: Record<string, LinkItem[]> = {
     // { label: "Maestro", href: "/maestro" },
     // TEMP: Skills page unpublished 2026-07-16 — restore to relist in footer.
     // { label: "Secure AI Skills", href: "/skills" },
-    { label: "Downloads", href: "/download" },
+    // TEMP: Downloads page unpublished 2026-09-17 — restore to relist in footer.
+    // { label: "Downloads", href: "/download" },
     { label: "Documentation", href: "/docs", external: false },
   ],
   Solutions: [
