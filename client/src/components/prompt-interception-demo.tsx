@@ -52,7 +52,7 @@ const SCENARIOS: Scenario[] = [
   {
     source: "claude.ai · Marketing",
     before: "Draft a follow-up email to our Q3 webinar attendees.",
-    policy: "60+ policies evaluated · no violation",
+    policy: "54 policies evaluated · no violation",
     verdict: "allow",
     result: "Compliant — delivered unchanged",
   },
@@ -137,7 +137,7 @@ function statusFor(phase: Phase, scenario: Scenario): {
     case "travel":
       return { text: "Intercepting prompt in transit…", className: "text-[#51617A]" };
     case "scan":
-      return { text: "Evaluating against 60+ compliance policies…", className: "text-[#1A5FB4]" };
+      return { text: "Evaluating against 54 compliance policies…", className: "text-[#1A5FB4]" };
     case "verdict":
       return { text: verdictStyle.enforcing, className: "text-[#1A5FB4]" };
     default:
@@ -440,7 +440,7 @@ export function PromptInterceptionDemo() {
       {/* Stats footer */}
       <div className="mt-5 grid grid-cols-3 gap-4 border-t border-[#0F1B2D]/10 pt-4">
         {[
-          { value: "60+", label: "AI Policies" },
+          { value: "54", label: "AI Policies" },
           { value: "12", label: "Regulatory Frameworks" },
           { value: "23+", label: "AI Platforms" },
         ].map((stat) => (

@@ -41,7 +41,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function SecurityWhitepaper() {
   usePageMeta(
     "Whiteout AI Security Whitepaper",
-    "How Whiteout AI enables safe enterprise adoption of generative AI — 54 policies across 8 compliance domains, 96.8% corrected accuracy and a 99.9% everyday-prompt pass rate on the public 100,000-prompt benchmark, a 20B-parameter US-developed LLM run locally, prompt-injection defense for agentic AI, MCP governance, and security-first architecture."
+    "How Whiteout AI enables safe enterprise adoption of generative AI — 54 policies across 8 compliance domains, 96.8% corrected accuracy and a 99.9% everyday-prompt pass rate on the public 100,000-prompt benchmark, a full LLM compliance engine run locally, prompt-injection defense for agentic AI, MCP governance, and security-first architecture."
   );
   const demoHref = "/demo";
 
@@ -419,7 +419,7 @@ const useCases = [
                       </GradientButton>
                     </Link>
                     <a
-                      href="/WHITEOUT_AI_WHITEPAPER.pdf?v=4.3"
+                      href="/WHITEOUT_AI_WHITEPAPER.pdf?v=4.4"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -432,7 +432,7 @@ const useCases = [
 
                   <div className="text-sm text-[#51617A] flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    Whiteout AI by Groovy Security — Version 4.2 | August 2026
+                    Whiteout AI by Groovy Security — Version 4.4 | September 2026
                   </div>
                 </ScrollReveal>
               </div>

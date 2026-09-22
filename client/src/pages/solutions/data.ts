@@ -1,6 +1,6 @@
 // Data-driven copy for the Solutions scope pages. Each entry is rendered by the
 // shared <SolutionPage /> template (solution-page.tsx). Metrics intentionally
-// mirror the vetted figures used elsewhere on the site (60+ policies / 9 domains /
+// mirror the vetted figures used elsewhere on the site (54 policies / 8 domains /
 // >99% benchmark accuracy) — no new product claims are introduced here.
 
 export type SolutionStat = { value: string; label: string };
@@ -26,9 +26,9 @@ export type SolutionData = {
 
 // Shared by every Whiteout AI solution scope — already vetted on the Government page.
 const WHITEOUT_STATS: SolutionStat[] = [
-  { value: "60+", label: "Pre-Built Policies" },
+  { value: "54", label: "Pre-Built Policies" },
   { value: ">99%", label: "Benchmark Accuracy" },
-  { value: "9", label: "Policy Domains" },
+  { value: "8", label: "Policy Domains" },
   { value: "<320ms", label: "Evaluation Latency (P95)" },
 ];
 
@@ -66,7 +66,7 @@ export const SOLUTIONS: Record<string, SolutionData> = {
         items: [
           "Full-LLM evaluation understands context, not just keyword patterns",
           'Distinguishes "aggregate statistics" from actual customer or patient data',
-          "60+ pre-built policies across 9 domains (PHI, PII, GDPR, code/IP, finance)",
+          "54 pre-built policies across 8 domains (PHI, PII, GDPR, code/IP, finance)",
           "Calibrated for low false positives so legitimate prompts pass through",
         ],
       },
@@ -96,14 +96,14 @@ export const SOLUTIONS: Record<string, SolutionData> = {
     eyebrow: "Solutions — Regulated Industries & Compliance",
     metaTitle: "AI Compliance for Regulated Industries — Whiteout AI",
     metaDescription:
-      "HIPAA, GDPR, FERPA, SOX, PCI-DSS — adopt AI in regulated industries with proof of control. Whiteout AI enforces 60+ pre-built policies across 9 domains and produces an audit-ready record of every AI interaction.",
+      "HIPAA, GDPR, FERPA, SOX, PCI-DSS — adopt AI in regulated industries with proof of control. Whiteout AI enforces 54 pre-built policies across 8 domains and produces an audit-ready record of every AI interaction.",
     headline: {
       lead: "Prove AI Compliance",
       gradient: "in Regulated",
       tail: "Industries",
     },
     intro:
-      "HIPAA, GDPR, FERPA, SOX, PCI-DSS — regulated organizations can't adopt AI without proof of control. Whiteout AI enforces 60+ pre-built policies across 9 domains and produces an audit-ready record of every AI interaction, so you can move fast on AI while staying inside the lines.",
+      "HIPAA, GDPR, FERPA, SOX, PCI-DSS — regulated organizations can't adopt AI without proof of control. Whiteout AI enforces 54 pre-built policies across 8 domains and produces an audit-ready record of every AI interaction, so you can move fast on AI while staying inside the lines.",
     ctaLabel: "Schedule a Compliance Briefing",
     stats: WHITEOUT_STATS,
     valuePropsHeading: "Compliance That Keeps Pace with AI Adoption",
@@ -114,7 +114,7 @@ export const SOLUTIONS: Record<string, SolutionData> = {
         title: "Regulatory Coverage",
         items: [
           "HIPAA, GDPR, FERPA, SOX, and PCI-DSS policy enforcement out of the box",
-          "60+ pre-built policies across 9 domains, extensible to your requirements",
+          "54 pre-built policies across 8 domains, extensible to your requirements",
           "Request custom policies tailored to organization-specific obligations",
           "Group-based policy assignment for department-level control",
         ],
