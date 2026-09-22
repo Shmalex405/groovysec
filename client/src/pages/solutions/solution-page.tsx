@@ -109,7 +109,7 @@ function SolutionContent({
             <ScrollReveal>
               <PromptInterceptionDemo />
               <p className="mt-5 text-sm text-[#6E7B8C] max-w-xl mx-auto">
-                Every prompt intercepted, evaluated against 60+ policies, and
+                Every prompt intercepted, evaluated against 54 policies, and
                 enforced in real time — before sensitive data ever leaves your network.
               </p>
             </ScrollReveal>

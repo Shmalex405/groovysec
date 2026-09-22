@@ -35,10 +35,10 @@ const PRODUCTS = {
     name: "Whiteout AI",
     href: "/whiteout-ai",
     description:
-      "Enterprise AI governance platform that intercepts, evaluates, and enforces compliance policies on every AI interaction — before sensitive data ever leaves your network.",
+      "Enterprise AI governance platform that evaluates AI interactions against your compliance policies — stopping sensitive data before it leaves your network wherever a pre-send check is possible, and recording it everywhere else.",
     bullets: [
-      "Real-time prompt interception across browser, desktop, IDE, mobile & cloud",
-      "60+ pre-built compliance policies across 9 domains (HIPAA, GDPR, FERPA, SOX)",
+      "Real-time prompt interception in the browser, desktop apps & IDEs, with audit across servers & mobile",
+      "54 pre-built compliance policies across 8 domains (HIPAA, GDPR, SOX, PCI-DSS)",
       "Full-LLM contextual evaluation — not keyword matching",
       "Complete audit trail with SIEM/SOC integration",
       "Isolated internal chat models for data-sensitive prompts",

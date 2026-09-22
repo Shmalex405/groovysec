@@ -34,14 +34,14 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function Government() {
   usePageMeta(
     "Whiteout AI for Government & Public Sector",
-    "AI governance built for the public sector — 50+ pre-built policies across 8 domains, 96.8% corrected accuracy on a 100,000-prompt public benchmark with a 99.9% pass rate on everyday prompts, SSO/MDM/SIEM integration, and audit-ready proof of every AI control."
+    "AI governance built for the public sector — 54 pre-built policies across 8 domains, 96.8% corrected accuracy on a 100,000-prompt public benchmark with a 99.9% pass rate on everyday prompts, SSO/MDM/SIEM integration, and audit-ready proof of every AI control."
   );
   const demoHref = "/demo";
 
   const stats = [
-    { value: "60+", label: "Pre-Built Policies" },
+    { value: "54", label: "Pre-Built Policies" },
     { value: ">99%", label: "Benchmark Accuracy" },
-    { value: "9", label: "Policy Domains" },
+    { value: "8", label: "Policy Domains" },
     { value: "<320ms", label: "Evaluation Latency (P95)" },
   ];
 
@@ -304,7 +304,7 @@ export default function Government() {
 
                 <div className="space-y-4">
                   {[
-                    "60+ pre-built policies across 9 domains covering PHI, PII, GDPR, FERPA, SOX, and PCI-DSS",
+                    "54 pre-built policies across 8 domains covering PHI, PII, GDPR, SOX, and PCI-DSS",
                     "Request custom policies tailored to agency-specific requirements",
                     "Group-based policy assignment for department-level control",
                     "Automatic redaction service generates compliant alternatives",
