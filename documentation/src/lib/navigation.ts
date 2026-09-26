@@ -100,6 +100,14 @@ export const navigation: NavSection[] = [
     ],
   },
   {
+    title: 'Compliance Evidence',
+    items: [
+      { title: 'Overview', href: '/admin-guides/compliance-evidence/overview' },
+      { title: 'Evidence Packs', href: '/admin-guides/compliance-evidence/evidence-packs' },
+      { title: 'GRC Connections (Vanta, Drata)', href: '/admin-guides/compliance-evidence/grc-connections' },
+    ],
+  },
+  {
     title: 'SOC/SIEM Destinations',
     items: [
       { title: 'Webhook', href: '/admin-guides/soc-destinations/webhook' },
