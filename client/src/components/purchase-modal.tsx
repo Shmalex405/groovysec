@@ -97,7 +97,7 @@ function RequestAccessModal({ onClose }: { onClose: () => void }) {
             </div>
             <h3 className="text-xl font-bold text-[#0F1B2D] mb-2">Request received</h3>
             <p className="text-sm text-[#51617A] max-w-sm mx-auto mb-6">
-              Thanks — we'll review your request and reach out from{" "}
+              Thanks. We'll review your request and reach out from{" "}
               <span className="text-[#0F1B2D]">alex@groovysec.com</span> with payment
               and repository access instructions shortly.
             </p>

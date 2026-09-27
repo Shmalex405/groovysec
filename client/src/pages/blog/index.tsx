@@ -23,7 +23,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 export default function Blog() {
   usePageMeta(
     "Blog",
-    "Insights on AI governance, compliance, and offensive security from the Groovy Security team — engineering deep dives, research, and product news."
+    "Insights on AI governance, compliance, and offensive security from the Groovy Security team: engineering deep dives, research, and product news."
   );
 
   const posts = getAllPosts();
@@ -91,7 +91,7 @@ export default function Blog() {
         <section className="pb-24">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             {visible.length === 0 ? (
-              <p className="text-center text-[#6E7B8C]">No posts yet — check back soon.</p>
+              <p className="text-center text-[#6E7B8C]">No posts yet. Check back soon.</p>
             ) : (
               <StaggerChildren className="space-y-6">
                 {visible.map((post) => (

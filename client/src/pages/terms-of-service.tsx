@@ -78,14 +78,14 @@ export default function TermsOfService() {
 
           <div>
             <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
-              Secure AI Skills — No Guarantee
+              Secure AI Skills: No Guarantee
             </h2>
             <p className="text-[#51617A] mb-3">
               The Groovy Secure AI Skills library (the “Skills”) is provided on
               an “as is” and “as available” basis. While the Skills are designed,
-              audited, and maintained with security best practices in mind —
-              including review against the OWASP Agentic Security Initiative Top
-              10 — Groovy Security makes <strong>no guarantee, warranty, or
+              audited, and maintained with security best practices in mind
+              (including review against the OWASP Agentic Security Initiative Top
+              10), Groovy Security makes <strong>no guarantee, warranty, or
               representation</strong> that the Skills will:
             </p>
             <ul className="list-disc list-inside text-[#51617A] space-y-1 mb-3">

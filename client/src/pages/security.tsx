@@ -27,7 +27,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function Security() {
   usePageMeta(
     "Trust & Security",
-    "How Groovy Security secures its own products — SOC 2 Type II in progress, encryption in transit and at rest, isolated per-customer deployments, audit logging, and a 48-hour critical patch commitment."
+    "How Groovy Security secures its own products: SOC 2 Type II in progress, encryption in transit and at rest, isolated per-customer deployments, audit logging, and a 48-hour critical patch commitment."
   );
 
   const pillars = [
@@ -64,7 +64,7 @@ export default function Security() {
       icon: Database,
       title: "Data Ownership & Audit",
       items: [
-        "Your data stays yours — exportable on request",
+        "Your data stays yours: exportable on request",
         "Complete audit trails across all products",
         "SIEM/SOC delivery of security events",
         "Sensitive content excluded from system logs",
@@ -107,7 +107,7 @@ export default function Security() {
               </HeroLine>
               <HeroLine>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto leading-relaxed">
-                  We're a security company — so we hold our own products to the
+                  We're a security company, so we hold our own products to the
                   standard we'd demand from any vendor. Here's how Groovy
                   Security protects your data across Whiteout AI and Secure AI
                   Skills.
@@ -170,7 +170,7 @@ export default function Security() {
               </h2>
               <p className="text-lg text-[#51617A] mb-10 max-w-xl mx-auto">
                 Security questionnaires, architecture reviews, or compliance
-                mapping requests — we're happy to walk through any of it.
+                mapping requests, we're happy to walk through any of it.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/demo">

@@ -41,7 +41,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function SecurityWhitepaper() {
   usePageMeta(
     "Whiteout AI Security Whitepaper",
-    "How Whiteout AI enables safe enterprise adoption of generative AI — 54 policies across 8 compliance domains, 96.8% corrected accuracy and a 99.9% everyday-prompt pass rate on the public 100,000-prompt benchmark, a 20B-parameter US-developed LLM run locally, prompt-injection defense for agentic AI, MCP governance, and security-first architecture."
+    "How Whiteout AI enables safe enterprise adoption of generative AI: 54 policies across 8 compliance domains, 96.8% corrected accuracy and a 99.9% everyday-prompt pass rate on the public 100,000-prompt benchmark, a 20B-parameter US-developed LLM run locally, prompt-injection defense for agentic AI, MCP governance, and security-first architecture."
   );
   const demoHref = "/demo";
 
@@ -84,13 +84,13 @@ export default function SecurityWhitepaper() {
   ];
 
   const capabilities = [
-    "Preventive Control — Sensitive data is blocked before it reaches external AI services",
-    "Contextual Understanding — AI-powered analysis understands natural language context",
-    "User Education — Clear feedback on policy violations creates a learning loop",
-    "Redact & Continue — One-click sanitized rewrites keep work moving without the sensitive data",
-    "Accountable Override — Groups can grant a justified, fully audited release valve on any block",
-    "Group-Scoped Control — Policies, custom rules, override rights, and data exposure are configured per group",
-    "Zero Productivity Impact — Compliant prompts proceed with imperceptible latency",
+    "Preventive Control: Sensitive data is blocked before it reaches external AI services",
+    "Contextual Understanding: AI-powered analysis understands natural language context",
+    "User Education: Clear feedback on policy violations creates a learning loop",
+    "Redact & Continue: One-click sanitized rewrites keep work moving without the sensitive data",
+    "Accountable Override: Groups can grant a justified, fully audited release valve on any block",
+    "Group-Scoped Control: Policies, custom rules, override rights, and data exposure are configured per group",
+    "Zero Productivity Impact: Compliant prompts proceed with imperceptible latency",
   ];
 
   const howItWorks = [
@@ -105,49 +105,49 @@ export default function SecurityWhitepaper() {
     {
       icon: Globe,
       title: "Browser Extension",
-      description: "Chrome, Firefox, Edge, Safari — ChatGPT, Claude, Gemini, Copilot, Perplexity + 6 more AI web apps, plus embedded Microsoft 365 Copilot and Google Workspace Gemini",
+      description: "Chrome, Firefox, Edge, Safari: ChatGPT, Claude, Gemini, Copilot, Perplexity + 6 more AI web apps, plus embedded Microsoft 365 Copilot and Google Workspace Gemini",
       color: "blue",
     },
     {
       icon: Monitor,
       title: "Desktop Guard",
-      description: "macOS & Windows — ChatGPT, Claude, Codex, Copilot, Office Copilot, Perplexity, Gemini desktop apps; pre-send gating, file drops, paste & attach interception",
+      description: "macOS & Windows: ChatGPT, Claude, Codex, Copilot, Office Copilot, Perplexity, Gemini desktop apps; pre-send gating, file drops, paste & attach interception",
       color: "green",
     },
     {
       icon: Layers,
       title: "IDE Extensions",
-      description: "VS Code, Cursor, Windsurf, JetBrains — Claude Code, GitHub Copilot, Codex, Gemini CLI, Aider coverage with prompt-injection defense",
+      description: "VS Code, Cursor, Windsurf, JetBrains: Claude Code, GitHub Copilot, Codex, Gemini CLI, Aider coverage with prompt-injection defense",
       color: "orange",
     },
     {
       icon: Brain,
       title: "MCP Governance",
-      description: "A governed MCP + OpenAPI gateway with field-level response vetting across 23 business integrations — and endpoint blocking of ungoverned vendor connectors",
+      description: "A governed MCP + OpenAPI gateway with field-level response vetting across 23 business integrations, and endpoint blocking of ungoverned vendor connectors",
       color: "blue",
     },
     {
       icon: Server,
       title: "Secure Internal AI",
-      description: "Compliance-checked AI for sensitive queries — data never leaves the org",
+      description: "Compliance-checked AI for sensitive queries: data never leaves the org",
       color: "green",
     },
     {
       icon: Cloud,
       title: "Infrastructure Agents",
-      description: "EKS, EC2, ECS, Lambda — transcript, tap & eBPF observation, in-process SDK enforcement, and full AWS Bedrock coverage",
+      description: "EKS, EC2, ECS, Lambda: transcript, tap & eBPF observation, in-process SDK enforcement, and full AWS Bedrock coverage",
       color: "orange",
     },
     {
       icon: Code2,
       title: "Developer SDKs",
-      description: "Python, Node, and an AWS Lambda layer — one-line governance for the AI calls inside your own applications",
+      description: "Python, Node, and an AWS Lambda layer: one-line governance for the AI calls inside your own applications",
       color: "blue",
     },
     {
       icon: Smartphone,
       title: "Mobile Governance",
-      description: "Managed iOS & Android — AI-app discovery, usage analytics, and block policies pushed through your MDM",
+      description: "Managed iOS & Android: AI-app discovery, usage analytics, and block policies pushed through your MDM",
       color: "green",
     },
   ];
@@ -178,14 +178,13 @@ export default function SecurityWhitepaper() {
 
   const policyCategories = [
     { name: "PHI", count: 5, desc: "Protected Health Information" },
-    { name: "PII", count: 5, desc: "Personally Identifiable Info" },
-    { name: "GDPR", count: 7, desc: "GDPR, LGPD, UK GDPR" },
+    { name: "PII", count: 6, desc: "Personally Identifiable Info" },
+    { name: "GDPR", count: 8, desc: "GDPR, LGPD, UK GDPR" },
     { name: "Code/IP", count: 4, desc: "Source Code & Trade Secrets" },
-    { name: "Finance", count: 7, desc: "SOX, SEC, GLB" },
+    { name: "Finance", count: 9, desc: "SOX, SEC, GLB" },
     { name: "Legal", count: 8, desc: "Attorney-Client, Work Product" },
-    { name: "Security", count: 7, desc: "NIST, ISO 27001" },
+    { name: "Security", count: 9, desc: "NIST, ISO 27001" },
     { name: "Confidential", count: 5, desc: "Trade Secrets, NDA" },
-    { name: "Education", count: 12, desc: "FERPA" },
   ];
 
   const injectionLayers = [
@@ -195,7 +194,7 @@ export default function SecurityWhitepaper() {
     },
     {
       title: "Before Tool Execution",
-      description: "The enforcement point — risky tool calls are stopped before they run",
+      description: "The enforcement point: risky tool calls are stopped before they run",
     },
     {
       title: "After Tool Output",
@@ -215,9 +214,9 @@ export default function SecurityWhitepaper() {
   const tamperFeatures = [
     "Hooks centrally installed and owned by Desktop Guard, locked read-only",
     "Integrity re-verified every 60 seconds with surgical self-repair on drift",
-    "Removed hook registrations are restored — user configuration left untouched",
-    "Runtime auth via short-lived local tokens — no credentials stored on disk",
-    "Self-protection hard-blocks any attempt to disable the defenses — even in warn-first mode",
+    "Removed hook registrations are restored; user configuration left untouched",
+    "Runtime auth via short-lived local tokens; no credentials stored on disk",
+    "Self-protection hard-blocks any attempt to disable the defenses, even in warn-first mode",
   ];
 
   const securityFeatures = [
@@ -226,7 +225,7 @@ export default function SecurityWhitepaper() {
       title: "Authentication & Access Control",
       items: [
         "Industry-standard token-based auth with rotation",
-        "SSO/SAML 2.0 — Okta, Azure AD, OneLogin, Ping Identity",
+        "SSO/SAML 2.0: Okta, Azure AD, OneLogin, Ping Identity",
         "Device binding for enhanced session security",
         "Role-based access control with organization scoping",
       ],
@@ -246,7 +245,7 @@ export default function SecurityWhitepaper() {
       title: "Audit & Compliance",
       items: [
         "Immutable audit trail for every AI interaction",
-        "Structured event logging — sensitive data never logged",
+        "Structured event logging: sensitive data never logged",
         "Real-time SIEM webhook delivery (Splunk, Sentinel, Elastic)",
         "Exportable compliance reports (PDF/CSV)",
       ],
@@ -326,7 +325,7 @@ const useCases = [
       name: "GDPR",
       full: "General Data Protection Regulation",
       items: [
-        "Data minimization — block personal data from external processing",
+        "Data minimization: block personal data from external processing",
         "Purpose limitation with logged justification",
         "Accountability through audit trails",
         "Data subject rights support",
@@ -402,7 +401,7 @@ const useCases = [
                     <p className="text-lg text-[#51617A] mb-8 leading-relaxed">
                       A comprehensive overview of how Whiteout AI enables
                       organizations to safely adopt generative AI tools while
-                      enforcing compliance, data security, and auditability —
+                      enforcing compliance, data security, and auditability
                       across the browser, desktop, IDE, infrastructure, mobile,
                       and the MCP connectors that wire AI into your business
                       systems.
@@ -432,7 +431,7 @@ const useCases = [
 
                   <div className="text-sm text-[#51617A] flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    Whiteout AI by Groovy Security — Version 4.2 | August 2026
+                    Whiteout AI by Groovy Security, Version 4.2 | August 2026
                   </div>
                 </ScrollReveal>
               </div>
@@ -545,7 +544,7 @@ const useCases = [
                   <p className="text-lg text-[#51617A] mb-6 leading-relaxed">
                     Rather than blocking AI tools or relying on post-hoc detection,
                     Whiteout AI evaluates every prompt and file upload against
-                    organizational policies in real time — before any data reaches
+                    organizational policies in real time, before any data reaches
                     external AI services.
                   </p>
                 </ScrollReveal>
@@ -684,7 +683,7 @@ const useCases = [
                         ALLOWED
                       </span>
                       <p className="text-[#51617A] italic">
-                        "I have a patient I need help with — help me build a
+                        "I have a patient I need help with, help me build a
                         reusable treatment plan summary template I can use."
                       </p>
                     </div>
@@ -700,10 +699,10 @@ const useCases = [
                 <div className="space-y-3">
                   {[
                     "54 built-in policies across 8 compliance domains",
-                    "96.8% corrected accuracy on the public 100,000-prompt benchmark \u2014 every residual miss adjudicated against the deployed rule text by independent readers",
+                    "96.8% corrected accuracy on the public 100,000-prompt benchmark, with every residual miss adjudicated against the deployed rule text by independent readers",
                     "99.9% pass rate on everyday work prompts: 40 false blocks in 36,416, so legitimate work is never interrupted",
                     "Request custom policies tailored to your organization\u2019s specific rules",
-                    "Group-based enforcement throughout — policies, custom rules, override rights, and connector exposure all scoped per group for full customizable control",
+                    "Group-based enforcement throughout: policies, custom rules, override rights, and connector exposure all scoped per group for full customizable control",
                     "Supports both cloud and self-hosted LLM evaluation",
                   ].map((item, index) => (
                     <div key={index} className="flex items-start">
@@ -739,8 +738,8 @@ const useCases = [
                   ))}
                 </div>
                 <div className="mt-4 text-center text-sm text-[#6E7B8C]">
-                  <span className="font-semibold text-[#0F1B2D]">60</span> expert-curated
-                  policies across all domains — extendable with custom policies
+                  <span className="font-semibold text-[#0F1B2D]">54</span> expert-curated
+                  policies across all 8 domains, extendable with custom policies
                 </div>
               </div>
             </div>
@@ -756,7 +755,7 @@ const useCases = [
                   Prompt-Injection Defense for Agentic AI
                 </h2>
                 <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
-                  Coding agents execute commands and read whatever their tools return —
+                  Coding agents execute commands and read whatever their tools return,
                   making injected instructions a first-class enterprise threat. Whiteout AI
                   defends agentic tools like Claude Code and Cursor with centrally managed,
                   tamper-resistant hooks at three interception points.
@@ -806,7 +805,7 @@ const useCases = [
                   Tamper-Resistant by Design
                 </h3>
                 <p className="text-sm text-[#51617A] mb-4">
-                  Tuned warn-first so it never blocks legitimate developer work — with
+                  Tuned warn-first so it never blocks legitimate developer work, with
                   one unconditional hard block: any attempt to disable the defense
                   itself.
                 </p>
@@ -1025,7 +1024,7 @@ const useCases = [
                 </Link>
               </div>
               <p className="text-sm text-[#51617A] mt-6">
-                Whiteout AI by Groovy Security — Enterprise AI Governance
+                Whiteout AI by Groovy Security: Enterprise AI Governance
               </p>
             </div>
           </section>

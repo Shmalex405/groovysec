@@ -222,12 +222,12 @@ const highlights = [
   {
     icon: ShieldCheck,
     title: "OWASP ASI Top 10 Audited",
-    description: <>Every skill is audited against the <span className="text-[#0F1B2D] font-semibold">OWASP Agentic Security Initiative Top 10</span> — covering prompt injection, excessive agency, insecure tool integration, sensitive data exposure, and more.</>,
+    description: <>Every skill is audited against the <span className="text-[#0F1B2D] font-semibold">OWASP Agentic Security Initiative Top 10</span>, covering prompt injection, excessive agency, insecure tool integration, sensitive data exposure, and more.</>,
   },
   {
     icon: AlertTriangle,
     title: "The Problem It Solves",
-    description: <><span className="font-semibold text-[#B3261E]">41% of community AI skills have vulnerabilities.</span> <span className="font-semibold text-[#A05F00]">99.3% lack permission manifests.</span> <span className="font-semibold text-[#B3261E]">12% contain malware.</span> <span className="text-[#0F1B2D] font-semibold">Groovy Skills are the enterprise-grade antidote.</span> <span className="text-[#6E7B8C]">— Groovy Security audit of community skill repositories, 2026</span></>,
+    description: <><span className="font-semibold text-[#B3261E]">41% of community AI skills have vulnerabilities.</span> <span className="font-semibold text-[#A05F00]">99.3% lack permission manifests.</span> <span className="font-semibold text-[#B3261E]">12% contain malware.</span> <span className="text-[#0F1B2D] font-semibold">Groovy Skills are the enterprise-grade antidote.</span> <span className="text-[#6E7B8C]">Source: Groovy Security audit of community skill repositories, 2026</span></>,
   },
   {
     icon: Award,
@@ -239,7 +239,7 @@ const highlights = [
 export default function Skills() {
   usePageMeta(
     "Secure AI Skills",
-    "111 production-grade, security-audited skills for AI agents across 14 categories — OWASP ASI Top 10 audited, zero external dependencies, lifetime access."
+    "111 production-grade, security-audited skills for AI agents across 14 categories: OWASP ASI Top 10 audited, zero external dependencies, lifetime access."
   );
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>(skillLibrary[0].id);
@@ -284,7 +284,7 @@ export default function Skills() {
                 <HeroLine>
                   <p className="text-xl lg:text-2xl text-[#51617A] mb-10 leading-relaxed max-w-3xl mx-auto">
                     The only <span className="text-[#0F1B2D] font-semibold">production-grade, security-audited</span> skill library for AI agents.
-                    111 skills across 14 categories — <span className="text-[#0F1B2D] font-semibold">purpose-built governance</span>, secure integrations,
+                    111 skills across 14 categories: <span className="text-[#0F1B2D] font-semibold">purpose-built governance</span>, secure integrations,
                     and <span className="text-[#0F1B2D] font-semibold">enterprise-ready alternatives to vulnerable community skills</span>.
                   </p>
                 </HeroLine>
@@ -559,7 +559,7 @@ export default function Skills() {
                   One Purchase. Unlimited Security.
                 </h2>
                 <p className="text-lg text-[#51617A] mb-8 max-w-xl mx-auto">
-                  Get lifetime access to all 111 Groovy Security Skills — including every future update, new skill, and security patch.
+                  Get lifetime access to all 111 Groovy Security Skills, including every future update, new skill, and security patch.
                 </p>
                 <GradientButton
                   onClick={() => setShowPurchaseModal(true)}

@@ -521,7 +521,7 @@ function ExtensionCard({
             </a>
           ) : (
             <Button disabled className="bg-[#0F1B2D]/[0.04] text-[#6E7B8C] border border-[#0F1B2D]/10 cursor-not-allowed">
-              Coming Soon — {primaryStore[1].label}
+              Coming Soon: {primaryStore[1].label}
             </Button>
           )}
 
@@ -534,7 +534,7 @@ function ExtensionCard({
                   key={key}
                   className="text-xs text-[#6E7B8C] bg-[#0F1B2D]/[0.04] px-2 py-1 rounded"
                 >
-                  {store.label} — {store.available ? "Available" : "Coming Soon"}
+                  {store.label}: {store.available ? "Available" : "Coming Soon"}
                 </span>
               ))}
           </div>
@@ -579,7 +579,7 @@ function IdeExtensionCard({
                     disabled
                     className="bg-[#0F1B2D]/[0.04] text-[#6E7B8C] border border-[#0F1B2D]/10 cursor-not-allowed w-full justify-start"
                   >
-                    {store.label} — Coming Soon
+                    {store.label}: Coming Soon
                   </Button>
                 )}
               </div>

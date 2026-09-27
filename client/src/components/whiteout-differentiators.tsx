@@ -11,9 +11,7 @@ import {
   KeyRound,
   Fingerprint,
   Smartphone,
-  Link2,
   Eye,
-  Webhook,
 } from "lucide-react";
 import {
   ScrollReveal,
@@ -32,7 +30,7 @@ export function FullLlmEngine() {
       icon: Brain,
       title: "Pure Semantic Evaluation",
       description:
-        "No regex. No keyword lists. The engine reads meaning and intent the way a compliance officer would — distinguishing real patient data from a generic template request.",
+        "No regex. No keyword lists. The engine reads meaning and intent the way a compliance officer would, distinguishing real patient data from a generic template request.",
     },
     {
       icon: Cpu,
@@ -44,7 +42,7 @@ export function FullLlmEngine() {
       icon: BarChart3,
       title: "Benchmarked in Public",
       description:
-        "96.8% corrected accuracy across a 100,000-prompt benchmark spanning all eight policy domains, with a 99.9% pass rate on everyday work prompts — calibrated to flag genuine violations without interrupting legitimate work. Published openly, prompts and labels, so you can verify it yourself rather than take our word for it.",
+        "96.8% corrected accuracy across a 100,000-prompt benchmark spanning all eight policy domains, with a 99.9% pass rate on everyday work prompts, calibrated to flag genuine violations without interrupting legitimate work. Published openly, prompts and labels, so you can verify it yourself rather than take our word for it.",
     },
   ];
 
@@ -61,8 +59,8 @@ export function FullLlmEngine() {
               Most AI data-protection tools rely on small classifier models or
               pattern matching that miss context. Whiteout AI evaluates every
               prompt with a full 20-billion-parameter, US-developed LLM running
-              inside your deployment boundary — never a third-party model
-              provider — accurate enough to catch real violations on a public
+              inside your deployment boundary (never a third-party model
+              provider), accurate enough to catch real violations on a public
               100,000-prompt benchmark, calibrated enough to wave legitimate
               work straight through.
             </p>
@@ -136,7 +134,7 @@ export function EnforcementSurfaces() {
       icon: Globe,
       title: "Browser Extension",
       mode: "Enforce",
-      description: "Chrome, Firefox, Edge & Safari — prompts, pastes, and file uploads intercepted across 23+ AI platforms.",
+      description: "Chrome, Firefox, Edge & Safari: prompts, pastes, and file uploads intercepted across 23+ AI platforms.",
     },
     {
       icon: Monitor,
@@ -148,13 +146,13 @@ export function EnforcementSurfaces() {
       icon: Code,
       title: "IDE Extension",
       mode: "Enforce",
-      description: "Pre-send gates for AI coding assistants — Claude Code, Cursor, and GitHub Copilot — right inside the editor.",
+      description: "Pre-send gates for AI coding assistants (Claude Code, Cursor, and GitHub Copilot) right inside the editor.",
     },
     {
       icon: Server,
       title: "Infrastructure Agent",
       mode: "Enforce",
-      description: "Monitor or enforce AI API calls from Kubernetes, EC2, ECS, and Lambda workloads — with a Python SDK and Lambda layer for in-process blocking in your own applications.",
+      description: "Monitor or enforce AI API calls from Kubernetes, EC2, ECS, and Lambda workloads, with a Python SDK and Lambda layer for in-process blocking in your own applications.",
     },
     {
       icon: Workflow,
@@ -176,8 +174,8 @@ export function EnforcementSurfaces() {
               One Policy Engine. Five Enforcement Surfaces.
             </h2>
             <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
-              Policy enforcement everywhere your workforce uses AI — browser,
-              desktop, IDE, and cloud — from a single policy engine.
+              Policy enforcement everywhere your workforce uses AI (browser,
+              desktop, IDE, and cloud) from a single policy engine.
             </p>
           </div>
         </ScrollReveal>
@@ -218,51 +216,42 @@ export function EnterpriseIdentity() {
     {
       icon: Fingerprint,
       title: "SCIM 2.0 Provisioning",
-      description: "Automated user and group lifecycle straight from your identity provider — joiners, movers, and leavers handled without manual admin.",
+      description: "Automated user and group lifecycle straight from your identity provider: joiners, movers, and leavers handled without manual admin.",
     },
     {
       icon: KeyRound,
       title: "SSO Across 9 Providers",
-      description: "Okta, Microsoft Entra, Google Workspace, Auth0, Ping, OneLogin, JumpCloud, and generic OIDC/SAML — with user and group sync.",
+      description: "Okta, Microsoft Entra, Google Workspace, Auth0, Ping, OneLogin, JumpCloud, and generic OIDC/SAML, with user and group sync.",
     },
     {
       icon: Smartphone,
       title: "Zero-Touch MDM Deployment",
-      description: "Roll out every enforcement surface fleet-wide through Microsoft Intune and Jamf — no end-user action required.",
-    },
-    {
-      icon: Link2,
-      title: "Hash-Chained Audit Log",
-      description: "Tamper-evident, cryptographically chained audit records — the kind of evidence compliance officers can take to an auditor.",
+      description: "Roll out every enforcement surface fleet-wide through Microsoft Intune and Jamf, with no end-user action required.",
     },
     {
       icon: Eye,
       title: "Human-in-the-Loop Approvals",
       description: "Route sensitive AI requests to reviewers with accountable-override workflows instead of blunt blocking.",
     },
-    {
-      icon: Webhook,
-      title: "SIEM / SOC Delivery",
-      description: "Signed, batched webhook delivery of events to Splunk, Sentinel, Elastic, QRadar, or S3 — your SOC sees everything in real time.",
-    },
   ];
 
   return (
     <section className="py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-[#0F1B2D] mb-4 tracking-tight">
-              Built for Your Identity Stack — and Your Auditors
+              Built for Your Identity Stack
             </h2>
             <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
               The enterprise plumbing is already done: provisioning, single
-              sign-on, fleet deployment, and audit evidence that holds up.
+              sign-on, and fleet-wide deployment, with human oversight when a
+              request needs it.
             </p>
           </div>
         </ScrollReveal>
 
-        <StaggerChildren className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <StaggerChildren className="grid md:grid-cols-2 gap-6">
           {items.map((item) => {
             const Icon = item.icon;
             return (

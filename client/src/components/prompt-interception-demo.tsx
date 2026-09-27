@@ -39,22 +39,22 @@ const SCENARIOS: Scenario[] = [
     redacted: "[PATIENT-01]",
     policy: "HIPAA §164.502 · PHI detected",
     verdict: "redact",
-    result: "PHI redacted — sanitized prompt delivered",
+    result: "PHI redacted; sanitized prompt delivered",
   },
   {
     source: "Copilot Chat · IDE",
-    before: "Auth keeps failing — here's our key: ",
+    before: "Auth keeps failing, here's our key: ",
     sensitive: "AWS_SECRET_KEY=wJalrXUtnFEMI…",
     policy: "Credential Exposure · live secret",
     verdict: "block",
-    result: "Blocked — the secret never left your network",
+    result: "Blocked: the secret never left your network",
   },
   {
     source: "claude.ai · Marketing",
     before: "Draft a follow-up email to our Q3 webinar attendees.",
-    policy: "60+ policies evaluated · no violation",
+    policy: "54 policies evaluated · no violation",
     verdict: "allow",
-    result: "Compliant — delivered unchanged",
+    result: "Compliant: delivered unchanged",
   },
   {
     source: "gemini.google.com · Finance",
@@ -62,7 +62,7 @@ const SCENARIOS: Scenario[] = [
     attachment: { name: "Q3-Board-Deck.pdf", meta: "12 pages" },
     policy: "Internal Use Only · confidential document",
     verdict: "block",
-    result: "Blocked — 12 pages of board material never left your network",
+    result: "Blocked: 12 pages of board material never left your network",
   },
 ];
 
@@ -101,21 +101,21 @@ const VERDICT_STYLE: Record<
     icon: ShieldAlert,
     badge: "border-[#A05F00]/25 bg-[#A05F00]/10 text-[#A05F00]",
     text: "text-[#A05F00]",
-    enforcing: "Policy matched — redacting sensitive data…",
+    enforcing: "Policy matched: redacting sensitive data…",
   },
   block: {
     label: "Blocked",
     icon: ShieldX,
     badge: "border-[#B3261E]/25 bg-[#B3261E]/10 text-[#B3261E]",
     text: "text-[#B3261E]",
-    enforcing: "Policy matched — blocking transmission…",
+    enforcing: "Policy matched: blocking transmission…",
   },
   allow: {
     label: "Allowed",
     icon: ShieldCheck,
     badge: "border-[#2E7D32]/25 bg-[#2E7D32]/10 text-[#2E7D32]",
     text: "text-[#2E7D32]",
-    enforcing: "No violation found — releasing prompt…",
+    enforcing: "No violation found: releasing prompt…",
   },
 };
 
@@ -137,7 +137,7 @@ function statusFor(phase: Phase, scenario: Scenario): {
     case "travel":
       return { text: "Intercepting prompt in transit…", className: "text-[#51617A]" };
     case "scan":
-      return { text: "Evaluating against 60+ compliance policies…", className: "text-[#1A5FB4]" };
+      return { text: "Evaluating against 54 compliance policies…", className: "text-[#1A5FB4]" };
     case "verdict":
       return { text: verdictStyle.enforcing, className: "text-[#1A5FB4]" };
     default:
@@ -218,7 +218,7 @@ export function PromptInterceptionDemo() {
       ref={containerRef}
       className="max-w-4xl mx-auto h-full flex flex-col rounded-xl border border-[#0F1B2D]/10 bg-white overflow-hidden shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] p-4 sm:p-6"
       role="img"
-      aria-label="Animated diagram: Whiteout AI intercepts each prompt between your workforce and AI platforms, evaluates it against compliance policies, then redacts, blocks, or allows it — and logs every decision to the audit trail."
+      aria-label="Animated diagram: Whiteout AI intercepts each prompt between your workforce and AI platforms, evaluates it against compliance policies, then redacts, blocks, or allows it, and logs every decision to the audit trail."
     >
       {/* Header row */}
       <div className="flex items-center justify-between mb-4">
@@ -440,7 +440,7 @@ export function PromptInterceptionDemo() {
       {/* Stats footer */}
       <div className="mt-5 grid grid-cols-3 gap-4 border-t border-[#0F1B2D]/10 pt-4">
         {[
-          { value: "60+", label: "AI Policies" },
+          { value: "54", label: "AI Policies" },
           { value: "12", label: "Regulatory Frameworks" },
           { value: "23+", label: "AI Platforms" },
         ].map((stat) => (

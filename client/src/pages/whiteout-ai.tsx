@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Navigation } from "@/components/navigation";
+import { StickyJumpNav } from "@/components/sticky-jump-nav";
 import { HeroSection } from "@/components/hero-section";
-import { PlatformOverview } from "@/components/platform-overview";
 import { ArchitectureFlow } from "@/components/architecture-flow";
 import { PlatformIntegrations } from "@/components/platform-integrations";
 import { SecurityCompliance } from "@/components/security-compliance";
@@ -9,9 +9,16 @@ import { ComplianceFrameworks } from "@/components/compliance-frameworks";
 import { Footer } from "@/components/footer";
 import {
   FullLlmEngine,
-  EnforcementSurfaces,
   EnterpriseIdentity,
 } from "@/components/whiteout-differentiators";
+import {
+  HumanVisibilityAuditTrail,
+  AgentsAreUsersProof,
+  AiFootprintDiscovery,
+  InfrastructureGovernance,
+  AiConnectorGrantGovernance,
+  GrcEvidenceNew,
+} from "@/components/whiteout-platform-capabilities";
 import { PromptInterceptionDemo } from "@/components/prompt-interception-demo";
 import { GlassCard } from "@/components/ui/glass-card";
 import { GradientButton } from "@/components/ui/gradient-button";
@@ -28,10 +35,17 @@ import {
 import { usePageMeta } from "@/lib/use-page-meta";
 import { useState } from "react";
 
+const JUMP_ITEMS = [
+  { id: "visibility", label: "Visibility" },
+  { id: "how-it-works", label: "How It Works" },
+  { id: "compliance", label: "Compliance" },
+  { id: "deploy", label: "Deploy" },
+];
+
 export default function WhiteoutAI() {
   usePageMeta(
-    "Whiteout AI — Enterprise AI Governance",
-    "Intercept and govern every AI interaction across browser, desktop, IDE, infrastructure, and cloud. A full 20B-parameter, US-developed LLM compliance engine that runs locally, with 50+ policies across 8 domains, 96.8% corrected accuracy on a 100,000-prompt public benchmark, and a 99.9% pass rate on everyday prompts."
+    "Whiteout AI: Enterprise AI Governance",
+    "Intercept and govern every AI interaction across browser, desktop, IDE, infrastructure, and cloud. A full 20B-parameter, US-developed LLM compliance engine that runs locally, with 54 policies across 8 domains, 96.8% corrected accuracy on a 100,000-prompt public benchmark, and a 99.9% pass rate on everyday prompts."
   );
 
   // First visit each session opens on the splash; the page mounts underneath
@@ -53,29 +67,42 @@ export default function WhiteoutAI() {
     <PageTransition>
       <AuroraBackground variant="bluegreen" className="min-h-screen">
         <Navigation />
+        <StickyJumpNav items={JUMP_ITEMS} />
         <HeroSection />
-        <ArchitectureFlow />
+        <div id="visibility" className="scroll-mt-28">
+          <HumanVisibilityAuditTrail />
+        </div>
+        <AgentsAreUsersProof />
+        <AiFootprintDiscovery />
+        <AiConnectorGrantGovernance />
+        <InfrastructureGovernance />
+        <div id="how-it-works" className="scroll-mt-28">
+          <ArchitectureFlow />
+        </div>
 
-        {/* Live enforcement demo — the How-It-Works pipeline above, running
+        {/* Live enforcement demo: the How-It-Works pipeline above, running
             (text-center matches the alignment context the demo was designed in) */}
         <section className="pb-24">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <ScrollReveal>
               <PromptInterceptionDemo />
               <p className="mt-5 text-sm text-[#6E7B8C] max-w-xl mx-auto">
-                The architecture above, running live — every prompt intercepted,
-                evaluated against 60+ policies, and enforced in real time.
+                The architecture above, running live. Every prompt intercepted,
+                evaluated against 54 policies, and enforced in real time.
               </p>
             </ScrollReveal>
           </div>
         </section>
 
         <FullLlmEngine />
-        <ComplianceFrameworks />
-        <SecurityCompliance />
-        <EnforcementSurfaces />
+        <div id="compliance" className="scroll-mt-28">
+          <ComplianceFrameworks />
+        </div>
+        <GrcEvidenceNew />
+        <div id="deploy" className="scroll-mt-28">
+          <SecurityCompliance />
+        </div>
         <PlatformIntegrations />
-        <PlatformOverview />
         <EnterpriseIdentity />
 
         {/* Learn More Links */}
@@ -141,7 +168,7 @@ export default function WhiteoutAI() {
           </div>
         </section>
 
-        {/* Company trust strip — condensed; full story lives on /about */}
+        {/* Company trust strip: condensed; full story lives on /about */}
         <section className="py-20 border-t border-[#0F1B2D]/10">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
@@ -151,7 +178,7 @@ export default function WhiteoutAI() {
                 </h2>
                 <p className="text-base text-[#51617A] max-w-2xl mx-auto">
                   Groovy Security was founded by cybersecurity professionals who saw the
-                  critical gaps in AI governance firsthand — and built Whiteout AI to close them.
+                  critical gaps in AI governance firsthand, and built Whiteout AI to close them.
                 </p>
               </div>
             </ScrollReveal>

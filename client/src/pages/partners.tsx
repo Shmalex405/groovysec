@@ -76,7 +76,7 @@ const partnerTracks = [
   {
     name: "Referral",
     description:
-      "Introduce qualified opportunities and earn referral fees — no selling required.",
+      "Introduce qualified opportunities and earn referral fees: no selling required.",
     features: [
       "Simple referral fee structure",
       "Lead tracking portal",
@@ -125,7 +125,7 @@ const colorMap: Record<string, { bg: string; border: string; text: string; icon:
 export default function Partners() {
   usePageMeta(
     "Partners",
-    "Partner with Groovy Security — reseller, referral, and technology partnerships for Whiteout AI."
+    "Partner with Groovy Security: reseller, referral, and technology partnerships for Whiteout AI."
   );
   return (
     <PageTransition>
@@ -252,7 +252,7 @@ export default function Partners() {
                   Why Partner With Us
                 </h2>
                 <p className="text-[#51617A] text-lg max-w-xl mx-auto">
-                  Everything you need to succeed — from enablement to execution.
+                  Everything you need to succeed: from enablement to execution.
                 </p>
               </div>
             </ScrollReveal>
@@ -287,7 +287,7 @@ export default function Partners() {
                   Ready to Get Started?
                 </h2>
                 <p className="text-[#51617A] mb-8 max-w-md mx-auto">
-                  Whether you're a reseller, consultant, or technology vendor —
+                  Whether you're a reseller, consultant, or technology vendor,
                   we'd love to explore how we can grow together.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -299,7 +299,7 @@ export default function Partners() {
                   </Link>
                   <a href="mailto:partners@groovysec.com">
                     <GradientButton variant="white" className="text-base px-8 py-3">
-                      Contact Us — partners@groovysec.com
+                      Contact Us: partners@groovysec.com
                     </GradientButton>
                   </a>
                 </div>

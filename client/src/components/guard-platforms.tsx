@@ -90,7 +90,7 @@ export function InterceptorPlatforms() {
               Whiteout AI Interceptor
             </h2>
             <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
-              Policy enforcement everywhere your workforce uses AI — browser,
+              Policy enforcement everywhere your workforce uses AI: browser,
               desktop, IDE, cloud, and mobile. Click any node to explore.
             </p>
           </div>
@@ -113,7 +113,7 @@ export function InterceptorPlatforms() {
               <h3 className="text-lg font-bold text-[#0F1B2D] mb-1">23+ AI Platforms Covered</h3>
               <p className="text-xs text-[#6E7B8C]">
                 Standalone AI, Microsoft 365 Copilot, Google Workspace Gemini,
-                and desktop applications — all governed by one policy engine.
+                and desktop applications, all governed by one policy engine.
               </p>
             </div>
             <div className="flex flex-wrap justify-center gap-2">

@@ -18,7 +18,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 
 export default function SkillsSuccess() {
   usePageMeta(
-    "Request Received — Secure AI Skills",
+    "Request Received: Secure AI Skills",
     "Your Secure AI Skills access request has been received. We'll email you payment and repository access instructions shortly."
   );
 

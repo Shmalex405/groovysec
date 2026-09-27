@@ -11,7 +11,7 @@ export function SecurityCompliance() {
               Flexible Deployment Architecture
             </h2>
             <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
-              Deploy Whiteout AI the way your organization needs — fully managed, in your cloud, or completely air-gapped on your own network.
+              Deploy Whiteout AI the way your organization needs: fully managed, in your own AWS account, or on-premises with a fully air-gapped option in development.
             </p>
           </div>
         </ScrollReveal>
@@ -74,7 +74,7 @@ export function SecurityCompliance() {
                 </circle>
               </g>
 
-              {/* Top center — Whiteout AI source */}
+              {/* Top center: Whiteout AI source */}
               <g>
                 <rect x="340" y="16" width="120" height="44" rx="10" fill="#FFFFFF" stroke="#1a5fb4" strokeWidth="0.8" />
                 <SpinningMarkSvg x={352} y={22} size={24} />
@@ -82,7 +82,7 @@ export function SecurityCompliance() {
                 <text x="358" y="52" fill="#51617A" fontSize="8">Choose your deployment</text>
               </g>
 
-              {/* Left — Whiteout-Hosted */}
+              {/* Left: Whiteout-Hosted */}
               <g>
                 <rect x="50" y="160" width="160" height="190" rx="12" fill="#FFFFFF" stroke="#1a5fb4" strokeWidth="1" />
                 {/* Status badge */}
@@ -113,7 +113,7 @@ export function SecurityCompliance() {
                 <circle cx="130" cy="340" r="3" fill="#1a5fb4" />
               </g>
 
-              {/* Center — Client-Hosted */}
+              {/* Center: Client-Hosted */}
               <g>
                 <rect x="320" y="160" width="160" height="190" rx="12" fill="#FFFFFF" stroke="#2e7d32" strokeWidth="1" />
                 {/* Status badge */}
@@ -125,7 +125,7 @@ export function SecurityCompliance() {
 
                 <g fill="#51617A" fontSize="8">
                   <circle cx="342" cy="232" r="1.5" fill="#2e7d32" />
-                  <text x="350" y="235">Your cloud account</text>
+                  <text x="350" y="235">Your AWS account</text>
                   <circle cx="342" cy="248" r="1.5" fill="#2e7d32" />
                   <text x="350" y="251">You control the network</text>
                   <circle cx="342" cy="264" r="1.5" fill="#2e7d32" />
@@ -142,7 +142,7 @@ export function SecurityCompliance() {
                 <circle cx="400" cy="340" r="3" fill="#2e7d32" />
               </g>
 
-              {/* Right — LAN-Hosted */}
+              {/* Right: LAN-Hosted */}
               <g>
                 <rect x="590" y="160" width="160" height="190" rx="12" fill="#FFFFFF" stroke="#c77800" strokeWidth="1" />
                 {/* Status badge */}
@@ -179,8 +179,8 @@ export function SecurityCompliance() {
                 <div className="text-[10px] tracking-[0.18em] font-semibold text-[#1A5FB4] mb-1.5">WHITEOUT-HOSTED</div>
                 <div className="text-sm font-bold text-[#0F1B2D] mb-1">The Classic SaaS Approach</div>
                 <p className="text-xs text-[#6E7B8C]">
-                  Sign up, set policies, done. Groovy carries the pager — dedicated,
-                  isolated infrastructure with managed keys — so your team gets
+                  Sign up, set policies, done. Groovy carries the pager: dedicated,
+                  isolated infrastructure with managed keys, so your team gets
                   governance without a single server to babysit.
                 </p>
               </div>
@@ -188,8 +188,8 @@ export function SecurityCompliance() {
                 <div className="text-[10px] tracking-[0.18em] font-semibold text-[#2E7D32] mb-1.5">CLIENT-HOSTED</div>
                 <div className="text-sm font-bold text-[#0F1B2D] mb-1">Maximum Data Control</div>
                 <p className="text-xs text-[#6E7B8C]">
-                  Your cloud, your network, your keys. Whiteout runs entirely inside
-                  your own account, so the answer to "where does our data go?" is
+                  Your AWS account, your network, your keys. Whiteout runs entirely
+                  inside your own VPC, so the answer to "where does our data go?" is
                   simple: nowhere. You own it.
                 </p>
               </div>
@@ -198,7 +198,7 @@ export function SecurityCompliance() {
                 <div className="text-sm font-bold text-[#0F1B2D] mb-1">For the Extremely Regulated</div>
                 <p className="text-xs text-[#6E7B8C]">
                   For environments where nothing leaves the building. Fully air-gapped
-                  on-premises operation with local GPU inference — built for defense,
+                  on-premises operation with local GPU inference, built for defense,
                   government, and classified networks.
                 </p>
               </div>

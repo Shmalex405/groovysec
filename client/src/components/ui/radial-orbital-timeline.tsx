@@ -316,7 +316,7 @@ export default function RadialOrbitalTimeline({
             </div>
           )}
 
-          {/* No visible orbit ring — nodes float freely */}
+          {/* No visible orbit ring; nodes float freely */}
 
           {/* Nodes */}
           {timelineData.map((item, index) => {
@@ -364,7 +364,7 @@ export default function RadialOrbitalTimeline({
                   />
                 )}
 
-                {/* Node circle — big, bright, bold */}
+                {/* Node circle: big, bright, bold */}
                 <div className={cn(
                   "w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all duration-300",
                   isExpanded ? `${c.nodeActive} scale-[1.5]` :
@@ -375,7 +375,7 @@ export default function RadialOrbitalTimeline({
                   <Icon size={24} className="drop-shadow-lg" />
                 </div>
 
-                {/* Label — solid ink, brand hue on focus */}
+                {/* Label: solid ink, brand hue on focus */}
                 <div className={cn(
                   "absolute top-[4.25rem] left-1/2 -translate-x-1/2 text-base font-bold tracking-wide transition-all duration-300 max-w-[240px] text-center leading-tight",
                   isExpanded && "scale-110",

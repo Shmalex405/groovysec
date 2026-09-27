@@ -14,7 +14,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function Demo() {
   usePageMeta(
     "Request a Demo",
-    "Schedule a personalized demo of Whiteout AI or Secure AI Skills — a 30-minute walkthrough tailored to your stack and compliance requirements."
+    "Schedule a personalized demo of Whiteout AI or Secure AI Skills: a 30-minute walkthrough tailored to your stack and compliance requirements."
   );
 
   const steps = [
@@ -28,7 +28,7 @@ export default function Demo() {
       icon: MonitorPlay,
       title: "See It Live",
       description:
-        "A 30-minute walkthrough — watch Whiteout AI intercept real prompts and follow a compliance decision end to end.",
+        "A 30-minute walkthrough: watch Whiteout AI intercept real prompts and follow a compliance decision end to end.",
     },
     {
       icon: Rocket,
@@ -52,7 +52,7 @@ export default function Demo() {
                   See Groovy Security in Action
                 </h1>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
-                  Here's what to expect from your demo — no slide decks, just the
+                  Here's what to expect from your demo: no slide decks, just the
                   products working on problems like yours.
                 </p>
               </div>
