@@ -4,9 +4,9 @@
 
 Generative AI has become the fastest-adopted workplace technology in history — and the fastest-growing data-exfiltration channel. Employees paste customer records into chatbots, attach contracts to AI assistants, wire coding agents into production repositories, and authorize AI connectors against corporate document stores. Traditional security tooling — file-oriented DLP, CASB blocking, security-awareness training — was never designed for conversational, agentic AI, and it shows.
 
-**Whiteout AI**, by Groovy Security, is an enterprise AI governance and security platform that closes this gap. It intercepts and evaluates every AI interaction — prompts, file uploads, pastes, tool calls, and connector reads — against your organization's policies **before** data reaches an external AI service, across every surface where employees touch AI: the browser, native desktop apps, IDEs and coding agents, cloud infrastructure, mobile devices, and the MCP connectors that wire AI assistants into business systems.
+**Whiteout AI**, by Groovy Security, is an enterprise AI governance and security platform that closes this gap. It evaluates AI interactions — prompts, file uploads, pastes, tool calls, and connector reads — against your organization's policies, stopping sensitive data **before** it reaches an external AI service wherever the surface allows a pre-send check, and recording it everywhere else. Its coverage now spans more of the places employees touch AI than ever before: the browser, native desktop apps, IDEs and coding agents, server-side workloads and SDKs, the MCP connectors that wire AI assistants into business systems, and managed mobile devices.
 
-The platform's verdicts come from a dedicated semantic compliance engine — a full 20-billion-parameter, US-developed LLM, self-hosted inside your deployment boundary and never a third-party model provider — governed by 54 expert-authored policies across 8 regulated data classes, every one of them enabled **group by group**, so each department gets exactly the guardrails its work requires. On the public 100,000-prompt Whiteout AI Compliance Benchmark, the deployed engine achieves **96.8% corrected accuracy** with a **99.9% pass rate on everyday prompts**, sub-two-second median verdicts, and a complete, exportable audit trail of every decision.
+The platform's verdicts come from a dedicated semantic compliance engine — a full open-weights LLM, self-hosted inside your deployment boundary and never a third-party model provider — governed by 54 expert-authored policies across 8 regulated data classes, every one of them enabled **group by group**, so each department gets exactly the guardrails its work requires. On the public 100,000-prompt Whiteout AI Compliance Benchmark, the deployed engine achieves **96.8% corrected accuracy** with a **99.9% pass rate on everyday prompts**, sub-two-second median verdicts, and a complete, exportable audit trail of every decision.
 
 ### Platform at a glance
 
@@ -16,10 +16,10 @@ The platform's verdicts come from a dedicated semantic compliance engine — a f
 | **96.8%** | Corrected compliance-engine accuracy on the public 100,000-prompt benchmark (96.53% raw) |
 | **99.9%** | Pass rate on everyday work prompts — 40 false blocks in 36,416 |
 | **40+** | AI assistants and model providers governed |
-| **7** | Enforcement surfaces — browser, desktop, IDE, infrastructure, SDK, MCP connector, mobile |
+| **7** | Governed surfaces — browser, desktop, IDE, infrastructure, SDK, MCP connector, mobile — enforcing before send where the platform allows it, auditing where it doesn't |
 | **23** | Governed data-source integrations behind one AI connector |
 | **9** | SSO / identity providers · **SCIM 2.0** provisioning · **6** SOC/SIEM destination types |
-| **~2.2 s** | Median latency for an approved prompt · ~0.03 s on cached verdicts |
+| **~1.1 s** | Median verdict for an allowed prompt on the benchmark run · ~0.03 s on cached verdicts |
 
 ---
 
@@ -83,7 +83,7 @@ Unlike traditional DLP that relies on pattern matching, the Whiteout compliance 
 | **BLOCKED** | *"Summarize the treatment plan for patient John A. Murphy, DOB 03/12/1974, MRN 4583921. He was diagnosed with Type 2 Diabetes last month, his most recent HbA1c was 8.9%, and he has been prescribed Metformin 1000mg twice daily…"* |
 | **ALLOWED** | *"I have a patient I need help with — help me build a reusable treatment plan summary template I can use."* |
 
-Pattern matching flags both prompts (or neither). Whiteout AI understands that the first contains real patient identifiers and protected health information, while the second is a generic template request with no sensitive data. This distinction — enforced correctly tens of thousands of times a day — is the difference between governance employees accept and governance they route around.
+Pattern matching flags both prompts (or neither). Whiteout AI understands that the first contains real patient identifiers and protected health information, while the second is a generic template request with no sensitive data. This distinction — drawn correctly across every prompt an organization sends — is the difference between governance employees accept and governance they route around.
 
 ### Engine properties
 
@@ -140,7 +140,7 @@ The same gate serves all four enforcement surfaces (browser, desktop, file uploa
 
 Real organizations are not uniform — legal, engineering, finance, and HR carry different data, different regulations, and different risk appetites. Every enforcement decision in Whiteout AI is therefore scoped to **groups**, synced from your identity provider, so policy mirrors the org chart instead of flattening it:
 
-- **Per-group policy toggles** — each of the 60 library rules is enabled or disabled per group, each with its own independent internal/external direction. Engineering gets source-code and secrets policies without FERPA noise; clinical teams get PHI enforcement without code-IP friction.
+- **Per-group policy toggles** — each of the 54 library rules is enabled or disabled per group, each with its own independent internal/external direction. Engineering gets source-code and secrets policies without clinical-data noise; clinical teams get PHI enforcement without code-IP friction.
 - **Per-group custom rules** — free-text rules (a project codename, a customer list, an internal hostname) merge into the same semantic evaluation, per group, with the same direction controls.
 - **Per-group override rights** — Accountable Override is a group-level grant: give the deal desk a governed release valve while keeping a hard boundary for interns.
 - **Per-group data exposure** — which integrations are exposed to AI is decided per group and per integration, and connector policies carry group exemption carve-outs: Finance may retrieve finance documents through the AI connector while every other group stays blocked.
@@ -201,17 +201,17 @@ Speed is measured on the same run as accuracy, not in a separate demo.
 | Blocked — verdict, cited rules, and sanitized rewrite | ~2.7 s | Block shown with the safe rewrite ready |
 | Sustained throughput | 9.6 prompts/s on two engines | 100,000 prompts in under three hours |
 
-Verdicts are produced on a forced answer channel with schema-constrained decoding, so the model never spends time reasoning out loud; only about 3% of prompts, where a deterministic pre-analysis disagrees with the first verdict, take a second, fuller look.
+Verdicts are produced in direct mode with schema-constrained decoding, so the model never spends time reasoning out loud; only about 3% of prompts — an allowed verdict on content that carries a detected identifier or a semantic-risk signal, or a block the engine itself attributes to masked content — take a second, fully reasoned look.
 
 ### Fail-closed by design
 
-A verdict the engine cannot finish or cannot express is **held**, never allowed: the user sees a "compliance incomplete" reason instead of a silent pass. The 100,000-prompt run surfaced one path that violated this rule, and it was closed and re-verified: 0 of 100,000 prompts now fall through to fail-open. Administrator configuration is enforced mechanically for identifier-class policies — a policy an administrator switches off contributes nothing to a verdict — and the full validation, including its current limits, is in the technical report.
+A verdict the engine cannot finish or cannot express is **held**, never allowed: the user sees a "compliance incomplete" reason instead of a silent pass. The 100,000-prompt run surfaced one path that violated this rule, and it was closed and re-verified: 0 of 100,000 prompts now fall through to fail-open. When an administrator switches an identifier-class policy off, a deterministic guard stops the engine from blocking that content under a neighbouring rule; for semantic policies this remains an open item. The full validation, including its current limits, is in the technical report.
 
 The complete methodology, per-band and per-category tables, latency distributions, error analysis, and roadmap are in the **[Whiteout AI Compliance Benchmark — Technical Report TR-2026-09](https://groovysec.com/Whiteout_AI_Compliance_Benchmark_TR-2026-09.pdf)**.
 
 ## Coverage: Everywhere Employees Touch AI
 
-Governance with gaps is theater. Whiteout AI ships seven enforcement surfaces so that policy follows the employee — not the other way around.
+Governance with gaps is theater. Whiteout AI governs seven surfaces so that policy follows the employee — not the other way around. Each one enforces before send where the platform allows it and audits where it doesn't, and each section below says which.
 
 ### Browser Extension
 
@@ -258,13 +258,13 @@ A Go agent that governs **server-side, CI/CD, and hosted-workload** AI traffic �
 - **In-process SDK governance** — the **Python and Node SDKs** and the **AWS Lambda layer** wrap OpenAI/Anthropic/Bedrock-style calls with `evaluate()` and `wrap()`; this is the one server-side path that can **block in-line**, under your code's control, with configurable fail-open.
 - **AWS Bedrock, fully covered** — a one-line SDK wrapper across `invoke_model` / `converse` and streams; an ingest worker that decodes Bedrock invocation logs (for managed Bedrock Agents no SDK can reach); Terraform to stand it up; and translation of Whiteout policies into **native AWS Bedrock Guardrails**.
 - **Providers recognized:** OpenAI · Anthropic · Google (Vertex / AI Studio) · AWS Bedrock · Cohere · Mistral · HuggingFace · Together · Fireworks · Perplexity · Groq · DeepSeek · OpenRouter — plus egress-level classification of Azure OpenAI, Microsoft Copilot, Grok, Poe, AI21, Replicate, Cerebras, SambaNova, and more.
-- **Fleet operations** — registration, 30-second heartbeats, atomic policy refresh, enforce/warn/monitor modes, offline/air-gapped operation with local policy bundles, and liveness alerting when an agent goes dark.
+- **Fleet operations** — registration, 30-second heartbeats, atomic policy refresh, enforce/warn/monitor policy modes (in-line blocking applies on the SDK path; the agent itself observes), offline/air-gapped operation with local policy bundles, and liveness alerting when an agent goes dark.
 
 ### Mobile Governance
 
 AI governance for managed **iOS and Android** — **audit-only by design**, because mobile operating systems prohibit pre-send gating, and honesty about that is a feature.
 
-- Device enrollment with beacon liveness, batched AI-app discovery and usage reporting, and a governed judge endpoint that vets captured content and logs verdicts without blocking.
+- Device enrollment with beacon liveness, batched AI-app discovery and usage reporting, and a governed judge endpoint that vets captured content and logs verdicts without blocking. On-device content capture is on the roadmap; today the mobile surface is device inventory, AI-app discovery, and policy.
 - Per-organization and per-group AI-app block policies, optionally **pushed into the MDM** (e.g., Intune configuration profiles) — Whiteout authors the policy; the MDM enforces it.
 - A mobile admin console: coverage stats, device inventory with staleness detection, alerts, activity feed, and analytics down to users-at-risk.
 - Broad consumer-AI app catalog: Gemini, Perplexity, Copilot, Poe, Character.AI, Jasper, Copy.ai, Replika, and more.
@@ -404,10 +404,9 @@ Whiteout AI's policy library maps to the frameworks enterprises are audited agai
 | Framework | How Whiteout AI helps |
 |---|---|
 | **HIPAA** | 5 PHI policies covering patient identifiers, diagnoses, and records; minimum-necessary enforcement at the prompt boundary; complete audit trail of every health-data interaction. |
-| **GDPR** | 7 policies for personal and special-category data; data minimization enforced before external processing; accountability via immutable audit; support for data-subject investigations. **100% benchmark accuracy on the GDPR class.** |
+| **GDPR** | 8 policies for personal and special-category data; data minimization enforced before external processing; accountability via immutable audit; support for data-subject investigations. |
 | **SOX** | Internal controls over financial data at the AI boundary; MNPI and unreleased-forecast blocking; append-only audit of access and administrative change. |
 | **PCI-DSS** | Cardholder-data blocking before external AI; access control and complete tracking of payment-data exposure. |
-| **FERPA** | 12 education policies covering student records and academic-integrity workflows. |
 | **SOC 2 / ISO 27001** | Security-domain policies (secrets, keys, credentials, infrastructure); exportable evidence of control operation; admin config-change audit. |
 
 ### Industry use cases
@@ -416,7 +415,6 @@ Whiteout AI's policy library maps to the frameworks enterprises are audited agai
 - **Financial services** — unreleased earnings, forecasts, and M&A detail cannot leave to external AI; public-market analysis remains untouched; insider-risk teams get a real-time SOC feed.
 - **Technology** — developers get AI assistance without exposing credentials, keys, or proprietary algorithms; coding agents are governed at the prompt, the tool call, and the transcript; the IDE fleet is inventoried for shadow AI.
 - **Legal** — attorney-client communications and litigation strategy are blocked from external AI; general legal research proceeds; privilege is protected at the boundary where waiver happens.
-- **Education** — FERPA-protected student records are governed across faculty and administrative AI use, with academic-integrity policies available where institutions choose to enforce them.
 
 ---
 

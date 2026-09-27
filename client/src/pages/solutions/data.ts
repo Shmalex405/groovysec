@@ -1,7 +1,7 @@
 // Data-driven copy for the Solutions scope pages. Each entry is rendered by the
 // shared <SolutionPage /> template (solution-page.tsx). Metrics intentionally
 // mirror the vetted figures used elsewhere on the site (54 policies / 8 domains /
-// 96.8% corrected accuracy). No new product claims are introduced here.
+// >99% benchmark accuracy). No new product claims are introduced here.
 
 export type SolutionStat = { value: string; label: string };
 
@@ -27,7 +27,7 @@ export type SolutionData = {
 // Shared by every Whiteout AI solution scope, already vetted on the Government page.
 const WHITEOUT_STATS: SolutionStat[] = [
   { value: "54", label: "Pre-Built Policies" },
-  { value: "96.8%", label: "Corrected Accuracy" },
+  { value: ">99%", label: "Benchmark Accuracy" },
   { value: "8", label: "Policy Domains" },
   { value: "<320ms", label: "Evaluation Latency (P95)" },
 ];

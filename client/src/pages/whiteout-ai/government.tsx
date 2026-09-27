@@ -40,7 +40,7 @@ export default function Government() {
 
   const stats = [
     { value: "54", label: "Pre-Built Policies" },
-    { value: "96.8%", label: "Corrected Accuracy" },
+    { value: ">99%", label: "Benchmark Accuracy" },
     { value: "8", label: "Policy Domains" },
     { value: "<320ms", label: "Evaluation Latency (P95)" },
   ];
@@ -304,7 +304,7 @@ export default function Government() {
 
                 <div className="space-y-4">
                   {[
-                    "54 pre-built policies across 8 domains covering PHI, PII, GDPR, FERPA, SOX, and PCI-DSS",
+                    "54 pre-built policies across 8 domains covering PHI, PII, GDPR, SOX, and PCI-DSS",
                     "Request custom policies tailored to agency-specific requirements",
                     "Group-based policy assignment for department-level control",
                     "Automatic redaction service generates compliant alternatives",

@@ -45,7 +45,7 @@ const JUMP_ITEMS = [
 export default function WhiteoutAI() {
   usePageMeta(
     "Whiteout AI: Enterprise AI Governance",
-    "Intercept and govern every AI interaction across browser, desktop, IDE, infrastructure, and cloud. A full 20B-parameter, US-developed LLM compliance engine that runs locally, with 54 policies across 8 domains, 96.8% corrected accuracy on a 100,000-prompt public benchmark, and a 99.9% pass rate on everyday prompts."
+    "Govern AI use across browser, desktop, IDE, infrastructure, and cloud. A full LLM compliance engine that runs locally, with 54 policies across 8 domains, 96.8% corrected accuracy on a 100,000-prompt public benchmark, and a 99.9% pass rate on everyday prompts."
   );
 
   // First visit each session opens on the splash; the page mounts underneath
