@@ -11,7 +11,7 @@ export function ArchitectureFlow() {
               How Whiteout AI Works
             </h2>
             <p className="text-lg text-[#51617A] max-w-2xl mx-auto mb-4">
-              Every AI prompt/upload is intercepted, verified against your policies — routed if approved, blocked on the device level if not.
+              Every AI prompt/upload is intercepted, verified against your policies: routed if approved, blocked on the device level if not.
             </p>
           </div>
         </ScrollReveal>

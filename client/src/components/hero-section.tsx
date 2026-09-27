@@ -69,7 +69,7 @@ const interceptorData: TimelineItem[] = [
 
 export function HeroSection() {
   return (
-    <section className="pt-32 pb-8">
+    <section className="pt-40 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           <div>
@@ -98,7 +98,7 @@ export function HeroSection() {
 
               <HeroLine>
                 <p className="text-lg text-[#51617A] mb-8 leading-relaxed max-w-lg">
-                  Your employees are already using ChatGPT, Copilot, and Claude Code. Whiteout AI gives you full visibility and control — scanning every prompt, enforcing your policies, and preventing sensitive data from ever leaving your organization.
+                  Your employees are already using ChatGPT, Copilot, and Claude Code. Whiteout AI gives you a complete inventory of every AI tool in use, from endpoints to cloud workloads to OAuth grants, scanning every prompt, enforcing your policies, and preventing sensitive data from ever leaving your organization.
                 </p>
               </HeroLine>
             </HeroTextReveal>
@@ -115,6 +115,9 @@ export function HeroSection() {
 
               <div className="text-sm text-[#6E7B8C] flex items-center">
                 Security certifications in progress · SOC 2 Type II pending
+              </div>
+              <div className="text-sm text-[#6E7B8C] flex items-center mt-1.5">
+                Deploy fully inside your own AWS account. We never touch your data
               </div>
             </ScrollReveal>
           </div>

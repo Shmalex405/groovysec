@@ -99,7 +99,7 @@ export function MaestroInstallGate({ children }: { children: React.ReactNode }) 
       if (res.status === 400) {
         // The only validation the server rejects that the browser does not already
         // catch is address shape, so say that rather than echoing a field map.
-        setError("That email address does not look right — please check it.");
+        setError("That email address does not look right. Please check it.");
         setSubmitting(false);
         return;
       }
@@ -127,7 +127,7 @@ export function MaestroInstallGate({ children }: { children: React.ReactNode }) 
         </div>
         <p className="text-sm text-[#51617A] mb-6">
           Maestro is free and there is nothing to pay. We ask so we know who is using
-          it and can tell you about releases that matter — nothing else.
+          it and can tell you about releases that matter. Nothing else.
         </p>
 
         <div className="space-y-4">

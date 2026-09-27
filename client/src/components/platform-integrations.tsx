@@ -102,7 +102,7 @@ export function PlatformIntegrations() {
               Every AI Tool. One View.
             </h2>
             <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
-              Whiteout AI gives you visibility into every AI application your organization is using — no proxies, no network configurations, just direct endpoint evaluation on the user level.
+              Whiteout AI gives you visibility into every AI application your organization is using: no proxies, no network configurations, just direct endpoint evaluation on the user level.
             </p>
           </div>
         </ScrollReveal>

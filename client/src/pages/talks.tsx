@@ -15,7 +15,7 @@ import { ExternalLink, ArrowRight, Calendar, MapPin, FileText, Presentation, Mai
 import { usePageMeta } from "@/lib/use-page-meta";
 
 /**
- * /talks — public companion page for Alex's conference talks: the slides,
+ * /talks: public companion page for Alex's conference talks: the slides,
  * the sources cited on stage, and the 30-day checklist attendees are told
  * to take home. Vendor-neutral by design (the talks are not product talks);
  * the only product mention is the single line under the speaker.
@@ -53,14 +53,14 @@ const TALKS: Talk[] = [
       },
     ],
     abstract: [
-      "Your employees adopted generative AI before your security team had a policy for it. ChatGPT, Microsoft Copilot, Claude, Cursor and a thousand browser-based AI tools are already in daily use — pasted into by developers, analysts, lawyers and HR. Each prompt is a potential egress channel for source code, customer records, credentials and regulated data, and most of it is invisible to the controls you already paid for.",
-      "The talk walks the real leakage surface of enterprise AI adoption — browser, desktop, IDE and coding agents, workloads, and MCP tool access — and shows concretely why each one defeats conventional egress controls, why regex and keyword matching break down against natural-language prompts, and where the regulated and air-gapped edge cases live. It closes with a discover → enforce → audit model you can start on Monday, and the two failure modes — “ban everything” and “ignore it” — that both end in data loss.",
+      "Your employees adopted generative AI before your security team had a policy for it. ChatGPT, Microsoft Copilot, Claude, Cursor and a thousand browser-based AI tools are already in daily use, pasted into by developers, analysts, lawyers and HR. Each prompt is a potential egress channel for source code, customer records, credentials and regulated data, and most of it is invisible to the controls you already paid for.",
+      "The talk walks the real leakage surface of enterprise AI adoption: browser, desktop, IDE and coding agents, workloads, and MCP tool access, and shows concretely why each one defeats conventional egress controls, why regex and keyword matching break down against natural-language prompts, and where the regulated and air-gapped edge cases live. It closes with a discover → enforce → audit model you can start on Monday, and the two failure modes, “ban everything” and “ignore it,” that both end in data loss.",
     ],
     takeaways: [
       "Map your organisation's real AI data-egress surface across browser, desktop, IDE and cloud.",
       "Explain to leadership why existing DLP / CASB stacks have a blind spot for generative AI.",
       "Apply a discover → enforce → audit framework for AI governance starting Monday.",
-      "Avoid the two failure modes — “ban everything” and “ignore it” — that both end in data loss.",
+      "Avoid the two failure modes, “ban everything” and “ignore it,” that both end in data loss.",
     ],
     slides: {
       label: "Download the slides (PDF)",
@@ -84,51 +84,51 @@ const CHECKLIST = [
   {
     week: "Week 3",
     title: "Nudge",
-    body: "Turn on warn-mode at one surface — the browser is cheapest. No blocks yet. Watch what changes in behaviour when people see a warning at the moment of send.",
+    body: "Turn on warn-mode at one surface: the browser is cheapest. No blocks yet. Watch what changes in behaviour when people see a warning at the moment of send.",
   },
   {
     week: "Week 4",
     title: "Audit",
-    body: "Get one AI-usage event — who, which tool, which data class, what verdict — into the SIEM you already have. Show it to your DPO. Then review the footprint monthly, watch for new tools weekly, and revisit the policy every quarter.",
+    body: "Get one AI-usage event (who, which tool, which data class, what verdict) into the SIEM you already have. Show it to your DPO. Then review the footprint monthly, watch for new tools weekly, and revisit the policy every quarter.",
   },
 ];
 
 /** Third-party sources cited on stage. */
 const SOURCES = [
   {
-    label: "Microsoft & LinkedIn — 2024 Work Trend Index: “AI at work is here. Now comes the hard part.”",
+    label: "Microsoft & LinkedIn, 2024 Work Trend Index: “AI at work is here. Now comes the hard part.”",
     href: "https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part",
   },
   {
-    label: "IBM — Cost of a Data Breach Report 2025",
+    label: "IBM, Cost of a Data Breach Report 2025",
     href: "https://www.ibm.com/reports/data-breach",
   },
   {
-    label: "Garante per la protezione dei dati personali — provisional measure on ChatGPT, 31 March 2023",
+    label: "Garante per la protezione dei dati personali, provisional measure on ChatGPT, 31 March 2023",
     href: "https://www.garanteprivacy.it/web/guest/home/docweb/-/docweb-display/docweb/9870847",
   },
   {
-    label: "OWASP Top 10 for LLM Applications — LLM01: Prompt Injection",
+    label: "OWASP Top 10 for LLM Applications, LLM01: Prompt Injection",
     href: "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
   },
   {
-    label: "Regulation (EU) 2024/1689 — the EU Artificial Intelligence Act",
+    label: "Regulation (EU) 2024/1689, the EU Artificial Intelligence Act",
     href: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
   },
   {
-    label: "Regulation (EU) 2016/679 — GDPR (Art. 9, 28, 30, 32; Chapter V)",
+    label: "Regulation (EU) 2016/679, GDPR (Art. 9, 28, 30, 32; Chapter V)",
     href: "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
   },
   {
-    label: "Directive (EU) 2022/2555 — NIS2",
+    label: "Directive (EU) 2022/2555, NIS2",
     href: "https://eur-lex.europa.eu/eli/dir/2022/2555/oj",
   },
   {
-    label: "ISO/IEC 42001:2023 — Artificial intelligence management system",
+    label: "ISO/IEC 42001:2023, Artificial intelligence management system",
     href: "https://www.iso.org/standard/42001",
   },
   {
-    label: "Model Context Protocol — specification",
+    label: "Model Context Protocol, specification",
     href: "https://modelcontextprotocol.io/",
   },
 ];
@@ -156,7 +156,7 @@ export default function Talks() {
               <HeroLine>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto leading-relaxed">
                   Slides, sources and the take-home checklist from our conference
-                  talks. Vendor-neutral by design — bring the framework home even if
+                  talks. Vendor-neutral by design: bring the framework home even if
                   you never bring the product.
                 </p>
               </HeroLine>
@@ -316,7 +316,7 @@ export default function Talks() {
               </h2>
               <p className="text-lg text-[#51617A] mb-2 max-w-xl mx-auto">
                 Alex Flowers founded Groovy Security on this problem. If any of it matched your
-                Tuesday, he is happy to walk through your AI footprint one-to-one — no pitch
+                Tuesday, he is happy to walk through your AI footprint one-to-one, no pitch
                 required.
               </p>
               <p className="text-sm text-[#6E7B8C] mb-8">Whiteout AI · U.S. patent pending</p>

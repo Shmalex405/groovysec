@@ -31,13 +31,13 @@ const SCENARIOS: Scenario[] = [
     source: "Web App Agent · api.acme-corp.com",
     outcome: "critical",
     lines: [
-      { phase: "discover", text: "surface: POST /api/login — user input reaches SQL sink", tone: "dim" },
+      { phase: "discover", text: "surface: POST /api/login; user input reaches SQL sink", tone: "dim" },
       { phase: "exploit", text: "payload ' OR 1=1-- → authentication bypassed", tone: "warn" },
-      { phase: "exploit", text: "3 sample rows extracted — impact proven, run halted", tone: "warn" },
-      { phase: "validate", text: "severity recalibrated CVSS 7.3 → 9.8 — exploited", tone: "crit" },
+      { phase: "exploit", text: "3 sample rows extracted; impact proven, run halted", tone: "warn" },
+      { phase: "validate", text: "severity recalibrated CVSS 7.3 → 9.8, exploited", tone: "crit" },
       { phase: "report", text: "evidence + reproduction steps written to report", tone: "ok" },
     ],
-    result: "Validated — proof of impact, not a scanner guess",
+    result: "Validated: proof of impact, not a scanner guess",
   },
   {
     source: "Cloud Exploit Agent · AWS prod account",
@@ -45,23 +45,23 @@ const SCENARIOS: Scenario[] = [
     lines: [
       { phase: "discover", text: "role build-ci grants iam:PassRole + lambda:CreateFunction", tone: "dim" },
       { phase: "exploit", text: "PassRole → Lambda chain executed under read-only proof", tone: "warn" },
-      { phase: "exploit", text: "admin-scoped credentials reachable — chain complete", tone: "warn" },
-      { phase: "validate", text: "escalation path validated end-to-end — CVSS 8.8", tone: "warn" },
+      { phase: "exploit", text: "admin-scoped credentials reachable; chain complete", tone: "warn" },
+      { phase: "validate", text: "escalation path validated end-to-end (CVSS 8.8)", tone: "warn" },
       { phase: "report", text: "attack graph rendered into the cloud companion report", tone: "ok" },
     ],
-    result: "Validated — a real path to admin, not a posture warning",
+    result: "Validated: a real path to admin, not a posture warning",
   },
   {
     source: "Identity Exploit Agent · corp.local (Active Directory)",
     outcome: "high",
     lines: [
       { phase: "discover", text: "BloodHound: SPN svc-backup is a Kerberoast candidate", tone: "dim" },
-      { phase: "exploit", text: "TGS ticket captured — cracked offline in 4m 12s", tone: "warn" },
-      { phase: "exploit", text: "creds valid · 2 hops from Domain Admin — 0 lockouts", tone: "warn" },
-      { phase: "validate", text: "privilege-escalation path confirmed — CVSS 8.6", tone: "warn" },
+      { phase: "exploit", text: "TGS ticket captured; cracked offline in 4m 12s", tone: "warn" },
+      { phase: "exploit", text: "creds valid · 2 hops from Domain Admin, 0 lockouts", tone: "warn" },
+      { phase: "validate", text: "privilege-escalation path confirmed (CVSS 8.6)", tone: "warn" },
       { phase: "report", text: "identity graph + path evidence attached to report", tone: "ok" },
     ],
-    result: "Validated — Domain Admin path proven without a single lockout",
+    result: "Validated: Domain Admin path proven without a single lockout",
   },
   {
     source: "AI Red Team Agent · support-bot · RAG pipeline",
@@ -69,11 +69,11 @@ const SCENARIOS: Scenario[] = [
     lines: [
       { phase: "discover", text: "untrusted surface: ticket body flows into model context", tone: "dim" },
       { phase: "exploit", text: "indirect prompt injection planted via support ticket", tone: "warn" },
-      { phase: "exploit", text: "system prompt extracted · delete_user call captured — never executed", tone: "warn" },
-      { phase: "validate", text: "mapped to OWASP LLM01 + MITRE ATLAS — CVSS 8.1", tone: "warn" },
+      { phase: "exploit", text: "system prompt extracted · delete_user call captured, but never executed", tone: "warn" },
+      { phase: "validate", text: "mapped to OWASP LLM01 + MITRE ATLAS (CVSS 8.1)", tone: "warn" },
       { phase: "report", text: "AI security assessment updated with captured evidence", tone: "ok" },
     ],
-    result: "Validated — excessive agency proven, tool calls never executed",
+    result: "Validated: excessive agency proven, tool calls never executed",
   },
   {
     source: "Cross-Validation Agent · SAST finding #214",
@@ -81,11 +81,11 @@ const SCENARIOS: Scenario[] = [
     lines: [
       { phase: "discover", text: "SAST flag: reflected XSS in /search?q= (Semgrep)", tone: "dim" },
       { phase: "exploit", text: "replaying 12 payload variants against the live endpoint", tone: "warn" },
-      { phase: "exploit", text: "0 of 12 reflected — output encoding verified at render", tone: "dim" },
-      { phase: "validate", text: "not reproducible — confidence 0.08, below threshold", tone: "dim" },
-      { phase: "report", text: "eliminated — this never reaches your report", tone: "ok" },
+      { phase: "exploit", text: "0 of 12 reflected; output encoding verified at render", tone: "dim" },
+      { phase: "validate", text: "not reproducible: confidence 0.08, below threshold", tone: "dim" },
+      { phase: "report", text: "eliminated: this never reaches your report", tone: "ok" },
     ],
-    result: "Eliminated — you only read findings that are real",
+    result: "Eliminated: you only read findings that are real",
   },
 ];
 
@@ -167,7 +167,7 @@ function statusFor(phase: Phase, scenario: Scenario): {
     case "exploit":
       return { text: "Controlled exploitation in progress…", className: "text-[#A05F00]" };
     case "validate":
-      return { text: "Validating impact — recalibrating severity…", className: "text-[#51617A]" };
+      return { text: "Validating impact, recalibrating severity…", className: "text-[#51617A]" };
     default:
       return { text: scenario.result, className: outcomeStyle.text };
   }
@@ -212,7 +212,7 @@ export function MaestroAssessmentDemo() {
       ref={containerRef}
       className="max-w-4xl mx-auto h-full flex flex-col rounded-xl border border-[#0F1B2D]/10 bg-white shadow-[0_1px_2px_rgba(15,27,45,0.05),0_12px_32px_rgba(15,27,45,0.07)] overflow-hidden p-4 sm:p-6"
       role="img"
-      aria-label="Animated diagram: Maestro's AI agents discover a vulnerability, exploit it under controlled safety rules, validate real impact with recalibrated severity, and write evidence-backed findings to the report — eliminating false positives along the way."
+      aria-label="Animated diagram: Maestro's AI agents discover a vulnerability, exploit it under controlled safety rules, validate real impact with recalibrated severity, and write evidence-backed findings to the report, eliminating false positives along the way."
     >
       {/* Header row */}
       <div className="flex items-center justify-between mb-4">

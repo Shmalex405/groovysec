@@ -47,7 +47,7 @@ function SolutionContent({
                   <span className="font-semibold text-[#0F1B2D]">Whiteout AI</span>
                   <span className="w-px h-3.5 bg-[#1A5FB4]/30" />
                   <span className="text-[#1A5FB4] text-xs font-semibold uppercase tracking-[0.18em]">
-                    {solution.eyebrow.replace(/^Solutions —\s*/, "")}
+                    {solution.eyebrow.replace(/^Solutions:\s*/, "")}
                   </span>
                 </div>
 
@@ -110,7 +110,7 @@ function SolutionContent({
               <PromptInterceptionDemo />
               <p className="mt-5 text-sm text-[#6E7B8C] max-w-xl mx-auto">
                 Every prompt intercepted, evaluated against 54 policies, and
-                enforced in real time — before sensitive data ever leaves your network.
+                enforced in real time, before sensitive data ever leaves your network.
               </p>
             </ScrollReveal>
           </div>

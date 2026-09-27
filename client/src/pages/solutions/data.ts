@@ -1,7 +1,7 @@
 // Data-driven copy for the Solutions scope pages. Each entry is rendered by the
 // shared <SolutionPage /> template (solution-page.tsx). Metrics intentionally
 // mirror the vetted figures used elsewhere on the site (54 policies / 8 domains /
-// >99% benchmark accuracy) — no new product claims are introduced here.
+// >99% benchmark accuracy). No new product claims are introduced here.
 
 export type SolutionStat = { value: string; label: string };
 
@@ -24,7 +24,7 @@ export type SolutionData = {
   valueProps: SolutionValueProp[];
 };
 
-// Shared by every Whiteout AI solution scope — already vetted on the Government page.
+// Shared by every Whiteout AI solution scope, already vetted on the Government page.
 const WHITEOUT_STATS: SolutionStat[] = [
   { value: "54", label: "Pre-Built Policies" },
   { value: ">99%", label: "Benchmark Accuracy" },
@@ -35,8 +35,8 @@ const WHITEOUT_STATS: SolutionStat[] = [
 export const SOLUTIONS: Record<string, SolutionData> = {
   "data-loss-prevention": {
     slug: "data-loss-prevention",
-    eyebrow: "Solutions — Data Loss Prevention",
-    metaTitle: "AI Data Loss Prevention — Whiteout AI",
+    eyebrow: "Solutions: Data Loss Prevention",
+    metaTitle: "AI Data Loss Prevention: Whiteout AI",
     metaDescription:
       "Stop source code, customer records, and confidential data from reaching public AI tools. Whiteout AI inspects every AI interaction in real time and blocks sensitive data before it leaves your network.",
     headline: {
@@ -45,18 +45,18 @@ export const SOLUTIONS: Record<string, SolutionData> = {
       tail: "Public AI",
     },
     intro:
-      "Your employees paste source code, customer records, and confidential documents into ChatGPT, Copilot, and Claude every day. Whiteout AI inspects every AI interaction in real time — blocking sensitive data before it ever leaves your network, without slowing legitimate work down.",
+      "Your employees paste source code, customer records, and confidential documents into ChatGPT, Copilot, and Claude every day. Whiteout AI inspects every AI interaction in real time, blocking sensitive data before it ever leaves your network, without slowing legitimate work down.",
     ctaLabel: "See It Intercept Live",
     stats: WHITEOUT_STATS,
     valuePropsHeading: "Data Loss Prevention for the AI Era",
     valuePropsSubheading:
-      "Traditional DLP never sees the prompt box. Whiteout AI inspects the AI interaction itself — across every surface your team uses.",
+      "Traditional DLP never sees the prompt box. Whiteout AI inspects the AI interaction itself, across every surface your team uses.",
     valueProps: [
       {
         title: "Real-Time Interception",
         items: [
           "Inspects prompts, pastes, and file uploads before they reach any AI provider",
-          "Blocks, redacts, or warns based on your policy — never fails open",
+          "Blocks, redacts, or warns based on your policy; never fails open",
           "Catches drag-drop, paste, and attachment uploads at the moment of action",
           "Generates compliant, redacted alternatives so work keeps moving",
         ],
@@ -83,7 +83,7 @@ export const SOLUTIONS: Record<string, SolutionData> = {
         title: "Audit & Proof",
         items: [
           "Immutable audit trail of every AI interaction across the organization",
-          "SIEM/SOC integration — Splunk, Sentinel, Elastic, QRadar, S3",
+          "SIEM/SOC integration: Splunk, Sentinel, Elastic, QRadar, S3",
           "Exportable reports (PDF/CSV) for security and compliance review",
           "Per-user and per-department risk scoring and usage analytics",
         ],
@@ -93,22 +93,22 @@ export const SOLUTIONS: Record<string, SolutionData> = {
 
   compliance: {
     slug: "compliance",
-    eyebrow: "Solutions — Regulated Industries & Compliance",
-    metaTitle: "AI Compliance for Regulated Industries — Whiteout AI",
+    eyebrow: "Solutions: Regulated Industries & Compliance",
+    metaTitle: "AI Compliance for Regulated Industries: Whiteout AI",
     metaDescription:
-      "HIPAA, GDPR, FERPA, SOX, PCI-DSS — adopt AI in regulated industries with proof of control. Whiteout AI enforces 54 pre-built policies across 8 domains and produces an audit-ready record of every AI interaction.",
+      "HIPAA, GDPR, FERPA, SOX, and PCI-DSS: adopt AI in regulated industries with proof of control. Whiteout AI enforces 54 pre-built policies across 8 domains and produces an audit-ready record of every AI interaction.",
     headline: {
       lead: "Prove AI Compliance",
       gradient: "in Regulated",
       tail: "Industries",
     },
     intro:
-      "HIPAA, GDPR, FERPA, SOX, PCI-DSS — regulated organizations can't adopt AI without proof of control. Whiteout AI enforces 54 pre-built policies across 8 domains and produces an audit-ready record of every AI interaction, so you can move fast on AI while staying inside the lines.",
+      "HIPAA, GDPR, FERPA, SOX, and PCI-DSS: regulated organizations can't adopt AI without proof of control. Whiteout AI enforces 54 pre-built policies across 8 domains and produces an audit-ready record of every AI interaction, so you can move fast on AI while staying inside the lines.",
     ctaLabel: "Schedule a Compliance Briefing",
     stats: WHITEOUT_STATS,
     valuePropsHeading: "Compliance That Keeps Pace with AI Adoption",
     valuePropsSubheading:
-      "Proof of control, not just a policy document. Whiteout AI enforces your obligations at the moment of every AI interaction — and records it.",
+      "Proof of control, not just a policy document. Whiteout AI enforces your obligations at the moment of every AI interaction, and records it.",
     valueProps: [
       {
         title: "Regulatory Coverage",
@@ -134,15 +134,15 @@ export const SOLUTIONS: Record<string, SolutionData> = {
           "Real-time DLP blocks sensitive data before it reaches AI providers",
           "Cloud, self-hosted, or hybrid deployment options",
           "Self-hosted inference keeps sensitive prompts inside your network boundary",
-          "Fail-safe design — never blocks due to a technical failure",
+          "Fail-safe design: never blocks due to a technical failure",
         ],
       },
       {
         title: "Enterprise Administration",
         items: [
-          "SSO/SAML 2.0 — Okta, Azure AD, OneLogin, Ping Identity",
-          "MDM integration — Intune, Jamf, Workspace ONE",
-          "SIEM/SOC integration — Splunk, Sentinel, Elastic, QRadar, S3",
+          "SSO/SAML 2.0: Okta, Azure AD, OneLogin, Ping Identity",
+          "MDM integration: Intune, Jamf, Workspace ONE",
+          "SIEM/SOC integration: Splunk, Sentinel, Elastic, QRadar, S3",
           "Role-based access control with department-level scoping",
         ],
       },

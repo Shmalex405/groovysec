@@ -43,7 +43,7 @@ export function RevealCard({
         {children}
       </div>
 
-      {/* Overlay — flat accent plate, crossfades over the base */}
+      {/* Overlay: flat accent plate, crossfades over the base */}
       <div
         className={cn(
           "absolute inset-0 z-20 transition-opacity duration-300 ease-out",

@@ -48,8 +48,8 @@ const platforms = MAESTRO_PLATFORMS.map((p) => ({ ...p, icon: PLATFORM_ICONS[p.i
 
 export default function MaestroInstall() {
   usePageMeta(
-    "Install Maestro — Free Autonomous Penetration Testing",
-    `Install Maestro ${VERSION} free on macOS, Windows or Linux. Signed builds, no account and no licence key — it runs entirely on your machine. Source is public and auditable.`,
+    "Install Maestro: Free Autonomous Penetration Testing",
+    `Install Maestro ${VERSION} free on macOS, Windows or Linux. Signed builds, no account and no licence key; it runs entirely on your machine. Source is public and auditable.`,
   );
 
   return (
@@ -69,7 +69,7 @@ export default function MaestroInstall() {
               </h1>
               <p className="text-lg text-[#51617A] leading-relaxed mb-8">
                 Four steps, and the long one is a download you can leave running. No
-                account, no licence key, and nothing to provision — Maestro runs
+                account, no licence key, and nothing to provision; Maestro runs
                 entirely on your machine.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -103,8 +103,8 @@ export default function MaestroInstall() {
                     Download the app
                   </h2>
                   <p className="text-[#51617A]">
-                    Code-signed builds — Apple Developer ID on macOS, Azure Trusted
-                    Signing on Windows — so your OS will not warn you about an
+                    Code-signed builds (Apple Developer ID on macOS, Azure Trusted
+                    Signing on Windows), so your OS will not warn you about an
                     unidentified developer.
                   </p>
                 </div>
@@ -151,16 +151,16 @@ export default function MaestroInstall() {
                 </div>
                 <ul className="space-y-1.5 text-sm text-[#51617A]">
                   <li>
-                    <strong className="text-[#0F1B2D]">macOS</strong> — signed with an
+                    <strong className="text-[#0F1B2D]">macOS</strong>: signed with an
                     Apple Developer ID and notarized by Apple, so Gatekeeper opens it
                     without an unidentified-developer warning.
                   </li>
                   <li>
-                    <strong className="text-[#0F1B2D]">Windows</strong> — signed via
+                    <strong className="text-[#0F1B2D]">Windows</strong>: signed via
                     Azure Trusted Signing, which requires a validated organisation.
                   </li>
                   <li>
-                    <strong className="text-[#0F1B2D]">All platforms</strong> — each
+                    <strong className="text-[#0F1B2D]">All platforms</strong>: each
                     release is cryptographically signed for the auto-updater, and the app
                     verifies that signature before applying an update.
                   </li>
@@ -231,7 +231,7 @@ export default function MaestroInstall() {
                   <span className="font-semibold text-[#0F1B2D]">
                     Roughly 15 GB, so give it a few minutes.
                   </span>{" "}
-                  The tag has to match your app version — Maestro looks its image up by
+                  The tag has to match your app version: Maestro looks its image up by
                   tag, so pulling <span className="font-mono">:latest</span> gives you a
                   byte-identical image under a name it never checks, and it will report
                   the toolkit missing.
@@ -268,7 +268,7 @@ export default function MaestroInstall() {
                   </h3>
                   <p className="text-sm text-[#51617A] leading-relaxed">
                     Use an existing Claude Pro/Max or ChatGPT Plus subscription. Nothing
-                    metered — running Maestro costs you nothing beyond the subscription
+                    metered: running Maestro costs you nothing beyond the subscription
                     you already have. This is what most people want.
                   </p>
                 </div>
@@ -277,7 +277,7 @@ export default function MaestroInstall() {
                   <h3 className="font-bold text-[#0F1B2D] mb-2">Or use an API key</h3>
                   <p className="text-sm text-[#51617A] leading-relaxed">
                     Paste an Anthropic or OpenAI API key instead. Billed per token, and
-                    assessments are token-heavy — a full multi-surface run can reach
+                    assessments are token-heavy; a full multi-surface run can reach
                     hundreds of dollars of usage. Best for CI and automation.
                   </p>
                 </div>
@@ -291,7 +291,7 @@ export default function MaestroInstall() {
                   </span>{" "}
                   Anthropic applies safeguards to cyber-offensive use of Claude, and
                   sustained exploitation is exactly what they look for. On an unenrolled
-                  account the exploitation agents will decline partway through —{" "}
+                  account the exploitation agents will decline partway through,{" "}
                   <em>quietly</em>, so you get a thinner report rather than an error.
                   Enrollment is per-organization and takes time, so start it early.
                   Recon, code scanning, compliance mapping and reporting are unaffected
@@ -331,7 +331,7 @@ export default function MaestroInstall() {
                     <p>
                       Maestro performs real exploitation. It sends live payloads, forges
                       tokens, escalates privileges and reads data in order to prove
-                      impact. That is the product — and it is why you must hold
+                      impact. That is the product, and it is why you must hold
                       documented authorization for every system you point it at.
                     </p>
                     <p>
@@ -366,7 +366,7 @@ export default function MaestroInstall() {
                   "Severity calibration from real outcomes",
                   "Reports with evidence, in Markdown and PDF",
                   "Web, API, cloud, identity and AI/LLM surfaces",
-                  "Findings stored locally — nothing leaves your machine",
+                  "Findings stored locally: nothing leaves your machine",
                 ].map((item) => (
                   <div key={item} className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 flex-shrink-0 text-[#A05F00] mt-1" />
@@ -380,7 +380,7 @@ export default function MaestroInstall() {
                   <span className="font-semibold text-[#0F1B2D]">
                     Needs a shared backend?
                   </span>{" "}
-                  A few capabilities depend on Postgres — the attack-graph explorer,
+                  A few capabilities depend on Postgres: the attack-graph explorer,
                   post-exploitation footholds, scheduled scanning and team roles. The
                   deployment terraform is in the repository, so you can stand your own up
                   in your own AWS account. Where something is unavailable locally, the

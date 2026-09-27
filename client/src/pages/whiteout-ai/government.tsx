@@ -34,7 +34,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function Government() {
   usePageMeta(
     "Whiteout AI for Government & Public Sector",
-    "AI governance built for the public sector — 54 pre-built policies across 8 domains, 96.8% corrected accuracy on a 100,000-prompt public benchmark with a 99.9% pass rate on everyday prompts, SSO/MDM/SIEM integration, and audit-ready proof of every AI control."
+    "AI governance built for the public sector: 54 pre-built policies across 8 domains, 96.8% corrected accuracy on a 100,000-prompt public benchmark with a 99.9% pass rate on everyday prompts, SSO/MDM/SIEM integration, and audit-ready proof of every AI control."
   );
   const demoHref = "/demo";
 
@@ -87,19 +87,19 @@ export default function Government() {
       icon: Lock,
       title: "Security & Data Protection",
       items: [
-        "Real-time DLP \u2014 blocks sensitive data before it reaches AI providers",
-        "File upload scanning \u2014 intercepts drag-drop, paste, and attachments",
-        "Fail-safe design \u2014 never blocks due to technical failure",
-        "Hybrid deployment \u2014 local LLM option keeps data on-premise",
+        "Real-time DLP: blocks sensitive data before it reaches AI providers",
+        "File upload scanning: intercepts drag-drop, paste, and attachments",
+        "Fail-safe design: never blocks due to technical failure",
+        "Hybrid deployment: local LLM option keeps data on-premise",
       ],
     },
     {
       icon: Users,
       title: "Enterprise Administration",
       items: [
-        "SSO/SAML 2.0 \u2014 Okta, Azure AD, OneLogin, Ping Identity",
-        "MDM integration \u2014 Intune, Jamf, Workspace ONE",
-        "SIEM/SOC integration \u2014 Splunk, Sentinel, Elastic, QRadar, S3",
+        "SSO/SAML 2.0: Okta, Azure AD, OneLogin, Ping Identity",
+        "MDM integration: Intune, Jamf, Workspace ONE",
+        "SIEM/SOC integration: Splunk, Sentinel, Elastic, QRadar, S3",
         "Role-based access control with department-level scoping",
       ],
     },
@@ -120,13 +120,13 @@ export default function Government() {
       icon: Zap,
       title: "Contextual Intelligence",
       description:
-        'LLM-based evaluation understands context, not just keywords. It distinguishes between "aggregate hospital statistics" and actual patient data\u201496.8% corrected accuracy across a 100,000-prompt public benchmark, with a 99.9% pass rate on everyday prompts so legitimate work is never interrupted',
+        'LLM-based evaluation understands context, not just keywords. It distinguishes between "aggregate hospital statistics" and actual patient data. 96.8% corrected accuracy across a 100,000-prompt public benchmark, with a 99.9% pass rate on everyday prompts so legitimate work is never interrupted',
     },
     {
       icon: Server,
       title: "Deployment Flexibility",
       description:
-        "Cloud, self-hosted, or hybrid. A self-hosted inference option keeps sensitive prompts entirely within your network boundary\u2014ensuring full data sovereignty.",
+        "Cloud, self-hosted, or hybrid. A self-hosted inference option keeps sensitive prompts entirely within your network boundary, ensuring full data sovereignty.",
     },
     {
       icon: Layers,
@@ -185,7 +185,7 @@ export default function Government() {
                   <HeroLine>
                     <p className="text-lg text-[#51617A] mb-8 leading-relaxed">
                       As agencies rapidly adopt generative AI, Whiteout AI ensures
-                      every interaction complies with established policies — protecting
+                      every interaction complies with established policies, protecting
                       sensitive data, enforcing regulatory requirements, and providing
                       the transparency that public trust demands.
                     </p>
@@ -237,7 +237,7 @@ export default function Government() {
                   How Whiteout AI Works
                 </h2>
                 <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
-                  Whiteout AI intercepts AI interactions across every surface —
+                  Whiteout AI intercepts AI interactions across every surface,
                   evaluating each prompt against organizational policies in real time
                   before any data leaves the network.
                 </p>
@@ -298,7 +298,7 @@ export default function Government() {
                 <p className="text-lg text-[#51617A] mb-6 leading-relaxed">
                   Unlike pattern-matching tools, Whiteout AI uses LLM-based
                   contextual evaluation. It distinguishes between "aggregate
-                  hospital statistics" and actual patient data — dramatically
+                  hospital statistics" and actual patient data, dramatically
                   reducing false positives while catching true violations.
                 </p>
 
@@ -326,7 +326,6 @@ export default function Government() {
                     "PHI",
                     "PII",
                     "GDPR",
-                    "Education",
                     "Legal",
                     "Finance",
                     "Code/IP",
@@ -470,7 +469,7 @@ export default function Government() {
                 </Link>
               </div>
               <p className="text-sm text-[#6E7B8C] mt-6">
-                Whiteout AI by Groovy Security — Enterprise AI Governance
+                Whiteout AI by Groovy Security: Enterprise AI Governance
               </p>
             </div>
           </section>

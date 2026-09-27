@@ -99,7 +99,7 @@ export function LeadCapture() {
               Demo Request Submitted
             </h2>
             <p className="text-[#51617A] mb-8 max-w-md mx-auto">
-              Thanks — we've received your request. Pick a time that works for
+              Thanks. We've received your request. Pick a time that works for
               you and we'll take care of the rest.
             </p>
             <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex">
