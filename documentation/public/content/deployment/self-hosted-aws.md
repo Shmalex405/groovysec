@@ -108,6 +108,36 @@ You can take manual RDS snapshots at any time before risky changes.
 
 If your security team requires a customer-managed KMS key with a restricted key policy, the module supports supplying your own key ARN for encryption at rest across the stack. See the [BYOK guide](./security/byok.md) for the key policy requirements.
 
+### Your license and enforcement tier
+
+On a self-hosted deployment, **your signed Whiteout AI license decides whether policy enforcement is available.** There are two tiers:
+
+| License tier | What your deployment does |
+|--------------|---------------------------|
+| **Full enforcement** | Policies are evaluated and enforced. Prompts, files and tool calls that violate policy can be blocked, redacted or overridden, according to your settings. |
+| **Discovery (audit-only)** | Everything is logged and every check except content policy and Prompt Injection Defense still runs, but nothing is blocked. The Policies page, Injection Defense and other enforcement settings are view-only. See [Audit-Only Mode](./governance/audit-only-mode.md). |
+
+**The license always wins.** Your deployment combines two inputs, and audit-only mode applies if *either* one calls for it:
+
+1. **Your license.** If it doesn't include full enforcement, your deployment runs in audit-only mode.
+2. **Your own audit-only setting.** An administrator on a full-enforcement license can choose to run in audit-only mode, for example during a visibility-first rollout, and switch back later.
+
+An administrator can always move a deployment *into* audit-only mode. Nobody can turn enforcement *on* beyond what the license includes. Changing the local setting, the database or the API won't do it, and requests to change policies and other enforcement settings are refused by the server (HTTP 403). The admin app follows the same rule: while your license is on the discovery tier, the **Policies** and **Injection Defense** items in the sidebar are greyed out with a lock, those pages open view-only under an **Audit-only mode** banner, and other enforcement settings are locked in place (see [Settings locked in audit-only mode](./governance/audit-only-mode.md#settings-locked-in-audit-only-mode)).
+
+#### Changing tier
+
+To move between tiers, contact Groovy Security or your account team. The change is made on your license record, and your deployment picks it up on its own. You don't need to redeploy or edit anything.
+
+| How your deployment reaches the license service | When the new tier takes effect |
+|-------------------------------------------------|--------------------------------|
+| **Online** (outbound HTTPS to the license service) | Within about **15 minutes**, on the next background license check. Restarting the backend service applies it immediately. |
+| **Intermittent connectivity** | On the next successful license check. Until then, your deployment keeps using the tier in its most recent signed license token. |
+| **Air-gapped** | When you install the new license token Groovy Security issues you. |
+
+> **Before moving to full enforcement:** make sure your deployment is sized to run the compliance engine, then review each group's policies, compliance frameworks and Accountable Override setting. Policy settings are kept while you're in audit-only mode and apply as soon as enforcement is enabled. The checklist in [Audit-Only Mode](./governance/audit-only-mode.md) walks through it.
+
+> **Checking your current tier:** the Policies page shows the **Audit-only mode** banner whenever enforcement is off, whether your license or your own setting turned it off. Signed-in administrators can also call `GET /admin/org/auditonly-mode`. In the response, `compliance_enabled` is the value to use: `false` means audit-only, for whatever reason.
+
 ---
 
 ## Cost Estimate

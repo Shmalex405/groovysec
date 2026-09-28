@@ -22,6 +22,8 @@ Whiteout AI covers Bedrock through three independent paths. Enable the ones that
 
 **Note:** Whiteout-Managed Guardrails requires the Invocation Log Ingest setup to be completed first, because the two share the same cross-account trust configuration.
 
+**Audit-only organizations:** if your organization runs in audit-only mode, nothing is blocked on the first two paths, and guardrails can't be registered, synced or attached. See [Audit-Only Mode](#audit-only-mode).
+
 ### Deployment Shapes (Log Ingest and Guardrails)
 
 The Whiteout ingest worker that reads your Bedrock invocation logs can run in one of two places. Choose once per AWS account/region:
@@ -281,9 +283,29 @@ This provisions a second, separate IAM role for guardrail authoring. Note the ne
    - **Without an alias**: Whiteout AI snapshots a new agent version without changing live routing
 4. Click **Attach**. Bedrock's `PrepareAgent` takes 10–60 seconds; Whiteout AI polls until the agent status is `PREPARED`
 
+> **Registering, syncing and attaching are locked in audit-only mode.** An attached guardrail blocks inline at AWS, so if your organization is in audit-only mode, these buttons are disabled and the server rejects them with *"Policy enforcement is not included in this tier (audit-only / discovery)."* Detaching and deleting still work. See [Audit-Only Mode](#audit-only-mode).
+
 ### Ongoing Sync
 
 When your policy library changes, click **Sync** on the guardrail card to publish a new guardrail version. Attached agents continue running their previously attached version — you choose when to re-attach with the new version, making updates rollback-safe by default.
+
+---
+
+## Audit-Only Mode
+
+If your organization runs Whiteout AI in [audit-only mode](./governance/audit-only-mode.md), nothing Whiteout controls blocks a Bedrock call. What each path does:
+
+| Path | In audit-only mode |
+|------|--------------------|
+| **SDK Inline Enforcement** | Every evaluation returns `allow` in `monitor` mode, so `WhiteoutBlockedError` is never raised because of a Whiteout verdict. Prompt content isn't checked. A blocked provider, a model outside the allowlist or an over-budget call is recorded in **Infrastructure** > **Activity** with the rule that matched. When the resource policy group is in `warn` or `enforce` mode, the response also carries `"enforced": false`, `"would_action"` and `"suppressed_by": "AUDIT_ONLY"`. |
+| **Invocation Log Ingest** | Every prompt and response is still recorded. Whiteout AI doesn't evaluate prompt content, so rows aren't marked **Whiteout flagged**. |
+| **Whiteout-Managed Guardrails** | View only. **Register guardrail**, **Sync** and **Attach agent** are disabled, under a banner that reads *"**Audit-only mode** — Bedrock guardrails need policy enforcement, which isn't enabled for your organization. You can review the settings here, but changes are disabled. Contact your account team to enable enforcement. Detaching or deleting an existing guardrail stays available."* Through the API, `POST /admin/bedrock/guardrails`, `POST /admin/bedrock/guardrails/{id}/sync` and `POST /admin/bedrock/guardrails/{id}/attach` are rejected with HTTP 403: *"Policy enforcement is not included in this tier (audit-only / discovery)."* You can still **detach** a guardrail from agents and delete its registration. |
+
+> **Guardrails that are already attached keep blocking.** AWS enforces an attached guardrail on its own, so audit-only mode can't switch it off. If nothing should be blocked, detach it: on the guardrail card, detach it from each agent. The same applies to any app that passes a guardrail in its own Bedrock calls.
+
+The SDK's own `WHITEOUT_FAIL_OPEN` setting is also unchanged: with `WHITEOUT_FAIL_OPEN=false`, the SDK still blocks calls when it can't reach Whiteout AI.
+
+When your organization moves to full enforcement, sync your guardrails to pick up any policy changes, and attach them again as described in [Step 3: Attach to Agents](#step-3-attach-to-agents). A Custom AI App's Bedrock guardrail choice is locked in audit-only mode too; see [Custom AI Apps → Bedrock Guardrail](./custom-ai-apps/browser-bedrock-infrastructure.md#bedrock-guardrail).
 
 ---
 

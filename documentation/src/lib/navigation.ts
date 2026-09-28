@@ -100,6 +100,49 @@ export const navigation: NavSection[] = [
     ],
   },
   {
+    title: 'Governance',
+    items: [
+      { title: 'Audit-Only Mode', href: '/admin-guides/governance/audit-only-mode' },
+    ],
+  },
+  {
+    title: 'Compliance Evidence',
+    items: [
+      { title: 'Overview', href: '/admin-guides/compliance-evidence/overview' },
+      { title: 'Frameworks and Controls', href: '/admin-guides/compliance-evidence/frameworks-and-controls' },
+      { title: 'AI System Register', href: '/admin-guides/compliance-evidence/ai-system-register' },
+      { title: 'Evidence Packs', href: '/admin-guides/compliance-evidence/evidence-packs' },
+      { title: 'GRC Connections (Vanta, Drata)', href: '/admin-guides/compliance-evidence/grc-connections' },
+      { title: 'Preparing for an Audit', href: '/admin-guides/compliance-evidence/audit-preparation' },
+      { title: 'Evidence Sources', href: '/admin-guides/compliance-evidence/evidence-sources' },
+      { title: 'Control Catalog', href: '/admin-guides/compliance-evidence/control-catalog' },
+    ],
+  },
+  {
+    title: 'Injection Defense',
+    items: [
+      { title: 'Overview', href: '/admin-guides/injection-defense/overview' },
+      { title: 'The Console', href: '/admin-guides/injection-defense/console' },
+      { title: 'Configuration & Rollout', href: '/admin-guides/injection-defense/configuration' },
+      { title: 'Investigating Detections', href: '/admin-guides/injection-defense/investigating-events' },
+      { title: 'FAQ & Troubleshooting', href: '/admin-guides/injection-defense/troubleshooting' },
+    ],
+  },
+  {
+    title: 'Custom AI Apps',
+    items: [
+      { title: 'Overview', href: '/admin-guides/custom-ai-apps/overview' },
+      { title: 'Register an App', href: '/admin-guides/custom-ai-apps/setup-wizard' },
+      { title: 'Policies, Identity and Verdicts', href: '/admin-guides/custom-ai-apps/policies-and-identity' },
+      { title: 'Guard API Reference', href: '/admin-guides/custom-ai-apps/guard-api' },
+      { title: 'SDK Integration', href: '/admin-guides/custom-ai-apps/sdk-integration' },
+      { title: 'Zero-Code Coverage', href: '/admin-guides/custom-ai-apps/zero-code-coverage' },
+      { title: 'Gateways', href: '/admin-guides/custom-ai-apps/gateways' },
+      { title: 'Browser, Bedrock and Infrastructure', href: '/admin-guides/custom-ai-apps/browser-bedrock-infrastructure' },
+      { title: 'Monitoring and Troubleshooting', href: '/admin-guides/custom-ai-apps/monitoring-and-troubleshooting' },
+    ],
+  },
+  {
     title: 'SOC/SIEM Destinations',
     items: [
       { title: 'Webhook', href: '/admin-guides/soc-destinations/webhook' },

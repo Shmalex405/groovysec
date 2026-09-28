@@ -37,6 +37,22 @@ This stops **new** connections. It does not, by itself, remove a
 connection that already exists — which is what the next two sections
 are for.
 
+> **Audit-only organizations:** if your organization runs in
+> [audit-only mode](./governance/audit-only-mode.md), **Block External
+> AI** isn't applied: the browser extension and Desktop Guard are sent
+> an empty block list, so connectors stay usable. The switch is also
+> view only: it's greyed out under a banner that reads *"**Audit-only
+> mode** — Blocking external AI needs policy enforcement, which isn't
+> enabled for your organization. You can review the settings here, but
+> changes are disabled. Contact your account team to enable
+> enforcement."*, and so is the per-group **external AI** access switch.
+> A change through the API (`POST /integrations/connector-policies`, or
+> external access on `/integrations/llm-access` or
+> `/integrations/global/group-access`) is rejected with HTTP 403. Blocks
+> you set before are kept and take effect once enforcement is enabled.
+> Revoking grants at the source (section 3) is an admin action and works
+> in either mode.
+
 ## 2. Find pre-existing connections
 
 If someone connected Gmail to ChatGPT *before* your organization
