@@ -61,13 +61,55 @@
     <loc>https://groovysec.com/docs/admin-guides/overview</loc>
   </url>
   <url>
+    <loc>https://groovysec.com/docs/admin-guides/compliance-evidence/ai-system-register</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/compliance-evidence/audit-preparation</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/compliance-evidence/control-catalog</loc>
+  </url>
+  <url>
     <loc>https://groovysec.com/docs/admin-guides/compliance-evidence/evidence-packs</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/compliance-evidence/evidence-sources</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/compliance-evidence/frameworks-and-controls</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/compliance-evidence/grc-connections</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/compliance-evidence/overview</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/custom-ai-apps/browser-bedrock-infrastructure</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/custom-ai-apps/gateways</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/custom-ai-apps/guard-api</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/custom-ai-apps/monitoring-and-troubleshooting</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/custom-ai-apps/overview</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/custom-ai-apps/policies-and-identity</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/custom-ai-apps/sdk-integration</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/custom-ai-apps/setup-wizard</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/custom-ai-apps/zero-code-coverage</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/deployment/overview</loc>
@@ -91,10 +133,28 @@
     <loc>https://groovysec.com/docs/admin-guides/developers/python-sdk</loc>
   </url>
   <url>
+    <loc>https://groovysec.com/docs/admin-guides/governance/audit-only-mode</loc>
+  </url>
+  <url>
     <loc>https://groovysec.com/docs/admin-guides/infrastructure/agent-quickstart</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/infrastructure/tool-activity-governance</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/injection-defense/configuration</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/injection-defense/console</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/injection-defense/investigating-events</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/injection-defense/overview</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/injection-defense/troubleshooting</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/integrations/asana</loc>
