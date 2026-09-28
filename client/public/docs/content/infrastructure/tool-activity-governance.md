@@ -2,7 +2,7 @@
 
 On agentic workloads, the risk usually isn't the prompt — it's what the agent *does next*. A coding agent asked to "clean up the repo" issues shell commands, rewrites files, and calls external services, and the command that exfiltrates a secret never appears in any prompt. Tool-activity governance extends the Infrastructure Agent's transcript mode to capture those tool calls as first-class, policy-evaluable activity.
 
-This guide assumes a working transcript-mode agent — if you don't have one yet, start with the [Agent Quickstart](./agent-quickstart.md).
+This guide assumes a working transcript-mode agent — if you don't have one yet, start with the [Agent Quickstart](./infrastructure/agent-quickstart.md).
 
 ## What Gets Captured
 
@@ -64,6 +64,7 @@ Two honesty notes, so your expectations match the architecture:
 
 - **Transcript mode is post-hoc.** The tool call already ran by the time the transcript records it. Evaluation gives you detection, audit evidence, and alerting — not pre-execution blocking. (Pre-execution enforcement on developer machines is the job of the agentic-coding defender hooks; in-line blocking on servers is the SDK's.)
 - **Evaluation fails open.** If the compliance engine is unreachable or scaled down, tool rows are still captured and stored — they simply aren't evaluated. Nothing about this feature can take your workload down.
+- **Audit-only mode doesn't evaluate.** In an [audit-only](./governance/audit-only-mode.md) organization the compliance engine isn't called, so tool calls are captured and stored but not flagged, and none is ever marked as blocked. The **Evaluate tool calls** switch on the resource policy group is greyed out and can't be changed until enforcement is enabled; its saved value is kept.
 
 ## Verify End to End
 

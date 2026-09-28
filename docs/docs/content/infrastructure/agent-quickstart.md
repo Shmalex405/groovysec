@@ -31,6 +31,10 @@ A policy group is the unit of governance for infrastructure: every agent enrolle
 - **Data capture** — `full` (prompt and payload text), `metadata_only` (events without content), or `none`.
 - **Guardrails** — model allowlist, blocked providers, per-call token budget, hourly rate limit.
 
+> **Audit-only organizations.** If your organization runs in [audit-only mode](./governance/audit-only-mode.md), nothing is blocked, whatever the group says. Agents and the SDK are sent a non-blocking posture: `monitor` mode, fail-open, and no model allowlist, blocked providers, token budget or rate limit. The group's own settings are kept, and the configuration served to agents lists them under `configured`. Checks still run on the backend: a call that a provider, model or token rule would have blocked is recorded in the **Activity** tab with the rule, and isn't marked as blocked. SDK evaluations return `allow` in `monitor` mode, with `"enforced": false` and `"would_action"` when the group's mode would have acted. Your settings apply again from the next policy refresh once enforcement is enabled.
+>
+> In audit-only mode the group's enforcement settings are also **view only**. On **Infrastructure → Resource Policies**, **Enforcement**, **On Failure**, **Evaluate tool calls**, **Infrastructure Rules**, **Content Policies** and **Compliance Engine (Premium)**, including its connection test, are greyed out under a banner that reads *"**Audit-only mode** — Enforcement modes, infrastructure rules, content policies and the compliance engine need policy enforcement, which isn't enabled for your organization. You can review the settings here, but changes are disabled. Contact your account team to enable enforcement. Name, data capture, classification and alerting stay editable."* You can still create a group (it starts with the default enforcement settings, `monitor` and no rules), rename it, change its description, data capture, classification and alerting, and delete it. Through the API, a create or update that sets or changes a locked field, a content-policy change and a connection test are rejected with HTTP 403: *"Policy enforcement is not included in this tier (audit-only / discovery)."*
+
 ## Step 2 — Mint an Enrollment Token
 
 **Infrastructure → Enrollment → New token**, bound to the policy group from Step 1.
@@ -92,7 +96,7 @@ Transcript-mode notes:
 - Sources are selected with `WHITEOUT_TRANSCRIPT_SOURCES` (default `claude-code`; add `codex`, `cursor`, `gemini`, `aider` as comma-separated values). Each source's log root is overridable (`WHITEOUT_TRANSCRIPT_ROOT`, `WHITEOUT_CODEX_ROOT`, …) — set the root explicitly when the service user differs from the user running the AI tool.
 - Existing files are seeded at end-of-file: activity appears **from enrollment forward**, never retroactively.
 - Batching defaults to 50 events / 10 seconds (`WHITEOUT_BATCH_SIZE`, `WHITEOUT_BATCH_INTERVAL`).
-- To also capture the **tool calls** agentic sessions execute, see [Tool-Activity Governance](./tool-activity-governance.md).
+- To also capture the **tool calls** agentic sessions execute, see [Tool-Activity Governance](./infrastructure/tool-activity-governance.md).
 
 For AWS Bedrock — including managed Bedrock Agents where no agent or SDK can reach — see the dedicated [AWS Bedrock integration](../integrations/aws-bedrock.md), which covers the SDK wrapper, the invocation-log ingest worker, and native Guardrails translation.
 
@@ -117,7 +121,7 @@ In the dashboard (**Infrastructure**):
 
 - **Liveness tiers** — agents move `active → stale → disconnected` based on missed heartbeats, with a page-level "needs attention" banner on transitions and per-agent history. A decommissioned or archived agent leaves the health math.
 - **Version drift** — the dashboard flags agents running behind the current release.
-- **Policy refresh** — agents pull group policy every 60 s (`WHITEOUT_CONFIG_REFRESH`); changing a group's posture reaches the fleet without redeploys.
+- **Policy refresh** — agents pull group policy every 60 s (`WHITEOUT_CONFIG_REFRESH`); changing a group's posture reaches the fleet without redeploys. A move into or out of [audit-only mode](./governance/audit-only-mode.md) reaches agents the same way.
 
 ## Troubleshooting
 
@@ -127,3 +131,5 @@ In the dashboard (**Infrastructure**):
 | Agent Active but no activity rows | Transcript root doesn't match where the AI tool actually writes (check the service user's home), or no *new* sessions since enrollment — history is never backfilled |
 | Rows show `not captured` for content | The policy group's data capture is `metadata_only` — intentional, not a fault |
 | Agent shows Stale after host sleep | Expected — it returns to Active on the next heartbeat |
+| Nothing is blocked, and the agent reports `monitor` mode whatever the group says | Your organization is in [audit-only mode](./governance/audit-only-mode.md). Would-be blocks are recorded in the Activity tab |
+| A group's mode, fail behaviour, rules and content policies are greyed out, or saving them returns HTTP 403 | Your organization is in [audit-only mode](./governance/audit-only-mode.md#settings-locked-in-audit-only-mode), where these settings are view only. Name, data capture, classification and alerting stay editable |

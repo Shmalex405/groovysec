@@ -162,8 +162,12 @@ Each text field can be up to 200,000 characters.
 | `identity` | Employee-policy apps: why the call fell back to the app's policy group, when it did |
 | `blocked_by` | `ai_app_access` when the app is blocked for the employee's group under AI Applications |
 | `redacted_text` | Employee-policy apps only, on some blocks: a redacted version of the prompt produced by your organisation's redaction settings |
-| `injection` | When Prompt Injection Defense is on: what was detected |
+| `injection` | When Prompt Injection Defense is on: what was detected. In an audit-only organisation, `{"status": "off", "reason": "AUDIT_ONLY", "detected": false, "action": "allow"}` instead, because the detector doesn't run |
 | `quarantine` | When Prompt Injection Defense is on: `{"messages": [...], "context": [...]}`, the indexes of messages and context documents to keep away from the model |
+| `enforced` | Audit-only organisations: `false` when a check would have blocked or warned but wasn't enforced (see [Audit-only organisations](#audit-only-organisations)) |
+| `would_action` | Audit-only organisations: what the check asked for, `block` or `warn` |
+| `suppressed_by` | Audit-only organisations: `"AUDIT_ONLY"` |
+| `would_block_by` | Audit-only organisations, employee-policy apps: `ai_app_access` when the app is blocked for the employee's group but the call was allowed |
 
 If `decision` is `block`, don't send the prompt to the model. If it's `warn`, you may continue and show the reason. Fields you don't use can be ignored; new optional fields may be added.
 
@@ -237,6 +241,40 @@ Returns the settings that apply to the key, so clients can cache them. Supports 
 ```
 
 With a gateway key, `app` is `null` and a `gateway` object is included instead. The SDKs read this endpoint to follow your policy group's fail behaviour.
+
+In an [audit-only organisation](#audit-only-organisations), the response is non-blocking whatever the policy group says, so a client that caches it never blocks or fails closed locally: `mode` is `monitor`, `fail_behavior` is `open`, `allowed_models` and `blocked_providers` are empty, `max_tokens_per_call` is `null`, and `"auditonly": true` is added.
+
+---
+
+## Audit-Only Organisations
+
+If your organisation runs Whiteout in [audit-only mode](./governance/audit-only-mode.md), the Guard API never blocks. Every check still runs and is recorded:
+
+- `/input` and `/output` always return `"decision": "allow"` and `"mode": "monitor"`, and fail open even when the policy group fails closed.
+- When a model, provider or token check, an AI Applications rule, or a fail-closed setting would have acted, the response adds `"enforced": false`, `"would_action"` (`block` or `warn`) and `"suppressed_by": "AUDIT_ONLY"`. A model, provider or token match also carries `rule`, as usual.
+- Prompt Injection Defense doesn't run. If it's switched on in your settings, `injection` reads `{"status": "off", "reason": "AUDIT_ONLY", "detected": false, "action": "allow"}` and there's no `quarantine` object. If it's switched off, `injection` is left out, as usual.
+- `/v1/guard/portkey` always returns `"verdict": true`.
+- `/v1/guard/config` serves non-blocking settings, as described under `GET /v1/guard/config` above.
+
+Example: an app whose policy group is in `enforce` mode calls a model that isn't on the allowlist.
+
+```json
+{
+  "decision": "allow",
+  "violated_policies": [],
+  "reason": "Model 'gpt-4o-mini' is not on the allowlist",
+  "evaluation_id": "6f1c2e9a-8a51-4c0b-9d1e-2b7f3c1d0a42",
+  "fail_open": false,
+  "mode": "monitor",
+  "latency_ms": 38,
+  "enforced": false,
+  "would_action": "block",
+  "suppressed_by": "AUDIT_ONLY",
+  "rule": "model_not_allowed"
+}
+```
+
+The extra fields are additive, so existing code and SDKs keep working unchanged. Read them if you want your app to log or show what enforcement would have done.
 
 ---
 

@@ -247,7 +247,17 @@ If Whiteout can't be reached, or rejects the key, the SDK applies a fail behavio
 
 Fail-open returns `allow` with `fail_open=True`; fail-closed raises `WhiteoutBlockedError` with `failed_closed=True`.
 
+In an [audit-only organisation](./custom-ai-apps/policies-and-identity.md#audit-only-organisations), `GET /v1/guard/config` always serves fail-open, so step 2 never fails closed. Setting `fail_open=False` / `failOpen: false` in code still forces fail-closed during an outage.
+
 A rejected key (revoked, expired, app archived) is logged at **ERROR** level: *app key rejected … coverage is NOT being applied*. Alert on this log line. A paused app is treated the same way as an outage.
+
+---
+
+## Audit-Only Organisations
+
+If your organisation runs Whiteout in [audit-only mode](./governance/audit-only-mode.md), the SDK never raises `WhiteoutBlockedError` because of a Whiteout verdict: every decision is `allow`, `mode` is `monitor`, and nothing is quarantined. Every check except Prompt Injection Defense still runs, and what it would have done is recorded in the app's **Activity** tab. Prompt Injection Defense is off: nothing is scanned or quarantined. You don't need to change any code.
+
+The decision object keeps `rule` (for a model, provider or token match) and `injection`, which reads `{"status": "off", "reason": "AUDIT_ONLY", "detected": false, "action": "allow"}` if Injection Defense is switched on in your settings. The Guard API's top-level `enforced`, `would_action` and `suppressed_by` fields aren't copied onto the decision object; call the [Guard API](./custom-ai-apps/guard-api.md#audit-only-organisations) directly if your code needs them.
 
 ---
 
@@ -351,6 +361,7 @@ To report calls after the fact, use `guard.send_events([...])` / `guard.sendEven
 ### Calls Are Allowed When You Expected a Block
 
 - Check the app's policy: with **No policy — monitor only** or a group in `monitor` mode, nothing is blocked (see [What gets checked](./custom-ai-apps/policies-and-identity.md#what-gets-checked-in-each-mode))
+- Check whether your organisation is in [audit-only mode](./custom-ai-apps/policies-and-identity.md#audit-only-organisations). If it is, nothing is blocked and `decision.mode` is `monitor` on every call
 - Check the logs for *app key rejected* or *Whiteout unreachable … failing open*
 - Make sure the model call goes through the **wrapped** client, not the original one
 - Widen `scan` if the sensitive data is in a system prompt, tool result or document

@@ -22,6 +22,18 @@ For every scan: where it came from, who sent it, what kinds of parts it held, a 
 
 Before the excerpt is stored, patterns for common personal data and secrets are replaced with placeholders: email addresses, phone numbers, card and account numbers, national ID numbers, IBANs, API keys, access tokens, private keys and credentials. The masking is pattern-based, so treat excerpts as sensitive. They're visible to admins and read-only auditors, and every view is logged. Turn off **Flagged content: keep a short excerpt around each match** if you don't want them stored.
 
+### Are detections sent to our SIEM?
+
+Yes. Every acting detection is sent to each enabled SOC/SIEM destination as a `prompt_injection_detection` event, whether or not **Notify on detections** is on. Suppressed detections and clean scans aren't sent. Splunk receives them with the sourcetype `whiteout:prompt_injection`, Elasticsearch in the index `whiteout-prompt-injection`, and Azure Sentinel in the table `WhiteoutAI_PromptInjection_CL`, which you need to add to your DCR unless you've set a **Table Name**. AWS S3 and IBM QRadar destinations don't receive them. See [Investigating detections → SIEM export](./injection-defense/investigating-events.md#siem-export).
+
+### Do excerpts leave the console?
+
+Only to your own SOC/SIEM destinations, and only while excerpts are on. Each detection event carries the masked excerpt, and each destination's privacy settings apply: a destination set to hash-only or redacted content receives a hash or `[CONTENT_REDACTED]` instead. Turn excerpts off to keep them out of your SIEM entirely.
+
+### Are admins alerted about detections by default?
+
+Yes. **Prompt injection detected** is in the default **Security events** notification rule, which alerts every admin in-app. Organizations that already had notification rules got it added automatically, unless one of their rules already covered it. Add email, Slack, Teams, webhook or PagerDuty delivery by editing the rule under **Alerts & Audit → Notifications → Rules**.
+
 ### How long are records kept?
 
 Scans are kept **for as long as your organisation uses Whiteout**, and each is chained to the one before it with a SHA-256 hash. Use **Detectors → Verify now** to check the chain.
@@ -34,9 +46,13 @@ No. There's one set of actions for the organisation. You can control outcomes pe
 
 No. Injection Defense is independent of **Governance → Policies** and of group settings. See [Configuration → Relationship to Policies](./injection-defense/configuration.md#relationship-to-policies).
 
-### Does audit-only mode turn it into monitoring only?
+### Does it run in audit-only mode?
 
-No. Injection Defense has its own switch and actions. To detect without enforcing, set both actions to **Record only**.
+No. In an [audit-only](./governance/audit-only-mode.md) organisation, Injection Defense is off, whatever its own switch says. Nothing is scanned on any surface, no detections are recorded, and no alerts or SIEM events are sent. Guard decisions and connector results go through unchanged, and a Guard API, SDK or gateway response carries `"injection": {"status": "off", "reason": "AUDIT_ONLY", "detected": false, "action": "allow"}` if the feature is switched on in your settings. The settings are greyed out and can't be changed, but they're kept, and Injection Defense resumes with them from the next request once enforcement is enabled. See [Configuration → Audit-only mode](./injection-defense/configuration.md#audit-only-mode).
+
+### Test the detector is disabled, and the settings are greyed out
+
+Your organisation is in [audit-only mode](./injection-defense/configuration.md#audit-only-mode), where the detector doesn't run. Hovering over **Test the detector** shows *"Audit-only mode — the detector doesn't run"*, and saving settings or adding a suppression through the API is rejected with HTTP 403: *"Policy enforcement is not included in this tier (audit-only / discovery)."* Past detections are still on the **Overview** and **Audit log** tabs. Contact your account team to enable enforcement.
 
 ### Why was a user's prompt only warned about, when I chose Block?
 
@@ -91,13 +107,16 @@ Open one of its scans and check the tier. If rules fired, add a suppression that
 ### Blocked requests aren't generating alerts
 
 - Check that **Notify on detections** is on.
-- Check that a notification rule includes **Prompt injection detected**; the default rules don't.
+- Check that a notification rule includes **Prompt injection detected** and is enabled. The default **Security events** rule includes it; if you edited or disabled that rule, or deleted it and its replacement **Prompt injection detected** rule, add a rule under **Alerts & Audit → Notifications → Rules**.
+- Check that the event isn't silenced in **Alerts & Audit → Notifications → Library**.
 - Suppressed hits don't raise events.
 - Repeats from the same surface and app or user are coalesced.
 
 ### A Custom AI App never blocks, whatever the settings
 
 The app is probably in **monitor mode**, which caps injection actions at warn. OpenTelemetry traffic is also always capped at warn, because the calls have already happened.
+
+If **nothing** is scanned at all and the page header reads **Off (audit-only)**, your organisation is in [audit-only mode](./governance/audit-only-mode.md), where Injection Defense is off.
 
 ### Quarantine is reported, but the model still saw the document
 

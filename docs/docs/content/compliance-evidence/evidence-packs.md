@@ -52,19 +52,36 @@ The ZIP contains one folder, named `evidence-pack_<framework>_<start>-<end>`, fo
 | `csv/evidence/<source>.csv` | One file per evidence source the framework uses: its sample rows (up to 25), or its figures as `metric,value` pairs for sources without sample rows |
 | `csv/ai_register.csv` | Every AI System Register row, including tools no longer installed |
 | `csv/snapshots.csv` | Every daily snapshot in the period: date, kind, SHA-256 and whether it still matches its hash |
-| `manifest.json` | The SHA-256 hash and size of every file above, plus the framework, catalog version, review status, period, organization, generation time, who generated it, whether end-user emails are shown, and the status counts |
+| `manifest.json` | The SHA-256 hash and size of every file above, plus the framework, catalog version, review status, period, organization, generation time, who generated it, whether end-user emails are shown, the status counts, and the enforcement mode over the period (`enforcement_mode`: `mode`, `days_observed`, `days_audit_only`) |
 
 ### The report
 
 `report.pdf` opens with a cover (*Whiteout AI · Compliance Evidence Pack*, the framework, period, organization, and when and by whom it was generated). Then come these sections:
 
-1. **Scope and method.** What the pack evidences and for which period, the catalog version, whether it covers the full framework or the AI-relevant subset, the draft-mapping notice where it applies, the framework's own note, headline counts (**Controls**, **Evidenced**, **Partially evidenced**, **Supported**, **Customer-owned**, **Gaps**) and *How to read the ratings*.
+1. **Scope and method.** What the pack evidences and for which period, the catalog version, whether it covers the full framework or the AI-relevant subset, the draft-mapping notice where it applies, the framework's own note, an audit-only warning if your organization was in audit-only mode for any of the period, headline counts (**Controls**, **Evidenced**, **Partially evidenced**, **Supported**, **Customer-owned**, **Gaps**) and *How to read the ratings*.
 2. **Control matrix.** Every control's ID, title, rating, status and owner on one table.
 3. **A section per control.** The rating and status for the period, *What Whiteout provides*, a table of evidence sources with their status and finding, their notes, any deployment hint, *Organisation's responsibility* for **Supports** and **Customer-owned** controls, and *Organisation's record*: your state, owner, note, not-applicable justification, and who recorded it when.
 4. **AI System Register.** Summary figures, then up to 100 tools with category, owner, risk tier and approval. The full list is in the CSV.
 5. **Evidence history.** How many daily snapshots fall in the period and how many still match their hash, with a warning if any don't, or if there are none.
-6. **Where Whiteout stops.** Every **Customer-owned** control with what your organization is expected to provide, and the known limits of the evidence.
+6. **Where Whiteout stops.** Every **Customer-owned** control with what your organization is expected to provide, and the known limits of the evidence (see below).
 7. **About this pack.** How to verify it, and what it does and doesn't contain.
+
+### Known limits of the evidence
+
+Every pack lists these limits under *Where Whiteout stops*:
+
+- The admin audit log and the browser, desktop and IDE prompt logs are append-only by design but are not hash-chained. Infrastructure-agent, SDK and Guard API activity, and the Prompt Injection Defense scan log, are hash-chained and verifiable.
+- Whiteout has no configurable log-retention policy. The pack shows how far back AI-use and admin logs go; retention itself must be documented in your own policy. Tamper, protection-state and fail-open events are kept for 90 days, so periods older than that show none. Generated packs can be downloaded for 90 days; keep your own copy.
+- Policy and coverage history starts on the day this framework was first enabled. Earlier configuration is shown through the policy change log only.
+- Prompt Injection Defense is off unless an administrator turns it on, and always off in audit-only mode. When on, it runs server-side on the Guard API and SDK (Custom AI Apps, including trace ingest, which records only), on AI Connector tool results and on scans sent by the VS Code extension. It does not scan browser-extension, Desktop Guard or JetBrains traffic. When it is off, only IDE and coding-agent injection warnings are recorded.
+- Human-oversight evidence comes from Accountable Override, flagged-prompt review and finding acknowledgement records.
+- Coverage evidence reflects devices and workloads running a Whiteout client. AI use on unenrolled devices is visible only through discovery and egress observation.
+
+If your organization was in [audit-only mode](./compliance-evidence/overview.md#audit-only-discovery-mode) on any day of the period, the pack adds one more limit, and shows the same text as a warning on the *Scope and method* page:
+
+> **Audit-only mode.** This organisation was in audit-only mode for all or part of the period. In audit-only mode AI interactions are logged but not evaluated against policy, and nothing is blocked. Evidence for those days reflects logging, not enforcement: configured rules were not applied.
+
+The mode is judged from the daily evidence snapshots in the period, plus the current mode for today, and is recorded in `manifest.json` under `enforcement_mode`: `mode` is `enforcing`, `audit_only` or `mixed`, with the number of days observed and the number in audit-only mode.
 
 ### How to use the CSVs
 

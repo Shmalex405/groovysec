@@ -204,7 +204,7 @@ Much of what auditors ask about is state, not events. Was this rule on in July? 
 
 | Snapshot | What it records |
 |----------|-----------------|
-| **Policy configuration** | For each group: library rules enabled (and which), custom rules, and whether Accountable Override is allowed. Totals across groups. |
+| **Policy configuration** | For each group: library rules enabled (and which), custom rules, and whether Accountable Override is allowed. Totals across groups, and whether your organization was in audit-only mode that day. |
 | **Coverage** | Devices reporting per surface (Desktop Guard, browser extension, IDE), active infrastructure agents, MDM-managed devices, active users, users with a live Whiteout client and the resulting user-coverage percentage. |
 | **Identity** | Users by role, active users, identity providers connected, sync runs completed and failed, SCIM events and users deactivated by sync. |
 | **Inventory** | Distinct AI tools, installs, unknown tools, tools with ungoverned installs, tools by category, and the AI System Register summary. |
@@ -218,13 +218,14 @@ How snapshots work:
 - **Every snapshot is hashed** (SHA-256 over its contents) when it's taken. Each pack re-checks every snapshot in its period against its hash and reports how many still match.
 - **Snapshots stop** if you stop tracking every framework, and resume when you track one again.
 
-The **Enforced AI-use policy** and **Monitoring coverage** evidence sources use the snapshots for their history. **Enforced AI-use policy** reports days recorded, rules enabled at the first and last snapshot and days with no rules. **Monitoring coverage** reports days recorded and the minimum and average daily user coverage. The pack's `csv/snapshots.csv` lists every snapshot in the period with its hash and whether it still verifies.
+The **Enforced AI-use policy** and **Monitoring coverage** evidence sources use the snapshots for their history. **Enforced AI-use policy** reports days recorded, rules enabled at the first and last snapshot, days with no rules and days in audit-only mode. The audit-only flag in each policy snapshot is also how **Enforced AI-use policy**, **Runtime enforcement**, **Agent tool-call governance** and the pack's audit-only warning judge a past period by the mode it was actually in; see [Audit-only (discovery) mode](./compliance-evidence/overview.md#periods-that-span-a-mode-change). **Monitoring coverage** reports days recorded and the minimum and average daily user coverage. The pack's `csv/snapshots.csv` lists every snapshot in the period with its hash and whether it still verifies.
 
 ## Troubleshooting
 
 | Symptom | Likely cause and fix |
 |---------|----------------------|
 | A control shows **Gap** although the feature is in use | Open the drawer and look at each evidence source. A source can be **Absent** because nothing happened in the period (for example no policy changes, or no flagged prompts reviewed). Widen the period, or explain the quiet period in the note. |
+| **Runtime enforcement** or **Enforced AI-use policy** is **Absent** or **Partial** although rules are configured and activity is logged | Your organization was in [audit-only mode](./compliance-evidence/overview.md#audit-only-discovery-mode) for all or part of the period, so nothing was evaluated or blocked on those days. The summary gives the number of audit-only days. This is the accurate rating; record the deployment mode in the control's note. |
 | **Not deployed** on inventory, shadow-AI or register evidence | None of Desktop Guard, the infrastructure agent or an MDM integration is enrolled. Discovery needs at least one of them. |
 | **Identity and access lifecycle** is **Partial** | No identity provider is connected, or none synced successfully in the period. Connect your IdP and run a sync. See the SSO provider guides, for example [Okta](./sso-providers/okta.md) or [Microsoft Entra ID](./sso-providers/microsoft-entra-id.md). |
 | **SOC/SIEM forwarding** is **Partial** or **Absent** | No SOC destination is enabled, or one is failing. See [SOC destinations](./soc-destinations/webhook.md). |

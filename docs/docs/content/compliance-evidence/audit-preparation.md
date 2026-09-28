@@ -35,7 +35,8 @@ Audit period dates are whole UTC days, and the end date is inclusive.
    | Inventory, shadow-AI and register evidence **Not deployed** | Deploy Desktop Guard, the infrastructure agent or an MDM integration for discovery. For fleet rollout, see [Zero-Touch MDM Deployment](./deployment/zero-touch-mdm.md). |
    | **Identity and access lifecycle** **Partial** | Connect your identity provider and let it sync, for example [Okta](./sso-providers/okta.md) or [Microsoft Entra ID](./sso-providers/microsoft-entra-id.md). SCIM is covered in [Groups, Users and SCIM](./sso-providers/groups-users-scim.md). |
    | **SOC/SIEM forwarding** **Absent** | Add a SOC destination, for example [Splunk HEC](./soc-destinations/splunk-hec.md) or a [webhook](./soc-destinations/webhook.md). |
-   | **Enforced AI-use policy** **Absent** | Enable AI-use rules for your groups. |
+   | **Enforced AI-use policy** **Absent** | Enable AI-use rules for your groups. If rules are configured and it's still **Absent** or **Partial**, your organization was in [audit-only mode](./compliance-evidence/overview.md#audit-only-discovery-mode) for all or part of the period, so the rules weren't enforced. |
+   | **Runtime enforcement** **Absent** or **Partial** with activity logged | Audit-only mode was on for all or part of the period; the summary gives the number of audit-only days. This is accurate, not a fault: record the deployment mode in the control's note. |
    | **AI app and provider restrictions** **Absent** | Block the AI apps or providers your policy doesn't allow. |
    | **Tamper-evident infrastructure log** or **Model output scanning** **Not deployed** | Deploy the [infrastructure agent](./infrastructure/agent-quickstart.md) or an SDK ([Python](./developers/python-sdk.md), [Node.js](./developers/node-sdk.md)) for your own AI workloads. |
 
@@ -94,10 +95,10 @@ Every framework is currently a **Draft mapping**: it was prepared by the Whiteou
 - **It's evidence, not an opinion.** Every status is computed from Whiteout data for the stated period, with its source named. Nothing is a hand-typed tick box.
 - **The mappings are drafts.** Ratings are the Whiteout product team's mapping, not yet independently reviewed.
 - **Metadata only.** No prompt, response, file or justification text is included. End users are pseudonymized unless you chose otherwise.
-- **Integrity has a boundary.** The manifest proves the pack is unaltered since it was generated. Infrastructure-agent and SDK activity is hash-chained. The admin audit log is append-only but not hash-chained.
+- **Integrity has a boundary.** The manifest proves the pack is unaltered since it was generated. Infrastructure-agent, SDK and Guard API activity, and the Prompt Injection Defense scan log, are hash-chained. The admin audit log and the browser, desktop and IDE prompt logs are append-only but not hash-chained.
 - **History starts when tracking started.** Daily snapshots begin the day you first tracked the framework. Earlier policy history comes from the admin audit log.
-- **Retention is yours.** Whiteout shows how far back logs go, but it has no configurable retention policy. Your retention policy is your own documentation.
-- **Audit-only deployments.** If you run in [audit-only mode](./compliance-evidence/overview.md#audit-only-discovery-mode), AI use is monitored but not enforced. Say so up front.
+- **Retention is yours.** Whiteout shows how far back logs go, but it has no configurable retention policy. Your retention policy is your own documentation. Tamper, protection-state and fail-open events are kept for 90 days, and generated packs can be downloaded for 90 days, so keep your own copy of every pack you hand over.
+- **Audit-only deployments.** If you ran in [audit-only mode](./compliance-evidence/overview.md#audit-only-discovery-mode) on any day of the period, AI use was monitored but not enforced on those days. The pack says so on its *Scope and method* page and in its known limits, and rates enforcement evidence **Absent** or **Partial** accordingly. Say so up front too.
 - **HITL isn't oversight.** Human-oversight evidence comes from Accountable Override, flagged-prompt review and finding acknowledgement, never from HITL approvals. See [the overview](./compliance-evidence/overview.md#human-in-the-loop-approvals-are-not-ai-oversight-evidence).
 
 ## FAQ
@@ -112,7 +113,7 @@ No. It's generally available to every organization. You only choose which framew
 No. The catalog is the same for every customer, and packs cite its version. Record your assessor's view, or your own scoping, in the control's note, or mark a control **Not applicable** with a justification.
 
 **Why does a control show Evidenced when we haven't done anything specific for it?**
-Because Whiteout data demonstrates it for the period. For example, discovery evidences an AI inventory control without extra work. Open the drawer to see exactly which data. In audit-only mode, read [this caveat](./compliance-evidence/overview.md#audit-only-discovery-mode) first.
+Because Whiteout data demonstrates it for the period. For example, discovery evidences an AI inventory control without extra work. Open the drawer to see exactly which data. In audit-only mode, enforcement evidence is never rated as present; see [Audit-only (discovery) mode](./compliance-evidence/overview.md#audit-only-discovery-mode).
 
 **We marked a control Implemented. Why is it still a Gap?**
 Your record doesn't change the computed status; only **Not applicable** does. The status reflects Whiteout's data, and your record sits alongside it. Fix the underlying gap, or explain it in the note.

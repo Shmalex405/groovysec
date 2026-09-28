@@ -162,7 +162,10 @@ exposed source. You should see:
 - **Allowed content** returned normally — but only for items your own
   account can access (access stays per-user).
 - **Blocked content** withheld with a short policy note instead of the
-  document body, when a connector policy rule matches.
+  document body, when a connector policy rule matches. In an
+  [audit-only](./whiteout-ai-connector/connector-policy.md#audit-only-mode)
+  organization the content is returned in full instead, and the
+  would-be block is recorded in the audit trail.
 
 If the assistant shows no Whiteout tools at all, the connector wasn't
 added or the OAuth consent didn't complete — re-add it and finish the

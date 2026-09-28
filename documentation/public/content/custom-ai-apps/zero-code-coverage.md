@@ -259,6 +259,7 @@ The exporter's key needs the `guard:events` scope, which every app key created i
 
 - `WHITEOUT_MODE=observe` is set on the service, or the app's policy group is in `monitor` mode
 - The method is OpenTelemetry, which never blocks
+- Your organisation is in [audit-only mode](./custom-ai-apps/policies-and-identity.md#audit-only-organisations), where no call is blocked. What would have been blocked is shown as **Flagged** in the app's **Activity** tab
 
 ### The Service Logs "WHITEOUT_APP_KEY is not set"
 

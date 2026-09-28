@@ -17,11 +17,13 @@ The header reads **Prompt Injection Defense**, with the subtitle *"Catch jailbre
 
 To the right of the title:
 
-- **On** / **Off**: whether the feature is switched on for your organisation.
+- **On** / **Off**: whether the feature is switched on for your organisation. In an [audit-only](./injection-defense/configuration.md#audit-only-mode) organisation it reads **Off (audit-only)**, whatever the switch says.
 - **Classifier status** (shown only while the feature is on): one of **Classifier on**, **Classifier loading**, **Rules only** or **Classifier unavailable**. See [Classifier status](#classifier-status).
-- **Test the detector**: opens the [test dialog](#test-the-detector). It works even while the feature is off.
+- **Test the detector**: opens the [test dialog](#test-the-detector). It works even while the feature is off, but not in audit-only mode: the button is disabled, and hovering over it shows *"Audit-only mode — the detector doesn't run"*.
 
 While the feature is off, every tab except **Settings** shows a banner: *"Protection is off — nothing is scanned or recorded. You can still try the detector."* The banner's **Settings** button takes you straight to the switch.
+
+In an audit-only organisation, every tab shows the **Audit-only mode** banner instead: *"**Audit-only mode** — Prompt Injection Defense needs policy enforcement, which isn't enabled for your organization. You can review the settings here, but changes are disabled. Contact your account team to enable enforcement. It is off: nothing is scanned or recorded, and your saved settings resume when enforcement is enabled. Past detections stay available under Overview and Audit log."* The **Overview** and **Audit log** tabs still show scans recorded before the move to audit-only mode, and the **Settings** tab is greyed out and view only. In the sidebar, **Injection Defense** is dimmed, with a lock icon and the tooltip **"Audit-only mode — view only"**. See [Configuration → Audit-only mode](./injection-defense/configuration.md#audit-only-mode).
 
 The four tabs are **Overview**, **Audit log**, **Detectors** and **Settings**. The selected tab and any open scan are part of the page URL, so you can bookmark or share a link to a specific scan.
 
@@ -96,7 +98,7 @@ The newest scans come first. Click **Load older** at the bottom for more. Click 
 
 Clicking a scan opens **Scan #\<number\>** on the right.
 
-**Summary**: the result chip, how many hits were suppressed, and the time, followed by:
+**Summary**: the result chip, how many hits were suppressed, and the time, followed by the fields below.
 
 | Field | Meaning |
 |---|---|
@@ -174,6 +176,8 @@ The note under the controls reads: *"Documents flagged for quarantine are droppe
 
 You can change every control while the feature is off. Setting your actions *before* you switch it on is the recommended way to start; see [Configuration → Recommended rollout](./injection-defense/configuration.md#recommended-rollout).
 
+In an [audit-only](./injection-defense/configuration.md#audit-only-mode) organisation the whole **Settings** tab is greyed out and every control is disabled, including **Add suppression** and **Revoke**. Your saved settings are shown as they are and apply again once enforcement is enabled.
+
 ### What the audit log keeps
 
 *"Every request that reaches the detector is recorded for as long as your organization uses Whiteout."*
@@ -218,7 +222,7 @@ The result panel shows:
 - each rule that matched, with its ID, category, severity and description. *(found after decoding hidden text)* marks matches that only appeared after decoding.
 - *"No rule matched — the classifier flagged this part."* when only the classifier fired
 
-The test uses your current settings: sensitivity, actions, whether the classifier is on, and your active suppressions. It works while the feature is off, so you can tune before you enable anything. Read-only users can run it only while the feature is on.
+The test uses your current settings: sensitivity, actions, whether the classifier is on, and your active suppressions. It works while the feature is off, so you can tune before you enable anything. Read-only users can run it only while the feature is on. It isn't available in an [audit-only](./injection-defense/configuration.md#audit-only-mode) organisation, where the detector doesn't run.
 
 ## On a Custom AI App's page
 

@@ -67,7 +67,7 @@ Every check returns a decision:
 |----------|---------|------------------------|
 | `allow` | No violation, or the app is in monitor mode | Continue |
 | `warn` | A violation in `warn` mode | Continue, optionally showing the reason to the user |
-| `block` | A violation in `enforce` mode, a blocked app, an injection block, or a fail-closed outcome | Don't send the prompt to the model, or don't show the reply |
+| `block` | A violation in `enforce` mode, a blocked app, an injection block, or a fail-closed outcome. Never returned in an [audit-only organisation](#audit-only-organisations) | Don't send the prompt to the model, or don't show the reply |
 
 The Guard API response also carries `violated_policies`, a human-readable `reason`, the `mode` that was applied, `fail_open` (true when Whiteout couldn't decide and allowed the call), an `evaluation_id` to link the reply check to the prompt, and the check's `latency_ms`. See [Guard API Reference](./custom-ai-apps/guard-api.md#response) for every field.
 
@@ -151,7 +151,7 @@ The reply to an employee-policy prompt is attached to that prompt's record, so P
 
 ### Allow or block the app per group
 
-Custom apps appear in the **AI Applications** list on **Integrations**, for each group and organisation-wide on the **Global** tab. Block the app for a group and every employee-policy call from that group returns `block` with the reason *<App name> is not allowed for your group.*
+Custom apps appear in the **AI Applications** list on **Integrations**, for each group and organisation-wide on the **Global** tab. Block the app for a group and every employee-policy call from that group returns `block` with the reason *<App name> is not allowed for your group.* In an [audit-only organisation](#audit-only-organisations), the call is allowed instead and the response records the rule that would have blocked it, and the allow/block rules can't be changed until enforcement is enabled.
 
 ---
 
@@ -164,7 +164,7 @@ If your organisation has **Prompt Injection Defense** turned on, custom app traf
 - A detection can turn the decision into `block`, depending on your Injection Defense settings; in monitor mode it's reported only
 - A context document or tool result carrying instructions can be **quarantined**: the response lists which messages and documents to keep away from the model. The SDKs and auto-instrumentation replace quarantined turns with a short notice automatically
 
-The response gains `injection` and `quarantine` fields only when the feature is on. Findings appear on the app's **Injection** tab and under **Governance → Injection Defense**. See [Injection Defense](./injection-defense/overview.md) for how detection, blocking and quarantine are configured.
+The response gains `injection` and `quarantine` fields only when the feature is on. In an [audit-only organisation](#audit-only-organisations) the detector doesn't run: `injection` reports `"status": "off"` and there's no `quarantine` field. Findings appear on the app's **Injection** tab and under **Governance → Injection Defense**. See [Injection Defense](./injection-defense/overview.md) for how detection, blocking and quarantine are configured.
 
 ---
 
@@ -179,7 +179,7 @@ If the compliance engine doesn't return a verdict within the policy group's **co
 - **`open`** (the default): the call is allowed, and the response says `"fail_open": true`
 - **`closed`**: the call is blocked, with a reason ending in *(fail-closed)*
 
-Apps with no policy group always fail open.
+Apps with no policy group always fail open, and so does every app in an [audit-only organisation](#audit-only-organisations).
 
 ### On the app side, when Whiteout can't be reached
 
@@ -200,13 +200,44 @@ When the app can't reach Whiteout at all (network failure, timeout, an HTTP erro
 
 ## Audit-Only Organisations
 
-If your organisation runs Whiteout in **audit-only** mode, the compliance engine isn't called for custom apps, as for every other surface:
+If your organisation runs Whiteout in **audit-only** mode, custom apps are **never blocked**, whatever the policy group, the app's identity setting or your Injection Defense settings say. Prompt Injection Defense is off, and every other check still runs and records what it would have done:
 
-- Prompts and replies are **logged and returned as `allow`**. No content verdict is reached, whatever the policy group's mode
-- Calls still appear in the app's Activity tab, in AI Activity and, for employee-policy apps, in Prompt Review
-- Policy editing is unavailable, as elsewhere in audit-only mode
+| Check | In audit-only mode |
+|-------|--------------------|
+| **Prompt and reply content** | Not checked: the compliance engine isn't called, as for every other surface. No content verdict is reached |
+| **Model allowlist, blocked providers, token budget** | Still checked. A match is recorded against the call (shown as **Flagged** in the Activity tab, with the rule), and the call is allowed |
+| **AI Applications** (employee-policy apps) | Still checked. A call from a group the app is blocked for is allowed and judged as usual. The response carries `"would_block_by": "ai_app_access"` and the reason *"\<App name\> is not allowed for your group — not enforced (audit-only mode)"*, and the call details record the rule |
+| **Prompt Injection Defense** | Off: nothing is scanned or recorded, and nothing is quarantined. If the feature is switched on in your settings, the response's `injection` result reads `{"status": "off", "reason": "AUDIT_ONLY", "detected": false, "action": "allow"}`. See [Injection Defense in audit-only mode](./injection-defense/configuration.md#audit-only-mode) |
+| **Mode** | Every response reports `"mode": "monitor"`, whatever the policy group's mode |
+| **Fail behaviour** | Always open, even when the policy group fails closed. `GET /v1/guard/config` serves `fail_behavior: open` |
 
-Checks that don't use the compliance engine are separate from audit-only mode: the model allowlist, blocked providers and token budget on a policy group, AI Applications allow/block for employee-policy apps, and Prompt Injection Defense. Leave those unset if you want an audit-only app to never block. See [Audit-Only Mode](./governance/audit-only-mode.md) for how audit-only mode affects every surface.
+Every decision is `allow`. When a check would have blocked or warned, the response also carries:
+
+- `enforced`: `false`
+- `would_action`: what the check asked for, `block` or `warn`
+- `suppressed_by`: `"AUDIT_ONLY"`
+
+These fields are additive: apps and SDKs that don't read them behave exactly as before. See [Guard API Reference → Audit-only organisations](./custom-ai-apps/guard-api.md#audit-only-organisations).
+
+Calls still appear in the app's Activity tab, in AI Activity and, for employee-policy apps, in Prompt Review.
+
+### Settings you can't change in audit-only mode
+
+A policy group, the employee's own policies and a Bedrock guardrail only matter to the compliance engine or to enforcement, so they're view only in audit-only mode. On an app's **Policy & identity** tab, the **Policy group** drop-down and **Whose policies apply** are greyed out under a banner that reads *"**Audit-only mode** — The policy group and employee policies need policy enforcement, which isn't enabled for your organization. You can review the settings here, but changes are disabled. Contact your account team to enable enforcement. Token audiences and identity settings stay editable."*
+
+| Where | Locked | Still editable |
+|-------|--------|----------------|
+| **Register a custom app**, step **Which policy should apply?** | Choosing a policy group. The app is registered with **No policy yet — monitor only**. | Every other step |
+| An app's **Policy & identity** tab | **Policy group**, **Whose policies apply** | Token audiences and identity settings |
+| An app's **Bedrock Guardrail** method | Choosing the guardrail | The IAM roles that attribute calls to the app |
+| **Gateways** | The policy for apps you haven't confirmed yet, **Until you confirm an app**, and the policy group when you confirm an app. See [Gateways](./custom-ai-apps/gateways.md#audit-only-organisations). | Everything else |
+| **Infrastructure → Resource Policies** | Each group's enforcement, fail behaviour, rules, content policies and compliance engine settings. See [Infrastructure Agent Quickstart](./infrastructure/agent-quickstart.md#step-1--create-a-resource-policy-group). | Name, description, data capture, classification and alerting |
+
+Through the API, `POST /custom-apps` with a `policy_group_id`, and `PATCH /custom-apps/{id}` or `POST /custom-apps/{id}/methods` that change the policy group, `policy_source` or the Bedrock guardrail, are rejected with HTTP 403: *"Policy enforcement is not included in this tier (audit-only / discovery)."* A request that re-sends those fields unchanged, for example to rename an app, is accepted. AI Applications rules and Injection Defense settings are view only too.
+
+Everything you had set is kept as it is, and applies from the next call once enforcement is enabled for your organisation. See [Audit-Only Mode](./governance/audit-only-mode.md#settings-locked-in-audit-only-mode) for how audit-only mode affects every surface.
+
+> **Clients that fail closed on their own still can.** Audit-only mode makes Whiteout's verdicts non-blocking, but it can't change what a client does when it can't reach Whiteout. A Cloudflare Worker with `WHITEOUT_FAIL = "closed"`, an Azure API Management fragment changed to fail closed, Portkey's guardrail timeout settings, and SDK code that sets `fail_open=False` / `failOpen: false` still refuse calls during an outage.
 
 ---
 

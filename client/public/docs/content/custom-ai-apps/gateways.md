@@ -96,7 +96,7 @@ Headers:      {"Authorization": "Bearer wo_gw_prod_xxxxxxxxxxxxxxxx"}
 Timeout:      10000
 ```
 
-Portkey sends each request (and, after the call, the reply) to Whiteout, and Whiteout returns a verdict: a block becomes a failed guardrail check in Portkey. The app is named by the request's Portkey metadata `app` (or `app_ref`); otherwise set an `X-Whiteout-App` header on the webhook.
+Portkey sends each request (and, after the call, the reply) to Whiteout, and Whiteout returns a verdict: a block becomes a failed guardrail check in Portkey. In an [audit-only organisation](./custom-ai-apps/policies-and-identity.md#audit-only-organisations) the verdict always passes. The app is named by the request's Portkey metadata `app` (or `app_ref`); otherwise set an `X-Whiteout-App` header on the webhook.
 
 > **Verify with your Portkey version.** The adapter reads Portkey's webhook payload tolerantly, but test it end to end before relying on it. Portkey's own guardrail settings decide what happens if the webhook times out.
 
@@ -115,6 +115,8 @@ WHITEOUT_BASE_URL = "https://<your Whiteout API URL>"
 UPSTREAM_URL      = "https://gateway.ai.cloudflare.com/v1/<account>/<gateway>/openai"   # or https://api.openai.com
 WHITEOUT_FAIL     = "open"          # "closed" to refuse calls when Whiteout is unreachable
 ```
+
+`WHITEOUT_FAIL` is the Worker's own setting. Audit-only mode doesn't change it: a Worker set to `closed` still refuses calls when Whiteout can't be reached, even in an [audit-only organisation](./custom-ai-apps/policies-and-identity.md#audit-only-organisations).
 
 Point your apps' base URL at the Worker instead of the provider. For each chat completions, Responses or Messages call, the Worker:
 
@@ -192,6 +194,16 @@ The gateway's page also has:
 
 The **Gateways** list shows each gateway's type, number of apps (with a **N to review** chip for unconfirmed ones), number of active keys (**No key** if none) and last call.
 
+### Audit-only organisations
+
+If your organisation runs in [audit-only mode](./custom-ai-apps/policies-and-identity.md#audit-only-organisations), no gateway call is blocked, and the gateway's policy settings are view only:
+
+- **Adding a gateway**: **Policy for apps you haven't confirmed yet** is set to **No policy — record only** and **Until you confirm an app** to **Monitor only — record, never block**, and both are greyed out under a banner that reads *"**Audit-only mode** — The policy for unconfirmed apps needs policy enforcement, which isn't enabled for your organization. You can review the settings here, but changes are disabled. Contact your account team to enable enforcement."*
+- **On the gateway's page**: the same two settings are greyed out under **Discovery**, with the note *"Automatic discovery stays editable."* Existing values are kept and apply once enforcement is enabled.
+- **Confirming an app**: **Policy group** is set to **No policy — monitor only** and greyed out under the banner *"**Audit-only mode** — Attaching a policy group needs policy enforcement, which isn't enabled for your organization. You can review the settings here, but changes are disabled. Contact your account team to enable enforcement."* You can still confirm the app, and give it a policy group once enforcement is enabled.
+
+Through the API, `POST /custom-apps/gateways` and `PATCH /custom-apps/gateways/{id}` with a default policy group or an unconfirmed-app mode other than `monitor`, and `POST /custom-apps/{id}/confirm` with a `policy_group_id`, are rejected with HTTP 403: *"Policy enforcement is not included in this tier (audit-only / discovery)."* Keys, automatic discovery, merging, assigning, ignoring and removing a gateway work as usual.
+
 On each app's page, calls through a gateway are labelled **Gateway**, and the app shows a **Gateway** coverage method.
 
 ---
@@ -214,6 +226,7 @@ The gateway is sending a changing value (such as a request ID) as the app name. 
 
 ### Calls Aren't Blocked
 
+- Your organisation may be in [audit-only mode](./custom-ai-apps/policies-and-identity.md#audit-only-organisations). Then no gateway call is blocked: every verdict is `allow` (Portkey's is `true`) in `monitor` mode, and what would have been blocked is recorded in each app's **Activity** tab
 - Discovered apps run in monitor mode until confirmed, unless you chose to enforce
 - Check the confirmed app's policy group is in `enforce` mode
 - Streaming replies aren't blocked by the Cloudflare Worker or Azure API Management fragment

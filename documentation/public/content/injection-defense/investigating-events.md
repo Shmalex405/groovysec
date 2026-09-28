@@ -12,6 +12,7 @@ This page covers what to do when Injection Defense flags something: where detect
 | **Governance → Prompt Review** | Reached from a scan's **Open in Prompt Review** link, when the scan belongs to a user-aware Custom AI App prompt |
 | **Activity → IDE Activity** | IDE scans that were flagged also appear as an injection warning for the user and AI tool |
 | **Alerts & Audit → Notifications** | A **Prompt injection detected** event for each acting detection, when **Notify on detections** is on |
+| **Your SIEM** | A `prompt_injection_detection` event for each acting detection, on every enabled [SOC/SIEM destination](./soc-destinations/webhook.md#prompt-injection-detection-events) |
 | **Alerts & Audit → Audit Log** | Admin activity on the feature: settings changes, scans opened, exports, chain verifications, verdicts and suppressions |
 | **Integrations → Compliance Evidence** | Detections feed the **Prompt-injection detection** evidence source |
 
@@ -19,7 +20,7 @@ AI Connector (MCP) detections appear in the Injection Defense audit log with the
 
 ## Triage workflow
 
-1. **Find flagged scans.** On the **Audit log** tab, set **Result** to **Flagged**. Narrow by **Action** (start with **block** and **quarantine**), **Surface**, **Period** or **User email**.
+1. **Find flagged scans.** On the **Audit log** tab, set **Result** to **Flagged**. Narrow by **Action** (start with **block** and **quarantine**), **Surface**, **Period** or **User email**. In an [audit-only](./injection-defense/configuration.md#audit-only-mode) organisation nothing new is scanned, so the log only holds scans from before the move to audit-only mode.
 2. **Open the scan.** Click the row to open the scan drawer.
 3. **Establish where it came from.** Read **Surface**, **App**, **User** and **Request**. The request reference often points straight at the source: a connector *source:tool* pair, a file path from an IDE, or a Guard evaluation ID.
 4. **Read each detection card.** Note which **part** carried the text (a user prompt is a different story from a retrieved document), the **tier** (rules or classifier), the **score**, the **categories** and the **rules** that fired.
@@ -75,18 +76,28 @@ Test any change in **Test the detector** with a copy of the content before relyi
 
 ## Alerts
 
-With **Notify on detections** on, every scan with an acting detection raises a **Prompt injection detected** event (category *Prompts & Policy*, default severity *High*). Suppressed-only scans don't raise events. Record-only detections do, titled *"Prompt injection recorded — \<surface\>"*; other actions are titled with the action, e.g. *"Prompt injection block — gateway"*. The event links straight to the scan. Repeats are coalesced per surface and per app or user.
+With **Notify on detections** on, every scan with an acting detection raises a **Prompt injection detected** event (category *Prompts & Policy*, default severity *High*). Suppressed-only scans don't raise events. Record-only detections do, titled *"Prompt injection recorded — \<surface\>"*; other actions are titled with the action, e.g. *"Prompt injection block — gateway"*. In an [audit-only](./injection-defense/configuration.md#audit-only-mode) organisation Injection Defense is off, so no alerts are raised. The event links straight to the scan. Repeats are coalesced per surface and per app or user.
 
-> **The default notification rules don't include this event.** To have it delivered, go to **Alerts & Audit → Notifications**, add a rule for **Prompt injection detected**, and choose where it goes: email, Slack, Microsoft Teams, a webhook or PagerDuty. You can also re-tier the event's severity or silence it there.
+> **Admins are alerted by default.** **Prompt injection detected** is part of the default **Security events** notification rule: every admin gets it in-app, in real time, with repeats deduplicated over 15 minutes and at most 20 alerts an hour. Organizations that already had notification rules got it added automatically: appended to **Security events**, or, if that rule had been deleted, as a new rule named **Prompt injection detected** with the same settings. If one of your rules already covered the event, including a disabled one, nothing was added.
+
+To change who hears about it and where, open **Alerts & Audit → Notifications**. On **Rules**, edit **Security events** (or your own rule) to add email, Slack, Microsoft Teams, a webhook or PagerDuty, or to narrow the audience. In the **Library**, find **Prompt injection detected** under *Prompts & Policy* to re-tier its severity or silence it.
 
 ## SIEM export
 
-Injection scans are **not** currently streamed to [SOC/SIEM destinations](./soc-destinations/webhook.md). To get them into your SIEM:
+Detections are **streamed automatically** to your [SOC/SIEM destinations](./soc-destinations/webhook.md#prompt-injection-detection-events). There's nothing extra to set up: every enabled destination receives them.
 
-- **Export** from the audit log as **JSON Lines (SIEM)** (or CSV) on a schedule that suits you. Each line is one scan with its metadata, part fingerprints and chain hashes. Exports are recorded in the admin Audit Log.
-- Or send **Prompt injection detected** notifications to a **webhook** channel that your SIEM ingests. See [Alerts](#alerts).
+- **One event per acting detection**, with the event type `prompt_injection_detection`. Suppressed detections and clean scans aren't sent. Record-only detections are.
+- **Severity** follows the action: **block** and **quarantine** are `high`, **warn** is `medium`, **record** is `low`.
+- **Independent of Notify on detections.** Turning notifications off doesn't stop SIEM delivery.
+- **None in audit-only mode.** Injection Defense is off in an [audit-only](./injection-defense/configuration.md#audit-only-mode) organisation, so no detection events are sent.
+- **Routed separately** from prompt logs: Splunk sourcetype `whiteout:prompt_injection`, Elasticsearch index `whiteout-prompt-injection`, Azure Sentinel table `WhiteoutAI_PromptInjection_CL`, and the webhook header `X-Whiteout-Event-Type: prompt_injection_detection`. Sentinel customers need to add that stream to their DCR or set a **Table Name**; see [Azure Sentinel](./soc-destinations/azure-sentinel.md#prompt-injection-detection-events).
+- **Metadata, plus the excerpt if you keep one.** Each event has the surface, app, user, action, categories, rule IDs, tier, score and a link to the scan. The masked excerpt is included only while **Flagged content: keep a short excerpt around each match** is on, and each destination's privacy settings (hash-only or redacted content, stripped or tokenized user email) apply to it.
 
-Neither route carries scanned text or excerpts. Excerpts are only visible in the console.
+The event fields and an example payload are in [Webhook → Prompt injection detection events](./soc-destinations/webhook.md#prompt-injection-detection-events). AWS S3 and IBM QRadar destinations don't receive these events.
+
+IDE injection warnings recorded while Injection Defense is off aren't sent to your SIEM; they only raise notifications.
+
+For a complete record, including scans that passed, **export** the audit log as **JSON Lines (SIEM)** (or CSV). Each line is one scan with its metadata, part fingerprints and chain hashes, without scanned text or excerpts. Exports are recorded in the admin Audit Log.
 
 ## Audit trail of admin activity
 
@@ -104,7 +115,7 @@ Everything an admin does in the console is written to **Alerts & Audit → Audit
 
 ## Compliance evidence
 
-When Injection Defense is on, the **Prompt-injection detection** evidence source in [Compliance Evidence](./compliance-evidence/overview.md) reports detections for the audit period by surface and action, with sample rows (time, surface, the part it was found in, action). Only verdict metadata is included, never the scanned text. For long-term proof that the log is intact, run **Verify now** on the **Detectors** tab and keep an export alongside your evidence pack.
+When Injection Defense is on, the **Prompt-injection detection** evidence source in [Compliance Evidence](./compliance-evidence/overview.md) reports detections for the audit period by surface and action, with sample rows (time, surface, the part it was found in, action). Only verdict metadata is included, never the scanned text. For a period your organisation spent entirely in [audit-only mode](./governance/audit-only-mode.md), the source reads **Absent**: *"Prompt Injection Defense is off: this organization is in audit-only mode, so no content is scanned for prompt injection."* A period that mixes audit-only and enforced days reads **Partial**. For long-term proof that the log is intact, run **Verify now** on the **Detectors** tab and keep an export alongside your evidence pack.
 
 ## Related
 

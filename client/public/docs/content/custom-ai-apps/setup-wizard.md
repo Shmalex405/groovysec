@@ -69,6 +69,8 @@ Choose one:
 - **No policy yet — monitor only.** Calls are logged (metadata only) and never blocked. A good way to start.
 - **An existing policy group.** Each group is listed with its mode (**monitor**, **warn** or **enforce**), description, data capture setting and fail behaviour (for example *data capture: metadata_only · fails open*).
 
+If your organisation runs in [audit-only mode](./custom-ai-apps/policies-and-identity.md#settings-you-cant-change-in-audit-only-mode), this step is greyed out under a banner that reads *"**Audit-only mode** — Attaching a policy group needs policy enforcement, which isn't enabled for your organization. You can review the settings here, but changes are disabled. Contact your account team to enable enforcement. The app is registered with no policy: calls are logged and never blocked."* The app is registered with **No policy yet — monitor only**, and you can give it a policy group once enforcement is enabled.
+
 To create or change a group, click **Create or edit policy groups in Infrastructure →**. You can change the app's policy group, or switch the app to the employee's own policies, at any time from the app's **Policy & identity** tab. See [Policies, Identity and Verdicts](./custom-ai-apps/policies-and-identity.md).
 
 Click **Continue**.
@@ -160,7 +162,7 @@ These are described in [Browser, Bedrock and Infrastructure Coverage](./custom-a
 
 The test call is a real call: it appears in the app's **Activity** tab and makes the method **live**.
 
-> **Why did the test prompt return allow?** With **No policy yet — monitor only**, nothing is blocked and prompt content isn't checked. With a policy group in **monitor** mode, prompt content isn't sent for a content check either. Switch the app to a group in **warn** or **enforce** mode to see a content verdict. See [What gets checked](./custom-ai-apps/policies-and-identity.md#what-gets-checked-in-each-mode).
+> **Why did the test prompt return allow?** With **No policy yet — monitor only**, nothing is blocked and prompt content isn't checked. With a policy group in **monitor** mode, prompt content isn't sent for a content check either. Switch the app to a group in **warn** or **enforce** mode to see a content verdict. See [What gets checked](./custom-ai-apps/policies-and-identity.md#what-gets-checked-in-each-mode). If your organisation runs in [audit-only mode](./custom-ai-apps/policies-and-identity.md#audit-only-organisations), every test returns *allow* in *monitor* mode, whatever the group's mode, because nothing is blocked and content isn't checked.
 
 ### Methods without a key
 

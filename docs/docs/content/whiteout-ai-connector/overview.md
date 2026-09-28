@@ -12,7 +12,9 @@ The connector and the source system each own one half of the decision:
 
 - **Whiteout governs CONTENT.** A dedicated connector policy set vets
   every payload before any AI sees it, and flagged material is redacted
-  or withheld before it reaches the assistant. The policy set is
+  or withheld before it reaches the assistant (in
+  [audit-only mode](./whiteout-ai-connector/connector-policy.md#audit-only-mode)
+  it's recorded instead of withheld). The policy set is
   org-wide by default; individual rules can be **scoped to user
   groups** (e.g. the finance team may retrieve financial statements
   through the connector while everyone else may not) — see
@@ -127,7 +129,10 @@ needs a one-time **operator setup** at the deployment level:
    credential is configured yields an empty scan. (SharePoint's scanner
    can instead run off the Microsoft 365 zero-click grant + site
    allowlist — no separate scanner credential needed; the expose wizard
-   now tells you which scanner credential, if any, is in place.)
+   now tells you which scanner credential, if any, is in place.) In
+   [audit-only mode](./whiteout-ai-connector/connector-policy.md#classification-scans-in-audit-only-mode)
+   the source is exposed and served, but the scan step is greyed out and
+   the initial scan waits until enforcement is enabled.
 3. **Each user — connect their own account** (per-user sources) — except
    where the provider is zero-click (Google DWD), which needs no
    per-user step.

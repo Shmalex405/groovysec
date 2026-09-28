@@ -131,18 +131,32 @@ In evidence packs, end-user email addresses are replaced with stable pseudonyms 
 
 ## Audit-only (discovery) mode
 
-Some organizations run Whiteout in **audit-only** mode, the discovery tier. In audit-only mode the compliance engine is never called: AI activity is logged, but prompts aren't evaluated against your rules and nothing is blocked. This changes what some evidence means:
+Some organizations run Whiteout in **audit-only** mode, the discovery tier. In audit-only mode the policy engine doesn't run: AI activity is logged, but prompts aren't evaluated against your rules and nothing is blocked. Other checks, such as AI app, provider and model restrictions, still run and record what they would have done, but don't act. Prompt Injection Defense is off altogether; see [Audit-Only Mode](./governance/audit-only-mode.md). Compliance Evidence rates your organization accordingly, so audit-only days are never presented as enforced:
 
-- **Unaffected:** evidence that doesn't depend on evaluating prompts works as usual. That includes the AI tool inventory, shadow-AI findings, the AI System Register, monitoring coverage, tamper events, identity and access, the admin audit trail, policy change history, event log history, SOC forwarding and connected data sources.
-- **Needs explaining:** the **Runtime enforcement** source counts logged AI interactions, and its summary line calls them *evaluated*, but in audit-only mode none of them were evaluated against your rules and none were blocked. Likewise, **Enforced AI-use policy** lists the rules configured for each group, but audit-only mode doesn't apply them. There will also be no Accountable Override records, because nothing is blocked for anyone to override.
+| Evidence source | In audit-only mode |
+|-----------------|--------------------|
+| **Runtime enforcement** | **Absent**. The summary reads *Enforcement is off because this organization is in audit-only mode*, with the number of AI interactions logged in the period and *none evaluated against policy*. |
+| **Enforced AI-use policy** | **Absent**, even when rules are configured. The summary reports how many groups have rules configured and says *they are not enforced: this organization is in audit-only mode*. |
+| **Agent tool-call governance** | **Partial** when agent or connector tool calls were seen: they're recorded but not evaluated against policy. |
+| **AI app and provider restrictions** | **Absent**, even when restrictions are configured. The summary counts them and says they're *configured, but not enforced: this organization is in audit-only mode*. |
+| **AI consumption limits** | **Absent**, even when spend thresholds or token limits are configured. The summary counts them, says they're *configured, but not enforced*, and still reports thresholds crossed. |
+| **Prompt-injection detection** | **Absent**, because Prompt Injection Defense doesn't run in audit-only mode. The summary reads *Prompt Injection Defense is off: this organization is in audit-only mode, so no content is scanned for prompt injection.* If the feature is switched on in your settings, it adds *Its settings are kept and resume when enforcement is enabled.* Detections recorded before the move to audit-only mode are still counted if they fall in the period, but the rating stays **Absent**. |
+| **Accountable Override records** | **Absent** when there are none: *No override records: nothing is blocked in audit-only mode, so there is nothing to override.* |
+| **Degraded (fail-open) periods** | Still **Present**: *No fail-open periods: the policy engine does not run in audit-only mode.* |
 
-So on an audit-only deployment, a control such as ISO/IEC 42001 A.9.2 or ISO/IEC 27001 A.8.12 can show **Evidenced** even though no rule was enforced. Don't present those controls as enforced:
+Everything else is **unaffected**: the AI tool inventory, shadow-AI findings, the AI System Register, monitoring coverage, tamper events, identity and access, the admin audit trail, policy change history, event log history, SOC forwarding and connected data sources work as usual. The affected sources carry the note *Audit-only mode: the policy engine does not run, so nothing is evaluated or blocked against policy. Logging, inventory, coverage and audit evidence are unaffected.*
 
-- record the mode in each affected control's note, for example *"Audit-only (discovery) deployment: AI use monitored, not enforced"*. Your record prints on the control's page in every evidence pack;
-- add the same line to each framework's scope note, so everyone working in the console sees it;
-- walk your assessor through it.
+Controls that rely on enforcement, such as ISO/IEC 42001 A.9.2 or ISO/IEC 27001 A.8.12, therefore show as **Gap** or **Partially evidenced** for an audit-only period, which is the accurate answer. Inventory, register and coverage evidence are still a strong basis for the "know what AI you use" controls that every framework starts with.
 
-Inventory, register and coverage evidence are still a strong basis for the "know what AI you use" controls that every framework starts with.
+### Periods that span a mode change
+
+Each daily [evidence snapshot](./compliance-evidence/frameworks-and-controls.md#daily-evidence-snapshots) records whether your organization was in audit-only mode that day, so a past period is judged by the mode it was actually in, not by today's mode. Today is always judged by the current mode, so a switch shows immediately.
+
+- **Audit-only for the whole period:** the ratings above.
+- **Audit-only for part of the period:** **Runtime enforcement** is **Partial**, with the interactions logged, how many were blocked or flagged, and on how many of the recorded days enforcement was off. **Enforced AI-use policy**, **AI app and provider restrictions** and **AI consumption limits** are **Partial** if rules are configured (for example *they were not enforced on 12 of 90 recorded days (audit-only mode)*). **Prompt-injection detection** is **Partial** if Prompt Injection Defense is on or recorded detections in the period (*It was off on 12 of 90 recorded days (audit-only mode).*). The affected sources carry the note *Audit-only mode was on for 12 of 90 recorded days in the period. On those days AI interactions were logged but not evaluated or blocked.*
+- **No recorded mode in the period**, for example a period before you tracked a framework: the current mode is used, with the note *No daily record of the enforcement mode falls in this period, so the current mode is shown.*
+
+Evidence packs for a period with any audit-only days say so on the *Scope and method* page and in the known limits; see [Evidence Packs](./compliance-evidence/evidence-packs.md#the-report). It's still worth recording the deployment mode in the scope note of each framework, for example *"Audit-only (discovery) deployment: AI use monitored, not enforced"*, and walking your assessor through it.
 
 ## Human-in-the-loop approvals are not AI-oversight evidence
 
@@ -160,10 +174,12 @@ Even with these, the human-oversight controls are rated **Supports**, not **Evid
 
 Whiteout governs how people and systems use AI. It doesn't write your policies, run impact assessments, train staff or operate your incident process. Controls like those are rated **Customer-owned**, and every pack lists them with what your organization is expected to provide. The evidence has limits of its own, which every pack also states:
 
-- The **admin audit log** is append-only by design but is not hash-chained. Infrastructure-agent and SDK activity is hash-chained and verifiable.
-- Whiteout has **no configurable log-retention policy**. The evidence shows how far back your logs go; the retention policy itself belongs in your own documentation.
+- The **admin audit log** and the browser, desktop and IDE **prompt logs** are append-only by design but are not hash-chained. Infrastructure-agent, SDK and Guard API activity, and the Prompt Injection Defense scan log, are hash-chained and verifiable.
+- Whiteout has **no configurable log-retention policy**. The evidence shows how far back your AI-use and admin logs go; the retention policy itself belongs in your own documentation. Tamper, protection-state and fail-open events are kept for 90 days, so older periods show none. Generated packs can be downloaded for 90 days, so keep your own copy.
 - **Policy and coverage history** starts on the day you first track a framework. Earlier configuration is covered by the policy change history only.
-- **Coverage** reflects devices and workloads running a Whiteout client. AI use on unenrolled devices is visible only through discovery.
+- **Prompt Injection Defense** is off unless an administrator turns it on, and always off in audit-only mode. When on, it scans the Guard API and SDK, AI Connector tool results and VS Code extension scans, not browser-extension, Desktop Guard or JetBrains traffic. See [Prompt-injection detection](./compliance-evidence/evidence-sources.md#enforcement-and-oversight).
+- **Coverage** reflects devices and workloads running a Whiteout client. AI use on unenrolled devices is visible only through discovery and egress observation.
+- In **audit-only mode**, evidence reflects logging, not enforcement; see [Audit-only (discovery) mode](#audit-only-discovery-mode).
 - An evidence pack's manifest proves the **pack** hasn't been altered since it was generated. It doesn't make the underlying logs tamper-proof.
 
 ## Get started

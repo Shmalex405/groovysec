@@ -58,6 +58,7 @@ How the two tiers combine:
 - **Documents and tool results** are flagged if the rules **or** the classifier flag them.
 - **A user's own prompt** can only be **blocked** by the rules. If only the classifier flags it, the action is at most a **warning**, because the classifier can't tell someone *discussing* an attack from someone *making* one.
 - **Custom AI Apps in monitor mode are never blocked or quarantined**, whatever the settings. Their detections are capped at a warning.
+- **In an audit-only organisation, Injection Defense is off.** Nothing is scanned or recorded on any surface, and your settings are kept for when enforcement is enabled. See [Configuration → Audit-only mode](./injection-defense/configuration.md#audit-only-mode).
 
 The detector looks for these categories:
 

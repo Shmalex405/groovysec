@@ -164,6 +164,111 @@ match:
 In every blocked case the AI gets a governed stub in place of data, so
 it can explain *that* something was withheld without leaking *what*.
 
+## Audit-only mode
+
+If your organization runs Whiteout in [audit-only mode](./governance/audit-only-mode.md), the connector
+never withholds anything. Every read is still vetted against the source's
+policy set, but only on document metadata and patterns: the compliance
+engine doesn't classify content in audit-only mode (see
+[Classification scans](#classification-scans-in-audit-only-mode)). The result is
+served **unredacted**:
+
+- **Nothing is withheld or omitted.** No body is nulled, no item is
+  dropped, and no `whiteout_summary` or `whiteout_vetting` stub is added.
+  The assistant gets the same data the user's account can read.
+- **What would have happened is recorded.** The audit record keeps the
+  would-be counts (items that would have been withheld or omitted) and
+  the policies that fired, marked `enforced: false` and
+  `suppressed_by: "AUDIT_ONLY"`. If the source's policy set can't be
+  resolved, the read is served instead of refused, and the record says
+  it would have been denied.
+- **SOC events and alerts still fire** for reads that would have
+  withheld or omitted something, or would have been refused. The SOC
+  event's `vetting` object carries `enforced: false`,
+  `suppressed_by: "AUDIT_ONLY"` and `would_block: true`. The
+  notification is titled *"Connector content would have been blocked
+  (audit-only) — …"* and ends *"Served in full (audit-only mode)."*
+- **The AI Connector page keeps them apart.** On **Activity → AI
+  Connector**, a **Would Block (audit-only)** tile counts these reads,
+  with how many items were served in full, and each one shows the
+  verdict **Would block (audit-only)**, which you can filter on. They're
+  never counted as blocked.
+- **Access rules are recorded, not applied.** A rule that stops internal
+  or external AI from reading a source lets the read through, and an
+  extra audit record reads *"AUDIT_ONLY (not enforced): \<the rule's
+  reason\>"*.
+- **Connection and exposure still apply.** A source that isn't
+  connected, isn't enabled for the user's group, or isn't exposed
+  through the connector still can't be read. Those are setup, not
+  governance verdicts.
+
+Prompt Injection Defense is off in audit-only mode, so tool results
+aren't scanned for prompt injection and carry no `whiteout_injection`
+annotation; see
+[Injection Defense in audit-only mode](./injection-defense/configuration.md#audit-only-mode).
+
+### Settings you can't change in audit-only mode
+
+Connector policy is compliance-engine policy, so its settings are view
+only in audit-only mode:
+
+- **Policy sets.** The **Connector policy sets** page, and the policy set
+  choice on a source's card, are greyed out under a banner that reads
+  *"**Audit-only mode** — Connector policy sets need policy enforcement,
+  which isn't enabled for your organization. You can review the settings
+  here, but changes are disabled. Contact your account team to enable
+  enforcement. Content is logged and served unredacted; what vetting
+  would have withheld is recorded."* You can't create or rename a set,
+  change its policies or assign a set to a source.
+- **Document availability.** On a source's documents, availability
+  overrides are disabled under the banner *"**Audit-only mode** —
+  Document availability overrides and re-evaluation need policy
+  enforcement, which isn't enabled for your organization. You can review
+  the settings here, but changes are disabled. Contact your account team
+  to enable enforcement."*, and **Re-evaluate** is hidden.
+- **Block External AI** and the per-group external AI access switch are
+  view only; see
+  [Native Connector Control](./whiteout-ai-connector/native-connector-control.md).
+
+Through the API, these return HTTP 403 with *"Policy enforcement is not
+included in this tier (audit-only / discovery)."*: `POST
+/connector/policy-sets`, `PATCH /connector/policy-sets/{id}`, `POST
+/connector/policy-sets/{id}/policies`, `POST
+/connector/exposures/{id}/policy-set`, `POST /connector/policies`,
+`PATCH /connector/classifications/override` (and `/override/bulk`) and
+`POST /connector/classifications/reevaluate`.
+
+Connecting and exposing sources works as usual. Your policy sets and
+overrides are kept, and apply from the next read once enforcement is
+enabled.
+
+### Classification scans in audit-only mode
+
+Document classification uses the compliance engine, so it doesn't run
+in audit-only mode:
+
+- **No documents are classified.** Backfill scans, incremental sync and
+  the continuous sync of document stores still sync documents, but
+  leave them unclassified. Nothing is stored in their place, so the
+  classification isn't marked as done.
+- **Scans stay queued.** Exposing a document store still works and its
+  documents are served, but the initial scan waits and starts once
+  enforcement is enabled. The scan step of the expose wizard and the
+  source's scan progress are greyed out under a banner that reads
+  *"**Audit-only mode** — Document classification scans need policy
+  enforcement, which isn't enabled for your organization. You can review
+  the settings here, but changes are disabled. Contact your account team
+  to enable enforcement."*, followed by a note that the source is still
+  exposed and served, and that the scan starts once enforcement is
+  enabled.
+- **API.** Testing the scanner endpoint (`POST /connector/test-gpu`),
+  attaching one to a scan run (`POST /connector/scan-runs/{id}/attach-gpu`)
+  and starting a backfill (`POST /connector/backfill/{id}`) are rejected
+  with HTTP 403.
+
+When enforcement is enabled, queued scans start and documents are
+classified as usual.
+
 ## Audit
 
 Connector reads that block or omit any item are recorded and fanned out

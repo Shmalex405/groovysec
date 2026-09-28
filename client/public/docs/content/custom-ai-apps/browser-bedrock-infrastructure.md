@@ -34,7 +34,7 @@ Extensions pick up new or changed web addresses within a few minutes, and whenev
 
 ### How prompts are judged
 
-Prompts typed into the internal chat are judged exactly as on public AI sites: with the **signed-in employee's own group policies**, and with the same block and warning overlays. They're logged with the app's name and appear in Prompt Review and AI Activity. The app's resource policy group doesn't apply to this method.
+Prompts typed into the internal chat are judged exactly as on public AI sites: with the **signed-in employee's own group policies**, and with the same block and warning overlays. In an [audit-only organisation](./governance/audit-only-mode.md) nothing is blocked, as on public AI sites. They're logged with the app's name and appear in Prompt Review and AI Activity. The app's resource policy group doesn't apply to this method.
 
 The extension checks what users send. It doesn't check the chat's replies. To check replies, cover the chat's backend as well, for example with the [SDK](./custom-ai-apps/sdk-integration.md) or [auto-instrumentation](./custom-ai-apps/zero-code-coverage.md#auto-instrumentation).
 
@@ -59,6 +59,10 @@ If a redesign of your chat means the extension can't find the prompt box, send b
 ## Bedrock Guardrail
 
 For apps that call AWS Bedrock models directly, Bedrock itself can enforce your Whiteout policy. Whiteout translates your policy library into a native Bedrock guardrail, your app passes that guardrail on each call, and AWS blocks violating prompts and replies inline. The results reach Whiteout through the Bedrock invocation-log ingest and are recorded against the app.
+
+> **Audit-only organisations.** AWS applies a guardrail whenever the app passes it, so audit-only mode can't switch this blocking off. If your organisation runs in [audit-only mode](./governance/audit-only-mode.md) and nothing should be blocked, don't pass the guardrail in the app's Bedrock calls. The other coverage methods don't block in audit-only mode.
+>
+> In audit-only mode the **Guardrail** choice on the method card is greyed out under a banner that reads *"**Audit-only mode** — Choosing a Bedrock guardrail needs policy enforcement, which isn't enabled for your organization. You can review the settings here, but changes are disabled. Contact your account team to enable enforcement. The IAM roles below stay editable."* A guardrail isn't selected for you, and changing the guardrail through the API is rejected with HTTP 403. Registering, syncing and attaching guardrails under **Infrastructure → Bedrock Guardrails** are locked too; see [AWS Bedrock](./integrations/aws-bedrock.md#audit-only-mode).
 
 ### Prerequisites
 

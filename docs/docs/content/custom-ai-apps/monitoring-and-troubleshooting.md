@@ -38,6 +38,8 @@ Every call Whiteout governed for this app, newest first, for both app-policy and
 
 Click a call to open **Call details**: the decision, who, model, tokens and evaluation ID; the policies and reason; the **Prompt** and **Reply** when the policy stores content (otherwise *Not kept — this app's policy stores metadata only*); Whiteout's verdict; links to **Open the injection scan** and **Open in Prompt Review** where relevant; and **Tamper evidence**, the call's record hash and the previous record's hash in the audit chain.
 
+> **In audit-only mode, Flagged shows what would have been blocked.** If your organisation runs in [audit-only mode](./custom-ai-apps/policies-and-identity.md#audit-only-organisations), no call is **Blocked**. A call that a model, provider or token check would have blocked or warned about is **Flagged**, and **Why** shows the rule. For employee-policy apps, a call from a group the app is blocked for is allowed, and its details record the AI Applications rule. Prompt Injection Defense doesn't run in audit-only mode, so no new scans appear on the **Injection** tab.
+
 > **Opening a call is audited.** Viewing a call's details is recorded in the admin **Audit Log**, as it may show prompt content.
 
 ### Injection tab
@@ -215,6 +217,7 @@ Some service is calling the app's model host without going through Whiteout.
 
 ### Calls Are Allowed That Should Be Blocked
 
+- Check whether your organisation is in [audit-only mode](./custom-ai-apps/policies-and-identity.md#audit-only-organisations). If it is, no call is ever blocked, and every response reports `"mode": "monitor"`
 - Check the policy chip in the header. **No policy — monitor only** and groups in `monitor` mode never block; in monitor mode prompt content isn't checked at all
 - Check the group's **Data capture** isn't `none`, which turns off content checks
 - Check the call's `fail_open` flag in Activity or your logs: Whiteout may have been unreachable
@@ -276,7 +279,7 @@ Discovered apps run in monitor mode until you confirm them, unless you chose to 
 Send a coverage request. Desktop apps need client work from Groovy Security.
 
 **What happens in audit-only mode?**
-The compliance engine isn't called: calls are logged and allowed. See [Audit-Only Organisations](./custom-ai-apps/policies-and-identity.md#audit-only-organisations).
+Nothing is blocked, whatever the app's policy group says. The compliance engine isn't called, so prompt and reply content isn't checked. Model, provider and token checks and AI Applications rules still run: calls they would have blocked are allowed and shown as **Flagged** with the rule. Prompt Injection Defense is off, so nothing is scanned for prompt injection. An app's policy group, whose policies apply and Bedrock guardrail can't be changed until enforcement is enabled. Responses report `"mode": "monitor"`, fail open, and say what would have happened in `enforced`, `would_action` and `suppressed_by`. See [Audit-Only Organisations](./custom-ai-apps/policies-and-identity.md#audit-only-organisations).
 
 **How do we remove an app?**
 Use **Archive app** in the app's **⋮** menu. Its keys stop working immediately and its history is kept. To stop checking temporarily instead, use **Pause coverage**.
