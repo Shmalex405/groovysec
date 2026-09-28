@@ -22,7 +22,7 @@ export function GroovyLogo({ showText = true, size = "md", splashDock }: GroovyL
   const s = sizes[size];
 
   return (
-    <Link href="/" className={`flex items-center ${s.gap} group`} aria-label="Groovy Security — home">
+    <Link href="/" className={`flex items-center ${s.gap} group`} aria-label="Groovy Security: home">
       <SpinningMark
         splashDock={splashDock}
         className={`${s.icon} group-hover:scale-105 transition-transform duration-500`}

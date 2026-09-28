@@ -27,7 +27,7 @@ const initialForm = {
   company: "",
   email: "",
   review: "",
-  website: "", // honeypot — must stay empty
+  website: "", // honeypot: must stay empty
 };
 
 const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
@@ -138,7 +138,7 @@ export function ReviewForm() {
             </h2>
             <p className="text-[#51617A] mb-2 max-w-md mx-auto">
               We've received it. Our team reviews each submission before it's used
-              publicly — we may reach out to confirm any details.
+              publicly; we may reach out to confirm any details.
             </p>
             <p className="text-sm text-[#6E7B8C]">
               Really appreciate you taking the time.
@@ -154,7 +154,7 @@ export function ReviewForm() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <GlassCard className="p-8" hover={false}>
           <form onSubmit={handleSubmit} className="space-y-7">
-            {/* Honeypot — visually hidden, never shown to real users */}
+            {/* Honeypot: visually hidden, never shown to real users */}
             <div className="absolute left-[-9999px] top-[-9999px]" aria-hidden="true">
               <label htmlFor="website">Leave this field empty</label>
               <input
@@ -215,7 +215,7 @@ export function ReviewForm() {
                   required
                 />
                 <p className="text-xs text-[#6E7B8C] mt-1.5">
-                  Private — used only to verify your review. Never shown publicly.
+                  Private: used only to verify your review. Never shown publicly.
                 </p>
               </div>
             </div>
@@ -224,7 +224,7 @@ export function ReviewForm() {
             <div>
               <Label className={labelClasses}>
                 Your experience with Groovy Security{" "}
-                <span className="text-[#6E7B8C] font-normal">(optional — check any that apply)</span>
+                <span className="text-[#6E7B8C] font-normal">(optional: check any that apply)</span>
               </Label>
               <div className="mt-3 grid sm:grid-cols-2 gap-2.5">
                 {EXPERIENCE_OPTIONS.map((option) => {
@@ -281,9 +281,9 @@ export function ReviewForm() {
                 className="flex w-full items-center justify-between rounded-md border border-[#0F1B2D]/10 bg-white px-3.5 py-3 text-left hover:border-[#0F1B2D]/20 transition-colors"
               >
                 <span className={labelClasses}>
-                  Review terms{" "}
+                  Review terms:{" "}
                   <span className="text-[#6E7B8C] font-normal">
-                    — how we may use your review
+                    how we may use your review
                   </span>
                 </span>
                 <ChevronDown
@@ -304,8 +304,8 @@ export function ReviewForm() {
                   </p>
                   <p>
                     You grant Groovy Security a perpetual, worldwide, royalty-free
-                    license to use, reproduce, publish, and display your review —
-                    together with your name, job title, and company — across its
+                    license to use, reproduce, publish, and display your review
+                    (together with your name, job title, and company) across its
                     marketing and promotional materials, including its website,
                     social media, presentations, and sales materials.
                   </p>
@@ -334,8 +334,8 @@ export function ReviewForm() {
                   className="mt-0.5 border-[#0F1B2D]/30 data-[state=checked]:bg-[#1A5FB4] data-[state=checked]:border-[#1A5FB4]"
                 />
                 <span className="text-sm text-[#51617A]">
-                  I have read and accept the review terms — including that my name,
-                  job title, and company may be used publicly — and I confirm this
+                  I have read and accept the review terms (including that my name,
+                  job title, and company may be used publicly) and I confirm this
                   review reflects my genuine experience. *
                 </span>
               </label>

@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * The Groovy mark, split into its three colour plates so each can turn on its
- * own. Use this anywhere the flat icon used to sit — the drift is driven by CSS
+ * own. Use this anywhere the flat icon used to sit; the drift is driven by CSS
  * (see `gs-plate-*` in index.css), so any number of instances cost nothing and
  * all stay in step with the brand.
  */
@@ -47,7 +47,7 @@ export function SpinningMark({ className, alt, splashDock }: SpinningMarkProps) 
 
 /**
  * Plate stack for use inside an <svg>, where the mark is positioned in user
- * space rather than by layout. Renders three <image> elements — drop it where
+ * space rather than by layout. Renders three <image> elements; drop it where
  * a single <image href="…icon.png"> used to be.
  */
 export function SpinningMarkSvg({

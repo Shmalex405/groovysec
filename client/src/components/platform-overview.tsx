@@ -39,7 +39,8 @@ export function PlatformOverview() {
       benefits: [
         "Real-time usage analytics",
         "Compliance reporting",
-        "Risk assessment tools"
+        "Risk assessment tools",
+        "AI spend & token usage tracking"
       ],
       color: "orange" as const,
       spotlightHue: "35",

@@ -65,8 +65,8 @@ import {
 
 export default function Maestro() {
   usePageMeta(
-    "Maestro — Free Autonomous Penetration Testing",
-    `Maestro is a free, open-core autonomous penetration testing platform — ${MAESTRO_AGENTS} specialized AI agents driving ${MAESTRO_TOOLS} security tools through a ${MAESTRO_TESTS}-test assessment matrix, across web, API, cloud, Kubernetes, identity providers and AI/LLM systems. Every exploitable finding is re-proven under a deterministic oracle.`
+    "Maestro: Free Autonomous Penetration Testing",
+    `Maestro is a free, open-core autonomous penetration testing platform: ${MAESTRO_AGENTS} specialized AI agents driving ${MAESTRO_TOOLS} security tools through a ${MAESTRO_TESTS}-test assessment matrix, across web, API, cloud, Kubernetes, identity providers and AI/LLM systems. Every exploitable finding is re-proven under a deterministic oracle.`
   );
   const [expandedDomain, setExpandedDomain] = useState<number | null>(null);
 
@@ -74,38 +74,38 @@ export default function Maestro() {
   // (config/team-assessment.yml), ordered by the penetration testing lifecycle:
   // discovery → analysis → exploitation → validation → reporting.
   const agents = [
-    { num: "01", icon: Search, title: "Recon & Infra Agent", description: "Reconnaissance and infrastructure security in one pass — asset discovery, port scanning, and subdomain enumeration alongside SSL/TLS, DNS/DNSSEC, certificate, and zone-transfer analysis.", color: "orange" as const },
-    { num: "02", icon: Cloud, title: "Cloud Recon Agent", description: "Multi-cloud discovery across AWS, Azure, GCP, and Kubernetes — resource enumeration, IAM analysis, storage discovery, and network mapping for cloud-native environments.", color: "red" as const },
-    { num: "03", icon: KeyRound, title: "Identity Recon Agent", description: "Identity provider enumeration across Active Directory, Entra ID, M365, Okta, Google Workspace, and Ping — BloodHound graph collection, Kerberoast/AS-REP candidate discovery, and ADCS vulnerable-template enumeration.", color: "amber" as const },
-    { num: "04", icon: Bot, title: "AI Recon Agent", description: "AI/LLM system reconnaissance — model, provider, and framework fingerprinting, exposed tool and function enumeration, untrusted-input surface mapping, and guardrail detection before red teaming begins.", color: "orange" as const },
-    { num: "05", icon: Scan, title: "Code Scanning Agent", description: "Static application security testing with Semgrep, Bandit, and njsscan — secrets detection, dependency and supply-chain scanning, and infrastructure-as-code analysis.", color: "red" as const },
+    { num: "01", icon: Search, title: "Recon & Infra Agent", description: "Reconnaissance and infrastructure security in one pass: asset discovery, port scanning, and subdomain enumeration alongside SSL/TLS, DNS/DNSSEC, certificate, and zone-transfer analysis.", color: "orange" as const },
+    { num: "02", icon: Cloud, title: "Cloud Recon Agent", description: "Multi-cloud discovery across AWS, Azure, GCP, and Kubernetes: resource enumeration, IAM analysis, storage discovery, and network mapping for cloud-native environments.", color: "red" as const },
+    { num: "03", icon: KeyRound, title: "Identity Recon Agent", description: "Identity provider enumeration across Active Directory, Entra ID, M365, Okta, Google Workspace, and Ping: BloodHound graph collection, Kerberoast/AS-REP candidate discovery, and ADCS vulnerable-template enumeration.", color: "amber" as const },
+    { num: "04", icon: Bot, title: "AI Recon Agent", description: "AI/LLM system reconnaissance: model, provider, and framework fingerprinting, exposed tool and function enumeration, untrusted-input surface mapping, and guardrail detection before red teaming begins.", color: "orange" as const },
+    { num: "05", icon: Scan, title: "Code Scanning Agent", description: "Static application security testing with Semgrep, Bandit, and njsscan: secrets detection, dependency and supply-chain scanning, and infrastructure-as-code analysis.", color: "red" as const },
     { num: "06", icon: Code, title: "Code Intelligence Agent", description: "Source code intelligence that maps entry points, traces data flows with taint analysis, verifies existing defenses, and builds the attack surface from your codebase.", color: "amber" as const },
-    { num: "07", icon: Globe, title: "Web App Agent", description: "Deep web application exploitation — OWASP Top 10, authorization and session testing, injection (SQLi/XSS/SSTI), SSRF, cache poisoning, HTTP smuggling, and race conditions.", color: "orange" as const },
+    { num: "07", icon: Globe, title: "Web App Agent", description: "Deep web application exploitation: OWASP Top 10, authorization and session testing, injection (SQLi/XSS/SSTI), SSRF, cache poisoning, HTTP smuggling, and race conditions.", color: "orange" as const },
     { num: "08", icon: Network, title: "API & GraphQL Agent", description: "GraphQL introspection and abuse, REST API fuzzing, JWT analysis, IDOR testing, WebSocket security, file-upload checks, and Nuclei/Nikto vulnerability scanning.", color: "red" as const },
-    { num: "09", icon: CloudCog, title: "Cloud Exploit Agent", description: "Cloud-native red team exploitation — IAM privilege escalation chains, storage abuse, Kubernetes attacks, serverless exploitation, and metadata probing with validated proof of impact.", color: "amber" as const },
-    { num: "10", icon: Lock, title: "Identity Exploit Agent", description: "Lockout-governed identity exploitation — Kerberoasting, password spraying, token replay, and ADCS ESC abuse across Active Directory, Entra ID, M365, Okta, Google Workspace, and Ping, with validated privilege escalation.", color: "orange" as const },
-    { num: "11", icon: BrainCircuit, title: "AI Red Team Agent", description: "AI/LLM exploitation against the OWASP Top 10 for LLM Applications (2025) — prompt injection, jailbreak, system-prompt extraction, sensitive disclosure, excessive agency, and RAG isolation, with capture-not-execute safety controls.", color: "red" as const },
-    { num: "12", icon: Container, title: "Post-Exploitation Operator", description: "Runs the plan-execute-deposit-replan loop from a confirmed foothold — pivoting, looting, and escalating across surfaces. Fires only when a foothold was actually established, so the campaign starts from proven access rather than assumption.", color: "amber" as const },
-    { num: "13", icon: Layers, title: "Chain Analysis Agent", description: "Two-pass attack-chain analysis — hypothesizes multi-step exploit paths, then validates them against real exploitation results with severity recalculation and defense-in-depth analysis.", color: "amber" as const },
+    { num: "09", icon: CloudCog, title: "Cloud Exploit Agent", description: "Cloud-native red team exploitation: IAM privilege escalation chains, storage abuse, Kubernetes attacks, serverless exploitation, and metadata probing with validated proof of impact.", color: "amber" as const },
+    { num: "10", icon: Lock, title: "Identity Exploit Agent", description: "Lockout-governed identity exploitation: Kerberoasting, password spraying, token replay, and ADCS ESC abuse across Active Directory, Entra ID, M365, Okta, Google Workspace, and Ping, with validated privilege escalation.", color: "orange" as const },
+    { num: "11", icon: BrainCircuit, title: "AI Red Team Agent", description: "AI/LLM exploitation against the OWASP Top 10 for LLM Applications (2025): prompt injection, jailbreak, system-prompt extraction, sensitive disclosure, excessive agency, and RAG isolation, with capture-not-execute safety controls.", color: "red" as const },
+    { num: "12", icon: Container, title: "Post-Exploitation Operator", description: "Runs the plan-execute-deposit-replan loop from a confirmed foothold: pivoting, looting, and escalating across surfaces. Fires only when a foothold was actually established, so the campaign starts from proven access rather than assumption.", color: "amber" as const },
+    { num: "13", icon: Layers, title: "Chain Analysis Agent", description: "Two-pass attack-chain analysis: hypothesizes multi-step exploit paths, then validates them against real exploitation results with severity recalculation and defense-in-depth analysis.", color: "amber" as const },
     { num: "14", icon: CheckCircle, title: "Cross-Validation & QA Agent", description: "Cross-validates static findings against live endpoints, scores confidence, eliminates false positives, and flags coverage gaps so every reported finding is reproducible.", color: "orange" as const },
-    { num: "15", icon: ShieldCheck, title: "Verification Agent", description: "The verdict gate. Every exploitable candidate is re-proven under one of six deterministic oracles, each with a mandatory control. The agent supplies the experiment and never the verdict — the model structurally cannot mark a finding verified.", color: "orange" as const },
-    { num: "16", icon: Gauge, title: "Severity Calibration Agent", description: "Re-rates every finding's severity from actual exploitation outcomes — exploited, partial, or not exploitable — using reachability evidence and attack-chain context.", color: "red" as const },
+    { num: "15", icon: ShieldCheck, title: "Verification Agent", description: "The verdict gate. Every exploitable candidate is re-proven under one of six deterministic oracles, each with a mandatory control. The agent supplies the experiment and never the verdict; the model structurally cannot mark a finding verified.", color: "orange" as const },
+    { num: "16", icon: Gauge, title: "Severity Calibration Agent", description: "Re-rates every finding's severity from actual exploitation outcomes (exploited, partial, or not exploitable) using reachability evidence and attack-chain context.", color: "red" as const },
     { num: "17", icon: Share2, title: "Cloud Analysis Agent", description: "Synthesizes the cloud companion report and builds an escalation graph, rendering validated cloud attack chains from posture and IAM data.", color: "amber" as const },
     { num: "18", icon: Share2, title: "Identity Analysis Agent", description: "Synthesizes the Identity Companion Report and builds the privilege-escalation graph, rendering validated identity attack chains across on-prem Active Directory and cloud identity providers.", color: "orange" as const },
-    { num: "19", icon: Share2, title: "AI Analysis Agent", description: "Synthesizes the AI Security Assessment Report — builds the excessive-agency graph from injection to tool to system, mapped to the OWASP LLM Top 10 and MITRE ATLAS.", color: "red" as const },
-    { num: "20", icon: Share2, title: "Post-Exploitation Analysis Agent", description: "Synthesizes the Post-Exploitation Campaign Report — the from-foothold-to-crown-jewels narrative and campaign graph, with per-edge receipts so each step of the path is traversable rather than asserted.", color: "amber" as const },
+    { num: "19", icon: Share2, title: "AI Analysis Agent", description: "Synthesizes the AI Security Assessment Report: builds the excessive-agency graph from injection to tool to system, mapped to the OWASP LLM Top 10 and MITRE ATLAS.", color: "red" as const },
+    { num: "20", icon: Share2, title: "Post-Exploitation Analysis Agent", description: "Synthesizes the Post-Exploitation Campaign Report: the from-foothold-to-crown-jewels narrative and campaign graph, with per-edge receipts so each step of the path is traversable rather than asserted.", color: "amber" as const },
     { num: "21", icon: Scale, title: "Compliance Agent", description: "Automated mapping to OWASP Top 10, OWASP API Top 10, OWASP LLM Top 10, NIST 800-53, PCI-DSS, MITRE ATLAS, and CWE standards, with CVSS v3.1 scoring for every finding.", color: "amber" as const },
     { num: "22", icon: FileText, title: "Report Agent", description: "Professional report generation with executive summaries, technical detail, original and calibrated severity, full test-coverage checklists, and prioritized remediation guidance.", color: "orange" as const },
     { num: "23", icon: FileCheck, title: "Report Enrichment Agent", description: "Validates each report against rigorous quality checks, re-runs tools to fill any gaps, and enforces complete coverage before the report is finalized.", color: "red" as const },
-    { num: "24", icon: Printer, title: "PDF Rendering Agent", description: "Converts the finished assessment into a polished, styled PDF and registers it for delivery to stakeholders — the final step of every engagement.", color: "amber" as const },
+    { num: "24", icon: Printer, title: "PDF Rendering Agent", description: "Converts the finished assessment into a polished, styled PDF and registers it for delivery to stakeholders, the final step of every engagement.", color: "amber" as const },
   ];
 
   const features = [
-    { icon: Bug, title: "Full-Spectrum Red Team", description: "Controlled exploitation across web applications, APIs, cloud infrastructure, Kubernetes, and identity providers — from OWASP Top 10 through IAM privilege escalation, container escapes, and Active Directory / Entra ID attack paths. Proven impact, not theoretical risk." },
-    { icon: Layers, title: "234-Test Assessment Matrix", description: "Structured assessment framework with 73 DAST tests, 60 identity tests, 29 cloud security tests, 24 SAST tests, 25 AI/LLM tests, 15 cross-validation tests, and 8 chain analysis tests — ensuring consistent, deterministic coverage across every engagement." },
+    { icon: Bug, title: "Full-Spectrum Red Team", description: "Controlled exploitation across web applications, APIs, cloud infrastructure, Kubernetes, and identity providers: from OWASP Top 10 through IAM privilege escalation, container escapes, and Active Directory / Entra ID attack paths. Proven impact, not theoretical risk." },
+    { icon: Layers, title: "234-Test Assessment Matrix", description: "Structured assessment framework with 73 DAST tests, 60 identity tests, 29 cloud security tests, 24 SAST tests, 25 AI/LLM tests, 15 cross-validation tests, and 8 chain analysis tests, ensuring consistent, deterministic coverage across every engagement." },
     { icon: SplitSquareVertical, title: "Multi-Track Analysis", description: "Parallel dynamic, static, cloud, and identity analysis with cross-validation. Findings enriched with source code context, cloud posture, and identity graph data, then validated against live endpoints." },
-    { icon: Zap, title: "Autonomous Testing", description: "Deploy agents and let them work autonomously — Maestro coordinates the full pentest lifecycle from reconnaissance through exploitation to reporting." },
-    { icon: FileText, title: "Report Generation", description: "Evidence-based reporting in HTML, PDF, and Markdown with executive summaries, technical breakdowns, complete reproduction steps, and prioritized remediation guidance — ready for stakeholders." },
+    { icon: Zap, title: "Autonomous Testing", description: "Deploy agents and let them work autonomously; Maestro coordinates the full pentest lifecycle from reconnaissance through exploitation to reporting." },
+    { icon: FileText, title: "Report Generation", description: "Evidence-based reporting in HTML, PDF, and Markdown with executive summaries, technical breakdowns, complete reproduction steps, and prioritized remediation guidance, ready for stakeholders." },
     { icon: Code, title: "Code Intelligence", description: "Entry point mapping, data flow tracing, and attack surface generation from source code. SAST findings enriched with git history, file paths, and commit context." },
   ];
 
@@ -158,7 +158,7 @@ export default function Maestro() {
                     <p className="text-lg text-[#51617A] mb-8 leading-relaxed max-w-lg">
                       Maestro deploys {MAESTRO_AGENTS} specialized AI agents to autonomously discover
                       vulnerabilities across web apps, APIs, cloud, identity
-                      providers, and AI/LLM systems — then validates them through real
+                      providers, and AI/LLM systems, then validates them through real
                       red team-style exploitation. Every exploitable finding is
                       re-proven under a deterministic oracle, so what you get is proof
                       of impact, not scanner output.
@@ -223,7 +223,7 @@ export default function Maestro() {
               <div className="mt-12">
                 <MaestroAssessmentDemo />
                 <p className="mt-5 text-sm text-[#6E7B8C] max-w-xl mx-auto text-center">
-                  Discover, exploit, validate, report — every one of the 234 tests
+                  Discover, exploit, validate, report: every one of the 234 tests
                   runs the same evidence pipeline.
                 </p>
               </div>
@@ -241,7 +241,7 @@ export default function Maestro() {
                 </h2>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Each agent is purpose-built for a specific phase of the penetration
-                  testing lifecycle — from reconnaissance and code intelligence through
+                  testing lifecycle: from reconnaissance and code intelligence through
                   web exploitation, cloud, identity, and AI/LLM red teaming, attack
                   chain analysis, compliance mapping, and validated reporting.
                 </p>
@@ -333,7 +333,7 @@ export default function Maestro() {
                 </ScrollReveal>
                 <GlassCard className="p-8">
                   <BlurredStaggerText
-                    text="Each agent is equipped with specialized MCP tools — purpose-built security instruments that interact directly with targets, APIs, cloud environments, and infrastructure. Scanners, fuzzers, exploit modules, and evidence collectors that turn AI reasoning into real security testing."
+                    text="Each agent is equipped with specialized MCP tools: purpose-built security instruments that interact directly with targets, APIs, cloud environments, and infrastructure. Scanners, fuzzers, exploit modules, and evidence collectors that turn AI reasoning into real security testing."
                     className="text-lg text-[#51617A] leading-relaxed"
 
                   />
@@ -348,7 +348,7 @@ export default function Maestro() {
                 </ScrollReveal>
                 <GlassCard className="p-8">
                   <BlurredStaggerText
-                    text="Maestro's structured assessment framework — a deterministic checklist ensuring every engagement covers the same 234 tests across DAST, SAST, cloud security, identity, AI/LLM, cross-validation, and chain analysis. No tester variance, no missed coverage. Every run produces consistent, comparable results."
+                    text="Maestro's structured assessment framework: a deterministic checklist ensuring every engagement covers the same 234 tests across DAST, SAST, cloud security, identity, AI/LLM, cross-validation, and chain analysis. No tester variance, no missed coverage. Every run produces consistent, comparable results."
                     className="text-lg text-[#51617A] leading-relaxed"
 
                   />
@@ -367,7 +367,7 @@ export default function Maestro() {
                   Full-Spectrum Security Assessment
                 </h2>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
-                  Covers your entire attack surface — from application code to cloud
+                  Covers your entire attack surface: from application code to cloud
                   infrastructure. Every domain is tested, validated, and reported with
                   real evidence.
                 </p>
@@ -419,7 +419,7 @@ export default function Maestro() {
                       icon: Cloud,
                       title: "Cloud Infrastructure",
                       isNew: true,
-                      summary: "AWS, Azure, GCP — IAM privesc, storage abuse, posture validation",
+                      summary: "AWS, Azure, GCP: IAM privesc, storage abuse, posture validation",
                       capabilities: [
                         "IAM privilege escalation testing",
                         "Storage & secrets exposure validation",
@@ -431,11 +431,11 @@ export default function Maestro() {
                       icon: KeyRound,
                       title: "Identity / IDP Security",
                       isNew: true,
-                      summary: "Active Directory, Entra ID, M365, Okta, Google Workspace & Ping — spray, token & privilege-escalation testing",
+                      summary: "Active Directory, Entra ID, M365, Okta, Google Workspace & Ping: spray, token & privilege-escalation testing",
                       capabilities: [
                         "Active Directory: BloodHound, Kerberoasting, ADCS (ESC1–ESC13)",
                         "Tenant & user enumeration across all major IdPs",
-                        "Password spray, token/session replay & MFA-bypass — Entra ID, M365, Okta, Google Workspace & Ping",
+                        "Password spray, token/session replay & MFA-bypass across Entra ID, M365, Okta, Google Workspace & Ping",
                         "Lockout-governed spraying + identity privilege-escalation graph",
                       ],
                     },
@@ -455,11 +455,11 @@ export default function Maestro() {
                       icon: Bot,
                       title: "AI / LLM Security",
                       isNew: true,
-                      summary: "Prompt injection, jailbreak, system-prompt leakage, RAG isolation & agent abuse — OWASP LLM Top 10 (2025)",
+                      summary: "Prompt injection, jailbreak, system-prompt leakage, RAG isolation & agent abuse: OWASP LLM Top 10 (2025)",
                       capabilities: [
                         "Prompt injection (direct & indirect), jailbreak & guardrail-bypass testing",
                         "System-prompt extraction & sensitive information disclosure",
-                        "Excessive agency & improper output handling — tool calls captured, never executed",
+                        "Excessive agency & improper output handling: tool calls captured, never executed",
                         "RAG isolation, data poisoning & MCP tool-poisoning, mapped to OWASP LLM Top 10 + MITRE ATLAS",
                       ],
                     },
@@ -633,7 +633,7 @@ export default function Maestro() {
                   </a>
                 </div>
                 <p className="text-sm text-[#51617A] text-center max-w-lg">
-                  No demo to sit through and no sales call in the way — the tool is
+                  No demo to sit through and no sales call in the way; the tool is
                   free, so the fastest way to judge it is to point it at something
                   you own.
                 </p>
@@ -663,7 +663,7 @@ export default function Maestro() {
                   schedule. That arithmetic works for a bank. It does not work for the
                   clinic, the school district, the two-person startup holding real
                   customer data, or the non-profit running something critical on a
-                  volunteer budget — and those are precisely the organizations an
+                  volunteer budget, and those are precisely the organizations an
                   attacker finds easiest.
                 </p>
                 <p>
@@ -671,7 +671,7 @@ export default function Maestro() {
                   <span className="font-mono text-base text-[#0F1B2D]">nmap</span>,{" "}
                   <span className="font-mono text-base text-[#0F1B2D]">sqlmap</span>,{" "}
                   <span className="font-mono text-base text-[#0F1B2D]">semgrep</span>,{" "}
-                  <span className="font-mono text-base text-[#0F1B2D]">nuclei</span> —
+                  <span className="font-mono text-base text-[#0F1B2D]">nuclei</span>,
                   excellent, open, and sitting right there. What has never been
                   accessible is the expertise to orchestrate them, chase down what they
                   surface, prove which findings are real, and tell you which of four
@@ -684,7 +684,7 @@ export default function Maestro() {
                 <p>
                   Run it on your own machine, for free, against systems you are
                   authorized to test. Read the source first if you would rather not take
-                  our word for it — that is why it is public. If you eventually need a
+                  our word for it; that is why it is public. If you eventually need a
                   human-signed attestation for an auditor, or a shared backend so a whole
                   team sees the same findings, that is what we sell. The tool itself is
                   yours.
@@ -693,7 +693,7 @@ export default function Maestro() {
                     paragraph where a reader decides whether the attestation is worth
                     paying for, and a signature is worth exactly what the signer is. */}
                 <p>
-                  Attestations are signed by <strong>Alex Flowers</strong> — MSc in
+                  Attestations are signed by <strong>Alex Flowers</strong>, MSc in
                   Information &amp; Cyber Security from the National College of Ireland,
                   former Head of Application Security, and Groovy Security's CEO. An
                   auditor wants a named practitioner standing behind a report, and that is
@@ -722,7 +722,7 @@ export default function Maestro() {
                 </h2>
                 <p className="text-lg text-[#51617A] max-w-3xl mx-auto leading-relaxed">
                   Maestro executes real attacks from your machine. You shouldn&apos;t take
-                  that on trust from a binary — so the source is public. Read the tool
+                  that on trust from a binary, so the source is public. Read the tool
                   handlers, the container definition, the scope guard and the agent
                   instructions, then install the signed build.
                 </p>
@@ -746,7 +746,7 @@ export default function Maestro() {
                   <Code className="w-6 h-6 text-[#A05F00] mb-4" />
                   <h3 className="font-bold text-[#0F1B2D] mb-2">Auditable, not just open</h3>
                   <p className="text-sm text-[#51617A] leading-relaxed">
-                    Apache-2.0 across the platform — 227 tool handlers, the Kali image,
+                    Apache-2.0 across the platform: 227 tool handlers, the Kali image,
                     the desktop app and the deployment terraform. A small, listed set of
                     components stays commercially licensed.
                   </p>
@@ -785,13 +785,13 @@ export default function Maestro() {
                   <p>
                     <span className="font-semibold text-[#0F1B2D]">Also needs:</span>{" "}
                     Docker, and the toolkit image
-                    (<code className="text-xs font-mono">docker pull {MAESTRO_TOOLKIT_IMAGE}</code>) —
+                    (<code className="text-xs font-mono">docker pull {MAESTRO_TOOLKIT_IMAGE}</code>),
                     roughly 15&nbsp;GB.
                   </p>
                   <p>
                     <span className="font-semibold text-[#0F1B2D]">Before your first run:</span>{" "}
                     request enrollment in Anthropic&apos;s Cyber Verification Program.
-                    Without it, exploitation agents may decline partway through a run —
+                    Without it, exploitation agents may decline partway through a run,
                     quietly, so you get a thinner report rather than an error.
                   </p>
                   <p>
@@ -828,7 +828,7 @@ export default function Maestro() {
                   No Fake Greens. No Noise.
                 </h2>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
-                  Maestro is engineered so you can trust every line of the report —
+                  Maestro is engineered so you can trust every line of the report:
                   passes are proven, severities are earned, and findings are
                   double-checked before they reach you.
                 </p>
@@ -841,19 +841,19 @@ export default function Maestro() {
                   icon: ShieldCheck,
                   title: "Tool-Provenance Gate",
                   description:
-                    "Every passing test must be backed by a security tool that actually ran and completed successfully. If the tool never executed, the result is automatically downgraded to BLOCKED — a silent scanner failure can never masquerade as clean coverage.",
+                    "Every passing test must be backed by a security tool that actually ran and completed successfully. If the tool never executed, the result is automatically downgraded to BLOCKED; a silent scanner failure can never masquerade as clean coverage.",
                 },
                 {
                   icon: Gauge,
                   title: "Exploitation-Calibrated Severity",
                   description:
-                    "Severity isn't copied from a CVE database. Every finding is re-rated by what actually happened during exploitation — exploited, partially exploited, or not exploitable — so your team fixes what's truly dangerous first.",
+                    "Severity isn't copied from a CVE database. Every finding is re-rated by what actually happened during exploitation (exploited, partially exploited, or not exploitable), so your team fixes what's truly dangerous first.",
                 },
                 {
                   icon: SplitSquareVertical,
                   title: "SAST ↔ DAST Cross-Validation",
                   description:
-                    "Static code findings are confirmed against the live application before they reach the report. Findings that can't be reproduced are flagged or eliminated — cutting false positives and giving every finding a confidence score.",
+                    "Static code findings are confirmed against the live application before they reach the report. Findings that can't be reproduced are flagged or eliminated, cutting false positives and giving every finding a confidence score.",
                 },
               ].map((item) => {
                 const Icon = item.icon;
@@ -887,7 +887,7 @@ export default function Maestro() {
                     <span className="block text-[#A05F00]">Maestro Attacks It Like One.</span>
                   </h2>
                   <p className="text-lg text-[#51617A] mb-8 leading-relaxed">
-                    The deepest domain in Maestro's test matrix is identity — 60
+                    The deepest domain in Maestro's test matrix is identity: 60
                     dedicated tests across your directory and every major identity
                     provider, executed with lockout-governed safety controls and
                     synthesized into a privilege-escalation graph.
@@ -980,19 +980,19 @@ export default function Maestro() {
                   icon: Database,
                   title: "Customer-Owned Data Plane",
                   description:
-                    "Assessment data, findings, and reports live in your AWS account — the backend, database, and storage all deploy inside your VPC. Nothing is copied to Groovy; Groovy holds only the licensing plane.",
+                    "Assessment data, findings, and reports live in your AWS account: the backend, database, and storage all deploy inside your VPC. Nothing is copied to Groovy; Groovy holds only the licensing plane.",
                 },
                 {
                   icon: Lock,
                   title: "Read-Only Cloud Access",
                   description:
-                    "Cloud assessments assume a read-only IAM role built on AWS's managed SecurityAudit policy — no write permissions, and secret values are never readable. Proof of impact without production risk.",
+                    "Cloud assessments assume a read-only IAM role built on AWS's managed SecurityAudit policy: no write permissions, and secret values are never readable. Proof of impact without production risk.",
                 },
                 {
                   icon: Container,
                   title: "Isolated, Scope-Enforced Testing",
                   description:
-                    "Offensive tooling runs in a dedicated Kali Linux container under your control. Every tool call is validated against your engagement scope — out-of-scope targets are refused and destructive exploits are banned.",
+                    "Offensive tooling runs in a dedicated Kali Linux container under your control. Every tool call is validated against your engagement scope: out-of-scope targets are refused and destructive exploits are banned.",
                 },
               ].map((item) => {
                 const Icon = item.icon;
@@ -1021,7 +1021,7 @@ export default function Maestro() {
                   Integration Points
                 </h2>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
-                  Maestro fits into your existing workflow — pushing findings and reports
+                  Maestro fits into your existing workflow, pushing findings and reports
                   where your team already works.
                 </p>
               </div>

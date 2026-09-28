@@ -8,7 +8,7 @@ interface AuroraBackgroundProps {
 
 /**
  * Page-section wrapper. The drifting aurora field this used to render was
- * retired in the light restyle — page grounds are plain paper now. The
+ * retired in the light restyle; page grounds are plain paper now. The
  * component and its `variant` prop survive so the twenty call sites keep
  * working; the one place the aurora still exists is AuroraDrift below,
  * inside the interception-flow diagram, where the drifting color reads as
@@ -29,7 +29,7 @@ interface AuroraDriftProps {
 /**
  * The original drifting aurora field, kept at its production geometry and
  * timings. Render it inside a dark, overflow-clipped panel (the flow-diagram
- * plate) — never page-wide.
+ * plate), never page-wide.
  */
 export function AuroraDrift({ className, variant = "mixed" }: AuroraDriftProps) {
   const gradients = {

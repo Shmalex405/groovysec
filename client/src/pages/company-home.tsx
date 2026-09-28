@@ -35,11 +35,11 @@ const PRODUCTS = {
     name: "Whiteout AI",
     href: "/whiteout-ai",
     description:
-      "Enterprise AI governance platform that evaluates AI interactions against your compliance policies — stopping sensitive data before it leaves your network wherever a pre-send check is possible, and recording it everywhere else.",
+      "Enterprise AI governance platform that evaluates AI interactions against your compliance policies, stopping sensitive data before it leaves your network wherever a pre-send check is possible, and recording it everywhere else.",
     bullets: [
       "Real-time prompt interception in the browser, desktop apps & IDEs, with audit across servers & mobile",
       "54 pre-built compliance policies across 8 domains (HIPAA, GDPR, SOX, PCI-DSS)",
-      "Full-LLM contextual evaluation — not keyword matching",
+      "Full-LLM contextual evaluation, not keyword matching",
       "Complete audit trail with SIEM/SOC integration",
       "Isolated internal chat models for data-sensitive prompts",
     ],
@@ -48,13 +48,13 @@ const PRODUCTS = {
     name: "Maestro",
     href: "/maestro",
     description:
-      `Free autonomous penetration testing platform that deploys ${MAESTRO_AGENTS} specialized agents to find vulnerabilities and validate them through real red team-style exploitation — proving actual impact, not just scanner output.`,
+      `Free autonomous penetration testing platform that deploys ${MAESTRO_AGENTS} specialized agents to find vulnerabilities and validate them through real red team-style exploitation, proving actual impact, not just scanner output.`,
     bullets: [
       "Free to use, with the source public and auditable",
       "Red team exploitation that tests and validates every finding",
       `${MAESTRO_AGENTS} AI agents with ${MAESTRO_TOOLS} MCP tools covering the full pentest lifecycle`,
       `${MAESTRO_TESTS}-test assessment matrix for consistent, deterministic coverage`,
-      "Runs on your machine — findings and target data never leave it",
+      "Runs on your machine, so findings and target data never leave it",
       "Assess vulnerability findings from other ASPM tools already implemented",
     ],
   },
@@ -137,7 +137,7 @@ export default function CompanyHome() {
               <HeroLine>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto mb-10 leading-relaxed">
                   Groovy Security gives enterprises the tools to govern AI usage, prevent
-                  data leakage, and automate security testing — purpose-built for a world
+                  data leakage, and automate security testing, purpose-built for a world
                   where AI is both the innovator and the risk.
                 </p>
               </HeroLine>
@@ -169,7 +169,7 @@ export default function CompanyHome() {
                   Our Products
                 </h2>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
-                  Two flagship platforms, one mission — giving organizations complete
+                  Two flagship platforms, one mission: giving organizations complete
                   control over AI security and automated defense.
                 </p>
               </div>
@@ -262,8 +262,8 @@ export default function CompanyHome() {
                 </h2>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
                   Based in Utah, Groovy Security was founded by cybersecurity professionals
-                  who saw the critical gaps in AI governance and opportunities in security testing firsthand
-                  — and built the products to close them.
+                  who saw the critical gaps in AI governance and opportunities in security testing firsthand,
+                  and built the products to close them.
                 </p>
               </div>
             </ScrollReveal>

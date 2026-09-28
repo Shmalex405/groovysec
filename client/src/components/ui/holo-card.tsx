@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-/* ── Holo Card — quieted to the standard paper card. The old 3D tilt and
+/* ── Holo Card: quieted to the standard paper card. The old 3D tilt and
  *  cursor-following holographic glow are retired; hover is a border/shadow
  *  change. `glowColor` is kept for call-site compatibility. ── */
 export function HoloCard({

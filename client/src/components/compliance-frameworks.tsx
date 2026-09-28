@@ -51,7 +51,7 @@ const complianceCategories: ComplianceCategory[] = [
       {
         name: "EU AI Act",
         description: "Risk classification and transparency requirements for general-purpose AI systems.",
-        enforcement: "Whiteout AI enforces data governance, risk management, and human oversight controls — proving you have technical safeguards over what data feeds into LLMs.",
+        enforcement: "Whiteout AI enforces data governance, risk management, and human oversight controls, proving you have technical safeguards over what data feeds into LLMs.",
       },
       {
         name: "NIST AI RMF",
@@ -61,7 +61,7 @@ const complianceCategories: ComplianceCategory[] = [
       {
         name: "ISO/IEC 42001",
         description: "International standard for AI Management Systems (AIMS) certification.",
-        enforcement: "Provides the foundational endpoint control layer required to achieve AIMS certification — continuous monitoring, policy enforcement, and audit-ready logs.",
+        enforcement: "Provides the foundational endpoint control layer required to achieve AIMS certification: continuous monitoring, policy enforcement, and audit-ready logs.",
       },
     ],
   },
@@ -102,13 +102,13 @@ const complianceCategories: ComplianceCategory[] = [
     frameworks: [
       {
         name: "HIPAA",
-        description: "Health Insurance Portability and Accountability Act — PHI protection.",
-        enforcement: "Prevents Protected Health Information (PHI) from being exposed to LLMs that are not covered by a Business Associate Agreement (BAA) — proven in a live clinical pilot.",
+        description: "Health Insurance Portability and Accountability Act: PHI protection.",
+        enforcement: "Prevents Protected Health Information (PHI) from being exposed to LLMs that are not covered by a Business Associate Agreement (BAA), as proven in a live clinical pilot.",
       },
       {
         name: "HITRUST CSF",
         description: "Common Security Framework for healthcare cloud environments.",
-        enforcement: "Fulfills strict endpoint Data Loss Prevention (DLP) and unauthorized transmission controls — a massive pain point for healthcare cloud environments.",
+        enforcement: "Fulfills strict endpoint Data Loss Prevention (DLP) and unauthorized transmission controls (a massive pain point for healthcare cloud environments).",
       },
     ],
   },
@@ -383,7 +383,7 @@ export function ComplianceFrameworks() {
               Compliance Enforcement, Not Just Checkboxes
             </h2>
             <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
-              Whiteout AI doesn't just claim compliance — it actively enforces
+              Whiteout AI doesn't just claim compliance; it actively enforces
               AI policies at the endpoint level, giving you audit-ready proof of every AI control.
             </p>
           </div>
@@ -463,7 +463,7 @@ export function ComplianceFrameworksCompact() {
             <p className="text-lg text-[#51617A] max-w-2xl mx-auto">
               Whiteout AI supports compliance across{" "}
               <span className="text-[#0F1B2D] font-semibold">{totalFrameworks} regulatory frameworks</span>{" "}
-              with real technical controls at the endpoint level — not just policy documents.
+              with real technical controls at the endpoint level, not just policy documents.
             </p>
           </div>
         </ScrollReveal>

@@ -21,7 +21,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 const MISSION_VISION = [
   {
     title: "Our Mission",
-    body: "To give every organization the tools to adopt AI safely and test their defenses continuously — without compromising on security, compliance, or operational speed.",
+    body: "To give every organization the tools to adopt AI safely and test their defenses continuously, without compromising on security, compliance, or operational speed.",
     accentColor: "#1a5fb4",
     accentDark: "#060e1f",
     glowColor: "rgba(26, 95, 180, 0.15)",
@@ -29,7 +29,7 @@ const MISSION_VISION = [
   },
   {
     title: "Our Vision",
-    body: "A world where organizations can fully leverage AI's potential without risking data exposure, regulatory violations, or security breaches — where security enables innovation instead of blocking it.",
+    body: "A world where organizations can fully leverage AI's potential without risking data exposure, regulatory violations, or security breaches, where security enables innovation instead of blocking it.",
     accentColor: "#2e7d32",
     accentDark: "#061206",
     glowColor: "rgba(46, 125, 50, 0.15)",
@@ -40,7 +40,7 @@ const MISSION_VISION = [
 export default function About() {
   usePageMeta(
     "About",
-    "Groovy Security was founded in 2025 by cybersecurity professionals to close the critical gaps in AI governance and security testing — with offices in Utah and Ireland."
+    "Groovy Security was founded in 2025 by cybersecurity professionals to close the critical gaps in AI governance and security testing, with offices in Utah and Ireland."
   );
   return (
     <PageTransition>
@@ -61,7 +61,7 @@ export default function About() {
               <HeroLine>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto leading-relaxed">
                   Groovy Security was founded to close the critical gaps in AI governance
-                  and security testing — building enterprise-grade products that
+                  and security testing, building enterprise-grade products that
                   organizations can trust.
                 </p>
               </HeroLine>

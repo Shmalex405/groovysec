@@ -19,7 +19,7 @@ const HUE_TO_SOLID: Array<[RegExp, string]> = [
 ];
 
 /**
- * Formerly rendered gradient-clipped text — retired in the light restyle.
+ * Formerly rendered gradient-clipped text. Retired in the light restyle.
  * The component keeps its API and now resolves the `from` hue to one solid
  * brand-grade color that holds ≥4.5:1 on the paper ground.
  */

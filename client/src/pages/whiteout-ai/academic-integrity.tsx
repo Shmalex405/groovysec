@@ -35,13 +35,13 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function AcademicIntegrity() {
   usePageMeta(
     "Whiteout AI for Academic Integrity",
-    "AI governance for education — intercept academic integrity violations in real time while preserving AI as a learning resource. 99.21% accuracy on 1,007 education benchmark prompts, built for FERPA."
+    "AI governance for education: intercept academic integrity violations in real time while preserving AI as a learning resource. 99.21% accuracy on 1,007 education benchmark prompts, built for FERPA."
   );
   const demoHref = "/demo";
 
   const stats = [
     { value: "99.21%", label: "Education Benchmark Accuracy" },
-    { value: "60+", label: "Pre-Built Policies" },
+    { value: "54", label: "Pre-Built Policies" },
     { value: "<320ms", label: "Evaluation Latency (P95)" },
     { value: "24/7", label: "Continuous Monitoring" },
   ];
@@ -115,7 +115,7 @@ export default function AcademicIntegrity() {
         "Allow legitimate AI tutoring, brainstorming, and learning assistance",
         "Differentiate between \"do it for me\" and \"help me understand\"",
         "Faculty-controlled exceptions for AI-permitted assignments",
-        "Soft-allow philosophy — never blocks if the system fails, preserving access",
+        "Soft-allow philosophy: never blocks if the system fails, preserving access",
       ],
     },
   ];
@@ -125,13 +125,13 @@ export default function AcademicIntegrity() {
       icon: Brain,
       title: "Semantic Understanding",
       description:
-        "LLM-based evaluation understands academic intent, not just keywords. It distinguishes between \"write my essay\" and \"explain essay structure\" — catching true integrity violations while enabling genuine learning. 99.21% accuracy across 1,007 education benchmark prompts.",
+        "LLM-based evaluation understands academic intent, not just keywords. It distinguishes between \"write my essay\" and \"explain essay structure,\" catching true integrity violations while enabling genuine learning. 99.21% accuracy across 1,007 education benchmark prompts.",
     },
     {
       icon: Users,
       title: "Institution-Wide Coverage",
       description:
-        "From K-12 Chromebooks to university research labs. Policy groups let you apply different rules to different departments, grade levels, or courses — one platform governing every AI interaction across your entire institution.",
+        "From K-12 Chromebooks to university research labs. Policy groups let you apply different rules to different departments, grade levels, or courses: one platform governing every AI interaction across your entire institution.",
     },
     {
       icon: Lock,
@@ -190,7 +190,7 @@ export default function AcademicIntegrity() {
                   <HeroLine>
                     <p className="text-lg text-[#51617A] mb-8 leading-relaxed">
                       As students and faculty rapidly adopt generative AI, Whiteout AI
-                      gives institutions the tools to uphold academic integrity —
+                      gives institutions the tools to uphold academic integrity,
                       intercepting policy violations before they happen while
                       preserving AI as a legitimate learning resource.
                     </p>
@@ -243,7 +243,7 @@ export default function AcademicIntegrity() {
                   How Whiteout AI Works
                 </h2>
                 <p className="text-lg text-[#51617A] max-w-3xl mx-auto">
-                  Whiteout AI intercepts AI interactions across every surface —
+                  Whiteout AI intercepts AI interactions across every surface,
                   evaluating each prompt against your institution's academic
                   integrity policies in real time before any content is generated.
                 </p>
@@ -305,7 +305,7 @@ export default function AcademicIntegrity() {
                   Unlike keyword-based filters, Whiteout AI uses LLM-based
                   contextual evaluation. It distinguishes between a student asking
                   "write my essay on climate change" and "help me understand the
-                  arguments in the climate change debate" — blocking dishonest use
+                  arguments in the climate change debate," blocking dishonest use
                   while allowing legitimate learning.
                 </p>
 
@@ -313,7 +313,7 @@ export default function AcademicIntegrity() {
                   {[
                     "Pre-built education policies: block essay writing, exam content, and assignment completion requests",
                     "Request custom policies tailored to institution-specific honor codes and academic standards",
-                    "Department-level policy groups — different rules for CS labs vs. English composition",
+                    "Department-level policy groups: different rules for CS labs vs. English composition",
                     "Automatic redaction generates compliant alternatives that guide learning instead of giving answers",
                   ].map((item, index) => (
                     <div key={index} className="flex items-start">
@@ -479,7 +479,7 @@ export default function AcademicIntegrity() {
                 </Link>
               </div>
               <p className="text-sm text-[#6E7B8C] mt-6">
-                Whiteout AI by Groovy Security — Enterprise AI Governance
+                Whiteout AI by Groovy Security: Enterprise AI Governance
               </p>
             </div>
           </section>

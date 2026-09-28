@@ -24,7 +24,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function Contact() {
   usePageMeta(
     "Contact",
-    "Get in touch with Groovy Security — sales and demos, partnerships, or product support. Offices in Utah, US and Ireland, EU."
+    "Get in touch with Groovy Security: sales and demos, partnerships, or product support. Offices in Utah, US and Ireland, EU."
   );
 
   const channels = [
@@ -38,7 +38,7 @@ export default function Contact() {
     {
       icon: Handshake,
       title: "Partnerships",
-      description: "Reseller, referral, and technology partnerships — let's grow together.",
+      description: "Reseller, referral, and technology partnerships. Let's grow together.",
       email: "partners@groovysec.com",
       color: "orange",
     },
@@ -74,7 +74,7 @@ export default function Contact() {
               <HeroLine>
                 <p className="text-lg text-[#51617A] max-w-2xl mx-auto leading-relaxed">
                   Whether you're evaluating AI governance, planning a penetration
-                  test, or exploring a partnership — we'd love to hear from you.
+                  test, or exploring a partnership, we'd love to hear from you.
                 </p>
               </HeroLine>
             </HeroTextReveal>
@@ -146,7 +146,7 @@ export default function Contact() {
                 Prefer to See It First?
               </h2>
               <p className="text-lg text-[#51617A] mb-10 max-w-xl mx-auto">
-                Skip the email thread — book a live demo and we'll walk you
+                Skip the email thread, book a live demo, and we'll walk you
                 through the products on a call.
               </p>
               <Link href="/demo">
