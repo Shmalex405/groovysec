@@ -74,7 +74,7 @@ export default function Security() {
       icon: Timer,
       title: "Vulnerability Management",
       items: [
-        "Critical Secure AI Skills patches within 48 hours",
+        "Critical patches shipped within 48 hours",
         "Continuous dependency and supply-chain scanning",
         "Coordinated disclosure welcomed",
       ],
