@@ -2,7 +2,12 @@
 
 If your compliance team works in **Vanta** or **Drata**, Whiteout AI can push evidence packs straight into it, by hand or on every scheduled run. Each push sends the pack's **PDF report**, with a description that carries the framework, the period and the pack's **manifest SHA-256**. The copy in the GRC platform can always be matched back to the full pack in Whiteout. The ZIP, with its CSV samples and manifest, stays in Whiteout: GRC platforms take documents, not archives, and the CSVs are for the auditor working from the ZIP.
 
-GRC connections are managed from **Governance** > **Compliance Evidence** > **Evidence Packs** > **GRC connections** (the button in the page header shows how many connections you have). Admins can add and change connections; Read-Only users can see them and their last push.
+GRC connections are managed from either of two places, which open the same dialog:
+
+- **Integrations** > **Global Integrations** > **Compliance Evidence (GRC)** > **GRC Connections** (desktop app 2.86.5 and later)
+- **Governance** > **Compliance Evidence** > **Evidence Packs** > **GRC connections**
+
+Both buttons show how many connections you have. Admins can add and change connections; Read-Only users can see them and their last push.
 
 ## Before you start
 
@@ -30,7 +35,7 @@ Whiteout authenticates to Vanta as an OAuth application with the client-credenti
 
 ### Step 2: Add the connection in Whiteout
 
-1. On **Evidence packs**, click **GRC connections**, then **Connect Vanta**.
+1. Open **GRC connections** (from the Integrations card or the Evidence packs page), then click **Connect Vanta**.
 2. Fill in:
 
    | Field | Value |
@@ -65,7 +70,7 @@ Whiteout authenticates to Drata with an API key and adds each pack to a workspac
 
 ### Step 2: Add the connection in Whiteout
 
-1. On **Evidence packs**, click **GRC connections**, then **Connect Drata**.
+1. Open **GRC connections** (from the Integrations card or the Evidence packs page), then click **Connect Drata**.
 2. Fill in:
 
    | Field | Value |
