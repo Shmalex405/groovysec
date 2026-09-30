@@ -15,8 +15,6 @@ import {
   RefreshCw,
   ArrowRight,
   ChevronDown,
-  User,
-  Bot,
   Brain,
   HeartPulse,
   Lock,
@@ -24,7 +22,7 @@ import {
   XCircle,
 } from "lucide-react";
 import { ScrollReveal } from "@/components/motion";
-import { SpinningMarkSvg } from "@/components/ui/spinning-mark";
+import { AiSecurityGlobe } from "@/components/ai-security-globe";
 import { cn } from "@/lib/utils";
 
 /* Shared expand-on-click reveal, reused across the sections below */
@@ -176,104 +174,11 @@ export function AgentsAreUsersProof() {
             externally, it's a user.
           </p>
         </ScrollReveal>
+      </div>
 
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-14">
         <ScrollReveal>
-          <div className="mt-14 relative w-full">
-            <svg
-              className="w-full text-[#51617A]"
-              viewBox="0 0 700 260"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <defs>
-                <radialGradient id="proof-blue" fx="0.5" fy="0.5">
-                  <stop offset="0%" stopColor="#1a5fb4" />
-                  <stop offset="100%" stopColor="transparent" />
-                </radialGradient>
-                <radialGradient id="proof-orange" fx="0.5" fy="0.5">
-                  <stop offset="0%" stopColor="#c77800" />
-                  <stop offset="100%" stopColor="transparent" />
-                </radialGradient>
-                <radialGradient id="proof-green" fx="0.5" fy="0.5">
-                  <stop offset="0%" stopColor="#2e7d32" />
-                  <stop offset="100%" stopColor="transparent" />
-                </radialGradient>
-
-                <mask id="proof-mask-human">
-                  <path d="M 180 75 Q 235 75 235 102 Q 235 130 290 130" stroke="white" strokeWidth="2" />
-                </mask>
-                <mask id="proof-mask-agent">
-                  <path d="M 180 185 Q 235 185 235 158 Q 235 130 290 130" stroke="white" strokeWidth="2" />
-                </mask>
-                <mask id="proof-mask-out">
-                  <path d="M 440 130 H 530" stroke="white" strokeWidth="2" />
-                </mask>
-              </defs>
-
-              {/* Static paths */}
-              <g stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" opacity="0.35">
-                <path d="M 180 75 Q 235 75 235 102 Q 235 130 290 130" />
-                <path d="M 180 185 Q 235 185 235 158 Q 235 130 290 130" />
-                <path d="M 440 130 H 530" />
-              </g>
-
-              {/* Animated lights */}
-              <g mask="url(#proof-mask-human)">
-                <circle r="16" fill="url(#proof-blue)">
-                  <animateMotion dur="2.6s" repeatCount="indefinite" path="M 180 75 Q 235 75 235 102 Q 235 130 290 130" />
-                </circle>
-              </g>
-              <g mask="url(#proof-mask-agent)">
-                <circle r="16" fill="url(#proof-orange)">
-                  <animateMotion dur="2.6s" repeatCount="indefinite" begin="0.4s" path="M 180 185 Q 235 185 235 158 Q 235 130 290 130" />
-                </circle>
-              </g>
-              <g mask="url(#proof-mask-out)">
-                <circle r="16" fill="url(#proof-green)">
-                  <animateMotion dur="1.8s" repeatCount="indefinite" begin="1.3s" path="M 440 130 H 530" />
-                </circle>
-              </g>
-
-              {/* Human node */}
-              <g>
-                <rect x="30" y="40" width="150" height="70" rx="12" fill="#FFFFFF" stroke="currentColor" strokeWidth="0.8" />
-                <g transform="translate(46, 55)">
-                  <User width={20} height={20} stroke="#1A5FB4" strokeWidth={2} />
-                </g>
-                <text x="78" y="68" fill="#0F1B2D" fontSize="12" fontWeight="700">Human User</text>
-                <text x="46" y="92" fill="#51617A" fontSize="8">ChatGPT · Copilot · Claude Code</text>
-              </g>
-
-              {/* Agent / workload node */}
-              <g>
-                <rect x="30" y="150" width="150" height="70" rx="12" fill="#FFFFFF" stroke="currentColor" strokeWidth="0.8" />
-                <g transform="translate(46, 165)">
-                  <Bot width={20} height={20} stroke="#A05F00" strokeWidth={2} />
-                </g>
-                <text x="78" y="178" fill="#0F1B2D" fontSize="12" fontWeight="700">AI Agent · Workload</text>
-                <text x="46" y="202" fill="#51617A" fontSize="8">Bedrock · EKS · Lambda</text>
-              </g>
-
-              {/* Policy engine node */}
-              <g>
-                <rect x="285" y="95" width="150" height="70" rx="14" fill="#FFFFFF" stroke="#1a5fb4" strokeWidth="1" />
-                <SpinningMarkSvg x={299} y={106} size={22} />
-                <text x="330" y="126" fill="#0F1B2D" fontSize="12" fontWeight="700">Whiteout AI</text>
-                <text x="299" y="148" fill="#51617A" fontSize="8">One policy engine, either source</text>
-                <circle cx="360" cy="130" r="30" fill="url(#proof-orange)" opacity="0.1">
-                  <animate attributeName="opacity" values="0.06;0.16;0.06" dur="3s" repeatCount="indefinite" />
-                </circle>
-              </g>
-
-              {/* Enforced node */}
-              <g>
-                <rect x="530" y="95" width="140" height="70" rx="12" fill="#FFFFFF" stroke="#2e7d32" strokeWidth="0.8" />
-                <circle cx="552" cy="120" r="4" fill="#2e7d32" opacity="0.8" />
-                <text x="562" y="124" fill="#0F1B2D" fontSize="12" fontWeight="700">Enforced</text>
-                <text x="546" y="148" fill="#2E7D32" fontSize="8">Same 54 policies</text>
-              </g>
-            </svg>
-          </div>
+          <AiSecurityGlobe />
         </ScrollReveal>
       </div>
     </section>
