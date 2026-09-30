@@ -96,7 +96,8 @@ Example rules (**Offenses** > **Rules** > **Actions** > **New Event Rule**):
 |-------|-------------|
 | **Destination Type** | **QRadar (TLS Syslog/CEF)** |
 | **Display Name** | A name for this destination, e.g. `QRadar` |
-| **Privacy Profile** | Leave at **(None)**. See [Privacy settings](#privacy-settings). |
+| **Prompt content** | **Full text** (default), **Hash only** or **Redacted**. See [Privacy settings](#privacy-settings). |
+| **User identity** | **Include email** (default), **Remove email** or **Tokenize**. See [Privacy settings](#privacy-settings). |
 | **Syslog Host** | Hostname or IP of your QRadar Event Collector / Console. Events arrive with hostname `whiteout-ai`; use it as the Log Source Identifier. |
 | **Port** | TLS Syslog listener port (default `6514`) |
 | **Verify TLS certificate** | On by default. Leave it on in production. |
@@ -200,18 +201,20 @@ QRadar receives every Whiteout AI SIEM event type: `prompt_log`, `prompt_overrid
 
 ## Privacy settings
 
-Each destination applies two privacy settings to every event before it's converted to CEF:
+Every destination has two privacy settings, under **Privacy** in the destination dialog. They apply to every event of every type, before it's converted to CEF:
 
-| Setting | Value | Effect |
-|---------|-------|--------|
-| `prompt_visibility` | `full` (default) | Prompt and response text are sent as captured (subject to the truncation limits) |
-| | `hash_only` | Prompt text, response text and injection excerpts become `sha256:<hash>` |
-| | `redacted` | Policy-matched parts of the prompt are masked; the response becomes `[RESPONSE_REDACTED]` when the prompt was blocked; injection excerpts become `[CONTENT_REDACTED]`. Prompts with no findings are sent unchanged. |
-| `pii_mode` | `allow` (default) | `suser` carries the user's email |
-| | `strip` | The email is removed, so `suser` is omitted, on every event |
-| | `tokenize` | `suser` becomes a stable token, `[USER_<hash>]`, on every event |
+| Setting | Option (`config` value) | Effect |
+|---------|-------------------------|--------|
+| **Prompt content** (`prompt_visibility`) | **Full text** (`full`, default) | Prompt and response text are sent as captured (subject to the truncation limits) |
+| | **Hash only** (`hash_only`) | Prompt text (`cs6`), response text (`flexString1`) and injection excerpts become `sha256:<hash>`. Identical prompts can be matched, but not read. |
+| | **Redacted** (`redacted`) | Only masked text is sent. A prompt with policy findings is sent with the policy-matched parts masked and the rest of the prompt unchanged. A prompt with no findings, or one that couldn't be masked, is sent as `[CONTENT_REDACTED]`. Response text is always sent as `[RESPONSE_REDACTED]`, and injection excerpts as `[CONTENT_REDACTED]`. |
+| **User identity** (`pii_mode`) | **Include email** (`allow`, default) | `suser` carries the user's email |
+| | **Remove email** (`strip`) | The email is removed, so `suser` is omitted, on every event |
+| | **Tokenize** (`tokenize`) | `suser` becomes a stable token, `[USER_<hash>]`, on every event, so one user's events can be correlated without revealing who they are |
 
-Set them in the destination's configuration through the API (see [Configuring through the API](#configuring-through-the-api)). The **Privacy Profile** list in the dialog doesn't set them, so leave it at **(None)**.
+Masking is done by the Whiteout AI compliance engine and is best-effort. If no prompt text at all may leave Whiteout AI, choose **Hash only**.
+
+The destination card shows the active settings, for example **Privacy: Full text prompts · include email**.
 
 ---
 
@@ -244,9 +247,10 @@ If you manage destinations through the Whiteout AI API rather than the dialog, u
 | **Verify TLS certificate** | `verify_tls` (default `true`) |
 | **CA Certificate** | `ca_cert` (PEM) |
 | (API only) | `framing`: `octet` (default, RFC 5425 octet counting) or `lf` (newline-terminated messages) |
-| (API only) | `prompt_visibility`, `pii_mode` (see [Privacy settings](#privacy-settings)) |
+| **Prompt content** | `prompt_visibility`: `full` (default), `hash_only` or `redacted` |
+| **User identity** | `pii_mode`: `allow` (default), `strip` or `tokenize` |
 
-Batching is set with the top-level `batching_max_events` (default `500`) and `batching_max_seconds` (default `5`).
+Batching is set with the top-level `batching_max_events` (default `500`) and `batching_max_seconds` (default `5`). The older top-level `privacy_profile_id` field is ignored if sent.
 
 ---
 
@@ -289,7 +293,7 @@ Batching is set with the top-level `batching_max_events` (default `500`) and `ba
 
 - **Keep Certificate Verification On**: Turn off **Verify TLS certificate** only for testing. Use **CA Certificate** for private CAs instead.
 - **Restrict Network Access**: Allow only Whiteout AI to reach the TLS syslog port.
-- **Limit Content**: QRadar receives prompt text by default. Use `prompt_visibility` and `pii_mode` to send only what QRadar is cleared to hold.
+- **Limit Content**: QRadar receives prompt text by default. Use **Prompt content** and **User identity** to send only what QRadar is cleared to hold.
 - **Monitor Log Source Health**: Set up QRadar system notifications for when the Whiteout AI log source stops receiving events.
 - **Protect QRadar Access**: Restrict the QRadar Admin console to authorized security personnel.
 - **Retention Policies**: Set retention for Whiteout AI events based on your compliance requirements (e.g., 90 days, 1 year, 7 years).
