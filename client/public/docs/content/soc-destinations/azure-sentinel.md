@@ -151,7 +151,8 @@ Grant the service principal permission to send data through the DCR:
 |-------|-------------|
 | **Destination Type** | **Microsoft Sentinel (DCR)** |
 | **Display Name** | A name for this destination, e.g. `Sentinel` |
-| **Privacy Profile** | Leave at **(None)**. See [Privacy settings](#privacy-settings). |
+| **Prompt content** | **Full text** (default), **Hash only** or **Redacted**. See [Privacy settings](#privacy-settings). |
+| **User identity** | **Include email** (default), **Remove email** or **Tokenize**. See [Privacy settings](#privacy-settings). |
 | **DCE Endpoint URL** | The Logs ingestion endpoint from Step 1, without a trailing slash |
 | **DCR Immutable ID** | The DCR's Immutable ID from Step 2 (starts with `dcr-`; not the resource ID) |
 | **Client ID** | Application (client) ID from Step 3 |
@@ -163,13 +164,15 @@ Grant the service principal permission to send data through the DCR:
 4. Click **Test Connection**. Whiteout AI checks that it can get a token for your app registration. The test doesn't send an event, so it doesn't check the DCE, DCR, stream or role assignment; use the end-to-end test in [Verification](#verification) for those.
 5. Click **Create**
 
+When you edit a saved destination, the **Client Secret** shows `****`. **Test Connection** then uses the saved secret, so you only need to re-enter it to change it.
+
 > **Destinations created before this release.** Sentinel destinations saved from an earlier version of the dialog now deliver without being re-entered. Open one with **Edit** to confirm the **Custom Table** matches your DCR stream.
 
 ---
 
 ## Events delivered
 
-Every event goes to your **Custom Table**, one row per event. Filter on the `event_type` column:
+Every event goes to your **Custom Table**, one row per event, whatever its type. Filter on the `event_type` column:
 
 | `event_type` | When it's sent |
 |--------------|----------------|
@@ -180,7 +183,7 @@ Every event goes to your **Custom Table**, one row per event. Filter on the `eve
 | `report` | A scheduled report run that lists this destination as a **SOC destination** |
 | `prompt_injection_detection` | A [Prompt Injection Defense](./injection-defense/overview.md) detection |
 
-Infrastructure agent state alerts are not sent to Sentinel. The event fields are described in [Webhook → Events delivered](./soc-destinations/webhook.md#events-delivered).
+Infrastructure agent state alerts are not sent to Sentinel. The event fields are described in [Webhook → Events delivered](./soc-destinations/webhook.md#events-delivered), and the labels on every destination in [Event type labels](./soc-destinations/webhook.md#event-type-labels).
 
 Prompt events are batched (500 events or 5 seconds by default); other events are sent as they occur. Transient failures (connection errors, timeouts, `5xx`) are retried, and after 10 consecutive failed deliveries the destination is disabled and admins get a Notification Center alert.
 
@@ -188,18 +191,20 @@ Prompt events are batched (500 events or 5 seconds by default); other events are
 
 ## Privacy settings
 
-Each destination applies two privacy settings to every event it receives:
+Every destination has two privacy settings, under **Privacy** in the destination dialog. They apply to every event of every type, before it's sent:
 
-| Setting | Value | Effect |
-|---------|-------|--------|
-| `prompt_visibility` | `full` (default) | Prompt and response text are sent as captured |
-| | `hash_only` | Prompt text, response text and injection excerpts become `sha256:<hash>` |
-| | `redacted` | Policy-matched parts of the prompt are masked; the response becomes `[RESPONSE_REDACTED]` when the prompt was blocked; injection excerpts become `[CONTENT_REDACTED]`. Prompts with no findings are sent unchanged. |
-| `pii_mode` | `allow` (default) | `user.email` is sent as is |
-| | `strip` | `user.email` is removed (`null`) from every event |
-| | `tokenize` | `user.email` becomes a stable token, `[USER_<hash>]`, in every event |
+| Setting | Option (`config` value) | Effect |
+|---------|-------------------------|--------|
+| **Prompt content** (`prompt_visibility`) | **Full text** (`full`, default) | Prompt and response text are sent as captured |
+| | **Hash only** (`hash_only`) | Prompt text, response text and injection excerpts become `sha256:<hash>`. Identical prompts can be matched, but not read. |
+| | **Redacted** (`redacted`) | Only masked text is sent. A prompt with policy findings is sent with the policy-matched parts masked and the rest of the prompt unchanged. A prompt with no findings, or one that couldn't be masked, is sent as `[CONTENT_REDACTED]`. Response text is always sent as `[RESPONSE_REDACTED]`, and injection excerpts as `[CONTENT_REDACTED]`. |
+| **User identity** (`pii_mode`) | **Include email** (`allow`, default) | `user.email` is sent as is |
+| | **Remove email** (`strip`) | `user.email` is removed (`null`) from every event |
+| | **Tokenize** (`tokenize`) | `user.email` becomes a stable token, `[USER_<hash>]`, in every event, so one user's events can be correlated without revealing who they are |
 
-Set them in the destination's configuration through the API (see [Configuring through the API](#configuring-through-the-api)). The **Privacy Profile** list in the dialog doesn't set them, so leave it at **(None)**.
+Masking is done by the Whiteout AI compliance engine and is best-effort. If no prompt text at all may leave Whiteout AI, choose **Hash only**.
+
+The destination card shows the active settings, for example **Privacy: Full text prompts · include email**.
 
 ---
 
@@ -247,11 +252,24 @@ If you manage destinations through the Whiteout AI API rather than the dialog, u
 | **Client Secret** | `client_secret` |
 | **Azure Tenant ID** | `tenant_id` |
 | **Custom Table** | `table_name` (the older name `table` is also accepted) |
-| (API only) | `prompt_visibility`, `pii_mode` (see [Privacy settings](#privacy-settings)) |
+| **Prompt content** | `prompt_visibility`: `full` (default), `hash_only` or `redacted` |
+| **User identity** | `pii_mode`: `allow` (default), `strip` or `tokenize` |
 
-If `table_name` is omitted, each event type goes to its own table and stream: `WhiteoutAI_PromptLogs_CL` (prompt, override and connector events), `WhiteoutAI_CoverageGap_CL`, `WhiteoutAI_Reports_CL` and `WhiteoutAI_PromptInjection_CL`, each needing a matching `Custom-<table>` stream in the DCR. Setting `table_name` is simpler.
+The dialog always sets a **Custom Table**, and every event type goes to it. If `table_name` is omitted through the API, each event type goes to its own table and stream (see [Event type labels](./soc-destinations/webhook.md#event-type-labels)), each needing a matching `Custom-<table>` stream in the DCR:
 
-Batching is set with the top-level `batching_max_events` (default `500`) and `batching_max_seconds` (default `5`). The client secret is returned masked as `****`; sending `****` back leaves it unchanged.
+| `event_type` | Table | DCR stream |
+|--------------|-------|------------|
+| `prompt_log` | `WhiteoutAI_PromptLogs_CL` | `Custom-WhiteoutAI_PromptLogs_CL` |
+| `prompt_overridden` | `WhiteoutAI_PromptOverrides_CL` | `Custom-WhiteoutAI_PromptOverrides_CL` |
+| `connector_vetting_action` | `WhiteoutAI_ConnectorVetting_CL` | `Custom-WhiteoutAI_ConnectorVetting_CL` |
+| `coverage_gap` | `WhiteoutAI_CoverageGap_CL` | `Custom-WhiteoutAI_CoverageGap_CL` |
+| `report` | `WhiteoutAI_Reports_CL` | `Custom-WhiteoutAI_Reports_CL` |
+| `prompt_injection_detection` | `WhiteoutAI_PromptInjection_CL` | `Custom-WhiteoutAI_PromptInjection_CL` |
+| Any new event type | `WhiteoutAI_<EventType>_CL` | `Custom-WhiteoutAI_<EventType>_CL` |
+
+> **Changed in this release.** Overrides and connector vetting actions used to go to `WhiteoutAI_PromptLogs_CL`. A destination created through the API without a `table_name` now needs the `Custom-WhiteoutAI_PromptOverrides_CL` and `Custom-WhiteoutAI_ConnectorVetting_CL` streams (and their tables) in its DCR, or those events fail to deliver. Setting `table_name` avoids this.
+
+Batching is set with the top-level `batching_max_events` (default `500`) and `batching_max_seconds` (default `5`). The client secret is returned masked as `****`; sending `****` back leaves it unchanged. The older top-level `privacy_profile_id` field is ignored if sent.
 
 ---
 
@@ -276,6 +294,11 @@ Batching is set with the top-level `batching_max_events` (default `500`) and `ba
 - Check that the DCR's transformation sets `TimeGenerated`
 - Review **Azure Monitor** > **Data Collection Rules** > **Metrics** for ingestion errors
 - Check **Last Error** on the destination card, and whether the destination has been disabled after repeated failures
+- Without a **Custom Table** (API only), check the DCR has a stream for every event type (see [Configuring through the API](#configuring-through-the-api))
+
+### Destination Stopped Delivering After an Edit
+
+- If a destination stopped delivering after you edited and saved it (before this release), its saved client secret was damaged by the edit. Open it with **Edit**, re-enter the **Client Secret**, and save. Editing no longer affects a secret you leave as `****`.
 
 ### Missing Columns
 
@@ -292,7 +315,7 @@ Batching is set with the top-level `batching_max_events` (default `500`) and `ba
 
 - **Use Short-Lived Secrets**: Set client secret expiry to the shortest acceptable duration and rotate before expiration.
 - **Principle of Least Privilege**: Assign only the **Monitoring Metrics Publisher** role to the service principal, scoped to the specific DCR, not the subscription or resource group.
-- **Limit Content**: Use `prompt_visibility` and `pii_mode` to send only what your workspace is cleared to hold.
+- **Limit Content**: Use **Prompt content** and **User identity** to send only what your workspace is cleared to hold.
 - **Monitor Service Principal Activity**: Enable Microsoft Entra sign-in and audit logs to watch the service principal for anomalies.
 - **Protect Credentials**: Store the client secret securely. Never commit it to version control or share it in plain text.
 - **Audit Role Assignments**: Periodically review IAM role assignments on the DCR to ensure no unauthorized principals have access.
