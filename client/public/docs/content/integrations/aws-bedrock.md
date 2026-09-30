@@ -144,7 +144,7 @@ module "whiteout_bedrock" {
   external_id         = "a3f9b2c8d1e4f7a6..."    # from Step 1
 
   # Optional: CloudTrail data events for full agent envelope correlation
-  # (adds ~$0.10 per 100k events)
+  # (billed by AWS as CloudTrail data events)
   enable_cloudtrail_data_events = false
 
   # Optional: enable Whiteout-Managed Guardrails (Option 3).
