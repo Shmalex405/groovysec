@@ -404,12 +404,7 @@ Use AWS CloudTrail to monitor all KMS API calls. You can:
 
 ### What does BYOK cost?
 
-Standard AWS KMS pricing applies, billed to your AWS account:
-
-- ~$1/month per customer-managed key
-- $0.03 per 10,000 API requests
-
-Typical Whiteout usage results in minimal KMS costs ($1–5/month).
+Standard AWS KMS pricing applies, billed to your AWS account: a monthly charge per customer-managed key plus a per-request charge. Whiteout's KMS usage is light, so the cost is small; see AWS's KMS pricing page for current rates.
 
 ### Should I use the Terraform module or manual setup?
 
