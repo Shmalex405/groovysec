@@ -169,6 +169,7 @@ const MENUS: NavMenu[] = [
         links: [
           { label: "About", href: "/about" },
           { label: "Partners", href: "/partners" },
+          { label: "Partner Portal", href: "https://partners.groovysec.com", hardNav: true },
           { label: "Contact", href: "/contact" },
           { label: "Trust & Security", href: "/security" },
         ],

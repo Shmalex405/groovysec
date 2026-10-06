@@ -34,6 +34,7 @@ const footerLinks: Record<string, LinkItem[]> = {
   Company: [
     { label: "About", href: "/about" },
     { label: "Partners", href: "/partners" },
+    { label: "Partner Portal", href: "https://partners.groovysec.com" },
     { label: "Contact", href: "/contact" },
     { label: "Trust & Security", href: "/security" },
     { label: "Privacy Policy", href: "/privacy-policy" },
