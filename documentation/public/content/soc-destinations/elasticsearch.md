@@ -8,6 +8,7 @@ The Elasticsearch destination allows Whiteout AI to:
 - Ship audit events to Elasticsearch for search, Kibana visualization, and custom alerting
 - Index events in near real time through the `_bulk` API
 - Run events through an ingest pipeline for enrichment or transformation before indexing
+- Authenticate with a least-privilege API key (or a username and password), over TLS with an optional private CA
 - Integrate AI governance data with existing Elastic Security or observability workflows
 
 ## Prerequisites
@@ -16,7 +17,8 @@ Before you begin, ensure you have:
 - **Whiteout AI Admin** privileges
 - An **Elasticsearch** cluster (version 7.x or 8.x) or **Elastic Cloud** deployment
 - Permissions to create indices, index templates, API keys and ingest pipelines
-- An HTTPS endpoint that Whiteout AI can write to **without credentials** (see [Step 2](#step-2-provide-an-endpoint-whiteout-ai-can-write-to))
+- An Elasticsearch **API key** that can write to the Whiteout AI index (see [Step 2](#step-2-create-an-api-key)), or a user that can. Clusters without security enabled need no credential.
+- Network connectivity from Whiteout AI to your cluster's HTTPS endpoint
 - (Optional) Kibana access for dashboards and visualizations
 
 ---
@@ -25,7 +27,7 @@ Before you begin, ensure you have:
 
 ### Step 1: Create an Index Template and Index
 
-Whiteout AI writes every event to the one **Index** you name in the destination. Create a template for it so fields are mapped the way you want:
+Whiteout AI writes every event to the one **Index** you name in the destination. It can be a regular index or a data stream. Create a template for it so fields are mapped the way you want:
 
 1. Open **Kibana** and navigate to **Stack Management** > **Index Management** > **Index Templates**
 2. Click **Create template**
@@ -35,13 +37,14 @@ Whiteout AI writes every event to the one **Index** you name in the destination.
 |-------|-------------------|
 | **Name** | `whiteout-ai-events` |
 | **Index patterns** | `whiteout-ai-events*` |
-| **Data stream** | Off. Whiteout AI uses `index` bulk operations, which data streams don't accept. |
+| **Data stream** | Optional. Whiteout AI adds documents with `create` operations and sets `@timestamp`, so both a regular index and a data stream work. |
 | **Priority** | `100` |
 
-4. On the **Mappings** step, use the JSON editor. Events are nested objects, and the event time is in `timestamp`:
+4. On the **Mappings** step, use the JSON editor. Events are nested objects. The event time is in both `@timestamp` (added by Whiteout AI, UTC) and `timestamp`:
    ```json
    {
      "properties": {
+       "@timestamp": { "type": "date" },
        "timestamp": { "type": "date" },
        "event_type": { "type": "keyword" },
        "event_id": { "type": "keyword" },
@@ -78,37 +81,37 @@ Whiteout AI writes every event to the one **Index** you name in the destination.
    }
    ```
 5. Click **Create template**
-6. Create the index itself (for example in **Dev Tools**):
+6. For a regular index, create the index itself (for example in **Dev Tools**). A data stream is created automatically on the first write.
    ```
    PUT whiteout-ai-events
    ```
 
 Fields not in the template are mapped dynamically.
 
-### Step 2: Provide an Endpoint Whiteout AI Can Write To
+### Step 2: Create an API Key
 
-Whiteout AI doesn't send Elasticsearch credentials: it posts to `<Endpoint URL>/_bulk` without an `Authorization` header, and **Test Connection** reads `<Endpoint URL>/_cluster/health` the same way. The **Endpoint URL** therefore has to accept those requests without authentication. Clusters that require authentication, including every Elastic Cloud deployment, need an ingest gateway in front of them:
+Create an API key that can only add documents to the Whiteout AI index:
 
-1. Create an API key limited to the Whiteout AI index. In Kibana, go to **Stack Management** > **Security** > **API keys** > **Create API key**, name it `whiteout-ai-ingestion`, and restrict it:
+1. In Kibana, go to **Stack Management** > **Security** > **API keys** > **Create API key**
+2. Name it `whiteout-ai-ingestion`, set an expiration if your policy requires one, and turn on **Control security privileges**
+3. Enter this role descriptor, with your index or data stream name:
    ```json
    {
      "whiteout_ai_writer": {
-       "cluster": ["monitor"],
        "indices": [
          {
            "names": ["whiteout-ai-events"],
-           "privileges": ["create_doc", "index"]
+           "privileges": ["create_doc"]
          }
        ]
      }
    }
    ```
-2. Run a reverse proxy or API gateway you control that:
-   - serves HTTPS with a certificate from a publicly trusted CA,
-   - forwards `POST /_bulk` and `GET /_cluster/health` to your cluster, adding `Authorization: ApiKey <encoded key>`,
-   - rejects every other path, and
-   - accepts traffic only from Whiteout AI.
-3. Use the proxy's URL as the **Endpoint URL**
+4. Click **Create API key** and copy the **Encoded** value. It's shown only once.
+
+`create_doc` is the only privilege Whiteout AI needs: it only adds documents, and **Test Connection** checks the key without any cluster privilege, so the key needs no `monitor` or other cluster access. `index` or `write` on the index also work.
+
+If you'd rather use a user, give it a role with the same index privilege and choose **Username and password** in Whiteout AI. **None** is only for clusters that run without security.
 
 ### Step 3: Create an Ingest Pipeline (Optional)
 
@@ -124,7 +127,7 @@ To enrich or transform events before indexing:
 | **Description** | Pre-processing pipeline for Whiteout AI events |
 
 4. Add processors as needed, for example:
-   - **Date processor**: copy `timestamp` into `@timestamp`
+   - **Rename processor**: rename fields to match your schema (for example ECS field names)
    - **Set processor**: add a static field like `data_source: "whiteout_ai"`
    - **Remove processor**: drop fields you don't want to store
 5. Click **Create pipeline**
@@ -141,22 +144,32 @@ To enrich or transform events before indexing:
 |-------|-------------|
 | **Destination Type** | **Elastic HTTP Ingest** |
 | **Display Name** | A name for this destination, e.g. `Elastic` |
-| **Privacy Profile** | Leave at **(None)**. See [Privacy settings](#privacy-settings). |
-| **Endpoint URL** | The HTTPS base URL from Step 2, e.g. `https://elastic-ingest.example.com`, without `/_bulk` |
-| **Index** | The index to write to, e.g. `whiteout-ai-events` |
+| **Prompt content** | **Full text** (default), **Hash only** or **Redacted**. See [Privacy settings](#privacy-settings). |
+| **User identity** | **Include email** (default), **Remove email** or **Tokenize**. See [Privacy settings](#privacy-settings). |
+| **Endpoint URL** | Your Elasticsearch URL, e.g. `https://my-deployment.es.us-east-1.aws.elastic.cloud:443`, without `/_bulk` |
+| **Index** | The index or data stream to write to, e.g. `whiteout-ai-events` |
 | **Ingest Pipeline (optional)** | The pipeline name from Step 3 |
+| **Authentication** | **API key** (recommended; the key only needs the `create_doc` privilege on the index), **Username and password**, or **None** (only for clusters without security enabled) |
+| **API Key** | Shown for **API key**. The **Encoded** value from Step 2 (base64 of `id:key`). An `id:key` pair is also accepted. |
+| **Username** / **Password** | Shown for **Username and password**. A user that can write to the index. |
+| **Verify TLS certificate** | On by default. Leave it on in production. |
+| **CA Certificate (PEM, optional)** | Only needed if the cluster uses a certificate from a private CA. See [TLS Certificate Errors](#tls-certificate-errors). |
 | **Enabled** | On to start delivering as soon as the destination is saved |
 
-4. Click **Test Connection**. Whiteout AI requests `<Endpoint URL>/_cluster/health` and shows the result. The test doesn't write a document.
+4. Click **Test Connection**. It checks the credential and that it can write to the index, and doesn't write any data:
+   - With **API key** or **Username and password**, Whiteout AI calls `<Endpoint URL>/_security/_authenticate`, then `_security/user/_has_privileges` for `create_doc` on the **Index**. On success it shows **Authenticated as `<key or user>`; can write to `<index>`**. A credential that authenticates but can't write fails the test and names the index.
+   - With **None**, it requests `<Endpoint URL>/`. A cluster that requires authentication answers `401`, and the test asks you to choose API key or Basic authentication.
 5. Click **Create**
 
-> **Destinations created before this release.** Elasticsearch destinations saved from an earlier version of the dialog didn't deliver or pass Test Connection. They now work as saved, without being re-entered.
+When you edit a saved destination, the **API Key** and **Password** show `****`. **Test Connection** then uses the saved value, so you only need to re-enter it to change it.
+
+> **Destinations created before this release.** Elasticsearch destinations saved from an earlier version of the dialog didn't deliver or pass Test Connection. They now work as saved, without being re-entered. A destination that points at an ingest gateway adding credentials for Whiteout AI keeps working with **Authentication** set to **None**; you can now point it straight at the cluster with an API key instead.
 
 ---
 
 ## Events delivered
 
-Every event is indexed into your **Index** as one document. Filter on `event_type`:
+Every event is indexed into your **Index** as one document, with `@timestamp` set to the event time (UTC). Filter on `event_type`:
 
 | `event_type` | When it's sent |
 |--------------|----------------|
@@ -171,24 +184,27 @@ Infrastructure agent state alerts are not sent to Elasticsearch. The event field
 
 Prompt events are batched (500 events or 5 seconds by default); other events are sent as they occur. Transient failures (connection errors, timeouts, `5xx`) are retried, and after 10 consecutive failed deliveries the destination is disabled and admins get a Notification Center alert.
 
-> **Per-document errors aren't reported.** A `_bulk` request that Elasticsearch accepts counts as delivered even if individual documents were rejected (for example a mapping conflict or an authorization error on the index). Check your cluster logs if documents are missing.
+- **Create operations with stable IDs.** Each document is added with a `create` operation and an `_id` derived from the event, so data streams and `create_doc`-only keys work, and retries are safe: if an event is sent again, Elasticsearch answers `409` for the copy it already has, and Whiteout AI counts that event as delivered instead of indexing it twice.
+- **Rejected documents are a failed delivery.** If the `_bulk` response reports `errors: true`, the delivery fails and **Last Error** on the destination card shows the first rejection, for example `Elasticsearch bulk rejected 3/50 events; first error (status 400, index whiteout-ai-events): mapper_parsing_exception: …`. It's retried only when every rejection is a `429` or `5xx`; a mapping or permission rejection needs a fix on your side and counts toward auto-disable.
 
 ---
 
 ## Privacy settings
 
-Each destination applies two privacy settings to every event it receives:
+Every destination has two privacy settings, under **Privacy** in the destination dialog. They apply to every event of every type, before it's sent:
 
-| Setting | Value | Effect |
-|---------|-------|--------|
-| `prompt_visibility` | `full` (default) | Prompt and response text are sent as captured |
-| | `hash_only` | Prompt text, response text and injection excerpts become `sha256:<hash>` |
-| | `redacted` | Policy-matched parts of the prompt are masked; the response becomes `[RESPONSE_REDACTED]` when the prompt was blocked; injection excerpts become `[CONTENT_REDACTED]`. Prompts with no findings are sent unchanged. |
-| `pii_mode` | `allow` (default) | `user.email` is sent as is |
-| | `strip` | `user.email` is removed (`null`) from every event |
-| | `tokenize` | `user.email` becomes a stable token, `[USER_<hash>]`, in every event |
+| Setting | Option (`config` value) | Effect |
+|---------|-------------------------|--------|
+| **Prompt content** (`prompt_visibility`) | **Full text** (`full`, default) | Prompt and response text are sent as captured |
+| | **Hash only** (`hash_only`) | Prompt text, response text and injection excerpts become `sha256:<hash>`. Identical prompts can be matched, but not read. |
+| | **Redacted** (`redacted`) | Only masked text is sent. A prompt with policy findings is sent with the policy-matched parts masked and the rest of the prompt unchanged. A prompt with no findings, or one that couldn't be masked, is sent as `[CONTENT_REDACTED]`. Response text is always sent as `[RESPONSE_REDACTED]`, and injection excerpts as `[CONTENT_REDACTED]`. |
+| **User identity** (`pii_mode`) | **Include email** (`allow`, default) | `user.email` is sent as is |
+| | **Remove email** (`strip`) | `user.email` is removed (`null`) from every event |
+| | **Tokenize** (`tokenize`) | `user.email` becomes a stable token, `[USER_<hash>]`, in every event, so one user's events can be correlated without revealing who they are |
 
-Set them in the destination's configuration through the API (see [Configuring through the API](#configuring-through-the-api)). The **Privacy Profile** list in the dialog doesn't set them, so leave it at **(None)**.
+Masking is done by the Whiteout AI compliance engine and is best-effort. If no prompt text at all may leave Whiteout AI, choose **Hash only**.
+
+The destination card shows the active settings, for example **Privacy: Full text prompts · include email**.
 
 ---
 
@@ -204,7 +220,7 @@ Set them in the destination's configuration through the API (see [Configuring th
      "size": 5
    }
    ```
-3. **Kibana**: Create a data view for `whiteout-ai-events` with `timestamp` as the time field, and check the event in **Discover**.
+3. **Kibana**: Create a data view for `whiteout-ai-events` with `@timestamp` as the time field, and check the event in **Discover**.
 4. **Pipeline Verification**: If you configured an ingest pipeline, confirm its enrichment fields are present.
 5. **Destination card**: **Last Delivery** shows the time of the last successful delivery and **Last Error** the most recent failure.
 
@@ -235,36 +251,54 @@ If you manage destinations through the Whiteout AI API rather than the dialog, u
 | **Endpoint URL** | `endpoint` (the older name `endpoint_url` is also accepted) |
 | **Index** | `index` |
 | **Ingest Pipeline** | `pipeline` |
-| (API only) | `prompt_visibility`, `pii_mode` (see [Privacy settings](#privacy-settings)) |
+| **Authentication** | `auth_type`: `api_key`, `basic` or `none`. When omitted, it's inferred: `api_key` if `api_key` is set, `basic` if `username` is set, otherwise `none`. |
+| **API Key** | `api_key` |
+| **Username** / **Password** | `username` / `password` |
+| **Verify TLS certificate** | `verify_tls` (default `true`) |
+| **CA Certificate** | `ca_cert` (PEM; a value that isn't a PEM certificate is rejected with a `400`) |
+| **Prompt content** | `prompt_visibility`: `full` (default), `hash_only` or `redacted` |
+| **User identity** | `pii_mode`: `allow` (default), `strip` or `tokenize` |
 
-If `index` is omitted, each event type goes to its own index: `whiteout-prompt-logs` (prompt, override and connector events), `whiteout-coverage-gaps`, `whiteout-reports` and `whiteout-prompt-injection`. Setting `index` is simpler.
+If `index` is omitted, each event type goes to its own index (see [Event type labels](./soc-destinations/webhook.md#event-type-labels)): `whiteout-prompt-logs`, `whiteout-prompt-overrides`, `whiteout-connector-vetting`, `whiteout-coverage-gaps`, `whiteout-reports` and `whiteout-prompt-injection`, and any new event type to `whiteout-<event-type>`. Test Connection then checks write access to every one of them, so the key needs `create_doc` on all of them (for example on `whiteout-*`). Setting `index` is simpler. Before this release, overrides and connector vetting actions went to `whiteout-prompt-logs`.
 
-Batching is set with the top-level `batching_max_events` (default `500`) and `batching_max_seconds` (default `5`).
+Batching is set with the top-level `batching_max_events` (default `500`) and `batching_max_seconds` (default `5`). `api_key` and `password` are stored encrypted and returned masked as `****`; sending `****` back leaves them unchanged. The older top-level `privacy_profile_id` field is ignored if sent.
 
 ---
 
 ## Troubleshooting
 
-### Test Connection Returns 401 or 403
+### Test Connection: "Authentication failed"
 
-- Whiteout AI doesn't send credentials. Point the **Endpoint URL** at an ingest gateway that adds them (see [Step 2](#step-2-provide-an-endpoint-whiteout-ai-can-write-to)).
+- For **API key**, paste the **Encoded** value (or `id:key`), and check the key hasn't expired or been invalidated
+- For **Username and password**, check both values
+- If an edit left the field showing `****`, the saved value is used; re-enter it if it changed in Elasticsearch
+
+### Test Connection: "The cluster requires authentication"
+
+- **Authentication** is set to **None**, but the cluster has security enabled. Choose **API key** or **Username and password**.
+
+### Test Connection: "… cannot write to …"
+
+- The credential works but lacks write access. Give it `create_doc` (or `index` or `write`) on the index or data stream named in the message.
+- If the message says write access **could not be checked**, the test passed authentication only. Save the destination and confirm with the end-to-end test in [Verification](#verification).
 
 ### Documents Not Appearing
 
 - Confirm the **Endpoint URL** is the base URL (no `/_bulk`), including `https://` and the port
-- Check that the gateway forwards `POST /_bulk` and that its API key can write to the index
-- Make sure the index isn't a data stream
-- Look for rejected documents in your cluster or gateway logs (see [Per-document errors](#events-delivered))
-- Check **Last Error** on the destination card, and whether the destination has been disabled after repeated failures
+- Check **Last Error** on the destination card: rejected documents are reported there with the first error's status, index and reason
+- Check whether the destination has been disabled after repeated failures
 
 ### Mapping Errors
 
 - Ensure the index template matches your **Index** name and has no higher-priority conflicting template
-- `timestamp` values are ISO 8601; keep that field mapped as `date`
+- `@timestamp` and `timestamp` values are ISO 8601; keep both mapped as `date`
 
 ### TLS Certificate Errors
 
-- Whiteout AI verifies the endpoint's certificate, and this destination has no option to turn verification off or add a private CA. Serve the endpoint with a certificate from a publicly trusted CA.
+- Whiteout AI verifies the cluster's certificate against the public trusted CAs by default. Test Connection reports a verification failure as `TLS error: …`.
+- If the cluster uses a certificate from a private CA (common for self-managed clusters), paste the issuing CA certificate (PEM, starting `-----BEGIN CERTIFICATE-----`) into **CA Certificate**. It is added to the public trusted CAs, so a publicly trusted certificate keeps working too. For a self-signed certificate, the certificate itself is the CA.
+- Check the certificate matches the host name in the **Endpoint URL** and hasn't expired
+- Turning off **Verify TLS certificate** skips the check (and ignores **CA Certificate**). Use it only for testing.
 
 ### Pipeline Processing Errors
 
@@ -276,10 +310,10 @@ Batching is set with the top-level `batching_max_events` (default `500`) and `ba
 ## Security Considerations
 
 - **Use HTTPS**: Always connect over HTTPS to encrypt events in transit.
-- **Lock Down the Gateway**: The ingest gateway accepts unauthenticated requests, so restrict it to Whiteout AI traffic and to the `_bulk` and `_cluster/health` paths only.
-- **Scoped API Keys**: Give the gateway's API key write access to the Whiteout AI index only. Never use the `elastic` superuser for ingestion.
+- **Keep Certificate Verification On**: Turn off **Verify TLS certificate** only for testing. Use **CA Certificate** for a private CA instead.
+- **Scoped API Keys**: Give Whiteout AI an API key with `create_doc` on the Whiteout AI index only. Never use the `elastic` superuser for ingestion.
 - **Rotate API Keys**: Set expiration dates on API keys and rotate them before they expire.
-- **Limit Content**: Use `prompt_visibility` and `pii_mode` to send only what your cluster is cleared to hold.
+- **Limit Content**: Use **Prompt content** and **User identity** to send only what your cluster is cleared to hold.
 - **Enable Audit Logging**: Turn on Elasticsearch audit logging to track API key usage and index operations.
 - **Index Lifecycle Management**: Use ILM policies (with a rollover alias if needed) to enforce your retention requirements.
 - **Encrypt at Rest**: Enable encryption at rest on your cluster to protect stored audit events.

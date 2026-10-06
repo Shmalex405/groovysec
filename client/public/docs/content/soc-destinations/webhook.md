@@ -64,7 +64,8 @@ If you are building a custom receiver:
 |-------|-------------|
 | **Destination Type** | **Generic Webhook (HMAC)** |
 | **Display Name** | A name for this destination, e.g. `SOC webhook` |
-| **Privacy Profile** | Leave at **(None)**. See [Privacy settings](#privacy-settings). |
+| **Prompt content** | **Full text** (default), **Hash only** or **Redacted**. See [Privacy settings](#privacy-settings). |
+| **User identity** | **Include email** (default), **Remove email** or **Tokenize**. See [Privacy settings](#privacy-settings). |
 | **Endpoint URL** | The HTTPS URL that receives event payloads |
 | **Signing Secret** | The HMAC-SHA256 secret from Step 2 |
 | **Verify TLS** | On by default. Turn off only for a test endpoint with a self-signed certificate. |
@@ -72,6 +73,8 @@ If you are building a custom receiver:
 
 4. Click **Test Connection**. Whiteout AI posts a test payload to your endpoint and shows the result.
 5. Click **Create**
+
+When you edit a saved destination, the secret fields show `****`. **Test Connection** then uses the saved secret, so you only need to re-enter a secret to change it.
 
 ---
 
@@ -86,7 +89,8 @@ Tines destinations use the same payload, headers and signature as a Generic Webh
 | Field | Description |
 |-------|-------------|
 | **Display Name** | A name for this destination |
-| **Privacy Profile** | Leave at **(None)** |
+| **Prompt content** | **Redacted** by default for Tines. See [Privacy settings](#privacy-settings). |
+| **User identity** | **Include email** (default), **Remove email** or **Tokenize** |
 | **Tines Webhook URL** | The URL of the Webhook action |
 | **HMAC Signing Secret (optional)** | A shared secret if your story verifies `X-Whiteout-Signature` |
 | **Verify TLS** | On by default |
@@ -94,25 +98,43 @@ Tines destinations use the same payload, headers and signature as a Generic Webh
 
 4. Click **Test Connection**, then **Create**
 
-Prompt text is sent to Tines **redacted** by default (`prompt_visibility: redacted`, see [Privacy settings](#privacy-settings)). If the test fails and the URL doesn't contain `/webhook/`, you probably copied a story or page URL instead of the Webhook action's URL.
+**Prompt content** defaults to **Redacted** for Tines, so only masked prompt text reaches your story (see [Privacy settings](#privacy-settings)). Change it under **Privacy** in the dialog if your story needs more. If the test fails and the URL doesn't contain `/webhook/`, you probably copied a story or page URL instead of the Webhook action's URL.
 
 ---
 
 ## Events delivered
 
-Every enabled destination receives the following event types. Each event in the body carries its own `event_type`.
+Every enabled destination receives the following event types. Each event in the body carries its own `event_type`, and the `X-Whiteout-Event-Type` header carries the same value.
 
-| `event_type` | When it's sent | `X-Whiteout-Event-Type` header |
-|--------------|----------------|-------------------------------|
-| `prompt_log` | Each governed prompt: allowed, flagged or blocked | `prompt_log` |
-| `prompt_overridden` | A user overrides a block. The block itself was already sent as a `prompt_log` event. | `prompt_log` |
-| `coverage_gap` | Shadow-AI discovery opens a coverage-gap finding (metadata only, no content) | `coverage_gap` |
-| `connector_vetting_action` | The [Whiteout AI Connector](./whiteout-ai-connector/overview.md) blocks or omits content. Results where everything was allowed aren't sent. | `prompt_log` |
-| `report` | A scheduled report run, when this destination is added as a **SOC destination** in the report's schedule | `report` |
-| `prompt_injection_detection` | A [Prompt Injection Defense](./injection-defense/overview.md) detection; see [below](#prompt-injection-detection-events) | `prompt_injection_detection` |
-| `infra_agent_state_transition` | An [infrastructure agent](./infrastructure/agent-quickstart.md) changes state, for example to `disconnected` or `decommissioned` | `infra_agent_state_transition` |
+| `event_type` | When it's sent |
+|--------------|----------------|
+| `prompt_log` | Each governed prompt: allowed, flagged or blocked |
+| `prompt_overridden` | A user overrides a block. The block itself was already sent as a `prompt_log` event. |
+| `coverage_gap` | Shadow-AI discovery opens a coverage-gap finding (metadata only, no content) |
+| `connector_vetting_action` | The [Whiteout AI Connector](./whiteout-ai-connector/overview.md) blocks or omits content. Results where everything was allowed aren't sent. |
+| `report` | A scheduled report run, when this destination is added as a **SOC destination** in the report's schedule |
+| `prompt_injection_detection` | A [Prompt Injection Defense](./injection-defense/overview.md) detection; see [below](#prompt-injection-detection-events) |
+| `infra_agent_state_transition` | An [infrastructure agent](./infrastructure/agent-quickstart.md) changes state, for example to `disconnected` or `decommissioned` |
 
-> **Use the event's own `event_type`.** The header labels the whole request, so `prompt_overridden` and `connector_vetting_action` events arrive under the `prompt_log` label. Route on each event's `event_type` field.
+### Event type labels
+
+Every event type has its own label on every destination, so you can route and filter on it without opening the event:
+
+| `event_type` | `X-Whiteout-Event-Type` (Webhook, Tines) | Splunk sourcetype | Elasticsearch default index | Sentinel default table |
+|--------------|------------------------------------------|-------------------|-----------------------------|------------------------|
+| `prompt_log` | `prompt_log` | `whiteout:prompt_log` | `whiteout-prompt-logs` | `WhiteoutAI_PromptLogs_CL` |
+| `prompt_overridden` | `prompt_overridden` | `whiteout:prompt_overridden` | `whiteout-prompt-overrides` | `WhiteoutAI_PromptOverrides_CL` |
+| `connector_vetting_action` | `connector_vetting_action` | `whiteout:connector_vetting_action` | `whiteout-connector-vetting` | `WhiteoutAI_ConnectorVetting_CL` |
+| `coverage_gap` | `coverage_gap` | `whiteout:coverage_gap` | `whiteout-coverage-gaps` | `WhiteoutAI_CoverageGap_CL` |
+| `report` | `report` | `whiteout:report` | `whiteout-reports` | `WhiteoutAI_Reports_CL` |
+| `prompt_injection_detection` | `prompt_injection_detection` | `whiteout:prompt_injection` | `whiteout-prompt-injection` | `WhiteoutAI_PromptInjection_CL` |
+| `infra_agent_state_transition` | `infra_agent_state_transition` | `whiteout:infra_agent` | Not sent | Not sent |
+
+- **New event types** follow the same pattern: header `<event_type>`, sourcetype `whiteout:<event_type>`, index `whiteout-<event-type>` (underscores become hyphens) and table `WhiteoutAI_<EventType>_CL` (for example `WhiteoutAI_SomeNewType_CL` for `some_new_type`). They are never labelled as `prompt_log`.
+- **A configured index or table still takes everything.** The Elasticsearch and Sentinel defaults apply only when the destination has no **Index** or **Custom Table** (possible only through the API). With one set, every event type goes there; filter on `event_type`.
+- **Mixed batches are split.** A batch can hold more than one event type (for example `prompt_log` and `prompt_overridden`). Webhook and Tines destinations then receive one request per event type, so the header always describes every event in the body. Splunk sets the sourcetype per event, and Elasticsearch and Sentinel without a configured index or table write each event to its own type's index or table.
+
+> **Changed in this release: overrides and connector vetting actions.** `prompt_overridden` and `connector_vetting_action` events used to arrive with the `prompt_log` label (header, sourcetype, default index and default table). They now use their own labels above. Update any filter, route, saved search or alert that expects them under `prompt_log`, or match every Whiteout event type at once (for example `sourcetype=whiteout:*` in Splunk). Sentinel destinations created through the API without a **Custom Table** need two more streams in their DCR, `Custom-WhiteoutAI_PromptOverrides_CL` and `Custom-WhiteoutAI_ConnectorVetting_CL`; see [Azure Sentinel](./soc-destinations/azure-sentinel.md#configuring-through-the-api).
 
 ### Payload format
 
@@ -130,7 +152,7 @@ Request headers:
 
 | Header | Contents |
 |--------|----------|
-| `X-Whiteout-Event-Type` | The label described above |
+| `X-Whiteout-Event-Type` | The `event_type` of every event in the body (see [Event type labels](#event-type-labels)) |
 | `X-Whiteout-Batch-Size` | Number of events in `events` |
 | `X-Whiteout-Timestamp` | When the request was sent (UTC, ISO 8601) |
 | `X-Whiteout-Signature` | `sha256=<hex>` HMAC of the raw body, when a signing secret is set |
@@ -148,18 +170,20 @@ Request headers:
 
 ## Privacy settings
 
-Each destination applies two privacy settings to every event it receives:
+Every destination has two privacy settings, under **Privacy** in the destination dialog. They apply to every event type the destination receives:
 
-| Setting | Value | Effect |
-|---------|-------|--------|
-| `prompt_visibility` | `full` (default) | Prompt and response text are sent as captured |
-| | `hash_only` | `prompt.text`, `response.text` and injection excerpts become `sha256:<hash>` |
-| | `redacted` | Policy-matched parts of the prompt are masked; the response becomes `[RESPONSE_REDACTED]` when the prompt was blocked; injection excerpts become `[CONTENT_REDACTED]`. Prompts with no findings are sent unchanged. Default for Tines. |
-| `pii_mode` | `allow` (default) | `user.email` is sent as is |
-| | `strip` | `user.email` is removed (`null`) from every event |
-| | `tokenize` | `user.email` becomes a stable token, `[USER_<hash>]`, in every event |
+| Setting | Option (`config` value) | Effect |
+|---------|-------------------------|--------|
+| **Prompt content** (`prompt_visibility`) | **Full text** (`full`, default) | Prompt and response text are sent as captured |
+| | **Hash only** (`hash_only`) | `prompt.text`, `response.text` and injection excerpts become `sha256:<hash>`. Identical prompts can be matched, but not read. |
+| | **Redacted** (`redacted`, default for Tines) | Only masked text is sent. A prompt with policy findings is sent with the policy-matched parts masked and the rest of the prompt unchanged. A prompt with no findings, or one that couldn't be masked, is sent as `[CONTENT_REDACTED]`. Response text is always sent as `[RESPONSE_REDACTED]`, and injection excerpts as `[CONTENT_REDACTED]`. |
+| **User identity** (`pii_mode`) | **Include email** (`allow`, default) | `user.email` is sent as is |
+| | **Remove email** (`strip`) | `user.email` is removed (`null`) from every event |
+| | **Tokenize** (`tokenize`) | `user.email` becomes a stable token, `[USER_<hash>]`, in every event, so one user's events can be correlated without revealing who they are |
 
-These are keys in the destination's configuration, set through the API (see [Configuring through the API](#configuring-through-the-api)). The **Privacy Profile** list in the dialog doesn't set them, so leave it at **(None)**.
+Masking is done by the Whiteout AI compliance engine and is best-effort. If no prompt text at all may leave Whiteout AI, choose **Hash only**.
+
+The destination card shows the active settings, for example **Privacy: Redacted prompts · include email**.
 
 ---
 
@@ -284,10 +308,10 @@ Each destination's privacy settings then apply, as they do to prompt text:
 
 | Destination setting | Effect on the event |
 |---------------------|---------------------|
-| `prompt_visibility`: `hash_only` | `detection.excerpt` becomes `sha256:<hash>` of the excerpt |
-| `prompt_visibility`: `redacted` | `detection.excerpt` becomes `[CONTENT_REDACTED]` |
-| `pii_mode`: `strip` | `user.email` is removed (`null`) |
-| `pii_mode`: `tokenize` | `user.email` becomes a stable token, `[USER_<hash>]` |
+| **Prompt content**: **Hash only** | `detection.excerpt` becomes `sha256:<hash>` of the excerpt |
+| **Prompt content**: **Redacted** | `detection.excerpt` becomes `[CONTENT_REDACTED]` |
+| **User identity**: **Remove email** | `user.email` is removed (`null`) |
+| **User identity**: **Tokenize** | `user.email` becomes a stable token, `[USER_<hash>]` |
 
 ---
 
@@ -300,9 +324,12 @@ If you manage destinations through the Whiteout AI API rather than the dialog, u
 | **Endpoint URL** / **Tines Webhook URL** | `endpoint` |
 | **Signing Secret** / **HMAC Signing Secret** | `signing_secret` (optional through the API) |
 | **Verify TLS** | `verify_tls` (default `true`) |
-| (API only) | `prompt_visibility`, `pii_mode` (see [Privacy settings](#privacy-settings)) |
+| **Prompt content** | `prompt_visibility`: `full` (default), `hash_only` or `redacted` (default for `tines`) |
+| **User identity** | `pii_mode`: `allow` (default), `strip` or `tokenize` |
 
-Batching is set with the top-level `batching_max_events` (default `500`) and `batching_max_seconds` (default `5`). Secrets are returned masked as `****`; sending `****` back leaves the stored secret unchanged.
+Any other `prompt_visibility` or `pii_mode` value is rejected with a `400`. The older top-level `privacy_profile_id` field is ignored if sent; privacy is set only through these two keys.
+
+Batching is set with the top-level `batching_max_events` (default `500`) and `batching_max_seconds` (default `5`). Secrets are returned masked as `****`; sending `****` back leaves the stored secret unchanged. The same applies to the pre-save connection test: send the saved destination's `destination_id` with the config and any `****` secret is filled from that destination.
 
 ---
 
@@ -314,6 +341,10 @@ Batching is set with the top-level `batching_max_events` (default `500`) and `ba
 - Check firewall rules and network security groups allow inbound HTTPS from Whiteout AI
 - Confirm your endpoint returns a `2xx` status within 30 seconds
 - Check **Last Error** on the destination card, and whether the destination has been disabled after repeated failures
+
+### Destination Stopped Delivering After an Edit
+
+- If a destination stopped delivering after you edited and saved it (before this release), its saved secret was damaged by the edit. Open it with **Edit**, re-enter the **Signing Secret**, and save. Editing no longer affects secrets you leave as `****`.
 
 ### TLS Handshake Failures
 
@@ -346,5 +377,5 @@ Batching is set with the top-level `batching_max_events` (default `500`) and `ba
 - **Restrict Access**: Limit network access to your webhook endpoint, for example with IP allowlisting.
 - **Validate Payloads**: Validate the structure and signature of incoming payloads before processing them.
 - **Rotate Secrets**: Rotate your signing secret periodically. Update Whiteout AI and your receiver together to avoid delivery failures.
-- **Limit Content**: Use `prompt_visibility` and `pii_mode` to send only what the receiving system is cleared to hold.
+- **Limit Content**: Use **Prompt content** and **User identity** to send only what the receiving system is cleared to hold.
 - **Avoid Logging Secrets**: Ensure your receiver doesn't log the signing secret or full payloads to insecure locations.

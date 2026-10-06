@@ -162,7 +162,8 @@ Set up lifecycle rules for retention:
 |-------|-------------|
 | **Destination Type** | **S3 Batch Export** |
 | **Display Name** | A name for this destination, e.g. `S3 archive` |
-| **Privacy Profile** | Leave at **(None)**. See [Privacy settings](#privacy-settings). |
+| **Prompt content** | **Full text** (default), **Hash only** or **Redacted**. See [Privacy settings](#privacy-settings). |
+| **User identity** | **Include email** (default), **Remove email** or **Tokenize**. See [Privacy settings](#privacy-settings). |
 | **Bucket** | Your S3 bucket name (no `s3://` prefix) |
 | **Prefix (optional)** | Folder inside the bucket, e.g. `whiteout`. Objects go to `<prefix>/<event type>/YYYY/MM/DD/HH/`. |
 | **Region** | The bucket's AWS region, e.g. `us-east-1` |
@@ -242,18 +243,20 @@ Infrastructure agent state alerts are not sent to S3. The event fields are descr
 
 ## Privacy settings
 
-Each destination applies two privacy settings to every event when it's queued:
+Every destination has two privacy settings, under **Privacy** in the destination dialog. They apply to every event of every type when it's queued, so changing them affects events queued from then on:
 
-| Setting | Value | Effect |
-|---------|-------|--------|
-| `prompt_visibility` | `full` (default) | Prompt and response text are stored as captured |
-| | `hash_only` | Prompt text, response text and injection excerpts become `sha256:<hash>` |
-| | `redacted` | Policy-matched parts of the prompt are masked; the response becomes `[RESPONSE_REDACTED]` when the prompt was blocked; injection excerpts become `[CONTENT_REDACTED]`. Prompts with no findings are stored unchanged. |
-| `pii_mode` | `allow` (default) | `user.email` is stored as is |
-| | `strip` | `user.email` is removed (`null`) from every event |
-| | `tokenize` | `user.email` becomes a stable token, `[USER_<hash>]`, in every event |
+| Setting | Option (`config` value) | Effect |
+|---------|-------------------------|--------|
+| **Prompt content** (`prompt_visibility`) | **Full text** (`full`, default) | Prompt and response text are stored as captured |
+| | **Hash only** (`hash_only`) | Prompt text, response text and injection excerpts become `sha256:<hash>`. Identical prompts can be matched, but not read. |
+| | **Redacted** (`redacted`) | Only masked text is stored. A prompt with policy findings is stored with the policy-matched parts masked and the rest of the prompt unchanged. A prompt with no findings, or one that couldn't be masked, is stored as `[CONTENT_REDACTED]`. Response text is always stored as `[RESPONSE_REDACTED]`, and injection excerpts as `[CONTENT_REDACTED]`. |
+| **User identity** (`pii_mode`) | **Include email** (`allow`, default) | `user.email` is stored as is |
+| | **Remove email** (`strip`) | `user.email` is removed (`null`) from every event |
+| | **Tokenize** (`tokenize`) | `user.email` becomes a stable token, `[USER_<hash>]`, in every event, so one user's events can be correlated without revealing who they are |
 
-Set them in the destination's configuration through the API (see [Configuring through the API](#configuring-through-the-api)). The **Privacy Profile** list in the dialog doesn't set them, so leave it at **(None)**.
+Masking is done by the Whiteout AI compliance engine and is best-effort. If no prompt text at all may leave Whiteout AI, choose **Hash only**.
+
+The destination card shows the active settings, for example **Privacy: Full text prompts · include email**.
 
 ---
 
@@ -294,9 +297,10 @@ If you manage destinations through the Whiteout AI API rather than the dialog, u
 | **Cadence** | `cadence`: `hourly` (default) or `daily` |
 | **KMS Key ARN** | `kms_key_arn` |
 | (API only) | `expected_bucket_owner`: the 12-digit account that must own the bucket. Defaults to the role's account. |
-| (API only) | `prompt_visibility`, `pii_mode` (see [Privacy settings](#privacy-settings)) |
+| **Prompt content** | `prompt_visibility`: `full` (default), `hash_only` or `redacted` |
+| **User identity** | `pii_mode`: `allow` (default), `strip` or `tokenize` |
 
-The External ID and filled-in policy templates are also available from the destinations API's S3 setup endpoint. Flushing an S3 destination through the API exports everything queued immediately, including the window that's still open.
+The older top-level `privacy_profile_id` field is ignored if sent. The External ID and filled-in policy templates are also available from the destinations API's S3 setup endpoint. Flushing an S3 destination through the API exports everything queued immediately, including the window that's still open.
 
 ---
 
@@ -332,6 +336,6 @@ The External ID and filled-in policy templates are also available from the desti
 - **Require the External ID**: Keep the `sts:ExternalId` condition in the trust policy. It stops another Whiteout AI customer from pointing Whiteout AI at your role.
 - **Least Privilege**: The role needs only `s3:PutObject` on the prefix (plus KMS use if you set a key). Don't grant read, list or delete.
 - **Encryption**: Objects are always encrypted at rest; use SSE-KMS with your own key for key-level control and CloudTrail auditing.
-- **Limit Content**: Use `prompt_visibility` and `pii_mode` to store only what the bucket is cleared to hold.
+- **Limit Content**: Use **Prompt content** and **User identity** to store only what the bucket is cleared to hold.
 - **Enable Access Logging**: Turn on S3 server access logging or CloudTrail data events for the bucket.
 - **Retention Lock**: For strict compliance requirements, consider S3 Object Lock in Governance or Compliance mode.

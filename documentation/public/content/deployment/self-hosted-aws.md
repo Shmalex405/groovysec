@@ -23,7 +23,7 @@ Only three narrow interactions cross the account boundary, all read-only or cryp
 | **Resources created** | Roughly 50–60 AWS resources |
 | **Typical apply time** | 15–25 minutes end to end |
 | **Supported regions** | `us-west-2` and `eu-north-1` (others on request, subject to GPU availability) |
-| **Compliance LLM** | Runs on a `g6e.xlarge` GPU instance in your VPC — inference never leaves your account |
+| **Compliance LLM** | Runs on a dedicated GPU instance in your VPC — inference never leaves your account |
 | **Availability zones** | Auto-selected across every GPU-capable AZ in your region; no AZ configuration required |
 
 The module provisions a standard, well-understood AWS stack:
@@ -57,17 +57,7 @@ Before deploying, make sure you have:
 
 ### GPU quota
 
-The compliance LLM runs on a `g6e.xlarge` instance (4 vCPUs). New AWS accounts often have a **vCPU quota of 0** for the G instance family, and quota increases can take anywhere from a few hours to a few days — so check and request early:
-
-```bash
-aws service-quotas get-service-quota \
-  --service-code ec2 \
-  --quota-code L-DB2E81BA \
-  --region us-west-2 \
-  --query 'Quota.Value'
-```
-
-Request a quota of at least **4 vCPUs** for "Running On-Demand G and VT instances" in your deployment region.
+The compliance LLM runs on a dedicated GPU instance. New AWS accounts often have an on-demand GPU instance quota of **0**, and quota increases can take anywhere from a few hours to a few days — so request early. Your deployment package from Groovy Security names the exact service quota to request and the vCPU count for your region.
 
 If you want to validate the rest of the stack while the quota request is pending, the module supports deploying with the GPU subsystem disabled and enabling it later (compliance LLM features stay dark until then).
 
@@ -140,20 +130,11 @@ To move between tiers, contact Groovy Security or your account team. The change 
 
 ---
 
-## Cost Estimate
+## Sizing and Cost
 
-A baseline production deployment in `us-west-2`, before request volume:
+Groovy Security provides a sizing and cost estimate for your region and expected request volume during evaluation. The compliance engine's GPU instance is the largest part of the infrastructure cost.
 
-| Component | Approximate monthly cost |
-|-----------|--------------------------|
-| GPU instance (1 × `g6e.xlarge`, 24×7) | ~$1,350 |
-| RDS PostgreSQL (`db.t4g.medium`, Multi-AZ, 50 GB) | ~$120 |
-| Networking (NAT gateways, ALB) | ~$85 |
-| ECS Fargate (2 tasks × 1 vCPU × 2 GB) | ~$60 |
-| KMS, Secrets Manager, CloudWatch Logs, S3 | ~$30 |
-| **Baseline total** | **~$1,650 / month** |
-
-The GPU instance dominates. For pilots and non-production environments, the GPU Auto Scaling Group can scale to zero between uses (trading always-on inference for a roughly 3-minute cold start), or the GPU subsystem can be disabled entirely, which reduces the baseline to a few hundred dollars per month.
+For pilots and non-production environments, the GPU Auto Scaling Group can scale to zero between uses (trading always-on inference for a roughly 3-minute cold start). The GPU subsystem can also be disabled entirely — for example on a discovery-tier (audit-only) license, where the compliance engine isn't used — which reduces the cost substantially.
 
 ---
 

@@ -17,7 +17,7 @@ Before you begin, ensure you have:
 - **Splunk Enterprise** (8.x or later) or **Splunk Cloud** with HEC enabled
 - **Splunk Admin** access to create HEC tokens and manage indexes
 - Network connectivity from Whiteout AI to the Splunk HEC endpoint (port `8088` by default, `443` on Splunk Cloud)
-- An HEC endpoint that presents a certificate from a publicly trusted CA (Splunk Cloud does; see [TLS Certificate Errors](#tls-certificate-errors))
+- The HEC endpoint's certificate: publicly trusted (Splunk Cloud), or the PEM certificate of the private CA that issued it (see [TLS Certificate Errors](#tls-certificate-errors))
 
 ---
 
@@ -105,14 +105,19 @@ A healthy response returns:
 |-------|-------------|
 | **Destination Type** | **Splunk HEC** |
 | **Display Name** | A name for this destination, e.g. `Splunk` |
-| **Privacy Profile** | Leave at **(None)**. See [Privacy settings](#privacy-settings). |
+| **Prompt content** | **Full text** (default), **Hash only** or **Redacted**. See [Privacy settings](#privacy-settings). |
+| **User identity** | **Include email** (default), **Remove email** or **Tokenize**. See [Privacy settings](#privacy-settings). |
 | **HEC URL** | The full event endpoint, including the path: `https://splunk.example.com:8088/services/collector/event` (Splunk Cloud: `https://http-inputs-<stack>.splunkcloud.com/services/collector/event`). Whiteout AI posts to this URL exactly as entered. |
 | **HEC Token** | The token value from Step 3 |
 | **Index** | The index to write to, e.g. `whiteout_ai`. The token must be allowed to write to it. |
+| **Verify TLS certificate** | On by default. Leave it on in production. |
+| **CA Certificate (PEM, optional)** | Only needed if the HEC endpoint uses a certificate from a private CA, for example Splunk Enterprise's own certificate. See [TLS Certificate Errors](#tls-certificate-errors). |
 | **Enabled** | On to start delivering as soon as the destination is saved |
 
 4. Click **Test Connection**. Whiteout AI sends a test event to the HEC URL and shows the result.
 5. Click **Create**
+
+When you edit a saved destination, the **HEC Token** shows `****`. **Test Connection** then uses the saved token, so you only need to re-enter it to change it.
 
 ---
 
@@ -123,14 +128,18 @@ Every event is written to your **Index**, with a sourcetype that depends on the 
 | `event_type` | When it's sent | Sourcetype |
 |--------------|----------------|------------|
 | `prompt_log` | Each governed prompt: allowed, flagged or blocked | `whiteout:prompt_log` |
-| `prompt_overridden` | A user overrides a block (the block was already sent as `prompt_log`) | `whiteout:prompt_log` |
+| `prompt_overridden` | A user overrides a block (the block was already sent as `prompt_log`) | `whiteout:prompt_overridden` |
 | `coverage_gap` | Shadow-AI discovery opens a coverage-gap finding | `whiteout:coverage_gap` |
-| `connector_vetting_action` | The [Whiteout AI Connector](./whiteout-ai-connector/overview.md) blocks or omits content | `whiteout:prompt_log` |
+| `connector_vetting_action` | The [Whiteout AI Connector](./whiteout-ai-connector/overview.md) blocks or omits content | `whiteout:connector_vetting_action` |
 | `report` | A scheduled report run that lists this destination as a **SOC destination** | `whiteout:report` |
 | `prompt_injection_detection` | A [Prompt Injection Defense](./injection-defense/overview.md) detection | `whiteout:prompt_injection` |
 | `infra_agent_state_transition` | An [infrastructure agent](./infrastructure/agent-quickstart.md) changes state | `whiteout:infra_agent` |
 
-`prompt_overridden` and `connector_vetting_action` events share the `whiteout:prompt_log` sourcetype, so filter on `event_type` to separate them. The event fields are described in [Webhook → Events delivered](./soc-destinations/webhook.md#events-delivered).
+Any new event type arrives as `whiteout:<event_type>`. The sourcetype is set per event, so a batch that mixes event types still labels each one correctly. To search every Whiteout event type at once, use `sourcetype=whiteout:*`. The event fields are described in [Webhook → Events delivered](./soc-destinations/webhook.md#events-delivered), and the labels on every destination in [Event type labels](./soc-destinations/webhook.md#event-type-labels).
+
+Each event's HEC `time` is its original event time, in epoch seconds with millisecond precision, so `_time` in Splunk is when the event happened rather than when it was received.
+
+> **Changed in this release.** `prompt_overridden` and `connector_vetting_action` events used to arrive with the `whiteout:prompt_log` sourcetype. Saved searches, alerts or dashboards that found them through `sourcetype=whiteout:prompt_log` need the new sourcetypes (or `sourcetype=whiteout:*`).
 
 Delivery behaviour is the same as for every HTTP destination: prompt events are batched (500 events or 5 seconds by default), other events are sent as they occur, transient failures (connection errors, timeouts, `5xx`) are retried, and after 10 consecutive failed deliveries the destination is disabled and admins get a Notification Center alert. Infrastructure agent alerts are sent once, without retries.
 
@@ -138,18 +147,20 @@ Delivery behaviour is the same as for every HTTP destination: prompt events are 
 
 ## Privacy settings
 
-Each destination applies two privacy settings to every event it receives:
+Every destination has two privacy settings, under **Privacy** in the destination dialog. They apply to every event of every type, before it's sent:
 
-| Setting | Value | Effect |
-|---------|-------|--------|
-| `prompt_visibility` | `full` (default) | Prompt and response text are sent as captured |
-| | `hash_only` | Prompt text, response text and injection excerpts become `sha256:<hash>` |
-| | `redacted` | Policy-matched parts of the prompt are masked; the response becomes `[RESPONSE_REDACTED]` when the prompt was blocked; injection excerpts become `[CONTENT_REDACTED]`. Prompts with no findings are sent unchanged. |
-| `pii_mode` | `allow` (default) | `user.email` is sent as is |
-| | `strip` | `user.email` is removed (`null`) from every event |
-| | `tokenize` | `user.email` becomes a stable token, `[USER_<hash>]`, in every event |
+| Setting | Option (`config` value) | Effect |
+|---------|-------------------------|--------|
+| **Prompt content** (`prompt_visibility`) | **Full text** (`full`, default) | Prompt and response text are sent as captured |
+| | **Hash only** (`hash_only`) | Prompt text, response text and injection excerpts become `sha256:<hash>`. Identical prompts can be matched, but not read. |
+| | **Redacted** (`redacted`) | Only masked text is sent. A prompt with policy findings is sent with the policy-matched parts masked and the rest of the prompt unchanged. A prompt with no findings, or one that couldn't be masked, is sent as `[CONTENT_REDACTED]`. Response text is always sent as `[RESPONSE_REDACTED]`, and injection excerpts as `[CONTENT_REDACTED]`. |
+| **User identity** (`pii_mode`) | **Include email** (`allow`, default) | `user.email` is sent as is |
+| | **Remove email** (`strip`) | `user.email` is removed (`null`) from every event |
+| | **Tokenize** (`tokenize`) | `user.email` becomes a stable token, `[USER_<hash>]`, in every event, so one user's events can be correlated without revealing who they are |
 
-Set them in the destination's configuration through the API (see [Configuring through the API](#configuring-through-the-api)). The **Privacy Profile** list in the dialog doesn't set them, so leave it at **(None)**.
+Masking is done by the Whiteout AI compliance engine and is best-effort. If no prompt text at all may leave Whiteout AI, choose **Hash only**.
+
+The destination card shows the active settings, for example **Privacy: Full text prompts · include email**.
 
 ---
 
@@ -192,9 +203,12 @@ If you manage destinations through the Whiteout AI API rather than the dialog, u
 | **HEC URL** | `hec_url` |
 | **HEC Token** | `token` |
 | **Index** | `index` (optional through the API; without it, events go to the token's default index) |
-| (API only) | `prompt_visibility`, `pii_mode` (see [Privacy settings](#privacy-settings)) |
+| **Verify TLS certificate** | `verify_tls` (default `true`) |
+| **CA Certificate** | `ca_cert` (PEM; a value that isn't a PEM certificate is rejected with a `400`) |
+| **Prompt content** | `prompt_visibility`: `full` (default), `hash_only` or `redacted` |
+| **User identity** | `pii_mode`: `allow` (default), `strip` or `tokenize` |
 
-Batching is set with the top-level `batching_max_events` (default `500`) and `batching_max_seconds` (default `5`). The token is returned masked as `****`; sending `****` back leaves it unchanged.
+Batching is set with the top-level `batching_max_events` (default `500`) and `batching_max_seconds` (default `5`). The token is returned masked as `****`; sending `****` back leaves it unchanged. The older top-level `privacy_profile_id` field is ignored if sent.
 
 ---
 
@@ -216,12 +230,18 @@ Batching is set with the top-level `batching_max_events` (default `500`) and `ba
 - Confirm network connectivity from Whiteout AI to the Splunk HEC endpoint
 - Check **Last Error** on the destination card, and whether the destination has been disabled after repeated failures
 - Review the Splunk internal logs: `index=_internal source=*http_event_collector*`
+- Searching for overrides or connector vetting actions under `sourcetype=whiteout:prompt_log`? They have their own sourcetypes now (see [Events delivered](#events-delivered)).
+
+### Destination Stopped Delivering After an Edit
+
+- If a destination stopped delivering after you edited and saved it (before this release), its saved token was damaged by the edit. Open it with **Edit**, re-enter the **HEC Token**, and save. Editing no longer affects a token you leave as `****`.
 
 ### TLS Certificate Errors
 
-- Whiteout AI verifies the HEC certificate, and the destination has no option to turn verification off or add a private CA
-- Splunk Enterprise ships HEC with a self-signed certificate. Replace it with a certificate from a publicly trusted CA, or put HEC behind a load balancer that presents one.
+- Whiteout AI verifies the HEC certificate against the public trusted CAs by default. Test Connection reports a verification failure as `TLS error: …`.
+- Splunk Enterprise ships HEC with a self-signed certificate, and many deployments use a private CA. Paste the issuing CA certificate (PEM, starting `-----BEGIN CERTIFICATE-----`) into **CA Certificate**. It is added to the public trusted CAs, so a publicly trusted certificate keeps working too. For a self-signed certificate, the certificate itself is the CA.
 - Verify the certificate matches the host name in the **HEC URL** and has not expired
+- Turning off **Verify TLS certificate** skips the check (and ignores **CA Certificate**). Use it only for testing.
 
 ### Index Errors
 
@@ -237,10 +257,10 @@ Batching is set with the top-level `batching_max_events` (default `500`) and `ba
 
 ## Security Considerations
 
-- **Use HTTPS**: Always serve HEC over TLS with a trusted certificate. Never use plain HTTP for production.
+- **Use HTTPS**: Always serve HEC over TLS and keep **Verify TLS certificate** on. Use **CA Certificate** for a private CA rather than turning verification off. Never use plain HTTP for production.
 - **Restrict Token Permissions**: Limit the HEC token to the Whiteout AI index. Avoid tokens with broad write access.
 - **Network Segmentation**: Restrict access to the HEC endpoint using firewall rules. Only allow traffic from Whiteout AI.
 - **Rotate Tokens**: Periodically rotate HEC tokens. Update the Whiteout AI destination immediately after rotation.
-- **Limit Content**: Use `prompt_visibility` and `pii_mode` to send only what your Splunk environment is cleared to hold.
+- **Limit Content**: Use **Prompt content** and **User identity** to send only what your Splunk environment is cleared to hold.
 - **Monitor Token Usage**: Use Splunk's internal logs to monitor HEC token usage for anomalies.
 - **Audit Access**: Regularly review which users and systems have access to the HEC token and the target index.
