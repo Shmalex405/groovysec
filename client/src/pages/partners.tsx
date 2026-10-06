@@ -17,8 +17,34 @@ import {
   ArrowRight,
   Mail,
   CheckCircle,
+  LogIn,
 } from "lucide-react";
 import { usePageMeta } from "@/lib/use-page-meta";
+
+const PORTAL_URL = "https://partners.groovysec.com";
+
+const portalFeatures = [
+  {
+    title: "Co-branded library",
+    description:
+      "Client-ready documents come back with your logo, your rep's contact details and an optional \"Prepared for\" line, organized by sales stage from first conversation to deployment.",
+  },
+  {
+    title: "Always current",
+    description:
+      "Every document is checked against our published claims and declared current before release, then reviewed on a fixed cycle. When a new version ships, everyone who downloaded the old one is emailed.",
+  },
+  {
+    title: "Verifiable copies",
+    description:
+      "Each download carries its own verify link, so you or your client can confirm at any time that a copy is still the latest version.",
+  },
+  {
+    title: "Your team, your brand",
+    description:
+      "Every person gets their own sign-in. Invite colleagues from your company's approved domains, manage your brand kit, and see your partnership details in one place.",
+  },
+];
 
 const partnerBenefits = [
   {
@@ -36,7 +62,7 @@ const partnerBenefits = [
   {
     title: "Market Expansion",
     description:
-      "Tap into growing demand for AI governance and automated penetration testing across every vertical.",
+      "Tap into growing demand for AI governance across every vertical.",
     spotlightHue: "35",
   },
   {
@@ -67,7 +93,7 @@ const partnerTracks = [
     features: [
       "Tiered discount structure",
       "Deal registration & protection",
-      "Co-branded proposals",
+      "Co-branded partner portal",
       "Sales engineering support",
     ],
     accentColor: "blue",
@@ -79,7 +105,7 @@ const partnerTracks = [
       "Introduce qualified opportunities and earn referral fees: no selling required.",
     features: [
       "Simple referral fee structure",
-      "Lead tracking portal",
+      "Product briefing from our team",
       "Minimal commitment",
       "Quick onboarding",
     ],
@@ -125,7 +151,7 @@ const colorMap: Record<string, { bg: string; border: string; text: string; icon:
 export default function Partners() {
   usePageMeta(
     "Partners",
-    "Partner with Groovy Security: reseller, referral, and technology partnerships for Whiteout AI."
+    "Partner with Groovy Security: reseller, referral, and technology partnerships for Whiteout AI, with a co-branded partner portal for signed partners."
   );
   return (
     <PageTransition>
@@ -152,42 +178,92 @@ export default function Partners() {
               </HeroLine>
               <HeroLine>
                 <p className="text-lg lg:text-xl text-[#51617A] max-w-2xl mx-auto mb-10 leading-relaxed">
-                  Join our partner ecosystem and bring enterprise-grade AI governance and
-                  automated penetration testing to your customers.
+                  Join our partner ecosystem and bring enterprise-grade AI governance
+                  to your customers.
                 </p>
               </HeroLine>
               <HeroLine>
-                <Link href="/demo">
-                  <GradientButton variant="default" className="text-base px-8 py-3">
-                    Become a Partner
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </GradientButton>
-                </Link>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <Link href="/demo">
+                    <GradientButton variant="default" className="text-base px-8 py-3">
+                      Become a Partner
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </GradientButton>
+                  </Link>
+                  <a href={PORTAL_URL}>
+                    <GradientButton variant="white" className="text-base px-8 py-3">
+                      Partner Sign In
+                      <LogIn className="w-4 h-4 ml-2" />
+                    </GradientButton>
+                  </a>
+                </div>
               </HeroLine>
             </HeroTextReveal>
           </div>
         </section>
 
-        {/* Coming Soon Banner */}
-        <section className="pb-16">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Partner Portal */}
+        <section id="portal" className="pb-16 scroll-mt-24">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <GlassCard
-                className="p-8 text-center"
+                className="p-8 lg:p-12"
                 hover={false}
                 glowColor="rgba(46,125,50,0.06)"
               >
-                <div className="inline-flex items-center px-3 py-1 rounded-md bg-[#2E7D32]/10 border border-[#2E7D32]/25 text-[#2E7D32] text-xs font-semibold uppercase tracking-[0.18em] mb-4">
-                  Coming Q2 2026
+                <div className="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-14">
+                  <div className="flex flex-col">
+                    <div className="inline-flex self-start items-center px-3 py-1 rounded-md bg-[#2E7D32]/10 border border-[#2E7D32]/25 text-[#2E7D32] text-xs font-semibold uppercase tracking-[0.18em] mb-5">
+                      Now live
+                    </div>
+                    <h2 className="text-3xl font-bold text-[#0F1B2D] tracking-tight mb-4">
+                      The Partner Portal
+                    </h2>
+                    <p className="text-[#51617A] leading-relaxed mb-4">
+                      Everything you need to sell and deploy Whiteout AI, under your
+                      own logo and always current.
+                    </p>
+                    <p className="text-[#51617A] text-sm leading-relaxed mb-8">
+                      Access is by invitation for signed partners. Your partner
+                      manager sends the first invite when your agreement is in place.
+                    </p>
+                    <div className="mt-auto">
+                      <a href={PORTAL_URL}>
+                        <GradientButton variant="blue" className="text-base px-8 py-3">
+                          Partner Sign In
+                          <LogIn className="w-4 h-4 ml-2" />
+                        </GradientButton>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="grid sm:grid-cols-2 gap-x-8 gap-y-7">
+                      {portalFeatures.map((feature) => (
+                        <div key={feature.title} className="border-t border-[#0F1B2D]/10 pt-4">
+                          <h3 className="text-base font-semibold text-[#0F1B2D] mb-1.5">
+                            {feature.title}
+                          </h3>
+                          <p className="text-sm text-[#51617A] leading-relaxed">
+                            {feature.description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="mt-8 text-sm text-[#51617A] leading-relaxed">
+                      <span className="font-semibold text-[#0F1B2D]">Coming next:</span>{" "}
+                      sales and deployment certification, and deal registration in
+                      the portal. Until then, register deals with{" "}
+                      <a
+                        href="mailto:partners@groovysec.com"
+                        className="text-[#1A5FB4] hover:underline"
+                      >
+                        partners@groovysec.com
+                      </a>
+                      .
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold text-[#0F1B2D] mb-2">
-                  Partner Portal Launching Soon
-                </h3>
-                <p className="text-[#51617A] text-sm leading-relaxed max-w-lg mx-auto">
-                  We're building a dedicated partner portal with deal registration,
-                  lead tracking, training resources, and co-branded marketing tools.
-                  In the meantime, reach out directly to get started.
-                </p>
               </GlassCard>
             </ScrollReveal>
           </div>

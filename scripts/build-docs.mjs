@@ -120,7 +120,7 @@ const ROUTES = [
     path: "/partners",
     title: `Partners | ${SITE_NAME}`,
     description:
-      "Partner with Groovy Security — reseller, referral, and technology partnerships for Whiteout AI.",
+      "Partner with Groovy Security — reseller, referral, and technology partnerships for Whiteout AI, with a co-branded partner portal for signed partners.",
   },
   {
     path: "/contact",
