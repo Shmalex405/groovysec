@@ -16,7 +16,7 @@ The integration gives Whiteout AI the ability to:
 - Sync your managed device inventory (hostname, serial, OS, last contact, assigned user)
 - Read installed-software inventory across the tenant to surface **unsanctioned AI tools** already on your endpoints
 - Deploy and silently sign in Whiteout Desktop Guard
-- Force-install the Whiteout browser extension in Chrome, Edge and Firefox, including coverage in private windows
+- Force-install the Whiteout browser extension in Chrome, Edge and Firefox, including coverage in private windows, and on macOS in the Aside browser
 - Report per-device rollout status back into NinjaOne, so you can track progress from your own console
 
 ### Two things to know before you start
@@ -180,6 +180,8 @@ Run the script again. Expected output:
 [Whiteout] done — device configured
 ```
 
+On macOS the output also includes `[Whiteout] Aside policy applied`. Aside is a Chromium-based AI browser that reads policy from its own preference domain, `at.studio.AsideBrowser`, so the script writes the same Chrome Web Store entry there as well. It has no effect on Macs without Aside.
+
 Desktop Guard signs in silently as the mapped user, and the browser extension and IDE plugins sign in through it. The user sees no prompts.
 
 > **Windows:** Desktop Guard installs per-user while NinjaOne scripts run as the System account, so the script stages the verified installer and schedules it to run in the user's own session — immediately if someone is signed in, otherwise at their next sign-in.
@@ -195,7 +197,7 @@ Desktop Guard signs in silently as the mapped user, and the browser extension an
 1. **Connection**: the integration row shows a successful sync with a device count
 2. **NinjaOne status**: `whiteoutDeviceStatus` reads `configured` on your test device
 3. **Desktop Guard**: the app is running and signed in as the correct user, with no sign-in prompt shown
-4. **Chrome and Edge**: the Whiteout extension is installed and signed in
+4. **Chrome and Edge** (and Aside, on Macs that have it): the Whiteout extension is installed and signed in
 5. **Firefox**: `about:policies` shows the extension as **Active**, and it is enabled in private windows
 6. **Shadow AI**: unsanctioned AI applications already installed on your endpoints appear in Whiteout
 
