@@ -139,7 +139,7 @@ These force-install the Whiteout extension. Create one Application & Custom Sett
 | Firefox | `org.mozilla.firefox` | `EnterprisePoliciesEnabled` = true, and `ExtensionSettings` with the extension set to `force_installed` |
 | Aside | `at.studio.AsideBrowser` | `ExtensionInstallForcelist` — the same entry as the Chrome row |
 
-> **Aside** is a Chromium-based AI browser for macOS. It installs the Whiteout extension from the Chrome Web Store, so its entry is identical to Chrome's, but it reads policy from its own preference domain — the Chrome profile does not reach it. Whiteout Desktop Guard governs Aside's built-in AI assistant separately; this profile covers the AI sites your users open in Aside. The profile has no effect on Macs without Aside, so you can scope it to the same group as the others.
+> **Aside** is a Chromium-based AI browser (the profile below is for macOS; Aside on Windows is not yet covered). It installs the Whiteout extension from the Chrome Web Store, so its entry is identical to Chrome's, but it reads policy from its own preference domain — the Chrome profile does not reach it. Whiteout Desktop Guard governs Aside's built-in AI assistant separately; this profile covers the AI sites your users open in Aside. The profile has no effect on Macs without Aside, so you can scope it to the same group as the others.
 
 Optional, for private-window coverage:
 

@@ -283,7 +283,7 @@ Once the extension is force-installed, it does **not** need a per-device managed
 
 ## Aside Browser (macOS)
 
-Aside is a Chromium-based AI browser for macOS. Desktop Guard governs its built-in AI assistant. The AI sites your users open inside Aside are covered by the Whiteout browser extension, which Aside installs from the Chrome Web Store.
+Aside is a Chromium-based AI browser. On macOS, Desktop Guard governs its built-in AI assistant. The AI sites your users open inside Aside are covered by the Whiteout browser extension, which Aside installs from the Chrome Web Store.
 
 Aside reads enterprise policy from its **own** preference domain, so a Chrome profile does not reach it. The deployment payload includes a separate macOS profile for it, and the Jamf and NinjaOne paths apply the same policy:
 
@@ -293,7 +293,7 @@ Aside reads enterprise policy from its **own** preference domain, so a Chrome pr
 | Key | `ExtensionInstallForcelist` |
 | Entry | `dcbndpnolggjgmclalpdcogigpedlhpn;https://clients2.google.com/service/update2/crx` — identical to the Chrome entry |
 
-Deliver it the same way as the Chrome profile: a Custom configuration profile in Intune, or **Application & Custom Settings** in Jamf. It has no effect on Macs without Aside, so you can scope it to the same device group as the other browser profiles.
+Deliver it the same way as the Chrome profile: a Custom configuration profile in Intune, or **Application & Custom Settings** in Jamf. It has no effect on Macs without Aside, so you can scope it to the same device group as the other browser profiles. Aside on Windows is not yet covered by the deployment payload.
 
 ---
 

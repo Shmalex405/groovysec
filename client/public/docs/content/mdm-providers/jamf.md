@@ -18,7 +18,7 @@ That makes deployment three artifacts, which Jamf treats separately:
 
 1. **The package** — you upload the Whiteout Desktop Guard installer to Jamf and scope a policy to install it, exactly as you would any other package.
 2. **The configuration profile** — Whiteout generates this. It carries a per-device enrollment credential so each Mac signs in as the right person without a prompt. You upload it as an Application & Custom Settings profile.
-3. **The browser extension profiles** — additional profiles that force-install the Whiteout extension in Chrome, Edge and Firefox.
+3. **The browser extension profiles** — additional profiles that force-install the Whiteout extension in Chrome, Edge, Firefox and Aside.
 
 All three are required. With only the package, Desktop Guard installs but every user gets a sign-in prompt. Skip the extension profiles and Desktop Guard enrolls silently while the browsers stay uncovered.
 
@@ -137,6 +137,9 @@ These force-install the Whiteout extension. Create one Application & Custom Sett
 | Chrome | `com.google.Chrome` | `ExtensionInstallForcelist` — one entry, `<extension id>;<update URL>` |
 | Edge | `com.microsoft.Edge` | `ExtensionInstallForcelist` as above, plus `ExtensionAllowedTypes` set to `extension` |
 | Firefox | `org.mozilla.firefox` | `EnterprisePoliciesEnabled` = true, and `ExtensionSettings` with the extension set to `force_installed` |
+| Aside | `at.studio.AsideBrowser` | `ExtensionInstallForcelist` — the same entry as the Chrome row |
+
+> **Aside** is a Chromium-based AI browser (the profile below is for macOS; Aside on Windows is not yet covered). It installs the Whiteout extension from the Chrome Web Store, so its entry is identical to Chrome's, but it reads policy from its own preference domain — the Chrome profile does not reach it. Whiteout Desktop Guard governs Aside's built-in AI assistant separately; this profile covers the AI sites your users open in Aside. The profile has no effect on Macs without Aside, so you can scope it to the same group as the others.
 
 Optional, for private-window coverage:
 
