@@ -64,7 +64,7 @@ Once Desktop Guard is enrolled, it acts as a **local credential broker** on `127
 The payload you generate from Whiteout AI contains more than the Desktop Guard enrollment configuration:
 
 - **App configuration profile** — the per-device Desktop Guard enrollment payload (an App Configuration Policy in Intune, a Configuration Profile in Jamf)
-- **Six browser force-install profiles** — Chrome, Edge, and Firefox, each for macOS and Windows
+- **Seven browser force-install profiles** — Chrome, Edge, and Firefox, each for macOS and Windows, plus Aside for macOS (see [Aside browser (macOS)](#aside-browser-macos))
 
 Each browser profile must be delivered as its own configuration profile in your MDM. If you skip them, Desktop Guard enrolls silently but the browser extensions do **not** auto-install on enrolled devices — and nothing in the console flags it.
 
@@ -278,6 +278,22 @@ HKLM\Software\Policies\Mozilla\Firefox\ExtensionSettings\whiteout-ai@groovysec.c
 ### Auto-login behavior on Firefox
 
 Once the extension is force-installed, it does **not** need a per-device managed-storage push for auto-login. Firefox's extension calls the local Desktop Guard broker on `127.0.0.1:18444` and receives a token bound to the same user — the same broker delegation pattern as Chrome and Edge. No user consent prompt fires for a policy-force-installed, AMO-signed extension.
+
+---
+
+## Aside Browser (macOS)
+
+Aside is a Chromium-based AI browser. On macOS, Desktop Guard governs its built-in AI assistant. The AI sites your users open inside Aside are covered by the Whiteout browser extension, which Aside installs from the Chrome Web Store.
+
+Aside reads enterprise policy from its **own** preference domain, so a Chrome profile does not reach it. The deployment payload includes a separate macOS profile for it, and the Jamf and NinjaOne paths apply the same policy:
+
+| Setting | Value |
+|---------|-------|
+| Preference domain | `at.studio.AsideBrowser` |
+| Key | `ExtensionInstallForcelist` |
+| Entry | `dcbndpnolggjgmclalpdcogigpedlhpn;https://clients2.google.com/service/update2/crx` — identical to the Chrome entry |
+
+Deliver it the same way as the Chrome profile: a Custom configuration profile in Intune, or **Application & Custom Settings** in Jamf. It has no effect on Macs without Aside, so you can scope it to the same device group as the other browser profiles. Aside on Windows is not yet covered by the deployment payload.
 
 ---
 

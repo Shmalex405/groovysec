@@ -17,7 +17,7 @@ Whiteout does not install itself into your tenant. Deployment is three artifacts
 
 1. **The app** — you upload the Whiteout Desktop Guard installer to Intune as an app and assign it, exactly like any other Win32 or macOS app.
 2. **The configuration payload** — Whiteout generates this. It carries a per-device enrollment credential so each device signs in as the right person without a prompt.
-3. **The browser extension policies** — separate configuration profiles that force-install the Whiteout extension in Chrome, Edge and Firefox.
+3. **The browser extension policies** — separate configuration profiles that force-install the Whiteout extension in Chrome, Edge and Firefox, plus Aside on macOS.
 
 All three are required. With only the app, Desktop Guard installs but every user gets a sign-in prompt. With only the payload, nothing is installed to configure. Skip the extension policies and Desktop Guard enrolls silently while the browsers stay uncovered.
 
@@ -150,6 +150,7 @@ Two things to know before you skip this step:
 
 - **Without the browser profiles, the extension does not install.** Desktop Guard will enroll silently and the browsers will have no Whiteout coverage at all.
 - **Firefox on Windows requires Mozilla's ADMX templates** ingested into Intune first (**Devices** > **Configuration** > **Import ADMX**). Without them, the Firefox Windows entry cannot apply.
+- **Aside has its own macOS entry.** Aside is a Chromium-based AI browser that reads policy from its own preference domain, `at.studio.AsideBrowser`, so the Chrome profile does not reach it. Its entry carries the same Chrome Web Store extension as Chrome's. Upload it like the other macOS entries; it has no effect on Macs without Aside.
 
 > **Automating this for a large fleet.** Intune assigns one configuration profile to one group, so a per-device credential means one profile and one device group per device. Doing that by hand is impractical beyond a pilot. Whiteout ships a fanout tool that creates them through Microsoft Graph — including the browser profiles above, when you point it at a device group — and it needs two permissions beyond the three in Step 3: `DeviceManagementApps.ReadWrite.All` and `Group.ReadWrite.All`. Ask your Whiteout contact for it — it is not required for a pilot of a few devices. Full usage is in the [Zero-Touch MDM Deployment guide](../deployment/zero-touch-mdm.md#step-3-fan-out-the-per-device-profiles).
 >
