@@ -22,7 +22,7 @@ MSI packages are available for each Windows application:
 ## Prerequisites
 
 Before you begin, ensure you have:
-- The MSI package(s) for the applications you're deploying
+- The MSI package(s) for the applications you're deploying. Download the Desktop Guard and Whiteout AI desktop app MSIs from **Coverage → Enrollment → Install** in the admin app
 - A distribution mechanism: **Microsoft Intune**, **Group Policy**, or any tool that can run `msiexec` in the user's context
 - Outbound access from endpoints to `https://updates.groovysec.com` (the auto-update feed)
 

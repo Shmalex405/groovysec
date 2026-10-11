@@ -4,6 +4,15 @@ Welcome to the Whiteout AI administrator documentation. This guide will help you
 
 ## Table of Contents
 
+### Getting Started
+
+New to Whiteout AI? Start with the walkthrough. It takes you from a new tenant to a governed pilot group, with or without SSO and an MDM.
+
+| Guide | Description |
+|-------|-------------|
+| [Onboarding Walkthrough](./onboarding/overview.md) | From a new tenant to a governed pilot group, end to end |
+| [Installing Without MDM or SSO](./deployment/install-without-mdm.md) | Invite people by email and have them install and sign in themselves |
+
 ### Data Integrations
 
 Connect your organization's tools to enable AI governance across your data sources. These integrations allow Whiteout AI to scan and protect sensitive information in connected applications.
@@ -74,7 +83,9 @@ Choose how Whiteout AI runs for your organization and roll it out to your device
 |-------|-------------|
 | [Deployment Models](./deployment/overview.md) | SaaS, self-hosted AWS, and air-gapped options compared |
 | [Self-Hosted AWS](./deployment/self-hosted-aws.md) | Run the entire platform in your own AWS account |
+| [Managing a Self-Hosted Deployment](./deployment/self-hosted-operations.md) | Scaling, capacity and updates for a self-hosted deployment |
 | [Zero-Touch MDM](./deployment/zero-touch-mdm.md) | Device-attested, zero-touch endpoint enrollment |
+| [Installing Without MDM or SSO](./deployment/install-without-mdm.md) | Manual installs and email-and-password sign-in |
 | [Windows MSI](./deployment/windows-msi.md) | Enterprise MSI deployment via GPO or Intune |
 
 ### Security & Encryption

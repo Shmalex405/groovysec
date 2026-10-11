@@ -78,6 +78,7 @@ console, then enroll from Whiteout.
 
 Add the Desktop Guard installer to Workspace ONE as you would any other package,
 using Workspace ONE's Apps & Books deployment, and assign it to the devices in scope.
+Download it from **Coverage → Enrollment → Install** in the admin app.
 
 ### 2. Force-install the browser extension
 

@@ -77,6 +77,7 @@ console, then enroll from Whiteout.
 
 Add the Desktop Guard installer to Mosyle as you would any other package,
 using Mosyle's application management, and assign it to the devices in scope.
+Download the macOS `.dmg` from **Coverage → Enrollment → Install** in the admin app.
 
 ### 2. Force-install the browser extension
 

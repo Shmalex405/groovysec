@@ -86,6 +86,7 @@ console, then enroll from Whiteout.
 
 Add the Desktop Guard installer to Kandji as you would any other package,
 using Kandji's Custom Apps or Auto Apps library, and assign it to the devices in scope.
+Download the macOS `.dmg` from **Coverage → Enrollment → Install** in the admin app.
 
 ### 2. Force-install the browser extension
 
