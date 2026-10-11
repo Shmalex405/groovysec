@@ -55,7 +55,7 @@ What the card says, by reason (Desktop Guard wording):
 
 | Reason | Message | What to do |
 |--------|---------|------------|
-| Sign-in expired | Your Whiteout sign-in has expired, so this message wasn't checked. It's been recorded for your admin. | To turn protection back on, sign in: click the Whiteout icon in the menu bar (Windows: system tray) and choose **Sign In with SSO**. |
+| Sign-in expired | Your Whiteout sign-in has expired, so this message wasn't checked. It's been recorded for your admin. | To turn protection back on, sign in: click the Whiteout icon in the menu bar and choose **Sign In**. (On Windows the card says *system tray* instead of *menu bar*.) |
 | Not signed in | You're not signed in to Whiteout, so this message wasn't checked. It's been recorded for your admin. | Sign in to Whiteout to turn protection back on. |
 | Whiteout service problem | Whiteout is having a problem on its end, so this message wasn't checked. It's been recorded for your admin. | Nothing to do. Protection turns back on automatically. |
 | Offline | Whiteout can't reach its server, so this message wasn't checked. It will be recorded for your admin when you're back online. | Check your internet or VPN connection. |
@@ -75,7 +75,7 @@ The card gives the same directions as the table above and has a **Sign in** butt
 
 While Whiteout is unavailable, the Desktop Guard menu bar or system tray icon and the VS Code and JetBrains status bars show the state instead of a generic error:
 
-- **Not protected: sign-in expired**. For Desktop Guard, **Sign In with SSO** is the first item in its menu.
+- **Not protected: sign-in expired**. For Desktop Guard, **Sign In…** is the first item in its menu.
 - **Not protected: not signed in**
 - **Not protected: Whiteout service issue (retrying)**
 - **Not protected: offline**
@@ -87,7 +87,7 @@ The browser extension's toolbar popup shows a shorter badge, such as **Not prote
 
 | Surface | During an outage |
 |---------|------------------|
-| **Desktop Guard** (macOS and Windows) | The card appears next to the AI app. The menu bar or tray icon shows the status, and its menu offers **Sign In with SSO**. |
+| **Desktop Guard** (macOS and Windows) | The card appears next to the AI app. The menu bar or tray icon shows the status, and its menu offers **Sign In…**, which goes to your identity provider or, without SSO, to an email-and-password sign-in. |
 | **Browser extension** | The card appears on the AI site. The toolbar popup shows the status and, for sign-in problems, the sign-in form. |
 | **Coding agents** (Claude Code, Codex, Cursor) | Prompts go through at once. The Whiteout defender hooks add a one-time note to the agent session, telling the user to sign in from the Whiteout menu bar or tray icon, or the VS Code status bar. With **Fail closed**, the prompt is stopped with the **Message not sent** explanation. |
 | **VS Code extension** | The status bar shows the status. One notification per outage, with a **Sign In** button for sign-in problems. |
@@ -155,7 +155,7 @@ To be told when devices recover as well, create a rule for **Device checks resto
 
 | Client | Version |
 |--------|---------|
-| Desktop Guard (macOS and Windows) | 1.8.84 or later |
+| Desktop Guard (macOS and Windows) | 1.8.84 or later (1.8.86 or later for the **Sign In…** wording) |
 | Browser extension (Chrome, Edge, Firefox, Safari) | 1.11.0 or later |
 | VS Code extension | 1.23.0 or later |
 | JetBrains plugin | 1.7.0 or later |
@@ -168,7 +168,7 @@ Older versions don't record messages sent during an outage, and they can make us
 ## Troubleshooting
 
 **A user keeps seeing "sign-in expired".**
-Ask them to choose **Sign in** on the card, or **Sign In with SSO** from the Whiteout menu bar or tray icon. In the browser, they click the Whiteout extension icon and sign in. If it comes back soon after they sign in, contact support@groovysec.com.
+Ask them to choose **Sign in** on the card, or **Sign In…** from the Whiteout menu bar or tray icon. In the browser, they click the Whiteout extension icon and sign in. If it comes back soon after they sign in, contact support@groovysec.com.
 
 **Many devices show "Whiteout service problem" at the same time.**
 The problem is on Whiteout's side, and users don't need to do anything. Messages keep flowing (with **Fail open**) and are checked once the service recovers. If it lasts more than a few minutes, contact support@groovysec.com.
