@@ -88,6 +88,13 @@ Choose how Whiteout AI runs for your organization and roll it out to your device
 | [Installing Without MDM or SSO](./deployment/install-without-mdm.md) | Manual installs and email-and-password sign-in |
 | [Windows MSI](./deployment/windows-msi.md) | Enterprise MSI deployment via GPO or Intune |
 
+### Governance
+
+| Guide | Description |
+|-------|-------------|
+| [Audit-Only Mode](./governance/audit-only-mode.md) | Full visibility into AI use without blocking anything |
+| [When Whiteout Is Unavailable](./governance/when-whiteout-is-unavailable.md) | What users see and what admins get when Whiteout can't check a message |
+
 ### Security & Encryption
 
 | Guide | Description |
