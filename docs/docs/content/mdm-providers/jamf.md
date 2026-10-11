@@ -102,7 +102,7 @@ Whiteout validates the credentials against Jamf before saving, so a failure here
 ### Step 5: Deploy the Desktop Guard package
 
 1. Jamf Pro > **Computers** > **Policies** > **New**
-2. Under **Packages**, add the Whiteout Desktop Guard installer package
+2. Under **Packages**, add the Whiteout Desktop Guard installer (a `.dmg`). Download it from **Coverage → Enrollment → Install** in the admin app
 3. Set **Scope** to the group of Macs you're rolling out to
 4. Set **Trigger** to Recurring Check-in, or Self Service for a pilot
 5. Save, and confirm the install reaches a few pilot Macs before continuing

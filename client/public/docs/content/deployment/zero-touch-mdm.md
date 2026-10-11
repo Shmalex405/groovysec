@@ -22,7 +22,7 @@ Before you begin, ensure you have:
 - **SSO / identity provider connected** — see the SSO provider guides (e.g. [Okta](./sso-providers/okta.md), [Microsoft Entra ID](./sso-providers/microsoft-entra-id.md))
 - **Whiteout AI Admin** privileges
 - Devices enrolled in your MDM
-- The Desktop Guard installer packages for your platforms (macOS `.pkg`, Windows `.exe` or `.msi` — see [Windows MSI Enterprise Deployment](./deployment/windows-msi.md))
+- The Desktop Guard installer packages for your platforms (macOS `.dmg`, Windows `.exe` or `.msi` — see [Windows MSI Enterprise Deployment](./deployment/windows-msi.md)). Download them from **Coverage → Enrollment → Install** in the admin app
 
 ---
 
@@ -135,8 +135,8 @@ curl ... -d '{"replace_existing": true}'
 The installer is separate from the configuration payload — Intune treats them as two different artifacts.
 
 1. In the [Intune admin center](https://intune.microsoft.com), go to **Apps** > **All apps** > **Add**
-2. App type: **Windows app (Win32)** for Windows, or the macOS app type for macOS
-3. Upload `Whiteout.DesktopGuard-Setup-<version>.exe` (Windows) or `Whiteout-Desktop-Guard.pkg` (macOS)
+2. App type: **Windows app (Win32)** for Windows, or **macOS app (DMG)** for macOS
+3. Upload `Whiteout.DesktopGuard-Setup-<version>.exe` (Windows) or the Desktop Guard `.dmg` (macOS), both from **Coverage → Enrollment → Install** in the admin app
 4. Under **Assignments** > **Required**, assign to the device group you'll use for the rollout (e.g. "Whiteout Pilot Group")
 5. Wait for the install to push to a few pilot devices and confirm Desktop Guard appears in their tray
 
@@ -195,7 +195,7 @@ Pick a pilot device. Within roughly 10 minutes of the next Intune check-in cycle
 ### Step 1: Upload the Desktop Guard installer as a Jamf policy
 
 1. In Jamf Pro, go to **Computers** > **Policies** > **New**
-2. Under **Packages**, upload `Whiteout-Desktop-Guard.pkg`
+2. Under **Packages**, upload the Desktop Guard `.dmg` from **Coverage → Enrollment → Install** in the admin app
 3. **Scope**: the Smart Group of Macs you'll target
 4. **Trigger**: Recurring Check-in (or Self Service for a pilot)
 5. Save and let it deploy to a few pilot Macs

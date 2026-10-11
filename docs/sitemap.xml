@@ -112,10 +112,16 @@
     <loc>https://groovysec.com/docs/admin-guides/custom-ai-apps/zero-code-coverage</loc>
   </url>
   <url>
+    <loc>https://groovysec.com/docs/admin-guides/deployment/install-without-mdm</loc>
+  </url>
+  <url>
     <loc>https://groovysec.com/docs/admin-guides/deployment/overview</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/deployment/self-hosted-aws</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/deployment/self-hosted-operations</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/deployment/windows-msi</loc>
@@ -134,6 +140,9 @@
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/governance/audit-only-mode</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/governance/when-whiteout-is-unavailable</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/infrastructure/agent-quickstart</loc>
@@ -212,6 +221,9 @@
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/mdm-providers/vmware-workspace-one</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/onboarding/overview</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/security/byok-terraform-module</loc>

@@ -14,6 +14,7 @@ export const navigation: NavSection[] = [
     title: 'Getting Started',
     items: [
       { title: 'Overview', href: '/admin-guides/overview' },
+      { title: 'Onboarding Walkthrough', href: '/admin-guides/onboarding/overview' },
     ],
   },
   {
@@ -21,7 +22,9 @@ export const navigation: NavSection[] = [
     items: [
       { title: 'Deployment Models', href: '/admin-guides/deployment/overview' },
       { title: 'Self-Hosted AWS', href: '/admin-guides/deployment/self-hosted-aws' },
+      { title: 'Managing a Self-Hosted Deployment', href: '/admin-guides/deployment/self-hosted-operations' },
       { title: 'Zero-Touch MDM', href: '/admin-guides/deployment/zero-touch-mdm' },
+      { title: 'Installing Without MDM or SSO', href: '/admin-guides/deployment/install-without-mdm' },
       { title: 'Windows MSI', href: '/admin-guides/deployment/windows-msi' },
     ],
   },
@@ -103,6 +106,7 @@ export const navigation: NavSection[] = [
     title: 'Governance',
     items: [
       { title: 'Audit-Only Mode', href: '/admin-guides/governance/audit-only-mode' },
+      { title: 'When Whiteout Is Unavailable', href: '/admin-guides/governance/when-whiteout-is-unavailable' },
     ],
   },
   {

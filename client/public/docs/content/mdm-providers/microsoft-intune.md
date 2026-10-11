@@ -109,8 +109,8 @@ Whiteout validates the credentials against Microsoft Graph before saving, so a f
 This is separate from the Whiteout configuration payload, and it comes first.
 
 1. Intune admin center > **Apps** > **All apps** > **Add**
-2. Choose the app type: **Windows app (Win32)** for Windows, or **macOS app (DMG/PKG)** for macOS
-3. Upload the Desktop Guard installer for that platform
+2. Choose the app type: **Windows app (Win32)** for Windows, or **macOS app (DMG)** for macOS
+3. Upload the Desktop Guard installer for that platform: the `.exe` or `.msi` for Windows, the `.dmg` for macOS. Download it from **Coverage → Enrollment → Install** in the admin app
 4. Under **Assignments**, add the app as **Required** for the device group you'll use for the rollout
 5. Confirm the install reaches a few pilot devices before continuing
 

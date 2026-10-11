@@ -18,11 +18,14 @@ MSI packages are available for each Windows application:
 | Whiteout AI (main desktop app) | `WhiteoutAI-<version>-x64.msi` |
 | Whiteout AI bundled installer | `WhiteoutAI-Bundled-<version>-x64.msi` |
 | Whiteout AI Desktop Guard | `Whiteout.DesktopGuard-<version>-x64.msi` |
+| Desktop Guard sensor service (per-machine) | `Whiteout.DesktopGuard.SensorService-<version>-x64.msi` |
+
+The Desktop Guard sensor service is the one exception to "per-user": it installs per-machine. See [The Desktop Guard sensor service](#the-desktop-guard-sensor-service).
 
 ## Prerequisites
 
 Before you begin, ensure you have:
-- The MSI package(s) for the applications you're deploying
+- The MSI package(s) for the applications you're deploying. Download the Desktop Guard and Whiteout AI desktop app MSIs from **Coverage → Enrollment → Install** in the admin app
 - A distribution mechanism: **Microsoft Intune**, **Group Policy**, or any tool that can run `msiexec` in the user's context
 - Outbound access from endpoints to `https://updates.groovysec.com` (the auto-update feed)
 
@@ -101,6 +104,28 @@ The Desktop Guard MSI mirrors the NSIS installer's per-user layout exactly:
 - Pre-creates `%ProgramData%\WhiteoutAI` for MDM enrollment data
 - Force-closes a running instance before an upgrade
 - Self-updates in place via its built-in updater — the same feed as the EXE
+
+The per-user Desktop Guard MSI does not include the sensor service. Deploy that separately, below.
+
+## The Desktop Guard sensor service
+
+Desktop Guard's AI sensor sees which AI services apps on the device connect to (connection details only, never content). It runs as a Windows service under the SYSTEM account, so it can't live in the per-user Desktop Guard install. It ships as its own **per-machine** MSI, `Whiteout.DesktopGuard.SensorService-<version>-x64.msi`. Download it from the **Desktop Guard sensor service** card on **Coverage → Enrollment → Install** in the admin app.
+
+| | Desktop Guard MSI | Sensor service MSI |
+|---|---|---|
+| Install scope | Per-user | Per-machine |
+| Install context | The user's context | SYSTEM, or an elevated context |
+| Installs to | `%LocalAppData%\Programs\Whiteout Desktop Guard\` | `%ProgramFiles%\Whiteout\Sensor Service\` |
+
+**With an MDM or GPO**, deploy both to the same devices: the Desktop Guard MSI in the user's context, and the sensor service MSI in SYSTEM context. In Intune, add the sensor service as a separate **Windows app (Win32)** with install behavior **System**:
+
+```powershell
+msiexec /i "Whiteout.DesktopGuard.SensorService-<version>-x64.msi" /qn /norestart
+```
+
+The service keeps itself on the same version as Desktop Guard, so you don't need to redeploy it for each release. For an Intune detection rule, the MSI writes `HKLM\SOFTWARE\Whiteout\Sensor Service` (`InstallDir`, `Version`).
+
+**Devices without an MDM don't need this package.** After someone signs in, Desktop Guard offers to set the service up itself, and Windows asks for administrator permission once. See [Installing Without MDM or SSO](./deployment/install-without-mdm.md#the-whiteout-ai-sensor-prompt).
 
 ---
 
