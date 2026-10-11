@@ -232,6 +232,16 @@ password. In the user list, each person shows **invited** until they finish and
 person shows **expired**. Tick them and click **Re-invite Selected** to send a
 fresh one.
 
+Invite people at their work address, on your organization's domain: Desktop
+Guard finds a person's organization from the domain of the address they sign
+in with.
+
+**Then put them in a group.** People you invite aren't in any group, and a
+person's group decides which policies apply to them. Once they have created
+their account, go to **Governance → Groups**, open the group, tick them under
+**All Users** and click **Add to Group**. Protection starts automatically once
+they're in a group; they don't need to sign in again.
+
 > **Invite people at the address your MDM knows them by.** If you are using an
 > MDM, step 4 matches devices to people by email address. Without an identity
 > provider there are no alias addresses to fall back on, so the address you
@@ -241,17 +251,19 @@ fresh one.
 
 ### What the emails tell people about installing
 
-Invitation and reminder emails, and the **You're all set!** page people see
-after creating their account, follow one setting: **Coverage → Enrollment →
-Settings → How Whiteout gets installed**.
+Invitation, reminder and re-activation emails, and the **You're all set!**
+page people see after creating their account, follow one setting:
+**Coverage → Enrollment → Settings → How Whiteout gets installed**.
 
 | Option | What people are told |
 |---|---|
-| **Automatic (recommended)** | That IT will install Whiteout when you have an MDM connected; otherwise, how to install it themselves |
-| **IT installs it** | To contact IT. Use this when you deploy everything yourselves, through an MDM or otherwise |
-| **Users install it themselves** | Install links for each client and how to sign in |
+| **Automatic (recommended)** | As **IT installs it** when an MDM integration is switched on and has synced at least once; otherwise as **Users install it themselves**. The option shows which applies right now |
+| **IT installs it** | That your IT team installs Whiteout, and to contact them if it isn't installed yet. Use this when you deploy everything yourselves, through an MDM or otherwise |
+| **Users install it themselves** | Install links for each client, and how to sign in: with your company account if you have SSO, otherwise with their email address and the password they set |
 
-Set it before you invite anyone, so the first email says the right thing.
+Set it before you invite anyone, so the first email says the right thing. The
+**Coverage → Enrollment → Install** tab also shows the current choice, with a
+**Change in Settings** button.
 
 ---
 
@@ -325,8 +337,11 @@ to a device. Your IT team deploys Desktop Guard through your MDM's own app
 deployment and scopes it however they normally scope software.
 
 Get the Desktop Guard installer for your MDM from **Coverage → Enrollment →
-Install** in the admin app: a `.dmg` for macOS, and a `.exe` or `.msi` for
-Windows. The same tab has the store links for the browser and IDE extensions.
+Install** in the admin app: a `.dmg` for macOS (Apple silicon), and a `.exe` or
+`.msi` for Windows. On Windows, also deploy the per-machine **Desktop Guard
+sensor service** `.msi` from the same tab, in SYSTEM context; see
+[Windows MSI](./deployment/windows-msi.md#the-desktop-guard-sensor-service).
+The same tab has the store links for the browser and IDE extensions.
 
 While you are there, set **Coverage → Enrollment → Settings → How Whiteout gets
 installed** to **Automatic (recommended)** or **IT installs it**, so invitation
@@ -412,7 +427,7 @@ If your organisation runs **WDAC** or **AppLocker**, do not depend on
 reputation at all. Create a **publisher rule** instead. It is deterministic: it
 matches on the signing identity rather than on any particular file, so it
 survives every version bump, needs no waiting period, and covers every Whiteout
-Windows binary (Desktop Guard, its ETW service, the desktop app and the
+Windows binary (Desktop Guard, its sensor service, the desktop app and the
 bundled installer) because all of them are signed under one identity.
 
 Our signing subject is:
