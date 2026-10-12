@@ -12,7 +12,7 @@ Only three narrow interactions cross the account boundary, all read-only or cryp
 
 - **Container image pull** — your deployment pulls the Whiteout AI backend image from Groovy Security's private container registry using a read-only, cross-account pull policy scoped to your AWS account.
 - **License validation** — your deployment sends only its license key and receives back a signed token. A cached token allows continued offline validation if the license service is briefly unreachable.
-- **Client discovery** — Whiteout AI's desktop app, browser extension, and IDE extensions look up which backend serves your users based on their email domain. The central service stores only that domain-to-URL mapping — never user records, passwords, or session data.
+- **Client discovery** — Whiteout AI's desktop app, browser extension, and IDE extensions look up which backend serves your users based on their email domain. The central service stores only that domain-to-address mapping — never user records, passwords, or session data. See [Your server address](#your-server-address).
 
 ---
 
@@ -51,7 +51,7 @@ Before deploying, make sure you have:
 | **AWS provider** | `~> 5.55` |
 | **AWS CLI** | Version 2 |
 | **GPU vCPU quota** | See below — request this early |
-| **Route53 hosted zone** | A domain (or subdomain) you control, hosted in Route53 |
+| **Route53 hosted zone** | A public hosted zone in your AWS account that holds your server's hostname: your domain's existing zone, or a zone for just that hostname delegated from your DNS. See [Using your own domain](#using-your-own-domain) |
 | **Transactional email account** | A [Resend](https://resend.com) account with a verified sending domain — your deployment sends its own invites, password resets, and MFA emails; email never touches Groovy Security's infrastructure |
 | **License key** | Issued by Groovy Security with your deployment package |
 
@@ -75,6 +75,53 @@ At a high level, the licensed deployment process is:
 6. Verify health, sign in, and onboard users manually or via SSO/SCIM
 
 The full step-by-step guide covers each of these with exact commands, verification checks, and troubleshooting.
+
+---
+
+## Your Server Address
+
+Your deployment's API has one hostname, set by the Terraform variable `api_domain`. Its address is `https://<api_domain>`, and that's the address every Whiteout app connects to. After you apply, `terraform output -raw api_url` prints it.
+
+### Using your own domain
+
+`api_domain` can be any fully qualified hostname in a DNS zone you control, such as `whiteout.yourcompany.com`. You can also use the Groovy-provided name, `<your-slug>.api.whiteout.groovysec.com`. Agree which one with your account manager before you deploy, because Groovy Security registers exactly that address for discovery.
+
+| Option | `api_domain` | Route53 zone (`route53_hosted_zone_id`) |
+|--------|--------------|------------------------------------------|
+| **Your own domain** | Any hostname you control, for example `whiteout.yourcompany.com` | A public zone in your deployment account that holds the name: your domain's existing zone if it's in Route53 in that account, or a new zone for exactly that hostname, delegated from your DNS provider with its four NS records |
+| **Groovy-provided name** | `<your-slug>.api.whiteout.groovysec.com` | Your account manager gives you the slug and tells you which zone to use |
+
+Either way, the module issues the TLS certificate (ACM, validated by DNS in that zone) and creates the record that points `api_domain` at your load balancer. Write `api_domain` as a bare, lowercase hostname: no `https://`, path, port or trailing dot. Nothing changes in Groovy Security's DNS.
+
+> **`api_root_domain` is legacy.** Leave it unset. Your deployment now advertises `https://<api_domain>` as its own address. If you set `api_root_domain` on an earlier release, leaving it set is harmless.
+
+### How the apps find your server
+
+Groovy Security registers your email domains and your server address in central discovery for you as part of onboarding. When someone signs in to a Whiteout app with their work email, the app asks central discovery where their organization's server is and connects to it. There's no per-device setup, with or without an MDM.
+
+- **The registered address must match `api_domain`.** If you change `api_domain` later, apply the change and tell Groovy Security, so the registration is updated too.
+- **List every email domain your people sign in with**, such as a subsidiary's or a country domain. Domains are added by Groovy Security, not from the admin app, so that no organization can claim another company's domain.
+- **Your deployment knows its own organization's domain.** On current releases it's set from the `email_domain` variable when your first admin is created.
+
+To check it, from any computer:
+
+```bash
+# Your server identifies itself and reports its own address
+curl -fsS https://whiteout.yourcompany.com/public/server-info
+# {"product":"whiteout-ai","api_base":"https://whiteout.yourcompany.com"}
+
+# Central discovery sends your people to your server
+curl -fsS "https://api.whiteout.groovysec.com/public/org-lookup?email=someone@yourcompany.com"
+# Expect "api_base": "https://whiteout.yourcompany.com"
+
+# Your server recognizes them too
+curl -fsS "https://whiteout.yourcompany.com/public/org-lookup?email=someone@yourcompany.com"
+# Expect "api_base": "https://whiteout.yourcompany.com"
+```
+
+A `404` with `{"detail":"Organization not found"}` from central discovery means that email domain isn't registered yet; contact Groovy Security.
+
+Some cases need the apps pointed at your server directly: an email domain that isn't registered yet, a network that can't reach central discovery (an air-gapped deployment, for example), or testing a second server. For those, and for pinning the address with your MDM, see [Pointing Apps at Your Server](./deployment/pointing-apps-at-your-server.md).
 
 ---
 

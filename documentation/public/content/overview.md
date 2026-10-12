@@ -83,6 +83,7 @@ Choose how Whiteout AI runs for your organization and roll it out to your device
 |-------|-------------|
 | [Deployment Models](./deployment/overview.md) | SaaS, self-hosted AWS, and air-gapped options compared |
 | [Self-Hosted AWS](./deployment/self-hosted-aws.md) | Run the entire platform in your own AWS account |
+| [Pointing Apps at Your Server](./deployment/pointing-apps-at-your-server.md) | Connect the Whiteout apps to your self-hosted server: MDM, setup link, or in each app |
 | [Managing a Self-Hosted Deployment](./deployment/self-hosted-operations.md) | Scaling, capacity and updates for a self-hosted deployment |
 | [Zero-Touch MDM](./deployment/zero-touch-mdm.md) | Device-attested, zero-touch endpoint enrollment |
 | [Installing Without MDM or SSO](./deployment/install-without-mdm.md) | Manual installs and email-and-password sign-in |

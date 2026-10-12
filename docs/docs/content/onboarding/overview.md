@@ -174,6 +174,11 @@ you connected SSO in step 2.
 Only those people become Whiteout users. Everyone else stays in your directory,
 able to sign in later, and is not governed until you say so.
 
+They join your **group for new users** (set at the top of **Governance →
+Groups**) unless one of your identity-provider group mappings puts them in a
+different group. The same goes for everyone who arrives later by auto-sync,
+SCIM or their first single sign-on, so nobody is signed in without policies.
+
 > **Do not use "Sync entire directory" for a pilot.** It provisions your whole
 > directory *and removes any Whiteout user who is no longer in it*. That is the
 > right tool for steady-state operation once you are rolling out broadly; it is
@@ -220,27 +225,39 @@ Pilots usually start in the second and move to the first.
 ### Without SSO: invite people by email
 
 1. Go to **Governance → Groups** and open the **Users** tab.
-2. Click **Invite Single**, enter the person's email address and click
-   **Send Invite**. For a list, use **Bulk Invite (CSV)** instead.
-3. Each person gets an email, **You're invited to join Whiteout AI**, with a
-   **Complete Setup** button. It opens a page where they choose a password (at
-   least 12 characters) and click **Create account**.
+2. Click **Invite Single** and enter the person's email address. For a list,
+   click **Bulk Invite (CSV)** and choose the file instead.
+3. Choose their **Group**. It starts on your group for new users; pick another
+   group, or **No group** if you'll place them yourself. Click **Send invite**
+   (or **Send *n* invites**).
+4. Each person gets an email, **You're invited to join Whiteout AI**, inviting
+   them to join your organization, with a **Complete Setup** button. It opens
+   a page where they choose a password (at least 12 characters) and click
+   **Create account**.
 
 From then on they sign in to every Whiteout client with that email address and
 password. In the user list, each person shows **invited** until they finish and
 **registered** after. An invitation is valid for 7 days; if it lapses the
-person shows **expired**. Tick them and click **Re-invite Selected** to send a
-fresh one.
+person shows **expired**. Tick them and click **Re-invite Selected**: they get
+the same link again, working for another 7 days.
 
 Invite people at their work address, on your organization's domain: Desktop
 Guard finds a person's organization from the domain of the address they sign
 in with.
 
-**Then put them in a group.** People you invite aren't in any group, and a
-person's group decides which policies apply to them. Once they have created
-their account, go to **Governance → Groups**, open the group, tick them under
-**All Users** and click **Add to Group**. Protection starts automatically once
-they're in a group; they don't need to sign in again.
+**Which group they join.** A person's group decides which policies apply to
+them. People join the group you chose when you invited them as soon as they
+create their account, so protection starts from their first sign-in. To change
+it before they accept, click their email address in the **Users** list, pick a
+**Group** and click **Save Changes**, or open a group and use **Add to Group**.
+Their existing invite then joins that group; they don't get a second email.
+
+Everyone who joins any other way (single sign-on, directory sync or SCIM) lands
+in your **group for new users**, set at the top of **Governance → Groups**,
+unless an identity-provider group mapping puts them somewhere else. If you set
+it to **None — I'll assign people myself**, new people won't be in any group,
+so no policies apply to them until you add them to one. The Groups page shows
+how many people aren't in any group, with a **Show them** link.
 
 > **Invite people at the address your MDM knows them by.** If you are using an
 > MDM, step 4 matches devices to people by email address. Without an identity
@@ -264,6 +281,10 @@ page people see after creating their account, follow one setting:
 Set it before you invite anyone, so the first email says the right thing. The
 **Coverage → Enrollment → Install** tab also shows the current choice, with a
 **Change in Settings** button.
+
+On a self-hosted deployment, these emails also tell people how to connect
+their Whiteout apps to your server, with a link to your server's setup page.
+See [Pointing Apps at Your Server](./deployment/pointing-apps-at-your-server.md).
 
 ---
 
@@ -557,7 +578,8 @@ Settings → Test connection** names the specific permission or scope missing.
 
 **An invited person never received the email, or the link has expired.** Check
 the address in **Governance → Groups → Users**, then tick them and click
-**Re-invite Selected**.
+**Re-invite Selected**. They get the same link again, working for another 7
+days.
 
 **A device shows in your MDM but not in Whiteout.** Click **Sync Now** on the
 integration row. If it still does not appear, the device may not be enrolled
