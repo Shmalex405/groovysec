@@ -117,7 +117,7 @@ Your data is encrypted with keys unique to your organization, and access is limi
 
 ## Next Steps
 
-- Deploying into your own AWS account? Start with the [Self-Hosted AWS Deployment guide](./deployment/self-hosted-aws.md).
+- Deploying into your own AWS account? Start with the [Self-Hosted AWS Deployment guide](./deployment/self-hosted-aws.md), then see [Pointing Apps at Your Server](./deployment/pointing-apps-at-your-server.md) for connecting the Whiteout apps to it.
 - Bringing your own encryption keys? See the [BYOK guide](./security/byok.md).
 - Evaluating LAN-Hosted or air-gapped deployment? [Contact us](https://groovysec.com/demo) for scoping.
 

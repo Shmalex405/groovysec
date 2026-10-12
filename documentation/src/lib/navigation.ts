@@ -22,6 +22,7 @@ export const navigation: NavSection[] = [
     items: [
       { title: 'Deployment Models', href: '/admin-guides/deployment/overview' },
       { title: 'Self-Hosted AWS', href: '/admin-guides/deployment/self-hosted-aws' },
+      { title: 'Pointing Apps at Your Server', href: '/admin-guides/deployment/pointing-apps-at-your-server' },
       { title: 'Managing a Self-Hosted Deployment', href: '/admin-guides/deployment/self-hosted-operations' },
       { title: 'Zero-Touch MDM', href: '/admin-guides/deployment/zero-touch-mdm' },
       { title: 'Installing Without MDM or SSO', href: '/admin-guides/deployment/install-without-mdm' },

@@ -56,6 +56,10 @@ sign in with their company account (SSO) instead.
 
 Set it before you invite anyone, so the first email says the right thing.
 
+On a self-hosted deployment, the emails and the **You're all set!** page also
+tell people how to connect their Whiteout apps to your server. See
+[Pointing Apps at Your Server](./deployment/pointing-apps-at-your-server.md).
+
 ---
 
 ## Step 2: Get the installers
@@ -88,7 +92,7 @@ The macOS installers are for Apple silicon Macs only.
 |--------|--------------|
 | **Desktop Guard** | Everyone. It covers the desktop AI apps, installs the coding-agent hooks, and signs the other clients in |
 | **Browser extension** | Everyone, in every browser they use for work |
-| **VS Code or JetBrains extension** | Developers, in the editors they use. Cursor users too, for Cursor's coding-agent hooks |
+| **VS Code or JetBrains extension** | Developers, in the editors they use, including Cursor and Windsurf |
 | **Whiteout AI desktop app** | Admins, who use it for the admin console, and people who use Whiteout's own **Chat**. Re-activation emails also need it on the device |
 
 By default, **Coverage → Enrollment** counts someone as covered when they have
@@ -105,36 +109,43 @@ Groovy Security.
 ### Without SSO: invite people by email
 
 1. Go to **Governance → Groups** and open the **Users** tab.
-2. Click **Invite Single**, enter the person's email address and click
-   **Send Invite**. For a list, use **Bulk Invite (CSV)**.
-3. The person gets an email, **You're invited to join Whiteout AI**, with a
-   **Complete Setup** button. It opens a page where they choose a password (at
-   least 12 characters), accept the terms and click **Create account**.
+2. Click **Invite Single** and enter the person's email address. For a list,
+   click **Bulk Invite (CSV)** and choose the file instead.
+3. Choose their **Group**. It starts on your group for new users; pick another
+   group, or **No group** if you'll place them yourself. Click **Send invite**
+   (or **Send *n* invites**).
+4. Each person gets an email, **You're invited to join Whiteout AI**, inviting
+   them to join your organization, with a **Complete Setup** button. It opens
+   a page where they choose a password (at least 12 characters) and click
+   **Create account**.
 
-That email address and password are what they sign in with, in every Whiteout
-client.
-
-In the user list, each person shows **invited** until they finish and
-**registered** after. An invitation is valid for 7 days. If it lapses, the
-person shows **expired**; tick them and click **Re-invite Selected** to send a
-fresh one.
+From then on they sign in to every Whiteout client with that email address and
+password. In the user list, each person shows **invited** until they finish and
+**registered** after. An invitation is valid for 7 days; if it lapses the
+person shows **expired**. Tick them and click **Re-invite Selected**: they get
+the same link again, working for another 7 days.
 
 > **Invite people at their work address, on your organization's domain.**
 > Desktop Guard finds a person's organization from the domain of the email
-> address they sign in with, and it has to match your organization's domain
-> exactly.
+> address they sign in with, and it has to match one of your organization's
+> domains. To add another domain, such as a subsidiary's, contact Groovy
+> Security.
 
-### Then put them in a group
+### Which group they join
 
-People you invite aren't in any group yet, and a person's group decides which
-policies apply to them. Once they have created their account:
+A person's group decides which policies apply to them. People join the group
+you chose when you invited them as soon as they create their account, so
+protection starts from their first sign-in. To change it before they accept,
+click their email address in the **Users** list, pick a **Group** and click
+**Save Changes**, or open a group and use **Add to Group**. Their existing
+invite then joins that group; they don't get a second email.
 
-1. Go to **Governance → Groups** and open the group they belong in.
-2. Under **All Users**, tick them and click **Add to Group**.
-
-Someone who signs in before they're in a group sees that no policy group is
-assigned yet. Protection starts automatically once you add them to a group;
-they don't need to sign in again.
+Everyone who joins any other way (single sign-on, directory sync or SCIM) lands
+in your **group for new users**, set at the top of **Governance → Groups**,
+unless an identity-provider group mapping puts them somewhere else. If you set
+it to **None — I'll assign people myself**, new people won't be in any group,
+so no policies apply to them until you add them to one. The Groups page shows
+how many people aren't in any group, with a **Show them** link.
 
 ### With SSO
 
@@ -143,6 +154,9 @@ Onboard people from your directory, as in
 Wherever this page says to sign in with an email address and password, they
 choose your identity provider instead. The clients offer it once they know the
 person's email address.
+
+People who arrive through SSO, directory sync or SCIM join your **group for new
+users** unless an identity-provider group mapping puts them in a different one.
 
 ---
 
@@ -177,6 +191,11 @@ If the Control Panel isn't open, or you need to sign in again later, click the
 Whiteout icon in the menu bar and choose **Sign In…**. It goes straight to
 your identity provider when your organization has SSO, and to the Control
 Panel's sign-in when it doesn't.
+
+Someone who signs in before they're in a group sees **No policy group assigned
+yet.** in the Control Panel, and **Status: No policy group assigned yet** in
+the menu bar. Protection starts by itself once you add them to a group; they
+don't need to sign in again.
 
 #### macOS permissions
 
@@ -223,6 +242,11 @@ Desktop Guard doesn't use Screen Recording, Automation or Full Disk Access.
 
 If the Control Panel isn't open, or you need to sign in again later,
 right-click the Whiteout icon in the system tray and choose **Sign In…**.
+
+Someone who signs in before they're in a group sees **No policy group assigned
+yet.** in the Control Panel, and **No policy group assigned yet** in the tray
+icon's menu and tooltip. Protection starts by itself once you add them to a group; they
+don't need to sign in again.
 
 #### The Whiteout AI Sensor prompt
 
@@ -296,14 +320,21 @@ IntelliJ IDEA, PyCharm, WebStorm, GoLand and the other JetBrains IDEs:
 ### Coding agents: Claude Code, Codex and Cursor
 
 Once Desktop Guard is signed in, it installs Whiteout's defender hooks for
-**Claude Code** and **Codex** by itself: straight away on macOS, and within
-about 5 minutes on Windows. It also puts them back if they're removed or
-changed. That covers these agents wherever they run, including from a terminal
-or a JetBrains IDE.
+**Claude Code**, **Codex** and **Cursor** by itself: straight away on macOS,
+and within about 5 minutes on Windows. It also puts them back if they're
+removed or changed. That covers Claude Code and Codex wherever they run,
+including from a terminal or a JetBrains IDE.
 
-For **Cursor**, install the Whiteout extension in Cursor (from Open VSX, as
-above) and run **Whiteout: Install Cursor Defender Hooks** from the Command
-Palette.
+Desktop Guard sets up the Cursor hooks only on computers where Cursor is
+installed. If Cursor is installed later, Desktop Guard registers its hooks
+within about a minute. They go in Cursor's user-level hooks file,
+`~/.cursor/hooks.json`, alongside any hooks the person already has there;
+Desktop Guard adds its own entries and leaves the rest alone. This needs
+Desktop Guard 1.8.87 or later.
+
+On a computer without Desktop Guard, install the Whiteout extension in Cursor
+(from Open VSX, as above) and run **Whiteout: Install Cursor Defender Hooks**
+from the Command Palette.
 
 ### Whiteout AI desktop app
 
@@ -368,11 +399,14 @@ walkthrough.
 
 **Desktop Guard can't find the organization.** The person is probably signing
 in with an address on a different domain, such as a personal address or an
-alias domain. They need their work email on your organization's domain.
+alias domain. They need their work email on your organization's domain. If
+your organization uses more than one email domain, ask Groovy Security to add
+the others.
 
 **The invitation email never arrived, or has expired.** Check the address under
 **Governance → Groups → Users**, tick the person and click
-**Re-invite Selected**.
+**Re-invite Selected**. They get the same link again, working for another 7
+days.
 
 **The browser extension or IDE extension doesn't sign in on its own.** Desktop
 Guard has to be signed in first. If it is, the person may have clicked **Deny**
@@ -381,9 +415,21 @@ that, and it stays that way until an administrator edits
 `~/.whiteout-desktop/approved-clients.json` on that computer. Meanwhile, the
 person can sign in directly in the extension.
 
-**Signed in, but no policy group assigned.** Add the person to a group: see
-[Then put them in a group](#then-put-them-in-a-group). Protection starts
-automatically once they're in one.
+**Signed in, but no policy group assigned.** The person isn't in any group
+(they show a **No group** chip under **Governance → Groups → Users**). Click
+their email address, choose a group under **Add to group** and click
+**Save Changes**, or use **Add to Group** on the group's page. Protection
+starts automatically once they're in one; they don't need to sign in again.
+To stop this happening for new people, set a **group for new users** at the
+top of **Governance → Groups**. See [Which group they join](#which-group-they-join).
+
+**Cursor's agent isn't being checked.** Desktop Guard needs to be version
+1.8.87 or later and signed in, with Cursor installed. If
+`~/.cursor/hooks.json` isn't valid JSON, or isn't in the shape Cursor reads,
+Desktop Guard doesn't change it, and Cursor isn't covered until it's fixed.
+Desktop Guard keeps a copy of the file as `hooks.json.whiteout-bak` next to
+it. Fix or remove the file, and Desktop Guard registers its hooks within about
+a minute.
 
 **On a Mac, nothing is checked in the ChatGPT or Claude desktop app.** Desktop
 Guard doesn't have Accessibility access. Turn on **Whiteout Interceptor** under
