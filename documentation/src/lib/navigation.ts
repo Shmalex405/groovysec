@@ -107,6 +107,7 @@ export const navigation: NavSection[] = [
     items: [
       { title: 'Audit-Only Mode', href: '/admin-guides/governance/audit-only-mode' },
       { title: 'When Whiteout Is Unavailable', href: '/admin-guides/governance/when-whiteout-is-unavailable' },
+      { title: 'Folders in AI Tools', href: '/admin-guides/governance/folders' },
     ],
   },
   {
