@@ -97,7 +97,7 @@ Either way, the module issues the TLS certificate (ACM, validated by DNS in that
 
 ### How the apps find your server
 
-Groovy Security registers your email domains and your server address in central discovery for you (the `register-external` step of client-hosted onboarding). When someone signs in to a Whiteout app with their work email, the app asks central discovery where their organization's server is and connects to it. There's no per-device setup, with or without an MDM.
+Groovy Security registers your email domains and your server address in central discovery for you as part of onboarding. When someone signs in to a Whiteout app with their work email, the app asks central discovery where their organization's server is and connects to it. There's no per-device setup, with or without an MDM.
 
 - **The registered address must match `api_domain`.** If you change `api_domain` later, apply the change and tell Groovy Security, so the registration is updated too.
 - **List every email domain your people sign in with**, such as a subsidiary's or a country domain. Domains are added by Groovy Security, not from the admin app, so that no organization can claim another company's domain.
