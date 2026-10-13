@@ -111,6 +111,19 @@ export const navigation: NavSection[] = [
     ],
   },
   {
+    title: 'AI Footprint',
+    items: [
+      { title: 'Overview', href: '/admin-guides/ai-footprint/overview' },
+      { title: 'Shadow AI Findings', href: '/admin-guides/ai-footprint/shadow-ai' },
+      { title: 'Browser Coverage', href: '/admin-guides/ai-footprint/browser-coverage' },
+      { title: 'Third-Party AI Extensions', href: '/admin-guides/ai-footprint/ai-browser-extensions' },
+      { title: 'Web AI Sites', href: '/admin-guides/ai-footprint/web-ai-sites' },
+      { title: 'Personal and Work Accounts', href: '/admin-guides/ai-footprint/account-types' },
+      { title: 'Network Visibility', href: '/admin-guides/ai-footprint/network-visibility' },
+      { title: 'Importing Network Logs', href: '/admin-guides/ai-footprint/network-logs' },
+    ],
+  },
+  {
     title: 'Compliance Evidence',
     items: [
       { title: 'Overview', href: '/admin-guides/compliance-evidence/overview' },

@@ -95,6 +95,21 @@ Choose how Whiteout AI runs for your organization and roll it out to your device
 | [Audit-Only Mode](./governance/audit-only-mode.md) | Full visibility into AI use without blocking anything |
 | [When Whiteout Is Unavailable](./governance/when-whiteout-is-unavailable.md) | What users see and what admins get when Whiteout can't check a message |
 
+### AI Footprint
+
+Find the AI on your devices and network, including AI no Whiteout surface governs.
+
+| Guide | Description |
+|-------|-------------|
+| [Overview](./ai-footprint/overview.md) | What AI Footprint shows, its tabs, and how to manage findings |
+| [Shadow AI Findings](./ai-footprint/shadow-ai.md) | Installed, running and active shadow AI: severity and what to do |
+| [Browser Coverage](./ai-footprint/browser-coverage.md) | Browser profiles without Whiteout, and how to force-install the extension |
+| [Third-Party AI Extensions](./ai-footprint/ai-browser-extensions.md) | AI extensions such as Grammarly and Sider, and how to block them |
+| [Web AI Sites](./ai-footprint/web-ai-sites.md) | AI websites in use, and what the extension collects |
+| [Personal and Work Accounts](./ai-footprint/account-types.md) | Which kind of account each prompt was sent from |
+| [Network Visibility](./ai-footprint/network-visibility.md) | When Desktop Guard can't see browser AI traffic, and how to fix it |
+| [Importing Network Logs](./ai-footprint/network-logs.md) | Find AI use in Cisco Umbrella, Zscaler and other DNS or proxy logs |
+
 ### Security & Encryption
 
 | Guide | Description |
