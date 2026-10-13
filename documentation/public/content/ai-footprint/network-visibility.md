@@ -2,7 +2,7 @@
 
 Desktop Guard can watch a device's network for traffic to AI services. That traffic is behind **Shadow AI — active** findings, including the per-browser findings in [Browser coverage](./ai-footprint/browser-coverage.md). But some browsers look up website addresses themselves, and some networks send browser traffic through a gateway, and in both cases Desktop Guard can't see which AI sites the browser reaches.
 
-The **Network visibility** card in **Coverage → AI Footprint** shows, per device, whether Desktop Guard can see browser AI traffic, and what to do when it can't.
+The **Network visibility** card in **Coverage → AI Footprint** shows, per device, whether Desktop Guard can see browser AI traffic, and what to do when it can't. It opens as one line; choose **Show what to do** (or **Details**) to see the counts, gateways and policies below.
 
 > **Whiteout only reports this.** It never changes network or browser settings. It doesn't act as a proxy, rewrite DNS, decrypt traffic or capture packets, and it never turns off or works around a secure web gateway. Any change is yours to make, through your MDM.
 

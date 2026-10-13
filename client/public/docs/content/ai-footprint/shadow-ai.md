@@ -83,7 +83,7 @@ Built-in AI (the operating system's own) and embedded AI (inside a signed vendor
 
 **Shadow AI — active** means a device or workload sent traffic to an AI provider, and no Whiteout surface that covers that traffic is live there. It's the strongest signal: data is actually leaving.
 
-The traffic comes from Desktop Guard's network sensor on Windows and from the infrastructure agent. Footprint rows with this traffic show an **active** chip, and the **actively talking out** chip counts them. Imported network logs raise their own findings instead. See [Importing network logs](./ai-footprint/network-logs.md).
+The traffic comes from Desktop Guard's network sensor on Windows and from the infrastructure agent. Rows on the **AI tools** tab with this traffic show an **Active** chip. Imported network logs raise their own findings instead. See [Importing network logs](./ai-footprint/network-logs.md).
 
 Whiteout judges the traffic by the process that sent it:
 
@@ -114,7 +114,7 @@ An **unknown** tool is one no catalog entry names. Whiteout finds it from what i
 - a process that loads an AI engine or model
 - a website that looks like an AI site (see [Web AI sites](./ai-footprint/web-ai-sites.md#unknown-sites))
 
-Unknown tools are shown with an **unknown** chip, and the **Shadow AI (uncatalogued)** type filter lists them.
+Unknown tools are shown with an **Unknown** chip, and the **Shadow AI (uncatalogued)** type filter lists them.
 
 **One weak signal isn't enough.** A hint like an AI-style name can be wrong, so an unknown tool found by one weak signal stays in the inventory and doesn't raise a finding. It becomes a finding when another signal from the same device backs it up, for example AI traffic from that device, or an AI tool or process on it that Whiteout is confident about. SDK dependencies and model files always need that second signal.
 

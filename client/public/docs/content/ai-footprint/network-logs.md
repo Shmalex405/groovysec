@@ -8,12 +8,12 @@ Your DNS and proxy logs see AI use that your endpoints can't show you: people wh
 
 ## Import
 
-1. Go to **Coverage → AI Footprint** and choose **Import network logs**. If the **Network visibility** card lists a gateway, its button (for example **Import Zscaler logs**) opens the same dialog with the format already chosen.
+1. Go to **Coverage → AI Footprint** and choose **Import network logs**. If the **Network visibility** card lists a gateway (under **Show what to do**), its button (for example **Import Zscaler logs**) opens the same dialog with the format already chosen.
 2. Choose the **Log format**.
 3. Choose **Choose file** and pick the log.
 4. Choose **Import**.
 
-When the import finishes, the dialog shows **Rows read**, **AI rows kept**, **AI sites**, **Users matched**, **Unmatched identities** and **Findings opened**, plus the AI tools it found. Choose **View findings** to go to the **Findings** tab. The AI rows appear on the **Egress** tab, with the observer **Cisco Umbrella DNS log**, **Zscaler web log** or **Network log (CSV)**.
+When the import finishes, the dialog shows **Rows read**, **AI rows kept**, **AI sites**, **Users matched**, **Unmatched identities** and **Findings opened**, plus the AI tools it found. Choose **View findings** to go to the **Findings** tab. The AI rows appear on the **Network activity** tab, with the observer **Cisco Umbrella DNS log**, **Zscaler web log** or **Network log (CSV)**.
 
 Only admins can import. Read-only viewers can't.
 
@@ -38,7 +38,7 @@ For **Generic CSV**, Whiteout recognizes common header names, such as `timestamp
 
 ### Import recent logs, regularly
 
-Findings are based on AI traffic from the **last 7 days** in your imported logs. Older rows are kept as evidence on the **Egress** tab but don't open findings. A finding resolves by itself once that person or identity has no AI traffic in the last 7 days of imported logs, so import new logs regularly, for example daily or weekly, to keep findings current.
+Findings are based on AI traffic from the **last 7 days** in your imported logs. Older rows are kept as evidence on the **Network activity** tab but don't open findings. A finding resolves by itself once that person or identity has no AI traffic in the last 7 days of imported logs, so import new logs regularly, for example daily or weekly, to keep findings current.
 
 ---
 
@@ -83,7 +83,7 @@ What happens next depends on the match:
 
 | Identity | Result |
 |---|---|
-| Matched, and the person has a live Whiteout surface on any device | Evidence only, on the **Egress** tab. No finding. |
+| Matched, and the person has a live Whiteout surface on any device | Evidence only, on the **Network activity** tab. No finding. |
 | Matched, with no live Whiteout surface on any device | **AI use with no Whiteout on any device** |
 | Not matched to any user | **AI use by someone we can't match to a user** |
 
@@ -128,7 +128,7 @@ It's often one of these:
 
 The finding resolves by itself once that identity has no AI traffic in the last 7 days of imported logs.
 
-To stop all findings from imported logs, mute **Imported network logs** under **Manage → Muted categories**. The rows stay on the **Egress** tab.
+To stop all findings from imported logs, mute **Imported network logs** under **Manage → Muted categories**. The rows stay on the **Network activity** tab.
 
 ---
 

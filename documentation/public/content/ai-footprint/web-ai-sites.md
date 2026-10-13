@@ -39,7 +39,7 @@ An unknown site is an AI site that isn't one of the catalogued tools above. It's
 - a domain on Whiteout's wider list of AI services, or
 - a domain that looks like an AI site: it's under `.ai`, or a part of its name is *gpt*, *llm* or *chatbot*.
 
-The row shows the site's hostname, with an **unknown** chip and low confidence.
+The row shows the site's hostname, with an **Unknown** chip and low confidence.
 
 **Unknown sites stay in the inventory.** A visit to an unknown site doesn't raise a finding on its own, because a domain name is a weak signal. Many `.ai` domains aren't AI chat tools.
 

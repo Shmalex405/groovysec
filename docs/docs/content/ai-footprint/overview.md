@@ -26,7 +26,7 @@ AI SDK packages and model weight files on disk are scanned only when your organi
 Whiteout keeps a catalog of AI tools: apps, extensions, websites, CLIs, runtimes and AI service hosts.
 
 - A **Known** chip means the catalog recognizes the tool.
-- An **unknown** chip means no catalog entry names it. Whiteout found it from what it looks like or what it does: an AI-style name, an LLM API on a local port, an AI engine or model loaded by a process, or an AI-style website. These are your uncatalogued **shadow AI tools**, counted in the chip at the top of the page.
+- An **Unknown** chip means no catalog entry names it. Whiteout found it from what it looks like or what it does: an AI-style name, an LLM API on a local port, an AI engine or model loaded by a process, or an AI-style website. These are your uncatalogued **shadow AI tools**, counted in the **AI tools found** tile at the top of the page.
 - **Built-in** and **Embedded** AI is the operating system's own AI, or AI inside a signed app from a known vendor. It is expected, governance doesn't apply to it, and it never raises a finding.
 
 A single weak signal about an unknown tool stays in the inventory without raising a finding. See [Unknown tools](./ai-footprint/shadow-ai.md#unknown-tools).
@@ -35,7 +35,7 @@ A single weak signal about an unknown tool stays in the inventory without raisin
 
 A tool is **governed** on a device when a Whiteout surface that covers it is live on that same device. For example, the ChatGPT desktop app is governed where Desktop Guard is running. ChatGPT in a browser is governed where the Whiteout browser extension is running in that browser. Coverage is judged per device: Desktop Guard on someone's laptop doesn't govern the AI on their other computer.
 
-A tool with no covering surface live on the device is **ungoverned**. The **Ungoverned** column counts those devices.
+A tool with no covering surface live on the device is **ungoverned**. The **Not governed** column counts those devices.
 
 ---
 
@@ -43,9 +43,9 @@ A tool with no covering surface live on the device is **ungoverned**. The **Ungo
 
 | Tab | What's on it |
 |---|---|
-| **Footprint** | One row per tool: **Tool**, **Category**, **Provider**, **Devices**, **Ungoverned**, **Last active** and **Last seen**. Click the device count to see every device and user the tool was found on, with the signals behind it and recent prompt activity where Whiteout records it. [Web AI](./ai-footprint/web-ai-sites.md) rows also show which [kinds of account](./ai-footprint/account-types.md) people used. |
+| **AI tools** | One row per tool: **Tool**, **Category**, **Provider**, **Devices**, **Not governed**, **Last active** and **Last seen**. A collapsible **Overview** above the list shows new AI tools per day and how many installs are governed. Click the device count to see every device and user the tool was found on, with the signals behind it and recent prompt activity where Whiteout records it. [Web AI](./ai-footprint/web-ai-sites.md) rows also show which [kinds of account](./ai-footprint/account-types.md) people used. |
 | **Processes** | AI processes the sensor reported, in four views: **Needs attention**, **Named AI**, **Built-in & embedded** and **All**. Filter by platform, or show **Running now only**. Open a process to see its signer, path, AI engines, models, auto-start entries and file hashes. |
-| **Egress** | Hourly records of traffic to AI services: **Provider**, **Destination**, **Observer**, **Process**, **Device / source**, **Hour** and **Flows**. Imported logs appear here too, with the observer **Cisco Umbrella DNS log**, **Zscaler web log** or **Network log (CSV)**. |
+| **Network activity** | Hourly records of traffic to AI services: **Provider**, **Destination**, **Observer**, **Process**, **Device / source**, **Hour** and **Flows**. Imported logs appear here too, with the observer **Cisco Umbrella DNS log**, **Zscaler web log** or **Network log (CSV)**. |
 | **Findings** | Ungoverned AI that needs a decision. See below. |
 | **Catalog** | Tools your organization added to the catalog with **Add to catalog**. |
 
@@ -70,16 +70,16 @@ New findings raise the **Shadow AI detected** notification in **Alerts & Audit â
 
 ## Filters
 
-Above the tabs, chips summarize what needs attention: **unknown AI processes running**, **shadow AI tools (uncatalogued)** and **actively talking out** (tools seen sending AI traffic from an ungoverned source). Click a chip to filter.
+At the top of the page, four tiles summarize your footprint: **AI tools found** (known and unknown), **Not governed**, **Unknown AI running** and **Open findings**. Select a tile to jump to the list behind it.
 
-On the **Footprint** tab you can filter by:
+On the **AI tools** tab, pick a group or person and search by name. Choose **Filters** for the rest:
 
 | Filter | Options |
 |---|---|
 | Group and user | Any group or person in your organization |
 | **Category** | Desktop app, IDE extension, Third-party AI extension, Web AI, Local LLM runtime, CLI, SDK dependency, Model file, MCP server, Custom AI App, AI process |
 | **Provider** | The AI vendor behind the tool |
-| **Governance** | **Governed**, **Partially governed** (ungoverned on some devices), **Ungoverned**, **Not applicable (built-in)** |
+| **Governance** | **Not governed (any device)**, **Governed**, **Partially governed** (ungoverned on some devices), **Ungoverned**, **Not applicable (built-in)** |
 | **Type** | **All AI**, **Shadow AI (uncatalogued)**, **Known catalog**, **Built-in & embedded** |
 | Search | Tool or provider name |
 
@@ -119,7 +119,7 @@ From then on the tool is recognized on every device, and it's listed on the **Ca
 
 ## Network visibility
 
-The **Network visibility** card shows, per device, whether Desktop Guard can see browser AI traffic, and what to do when it can't. See [Network visibility](./ai-footprint/network-visibility.md).
+The **Network visibility** card shows, in one line, how many devices Desktop Guard can see browser AI traffic on. Choose **Show what to do** (or **Details**) for the per-device counts and the fixes. See [Network visibility](./ai-footprint/network-visibility.md).
 
 **Import network logs** brings in Cisco Umbrella, Zscaler or other DNS and proxy logs to find AI use the endpoints can't show you. See [Importing network logs](./ai-footprint/network-logs.md).
 
