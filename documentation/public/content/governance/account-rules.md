@@ -87,13 +87,24 @@ How each kind of account is treated:
 | **Unknown account** (for example ChatGPT Team or Claude Enterprise, where the site shows the plan but not whose workspace it is) | Sent | Sent, recorded as not checked |
 | **Not observable** (the surface can't see the account) | Sent | Sent, recorded as not checked |
 
-So on ChatGPT and Claude, **Work accounts only** stops personal plans and signed-out use, while business-plan accounts go through. See [Personal and work accounts](./ai-footprint/account-types.md) for what each value means.
+So on ChatGPT and Claude, **Work accounts only** stops personal plans and signed-out use, while business-plan accounts go through.
+
+**Microsoft Copilot on the web** now lives at `copilot.com` (`copilot.microsoft.com` redirects there). Both work and personal Microsoft accounts land on it, so Whiteout shows the account there as unknown, and a Copilot account rule records those prompts as not checked rather than blocking them.
+
+See [Personal and work accounts](./ai-footprint/account-types.md) for what each value means.
 
 ### Listing workspaces
 
 **Work accounts in these workspaces** narrows the rule to the workspaces you list. An account in any other workspace counts as not allowed, and raises [Workspace not on your list](#workspace-not-on-your-list).
 
-Few AI apps show which workspace an account belongs to, so today this check applies only rarely. Where Whiteout can't tell the workspace, the prompt goes through and is recorded as not checked. Whiteout never sees a workspace's own ID on these sites. It identifies a workspace by a one-way fingerprint, shown as `account_ref` in a **Workspace not on your list** finding's evidence. To approve a workspace that finding names, add that value to the rule's list.
+Few AI apps show which workspace an account belongs to, so today this check applies only rarely. Where Whiteout can't tell the workspace, the prompt goes through and is recorded as not checked.
+
+Whiteout never sees a workspace's own ID on these sites, so you can't type it in from the app's admin settings. It identifies a workspace by a one-way fingerprint, its **account reference**. The way to list a workspace is from a **Workspace not on your list** finding:
+
+- Open the finding and choose **Allow this workspace**. Whiteout adds it to the app's organization-wide rule, and the finding resolves on the next discovery check.
+- Or copy the finding's account reference (`account_ref` in its evidence) into the **Workspace account reference** field of the rule.
+
+If the organization-wide rule doesn't list workspaces, the finding came from a group's rule. **Allow this workspace** says so rather than changing the rule for everyone else; add the reference in that group's **Accounts** control instead.
 
 ---
 
@@ -139,7 +150,7 @@ It resolves by itself when there have been no such prompts for 7 days.
 **What to do:**
 
 1. **Find out who owns the workspace.**
-2. **If it's yours,** add it to the app's account rule: copy the `account_ref` value from the finding's evidence into the workspace list.
+2. **If it's yours,** choose **Allow this workspace** on the finding. See [Listing workspaces](#listing-workspaces).
 3. **If it isn't,** ask its users to move to your organization's workspace.
 4. **Acknowledge the finding** with a note.
 
@@ -150,6 +161,6 @@ It resolves by itself when there have been no such prompts for 7 days.
 ## Limits
 
 - **The account is client-reported.** It's read on the person's device from what the AI app shows, so a determined person could change it. Account rules fail open: if the check can't run, the prompt goes through. MDM remains the hard control.
-- **Business plans are often unknown.** On ChatGPT and Claude, Team and Enterprise accounts can't yet be confirmed as yours, so they go through rather than being treated as work accounts.
+- **Business plans are often unknown.** On ChatGPT and Claude, Team and Enterprise accounts can't yet be confirmed as yours, so they go through rather than being treated as work accounts. On `copilot.com`, every account shows as unknown.
 - **Desktop apps.** Which desktop apps show the account is still expanding. Where Desktop Guard can't read it, the rule doesn't apply.
 - **IDEs and coding agents** don't report an account, so rules don't apply there.

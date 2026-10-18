@@ -8,7 +8,7 @@ Connect them under **Integrations → Data Integrations → Vendor audit logs**.
 
 | Vendor log | What it shows | Needs |
 |---|---|---|
-| **Microsoft 365 Copilot** | Who used Copilot in Word, Excel, Outlook, Teams and Copilot Chat, and when | Microsoft 365 Copilot licenses, and the Whiteout Microsoft app's admin consent |
+| **Microsoft 365 Copilot** | Who used Copilot in Word, Excel, Outlook, Teams and Copilot Chat, and when | Microsoft 365 Copilot licenses, and an admin consent to Whiteout's read-only Discovery app (or the Whiteout app) |
 | **Google Gemini** | Who used Gemini in Gmail, Docs, Sheets and the other Workspace apps, and when | Google Workspace read access for Whiteout |
 | **Slack** | AI apps added to your Slack workspace | A Slack Enterprise Grid plan |
 
@@ -57,25 +57,28 @@ There's one finding per person and vendor. It resolves by itself when there have
 
 ## Microsoft 365 Copilot
 
-Whiteout reads Copilot interaction records from Microsoft Graph, through the same Whiteout Microsoft app as the [Microsoft 365 connector](./whiteout-ai-connector/microsoft-365-zero-click.md). There's something to read only for people who have Microsoft 365 Copilot licenses.
+Whiteout reads Copilot interaction records from Microsoft Graph, with an app-only consent in your Entra tenant. There's something to read only for people who have Microsoft 365 Copilot licenses.
 
-The permission Whiteout asks for:
+**Which Whiteout app it reads with.** Where your Whiteout server has the read-only **Whiteout Discovery** app, the Copilot log uses it. It's the same read-only app that [detects AI apps people connected](./ai-footprint/connected-ai-apps.md#microsoft-365), and it can read, never change. Otherwise the log uses the **Whiteout** app, the same app as the [Microsoft 365 connector](./whiteout-ai-connector/microsoft-365-zero-click.md). The card says which: *Reads with the read-only Whiteout Discovery app*, or *Reads with the Whiteout app*.
+
+The permissions Whiteout asks for:
 
 | Permission | Type | Why |
 |---|---|---|
 | `AiEnterpriseInteraction.Read.All` | Application | Read the Copilot interaction records for your tenant |
-
-Whiteout also uses `User.Read.All`, which the Microsoft 365 connector already has, to find each Whiteout user in your tenant.
+| `User.Read.All` | Application | Find each Whiteout user in your tenant |
 
 **To connect:**
 
 1. On the **Microsoft 365 Copilot** card, choose **Connect**.
-2. If your tenant's consent to the Whiteout app already includes the Copilot permission, the card connects straight away.
+2. If your tenant's existing consent to that app already includes the Copilot permission, the card connects straight away.
 3. Otherwise Microsoft's admin consent page opens. Sign in as a tenant admin (Global Administrator or Privileged Role Administrator) and approve. Then refresh the card in Whiteout.
 
-**Already consented to the Whiteout app?** Microsoft records the permissions in force when you consented. If you consented before the Copilot permission was added, you need to consent again to add Copilot interaction access. **Connect** takes you through it.
+**Reading with the Whiteout app today?** If the read-only Discovery app is set up on your server, the card offers **Move to the read-only app**. It reconnects the log through the Discovery app, so the Copilot log no longer depends on the Whiteout app's broader consent.
 
-If the card says **Microsoft 365 isn't set up on this Whiteout server yet**, contact Whiteout support. On a self-hosted deployment, your operator sets up the Whiteout Microsoft app first.
+**Already consented?** Microsoft records the permissions in force when you consented. If you consented before the Copilot permission was added, you need to consent again to add Copilot interaction access. **Connect** takes you through it.
+
+If the card says **Microsoft 365 isn't set up on this Whiteout server yet**, contact Whiteout support. On a self-hosted deployment, your operator sets up the Whiteout Microsoft apps first.
 
 See Microsoft's documentation on Microsoft 365 Copilot interaction export for what Microsoft records.
 

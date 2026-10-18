@@ -37,10 +37,10 @@ The same applies to the AI built into other work apps Whiteout already covers, s
 
 ### The new site permission
 
-To check these composers, the extension needs access to the Slack, Notion and Atlassian sites listed above.
+To check these composers, browser extension 1.16.0 needs access to the Slack, Notion and Atlassian sites listed above. The same update also adds `copilot.com`, where Microsoft Copilot on the web now lives (see [Web AI sites](./ai-footprint/web-ai-sites.md#known-sites)).
 
 - **Extension force-installed through MDM:** the browser grants the access silently when the extension updates. Nobody sees a prompt.
-- **Extension installed by the person:** when the extension updates, the browser asks them once to approve the new site access. Until they approve it, the browser can keep the extension turned off or on its previous version, so prompts in that browser may not be checked. Let people know before the update, or force-install the extension through MDM (see [Force-install the extension](./ai-footprint/browser-coverage.md#force-install-the-extension)).
+- **Extension installed by the person:** when the extension updates to 1.16.0, the browser asks them once to approve the new site access. Until they approve it, the browser can keep the extension turned off or on its previous version, so prompts in that browser may not be checked. Let people know before the update, or force-install the extension through MDM (see [Force-install the extension](./ai-footprint/browser-coverage.md#force-install-the-extension)).
 
 The extension uses this access only to find the AI composer and its send button. It doesn't read or collect messages, pages or files.
 
@@ -70,13 +70,19 @@ You have three options:
 
 1. **Allow them**, and allowlist them under **Manage** so they stop raising findings.
 2. **Block them** with your browser's extension policy. See [Block AI extensions with your MDM](./ai-footprint/ai-browser-extensions.md#block-ai-extensions-with-your-mdm).
-3. **Keep them off your sensitive sites** and let people use them everywhere else, with the recipe below.
+3. **Keep them off your sensitive sites** and let people use them everywhere else, with the setting below.
 
 ### Keep AI extensions off sensitive sites
 
-Whiteout's MDM deployment payload has an optional block, **Keep AI extensions off sensitive sites (optional)**. You list the sites, and choose which AI extensions it applies to. By default it covers every third-party AI extension in Whiteout's catalog.
+The **Browser AI policy** setting, under **Integrations → Mobile Device Management (MDM)**, has a section **Keep AI extensions off sensitive sites**. In Chrome and Edge, the AI extensions you choose stop running on the sites you list and keep working everywhere else.
 
-It uses Chrome's and Edge's `ExtensionSettings` policy: for each chosen extension ID, Whiteout writes a `runtime_blocked_hosts` entry with your sites, so the browser keeps that extension off them. The extension keeps working on every other site.
+1. Under **Sensitive sites**, list the sites, one per line: a hostname such as `intranet.example.com`, or a whole domain such as `*.corp.example.com`. Don't include `https://`, a path or a port. You can list up to 100.
+2. By default it applies to every third-party AI extension in Whiteout's catalog. To pick, turn on **Only some AI extensions** and choose them.
+3. Choose **Save**.
+
+From then on, Whiteout adds these entries to every MDM profile and script it generates: Intune, Jamf, Kandji, Mosyle, Workspace ONE and NinjaOne. Nothing changes on devices until you deploy a newly generated profile, and with no sites listed nothing is added.
+
+It uses Chrome's and Edge's `ExtensionSettings` policy: for each chosen extension ID, Whiteout writes a `runtime_blocked_hosts` entry with your sites, so the browser keeps that extension off them.
 
 ```json
 {
@@ -86,31 +92,14 @@ It uses Chrome's and Edge's `ExtensionSettings` policy: for each chosen extensio
 }
 ```
 
-- **Sites** are hostnames, such as `intranet.example.com`, or a whole domain, such as `*.corp.example.com`. Don't include `https://`, a path or a port. Whiteout covers every scheme for each site. You can list up to 100.
-- **Extensions** are catalog keys, such as `grammarly_extension`. The finding's **Tool** column shows the key.
 - **Chrome and Edge only.** Firefox's extension policy has no per-site setting like this, so Firefox isn't covered.
-- **`ExtensionSettings` is a single policy per browser.** If you already manage it for Chrome or Edge, merge these entries into yours rather than deploying a second profile, or the two will conflict. The NinjaOne script merges for you.
+- **`ExtensionSettings` is a single policy per browser.** If you already manage it for Chrome or Edge, merge these entries into yours rather than deploying a second profile, or the two will conflict. The NinjaOne script merges for you, and its rollback script removes only these entries.
+- **Intune:** `intune-fanout.py` with `--browser-group` creates these profiles along with the browser profiles.
+- **Apple MDMs:** the payload gains a **KEEP AI EXTENSIONS OFF SENSITIVE SITES (OPTIONAL)** section to upload as its own profiles.
 
 This is the browsers' own extension setting, so test it on one device before rolling out: open `chrome://policy` or `edge://policy`, check `ExtensionSettings` shows your entries, and confirm the extension no longer runs on a listed site. See Chrome's and Edge's documentation for `ExtensionSettings` for the full behaviour.
 
-**Generating it.** The block has profiles only when you generate the payload with your sites:
-
-| MDM | How |
-|---|---|
-| **Intune** | Generate the payload with `ai_extension_blocked_hosts` (and optionally `ai_extensions`), then run `intune-fanout.py` with `--ai-extension-sites` and `--browser-group` |
-| **Jamf, Kandji, Mosyle, Workspace ONE** | Generate the payload with `ai_extension_blocked_hosts`. It gains a **KEEP AI EXTENSIONS OFF SENSITIVE SITES (OPTIONAL)** section to upload as its own profiles. |
-| **NinjaOne** | Generate the deployment script with `ai_extension_blocked_hosts`. The script merges the entries into any `ExtensionSettings` already on the device, and the matching rollback script removes them. |
-
-For example, for Intune:
-
-```bash
-curl -G -H "Authorization: Bearer $ADMIN_TOKEN" \
-  -o intune-payload.json \
-  --data-urlencode "ai_extension_blocked_hosts=intranet.example.com,*.corp.example.com" \
-  "https://api.whiteout.groovysec.com/mdm/integrations/$INTEGRATION_ID/intune-payload"
-```
-
-For an Apple MDM, use `jamf-payload` (Jamf) or `apple-profile-payload` (Kandji, Mosyle, Workspace ONE) in place of `intune-payload`. For NinjaOne, add the same parameter to the `ninjaone-script` request shown in [Built-in browser AI](./ai-footprint/built-in-browser-ai.md#deploying-it). See [Zero-Touch MDM](./deployment/zero-touch-mdm.md) for the rest of the payload steps.
+> **Advanced: overriding the saved sites for one payload.** The payload and NinjaOne script API requests accept `ai_extension_blocked_hosts` (and optionally `ai_extensions`, as catalog keys such as `grammarly_extension`), which replace the saved sites for that one request. `intune-fanout.py --no-ai-extension-sites` skips these profiles for one run. Most organizations don't need this.
 
 ---
 

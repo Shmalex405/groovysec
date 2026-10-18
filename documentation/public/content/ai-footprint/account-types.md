@@ -42,11 +42,13 @@ AI apps people connected through your identity provider, and AI use from a [vend
 | **Claude** | The plan of the signed-in Claude organization, read from claude.ai with the page's own session (as the Claude page itself does), or else the plan label in Claude's sidebar | Free, Pro or Max: **Personal**. Team or Enterprise: **Unknown account (Team)** or **(Enterprise)**, because claude.ai doesn't show the account's email domain. |
 | **ChatGPT** | The plan shown in ChatGPT's own interface: the label in the profile menu or sidebar, an **Upgrade plan** button (Free), or a workspace switcher. Whiteout never reads ChatGPT's session data. | Free, Plus, Pro or Go: **Personal**. Team, Business, Enterprise or Edu: **Unknown account** with the plan, because ChatGPT doesn't show the account's email domain. Guest chats: **Signed out**. |
 | **Gemini** | The domain of the Google account shown on Gemini's account button. Only the domain is read. | gmail.com or another personal email provider: **Personal**. One of your organization's domains: **Work email, unverified workspace**. Any other domain: **Unknown account**. Not signed in: **Signed out**. |
-| **Microsoft Copilot** (copilot.microsoft.com) | The site itself: it's consumer Copilot, used with a personal Microsoft account | **Personal**, or **Signed out** |
-| **Microsoft 365 Copilot** (cloud.microsoft) | The site itself: it accepts work accounts only, but it doesn't show which organization | **Unknown account** |
+| **Microsoft Copilot** (copilot.com, where copilot.microsoft.com now redirects) | The site itself. Both work and personal Microsoft accounts sign in there, so the site doesn't say which. | **Unknown account** |
+| **Microsoft 365 Copilot** (cloud.microsoft and the Microsoft 365 Copilot app) | The site itself: it accepts work accounts only, but it doesn't show which organization | **Unknown account** |
 | **Perplexity** | An Enterprise badge in Perplexity's interface | **Unknown account (Enterprise)** when the badge shows. Otherwise the account type can't be read. |
 | **DeepSeek** | DeepSeek has no organization accounts | Always **Personal** |
 | **Any other site** | Not read | **Not observable** |
+
+Reading copilot.com as **Unknown account** needs browser extension 1.16.0 or later. If copilot.microsoft.com itself loads without redirecting, it still reads as **Personal** or **Signed out**, as before.
 
 **Work workspace** needs a business plan and one of your organization's email domains together. None of the sites above shows both today, so **Work workspace** doesn't appear for them yet. Your organization's domains are the domain set up for your organization in Whiteout, any additional email domains registered for it, and the domain of a Google Workspace identity provider.
 

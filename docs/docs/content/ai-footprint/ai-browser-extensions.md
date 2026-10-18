@@ -75,7 +75,7 @@ An extension can have a different ID in each store. A Chrome Web Store extension
 
 After you block an extension, its finding resolves at the next full scan that no longer finds it.
 
-**Keep an extension off sensitive sites instead.** If people may use an AI extension in general but it shouldn't run on your internal apps, Whiteout's MDM payload has an optional recipe that keeps chosen extensions off the sites you list. See [Keep AI extensions off sensitive sites](./ai-footprint/ai-in-work-apps.md#keep-ai-extensions-off-sensitive-sites).
+**Keep an extension off sensitive sites instead.** If people may use an AI extension in general but it shouldn't run on your internal apps, the **Browser AI policy** setting can keep chosen extensions off the sites you list, through the MDM profiles Whiteout generates. See [Keep AI extensions off sensitive sites](./ai-footprint/ai-in-work-apps.md#keep-ai-extensions-off-sensitive-sites).
 
 ---
 

@@ -89,12 +89,20 @@ On the **AI apps connected through your identity provider** card, the **Read acc
 
 Whiteout reads which AI apps people connected by acting as a Google Workspace admin, through Google's domain-wide delegation. The [Gemini audit log](./ai-footprint/vendor-audit-logs.md) uses the same access.
 
-1. In Google's Admin console, go to **Security → Access and data control → API controls → Domain-wide delegation**.
-2. Add, or edit, the client ID Whiteout will use, with the scopes below.
-   - **Whiteout's service account:** your Whiteout contact gives you its client ID. It can only act for an email domain registered to your organization in Whiteout.
-   - **Your own service account:** create a service account with domain-wide delegation in your own Google Cloud project and use its client ID. See [Google Workspace (Zero-Click)](./whiteout-ai-connector/google-workspace-dwd.md) for how to create one.
-3. In Whiteout, open **Integrations → Data Integrations**, and under **Read access** choose **Set up** on **Google Workspace**.
+The **Google Workspace** row under **Read access**, and its setup dialog, show what to authorize, each with a copy button:
+
+- **Client ID:** the client ID of Whiteout's service account. It's shown when this Whiteout server has a shared service account and you aren't using your own.
+- **Scopes to authorize:** the scopes below, as one comma-separated list, ready to paste.
+- The Admin console path, with an **Open it** link.
+
+1. In Whiteout, open **Integrations → Data Integrations**, and find **Read access** on the **AI apps connected through your identity provider** card. Copy the **Client ID** and the **Scopes to authorize** from the **Google Workspace** row.
+2. In Google's Admin console, go to **Security → Access and data control → API controls → Domain-wide delegation**. Add a new entry with that client ID and those scopes.
+   - **If the client ID is already listed,** for example for the Whiteout connector's Drive and Gmail access, edit that entry and add the scopes. Keep the scopes already there.
+   - **Using your own service account instead?** Create a service account with domain-wide delegation in your own Google Cloud project, and authorize *its* client ID with the same scopes. See [Google Workspace (Zero-Click)](./whiteout-ai-connector/google-workspace-dwd.md) for how to create one.
+3. Back in Whiteout, choose **Set up** on **Google Workspace**.
 4. Enter the **Admin email** of a Google Workspace admin for Whiteout to read as. If you use your own service account, paste its JSON key into **Your own service-account key (optional)**. Choose **Save**.
+
+Whiteout's service account can only act for an email domain registered to your organization in Whiteout. If no shared service account is set up on your Whiteout server, the card asks you to use your own.
 
 The scopes Whiteout asks for:
 
@@ -102,34 +110,44 @@ The scopes Whiteout asks for:
 |---|---|
 | `https://www.googleapis.com/auth/admin.directory.user.readonly` | List your Workspace users, so each one can be checked |
 | `https://www.googleapis.com/auth/admin.directory.user.security` | List the apps each user has given access to, and remove an app's access when you choose to |
-| `https://www.googleapis.com/auth/admin.reports.audit.readonly` | Only for the [Gemini audit log](./ai-footprint/vendor-audit-logs.md#google-gemini) |
+| `https://www.googleapis.com/auth/admin.reports.audit.readonly` | For the [Gemini audit log](./ai-footprint/vendor-audit-logs.md#google-gemini) |
 
 Whiteout lists and removes connected apps with the same scope, so on Google Workspace the card shows **Revoke** as on as soon as read access works. Whiteout still removes access only when you choose to, or when **Remove access automatically** is on.
 
-> **Adding a scope to an existing client ID?** The scope box holds one comma-separated list, and saving replaces the whole list. Add to what's already there rather than retyping it, or you'll drop a scope another Whiteout feature uses.
+> **The scope box holds one comma-separated list, and saving replaces the whole list.** When you edit an existing entry, add to what's already there rather than retyping it, or you'll drop a scope another Whiteout feature uses.
 
 If Whiteout says **That admin's email domain isn't registered to your organization**, ask Whiteout support to register the domain, or use your own service account.
 
 ### Microsoft 365
 
-Microsoft 365 needs nothing in the **Read access** section. Whiteout reads with the same Microsoft 365 admin consent as the Whiteout AI Connector: one Whiteout app in your Entra tenant. If you haven't consented yet, follow [Microsoft 365 (Zero-Click)](./whiteout-ai-connector/microsoft-365-zero-click.md#1-grant-tenant-admin-consent-one-click).
+Microsoft 365 needs nothing typed into the **Read access** section. Whiteout uses an admin consent in your Entra tenant, started from the **Microsoft 365** row of the card. There can be two Whiteout apps:
 
-The Microsoft Graph application permissions Whiteout asks for come in two sets:
-
-| Set | Permission | Why |
+| App | Used for | Button on the Microsoft 365 row |
 |---|---|---|
-| **Detect** (read-only) | `Application.Read.All` | Identify AI apps in your tenant |
+| **Whiteout Discovery** (read-only) | Detecting AI apps, and the [Microsoft 365 Copilot audit log](./ai-footprint/vendor-audit-logs.md#microsoft-365-copilot) | **Grant read-only access**, under **Detect** |
+| **Whiteout** (the Microsoft 365 connector's app) | Removing access | **Grant removal access**, under **Revoke** |
+
+The Whiteout Discovery app can read, never change. A tenant can consent to it on its own, so Whiteout can detect AI apps without being given any write access. If the Discovery app isn't set up on your Whiteout server, or your tenant hasn't consented to it yet, detecting uses the Whiteout app's admin consent instead, the same consent as the Whiteout AI Connector ([Microsoft 365 (Zero-Click)](./whiteout-ai-connector/microsoft-365-zero-click.md#1-grant-tenant-admin-consent-one-click)). Removing access always uses the Whiteout app.
+
+The row says in a line which consent each part uses, for example *Detect reads with the read-only Whiteout Discovery app.* To consent, choose the button, sign in to Microsoft as a tenant admin, approve, then refresh the card in Whiteout.
+
+The Microsoft Graph application permissions Whiteout asks for:
+
+| App | Permission | Why |
+|---|---|---|
+| **Whiteout Discovery** (or the Whiteout app, when it's used for detecting) | `Application.Read.All` | Identify AI apps in your tenant |
 | | `DelegatedPermissionGrant.Read.All` | List the consent people gave to each app |
 | | `User.Read.All` | Match each consent to a person |
-| **Revoke** | `DelegatedPermissionGrant.ReadWrite.All` | Remove a person's consent to an app |
+| **Whiteout Discovery** (or the Whiteout app, when it reads the Copilot audit log) | `AiEnterpriseInteraction.Read.All` | Read the [Microsoft 365 Copilot audit log](./ai-footprint/vendor-audit-logs.md#microsoft-365-copilot), if you connect it |
+| **Whiteout** (removing access) | `DelegatedPermissionGrant.ReadWrite.All` | Remove a person's consent to an app |
 | | `AppRoleAssignment.ReadWrite.All` | Remove an app's application permissions |
 | | `User.RevokeSessions.All` | Optional: sign people out when you remove an app, so existing sessions end at once |
 
-Detecting needs only the read-only set. The revoke set is needed only to remove access from Whiteout. The card shows which set your tenant consented to: the **Revoke** column reads **Not set up** without the revoke set.
+Detecting needs only read permissions. The removal permissions are needed only to remove access from Whiteout. The **Revoke** column reads **Not set up** until the Whiteout app's consent includes them. If a consent is missing a permission, the row names it and offers **Grant again**.
 
-> Evaluate the revoke set on its own terms: `DelegatedPermissionGrant.ReadWrite.All` can remove any app's consent in your tenant, not only AI apps'. Whiteout limits every removal to apps it identified exactly and shows each one before you confirm, but the permission itself is broad.
+> Evaluate the removal permissions on their own terms: `DelegatedPermissionGrant.ReadWrite.All` can remove any app's consent in your tenant, not only AI apps'. Whiteout limits every removal to apps it identified exactly and shows each one before you confirm, but the permission itself is broad.
 
-**Consented before?** Microsoft records the permissions in force when you consented. If your tenant consented before these permissions were part of the Whiteout app, consent again with the same flow to pick them up.
+**Consented before?** Microsoft records the permissions in force when you consented. If your tenant consented before a permission was added, consent again with the same button to pick it up.
 
 ### Okta
 
@@ -161,7 +179,8 @@ See Okta's developer documentation on service apps for the steps in Okta's conso
 | **Waiting for the first check** | The first daily check hasn't run yet |
 | Grants couldn't be read for some people | Whiteout keeps their previous results and tries again at the next check. A failed read never counts as an app being removed. |
 | Okta says DPoP is required | Turn off DPoP on the service app, or use an API token |
-| **Revoke: Not set up** on Microsoft 365 | Your consent doesn't include the revoke set. Detecting still works. |
+| **Revoke: Not set up** on Microsoft 365 | The Whiteout app's consent doesn't include the removal permissions. Choose **Grant removal access** if you want Whiteout to remove access. Detecting still works. |
+| No **Grant read-only access** button on the Microsoft 365 row | The read-only Discovery app isn't set up on your Whiteout server, so detecting uses the Whiteout app's admin consent (*Detect uses your Microsoft 365 admin consent*). Contact Whiteout support if you'd like the read-only app. |
 
 ---
 

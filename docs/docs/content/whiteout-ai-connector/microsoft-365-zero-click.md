@@ -92,7 +92,11 @@ The Graph **application** permissions come in two sets:
 > permission itself is broad.
 
 Detecting needs only the read-only set; the revoke set is needed only to
-remove access from Whiteout. Blocking native connectors needs **no
+remove access from Whiteout. Where your Whiteout server has the separate,
+read-only **Whiteout Discovery** app, your tenant can consent to that for
+detecting (and for the Microsoft 365 Copilot audit log) instead, without
+giving this app's write permissions; see
+[AI Apps Connected With Work Accounts](./ai-footprint/connected-ai-apps.md#microsoft-365). Blocking native connectors needs **no
 Microsoft permissions at all.**
 
 ### 2. (SharePoint only) Allowlist the sites to govern
