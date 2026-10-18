@@ -145,6 +145,13 @@ the preview, since revoking one affects everybody at once.
 Blocking and detection work out of the box — **no cloud permissions
 required.** Only source-side revocation needs additional authorization.
 
+> **Looking for every AI app people connected, not only blocked
+> connectors?** Whiteout also checks Google Workspace, Microsoft 365 and
+> Okta once a day for AI apps people connected with their work account,
+> once it has read access. That guide lists the read-only and the remove
+> permission sets separately: see
+> [AI Apps Connected With Work Accounts](./ai-footprint/connected-ai-apps.md).
+
 ### Google Workspace
 
 Add one scope to the domain-wide delegation grant you created in

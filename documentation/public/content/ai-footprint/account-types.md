@@ -1,8 +1,8 @@
 # Personal and Work Accounts
 
-On supported AI sites, the Whiteout browser extension notes which kind of account each prompt was sent from: a personal account, your organization's workspace, or no account at all. A prompt sent from a personal ChatGPT or Claude account falls under that vendor's consumer terms, not your organization's contract, even when your policies allowed the prompt itself.
+On supported AI sites, the Whiteout browser extension notes which kind of account each prompt was sent from: a personal account, your organization's workspace, or no account at all. Desktop Guard does the same in desktop AI apps that show the account on screen. A prompt sent from a personal ChatGPT or Claude account falls under that vendor's consumer terms, not your organization's contract, even when your policies allowed the prompt itself.
 
-> **Detection only.** Whiteout shows which account was used. It can't block or allow prompts by account type yet.
+> **To allow or block by account,** set an [account rule](./governance/account-rules.md) on the AI app, for example "work accounts only" for ChatGPT. This page explains how the account is read and what each value means.
 
 This needs browser extension 1.14.0 or later.
 
@@ -18,6 +18,8 @@ This needs browser extension 1.14.0 or later.
 
 This is the account on the **AI site**. It's different from the **Account** column under **Coverage → Enrollment → Browsers**, which is the account signed in to the browser profile. See [Browser coverage](./ai-footprint/browser-coverage.md).
 
+AI apps people connected through your identity provider, and AI use from a [vendor's audit log](./ai-footprint/vendor-audit-logs.md), count as work accounts, because they went through your organization's own tenant. See [AI apps connected with work accounts](./ai-footprint/connected-ai-apps.md).
+
 ### What the values mean
 
 | Value | Meaning |
@@ -27,7 +29,7 @@ This is the account on the **AI site**. It's different from the **Account** colu
 | **Work email, unverified workspace** | Signed in with one of your organization's email domains, but Whiteout couldn't confirm the workspace belongs to your organization |
 | **Signed out** | Sent without signing in to the AI site |
 | **Unknown account**, or **Unknown account (Team)** with the plan | The site was used, but Whiteout couldn't tell whose account it was |
-| **Not observable** | This surface can't see the account: desktop apps, IDEs, older extensions and sites not listed below. It never means a work account. |
+| **Not observable** | This surface can't see the account: IDEs, desktop apps that don't show it, older extensions and sites not listed below. It never means a work account. |
 
 **A personal plan wins over a work email.** Someone who signed up for ChatGPT Plus with their work address is counted as personal. The plan decides which terms cover the data, not the mailbox used to sign up.
 
@@ -62,6 +64,5 @@ This is the account on the **AI site**. It's different from the **Account** colu
 
 ## What isn't built yet
 
-- **Blocking or allowing by account type.** For example, "allow ChatGPT only from our Enterprise workspace" isn't available yet.
-- **Desktop apps and IDEs.** Prompts from the ChatGPT or Claude desktop apps, or from coding agents, show **Not observable**.
+- **Most desktop apps and all IDEs.** Desktop Guard reads the account only where a desktop app shows it on screen, and which apps it can read is still expanding. Prompts from coding agents show **Not observable**.
 - **Confirming Team and Enterprise workspaces** on Claude, ChatGPT, Microsoft 365 Copilot and Perplexity. These show **Unknown account** with the plan, rather than **Work workspace**.

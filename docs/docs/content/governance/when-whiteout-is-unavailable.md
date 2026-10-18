@@ -176,6 +176,14 @@ The problem is on Whiteout's side, and users don't need to do anything. Messages
 **One device shows "offline" while it has internet access.**
 Something between the device and Whiteout is blocking it: a VPN, a proxy, or a firewall rule. Make sure the device can reach your organization's Whiteout address (for example, `https://<your-org-slug>.api.whiteout.groovysec.com` on SaaS).
 
+**We use a secure web gateway that inspects TLS (Zscaler, Netskope, Palo Alto, or similar).**
+Whiteout checks prompts inside the AI app, browser, or coding tool, before they reach the network, so the gateway doesn't change what Whiteout sees or blocks. Whiteout's own components still need to reach your organization's Whiteout address through it. Do one of these:
+
+- **Exempt your Whiteout address from TLS inspection.** This is the usual setup for security agents.
+- **Make sure devices trust the gateway's root certificate.** Deploy it to the macOS Keychain and the Windows certificate store, as you already do for browsers.
+
+If a component can't reach Whiteout, messages follow your **Fail open** or **Fail closed** setting and the device shows as offline.
+
 **An outage alert arrived, but Prompt Review shows nothing for that device.**
 The records upload when the device can reach Whiteout. They might also be coding-agent prompts, which don't carry the label, or messages held by **Fail closed**, which aren't sent at all. Check the alert's counts and the device's label on the **Devices** page.
 

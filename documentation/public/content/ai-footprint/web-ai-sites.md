@@ -93,6 +93,6 @@ To check who hasn't approved yet, look under **Coverage → Enrollment** for peo
 
 ## What isn't covered
 
-- **AI panels built into the browser,** such as the Copilot sidebar in Edge, Gemini in Chrome and Leo in Brave.
-- **AI features inside other web apps,** such as Notion AI and Slack AI. Their requests go to the app's own site, which isn't an AI site.
+- **AI panels built into the browser,** such as the Copilot sidebar in Edge, Gemini in Chrome and Leo in Brave. These aren't websites. AI Footprint lists them separately. See [Built-in browser AI](./ai-footprint/built-in-browser-ai.md).
+- **AI features inside other web apps.** Their requests go to the app's own site, which isn't an AI site. Slack AI, Notion AI and Atlassian Rovo are covered separately. See [AI inside work apps](./ai-footprint/ai-in-work-apps.md).
 - **Browsers without the extension.** Use the [profile scan](./ai-footprint/browser-coverage.md) and [imported network logs](./ai-footprint/network-logs.md) to find those.

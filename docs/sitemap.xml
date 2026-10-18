@@ -67,7 +67,16 @@
     <loc>https://groovysec.com/docs/admin-guides/ai-footprint/ai-browser-extensions</loc>
   </url>
   <url>
+    <loc>https://groovysec.com/docs/admin-guides/ai-footprint/ai-in-work-apps</loc>
+  </url>
+  <url>
     <loc>https://groovysec.com/docs/admin-guides/ai-footprint/browser-coverage</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/ai-footprint/built-in-browser-ai</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/ai-footprint/connected-ai-apps</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/ai-footprint/network-logs</loc>
@@ -80,6 +89,9 @@
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/ai-footprint/shadow-ai</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/ai-footprint/vendor-audit-logs</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/ai-footprint/web-ai-sites</loc>
@@ -161,6 +173,9 @@
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/developers/python-sdk</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/governance/account-rules</loc>
   </url>
   <url>
     <loc>https://groovysec.com/docs/admin-guides/governance/audit-only-mode</loc>

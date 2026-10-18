@@ -94,6 +94,7 @@ Choose how Whiteout AI runs for your organization and roll it out to your device
 |-------|-------------|
 | [Audit-Only Mode](./governance/audit-only-mode.md) | Full visibility into AI use without blocking anything |
 | [When Whiteout Is Unavailable](./governance/when-whiteout-is-unavailable.md) | What users see and what admins get when Whiteout can't check a message |
+| [Account Rules for AI Apps](./governance/account-rules.md) | Allow an AI app with work accounts only, and what people see when they use a personal one |
 
 ### AI Footprint
 
@@ -107,6 +108,10 @@ Find the AI on your devices and network, including AI no Whiteout surface govern
 | [Third-Party AI Extensions](./ai-footprint/ai-browser-extensions.md) | AI extensions such as Grammarly and Sider, and how to block them |
 | [Web AI Sites](./ai-footprint/web-ai-sites.md) | AI websites in use, and what the extension collects |
 | [Personal and Work Accounts](./ai-footprint/account-types.md) | Which kind of account each prompt was sent from |
+| [Built-In Browser AI](./ai-footprint/built-in-browser-ai.md) | Gemini in Chrome, Copilot in Edge and other browser AI, and how to turn them off with MDM |
+| [AI Inside Work Apps](./ai-footprint/ai-in-work-apps.md) | Slack AI, Notion AI, Atlassian Rovo and AI writing extensions such as Grammarly |
+| [AI Apps Connected With Work Accounts](./ai-footprint/connected-ai-apps.md) | AI apps people connected through Google Workspace, Microsoft 365 or Okta |
+| [Vendor Audit Logs](./ai-footprint/vendor-audit-logs.md) | AI use recorded in the Microsoft 365 Copilot, Google Gemini and Slack audit logs |
 | [Network Visibility](./ai-footprint/network-visibility.md) | When Desktop Guard can't see browser AI traffic, and how to fix it |
 | [Importing Network Logs](./ai-footprint/network-logs.md) | Find AI use in Cisco Umbrella, Zscaler and other DNS or proxy logs |
 
