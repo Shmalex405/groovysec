@@ -1,10 +1,9 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-console.log("Loaded DATABASE_URL:", process.env.DATABASE_URL);
 
 import express, { type Request, type Response, type NextFunction } from "express";
 import cors from "cors";
-import { registerRoutes } from "./routes";        // GET /api/leads + createServer
+import { registerRoutes } from "./routes";        // createServer
 import { setupVite, serveStatic, log } from "./vite";
 import leadsRouter from "./routes/leads";        // ✅ POST /api/leads lives here
 import skillAccessRouter from "./routes/skill-access"; // ✅ POST /api/skill-access
@@ -34,22 +33,10 @@ app.use(express.urlencoded({ extended: false }));
 /** API logging (before routes) */
 app.use((req, res, next) => {
   const start = Date.now();
-  let captured: any;
-  // Bind to keep the correct `this`
-  const origJson = res.json.bind(res) as (body?: any) => Response;
-
-  res.json = (body?: any) => {
-    captured = body;
-    return origJson(body);
-  };
+  // Method, path, status and timing only: response bodies can hold form data.
   res.on("finish", () => {
     if (req.path.startsWith("/api")) {
-      let line = `${req.method} ${req.path} ${res.statusCode} in ${Date.now() - start}ms`;
-      if (captured) {
-        try { line += ` :: ${JSON.stringify(captured)}`; } catch {}
-      }
-      if (line.length > 250) line = line.slice(0, 249) + "…";
-      log(line);
+      log(`${req.method} ${req.path} ${res.statusCode} in ${Date.now() - start}ms`);
     }
   });
   next();
@@ -61,8 +48,13 @@ app.use("/api/skill-access", skillAccessRouter);
 app.use("/api/reviews", reviewsRouter);
 
 (async () => {
-  /** Register remaining routes (GET /api/leads) and get the server */
+  /** Register remaining routes and get the server */
   const server = await registerRoutes(app);
+
+  /** Unknown API paths get a JSON 404 instead of falling through to the SPA */
+  app.use("/api", (_req, res) => {
+    res.status(404).json({ success: false, error: "Not found" });
+  });
 
   /** Error handler */
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
