@@ -75,16 +75,101 @@ no per-user consent screen. Users still only ever surface their **own**
 mailbox; delegation only removes the individual grant step. This is the
 same DWD path described for Drive in the
 [Connect Google Drive](./whiteout-ai-connector/google-drive.md#domain-wide-delegation-recommended)
-guide.
+guide. To let the AI draft and send email too, the delegation also needs
+the write scopes; see [What the AI can change](#what-the-ai-can-change).
 
 ## Scopes Whiteout requests
 
 | Role | Scope | Why |
 |---|---|---|
 | Per-user serving | `gmail.readonly` | At query time, read only that user's own mail subject + body for classification. |
+| Changes (Workspace delegation) | `gmail.compose`, `gmail.modify` | Write drafts, send email and replies, and move messages to the trash as the person who asked, when your admin allows the AI to change Gmail. |
 
-We request no write scopes and no scanner credential — Gmail has no
-org-wide corpus scan.
+Reads use only `gmail.readonly`. The write scopes are needed only for
+changes, and only on your Workspace's domain-wide delegation: a personal
+Google sign-in never makes changes. There's no scanner credential, as
+Gmail has no org-wide corpus scan.
+
+## What the AI can change
+
+When your admin allows it, the AI can write drafts and send email from
+the person's own mailbox. Changes go through your organization's
+Workspace delegation as that person, so they show up in Gmail under
+their name, not under Whiteout.
+
+| Kind of change | What the AI can do | Default |
+|---|---|---|
+| **Create** | Write a draft: a new email, or a reply draft | Allowed |
+| **Edit** | Change a draft | Allowed |
+| **Comment & post** | Send an email, reply or reply all | **Needs approval** |
+| **Delete, archive & merge** | Move a message to the trash (recoverable for 30 days) | **Off** |
+
+Set these in **Integrations → Whiteout AI Connector → Gmail → What the
+AI can change**.
+
+**Sending waits for approval by default.** A draft is a **Create**:
+nobody sees it until someone sends it. So the AI can prepare email
+while every send waits for a person. We recommend keeping it that way:
+the AI drafts, and the person sends it from Gmail, or an approver
+approves the AI's send. When a send is held, the AI says it's waiting on
+approval and gives a request code. Approvers decide in **Agents →
+Approvals**, or from the approval notification. Once it's approved, the
+AI retries the identical request and the email is sent exactly once. A
+denied send isn't asked about again for an hour.
+
+**Sending outside your organization.** A send that reaches any address
+outside your organization's own email domains is tagged as an
+**External send**, so any Action Policy for external sends (**Agents →
+Action Policies**) applies too. A reply always counts as external,
+because the people it reaches come from the original message, not from
+the AI's request. **Activity → MCP Activity** shows each send's
+recipients: how many people, and which outside domains.
+
+**What's checked.** The subject, body and every recipient address are
+checked against Gmail's policy set and for planted instructions. A
+reply, or a reply draft, to a message that's **Hidden** or restricted
+by policy is refused. Messages are checked by their own id; drafts
+aren't checked, and are recorded as *not checked*. See
+[Write Actions](./whiteout-ai-connector/write-actions.md#sending-email-and-invitations).
+
+### Limits
+
+- Plain-text email bodies only, and no attachments.
+- Up to 100 recipients per email, and a body of up to 1 MB.
+- Addresses must be plain ASCII email addresses (`Name
+  <pat@example.com>` is fine). Addresses with non-ASCII characters are
+  refused for now.
+- Bad input is refused before anything is held for approval: an invalid
+  address, a line break in an address or subject, more than 100
+  recipients, or a send with no "to" address. The AI is told what to
+  fix right away, and no approval request is created.
+- The AI can't send a draft that already exists. It creates the draft
+  and the person sends it from Gmail, or the AI sends a new email.
+- A draft that has attachments, or one with only an HTML body, can't be
+  rewritten by the AI.
+
+### Before the AI can make changes
+
+Changes in Gmail go only through your Google Workspace domain-wide
+delegation. A personal Google sign-in still serves reads, but never
+makes changes. A **Workspace super admin** adds these scopes to
+Whiteout's existing delegation entry:
+
+```
+https://www.googleapis.com/auth/gmail.compose,
+https://www.googleapis.com/auth/gmail.modify
+```
+
+In the Google Admin console, open **Security → Access and data control
+→ API controls → Domain-wide delegation**, edit Whiteout's client and
+add the scopes to the end of the list. **Keep the scopes already there:
+saving replaces the whole list.**
+
+Until they're added, reads keep working and the AI is told your admin
+needs to add them (`org_grant_missing`). The **What the AI can change**
+panel shows exactly which scopes to add, with a button to copy them.
+See
+[Google Workspace (Zero-Click)](./whiteout-ai-connector/google-workspace-dwd.md#let-the-ai-make-changes-write-scopes).
 
 ## What to expect after connect
 
@@ -112,4 +197,6 @@ org-wide corpus scan.
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=gmail`.
+Reads are on **Activity → AI Connector**; filter the source to Gmail.
+Drafts, sends and other changes the AI made or tried to make are on
+**Activity → MCP Activity**.

@@ -8,6 +8,8 @@
 > admin-chosen **site allowlist**. The backfill scanner can run off the
 > same grant — no customer-registered Entra app needed. See
 > [Overview → Before you connect](./whiteout-ai-connector/overview.md#before-you-connect--availability--prerequisites).
+> Zero-click is read-only: changes need each person's own Microsoft
+> connection (see [What the AI can change](#what-the-ai-can-change)).
 
 Expose your organization's SharePoint content to AI assistants through
 the Whiteout AI Connector. SharePoint is a **document store**, so it
@@ -84,9 +86,68 @@ what each person is actually served.
 | Scanner (org-wide) | `Files.Read.All` | Read document-library content for classification. |
 | Per-user serving | `Sites.Read.All` | At query time, resolve which sites that user can access. |
 | Per-user serving | `Files.Read.All` | At query time, read only the files that user's account can access. |
+| Changes (each person's own connection) | `Files.ReadWrite.All`, `Sites.ReadWrite.All` | Upload, change, rename, move and delete files as the person who asked, when your admin allows the AI to change SharePoint. |
 
-We **do not** request write scopes. Whiteout never modifies your
-SharePoint content.
+The write permissions are delegated permissions on each person's own
+Microsoft connection. Your organization's zero-click access stays
+read-only. See [What the AI can change](#what-the-ai-can-change).
+
+## What the AI can change
+
+When your admin allows it, the AI can change SharePoint files as the
+person who asked, through that person's own Microsoft connection. The
+changes show up in SharePoint's own history under their name, not under
+Whiteout.
+
+| Kind of change | What the AI can do | Default |
+|---|---|---|
+| **Create** | Upload a text file | Allowed |
+| **Edit** | Replace a text file's content, rename a file, move a file | Allowed |
+| **Delete, archive & merge** | Delete a file (it goes to the recycle bin) | **Off** |
+
+SharePoint has no **Comment & post** changes. Set these in
+**Integrations → Whiteout AI Connector → SharePoint → What the AI can
+change**. Every change is checked first: a **Hidden** file is refused as
+not found, a file restricted by policy is refused, and the text is
+checked against SharePoint's policy set and for planted instructions.
+See [Write Actions](./whiteout-ai-connector/write-actions.md).
+
+### Limits
+
+- Content changes accept text files only: .txt, .md, .csv, .json,
+  .html, .xml, .yaml and .log. Word, Excel, PowerPoint and other binary
+  files can't have their content changed, but can still be renamed or
+  moved.
+- Uploads are capped at 4 MB.
+- Folders can't be changed, moved or deleted, because Whiteout can't
+  check everything inside a folder.
+- File names can't contain `/` or `\`, and can't be `.` or `..`.
+- A file is checked by its own id. The folder a new file is created in
+  isn't checked, and is recorded as *not checked*.
+- After a change, Whiteout re-scans, so the new content gets a fresh
+  classification.
+
+### Before the AI can make changes
+
+Changes use each person's own Microsoft connection, never your
+organization's
+[zero-click](./whiteout-ai-connector/microsoft-365-zero-click.md)
+access, because changes made with app-only access would show as made by
+the app. Zero-click reads keep working.
+
+1. **Your operator** adds the delegated permissions `Files.ReadWrite.All`
+   and `Sites.ReadWrite.All` to Whiteout's Entra app (Whiteout-hosted:
+   ask your account manager).
+2. **Each person** connects their own Microsoft account once, from
+   **Connect your sources**. People who read SharePoint zero-click see
+   **Connect to make changes**; until they connect, the AI is told to
+   connect first (`connect_for_write`). People who connected before
+   changes were turned on see **Grant write access** and reconnect once.
+
+One Microsoft connection covers SharePoint, OneDrive, Outlook Mail and
+Outlook Calendar. The consent screen asks only for the write
+permissions of the sources your organization has exposed and allows
+changes in.
 
 ## What to expect after connect
 
@@ -118,6 +179,10 @@ SharePoint content.
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=sharepoint`.
-SharePoint events also surface in your tenant's Microsoft 365 audit
-log under the application name you used at consent time.
+Reads are on **Activity → AI Connector**; filter the source to
+SharePoint. SharePoint reads also surface in your tenant's Microsoft
+365 audit log under the application name you used at consent time.
+
+Changes the AI made or tried to make are on **Activity → MCP Activity**.
+In SharePoint itself, a change is recorded under the person who asked,
+because it's made with their own Microsoft connection.

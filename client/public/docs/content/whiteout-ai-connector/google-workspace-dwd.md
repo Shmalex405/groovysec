@@ -16,6 +16,10 @@ do it once, not per source.
 - **Still ACL-correct.** Each user is served only their own mail and
   files. Delegation removes the per-user *grant* step; it does **not**
   widen access. Content is still vetted org-wide before any AI sees it.
+- **Changes go through it too.** Changes the AI makes in Drive, Gmail
+  and Calendar go only through this delegation, as the person who asked,
+  once you add the write scopes. Reads don't need them. See
+  [Let the AI make changes](#let-the-ai-make-changes-write-scopes).
 
 > This is the recommended path for a Google Workspace tenant. If you'd
 > rather have each user connect their own Google account instead, use
@@ -52,8 +56,9 @@ do it once, not per source.
 
 ### 2. Enable the Google APIs
 
-In the same GCP project, enable the **Google Drive API** and the
-**Gmail API**.
+In the same GCP project, enable the **Google Drive API**, the
+**Gmail API** and, if you use Google Calendar through the connector, the
+**Google Calendar API**.
 
 ### 3. Authorize the client ID in the Workspace Admin Console
 
@@ -77,6 +82,9 @@ In the same GCP project, enable the **Google Drive API** and the
      against your Workspace. See
      [Vendor-Native Connector Control](./whiteout-ai-connector/native-connector-control.md).
      Omit it and everything else still works.
+   - To let the AI make changes too, also add the write scopes in
+     [Let the AI make changes](#let-the-ai-make-changes-write-scopes).
+     Reads don't need them.
 4. Click **Authorize.**
 
 > **Adding a scope later?** The scope box holds one comma-separated list
@@ -84,8 +92,10 @@ In the same GCP project, enable the **Google Drive API** and the
 > there rather than retyping it, or you'll silently drop a scope the
 > connector depends on.
 
-> Whiteout **never writes** to Drive, Gmail, or Calendar, and requests
-> nothing beyond the scopes above. The one non-read-only capability —
+> With only the scopes above, Whiteout can't change anything in Drive,
+> Gmail or Calendar. It makes changes only once you add the write scopes
+> below, only the kinds of changes you allow, and always as the person
+> who asked. The other non-read-only capability —
 > `admin.directory.user.security` — can delete third-party OAuth grants,
 > and only ever does so when you explicitly confirm a revocation. It
 > gives Whiteout no access to mail or file content.
@@ -98,7 +108,8 @@ alongside the connector's other secrets, and restarts the backend to
 pick it up.
 
 > **Treat the key as a secret.** It lets Whiteout impersonate your
-> users for read-only Drive/Gmail. Deliver it through your secret store
+> users within the scopes you authorized in step 3: read-only, unless
+> you also add the write scopes. Deliver it through your secret store
 > (1Password, Vault, AWS Secrets Manager), not over chat or email.
 
 ### 5. Expose Drive and Gmail on the connector
@@ -122,6 +133,60 @@ and **Expose** Google Drive and/or Gmail. For Drive, the org-wide
   applies exactly as before. See
   [Connector Policy](./whiteout-ai-connector/connector-policy.md).
 
+## Let the AI make changes (write scopes)
+
+Changes the AI makes in Google Drive, Gmail and Google Calendar go
+**only** through this delegation, acting as the person who asked. They
+show up in Google's own history under that person, not under Whiteout.
+A personal Google sign-in still serves reads, but never makes changes.
+
+Reads don't need the write scopes; changes do. Add the scopes for each
+source you want the AI to change:
+
+| Source | Write scopes to add | What they let the AI do |
+|---|---|---|
+| Google Drive | `https://www.googleapis.com/auth/drive` | Create files, replace their content, rename and move them, comment, move to the trash |
+| Gmail | `https://www.googleapis.com/auth/gmail.compose`, `https://www.googleapis.com/auth/gmail.modify` | Write and change drafts, send email and replies, move messages to the trash |
+| Google Calendar | `https://www.googleapis.com/auth/calendar.events` | Create, change and delete events, and send invitations |
+
+1. A Workspace super admin goes to **admin.google.com → Security →
+   Access and data control → API controls → Domain-wide delegation**
+   (the **Manage Domain Wide Delegation** button).
+2. Find Whiteout's client ID and edit it.
+3. Add the write scopes to the **end** of the existing list,
+   comma-separated.
+4. **Keep the scopes already there: saving replaces the whole list.**
+   Dropping a read scope stops reads for that source.
+5. Save.
+
+With all three sources, the list looks like this (keep
+`admin.directory.user.security` if you added it):
+
+```
+https://www.googleapis.com/auth/drive.readonly,
+https://www.googleapis.com/auth/gmail.readonly,
+https://www.googleapis.com/auth/calendar.readonly,
+https://www.googleapis.com/auth/admin.directory.user.readonly,
+https://www.googleapis.com/auth/drive,
+https://www.googleapis.com/auth/gmail.compose,
+https://www.googleapis.com/auth/gmail.modify,
+https://www.googleapis.com/auth/calendar.events
+```
+
+**Until the write scopes are added,** reads keep working, and a change
+the AI tries is refused with a note that your Google Workspace admin
+needs to add them (`org_grant_missing`). In Whiteout, each Google
+source's **What the AI can change** panel (**Integrations → Whiteout AI
+Connector**) shows exactly which scopes to add, with a button to copy
+them.
+
+Once the scopes are in place, the AI can make the changes each source
+allows in Whiteout. By default, **Create**, **Edit** and **Comment &
+post** are Allowed and **Delete** is Off. For Gmail and Google
+Calendar, **Comment & post** is sending, and it starts at **Needs
+approval**. Set what the AI may change per source;
+see [Write Actions](./whiteout-ai-connector/write-actions.md).
+
 ## Identity matching — the one thing that must line up
 
 The connector impersonates the caller by their **Workspace email**, so
@@ -139,8 +204,8 @@ fails outright.
 - **`unauthorized_client` / "Client is unauthorized to retrieve access
   tokens"** — the client ID or the scope string in the Admin Console
   doesn't exactly match. Re-check step 3: the client ID must be the
-  service account's OAuth client ID, and both scopes must be present
-  verbatim.
+  service account's OAuth client ID, and every scope Whiteout uses must
+  be present verbatim.
 - **A user gets no files / no mail** — expected if that user genuinely
   has none, but also check their Whiteout email matches their Workspace
   email (see above).
@@ -148,12 +213,21 @@ fails outright.
   `GOOGLE_DWD_SERVICE_ACCOUNT_JSON`, or the key JSON is malformed. Have
   your operator confirm the secret is set (single-line JSON) and the
   backend was restarted.
+- **The AI says your Google Workspace admin needs to add scopes
+  (`org_grant_missing`)** — the delegation doesn't include that
+  source's write scopes yet. Add them as described in
+  [Let the AI make changes](#let-the-ai-make-changes-write-scopes).
+  Reads aren't affected.
+- **Reads stopped after you added the write scopes** — the save
+  probably replaced the read scopes. Edit Whiteout's client again and
+  put them back: saving replaces the whole list.
 
 ## Audit log
 
-Drive and Gmail reads land in **Admin → Audit → MCP Activity**, tagged
-`integration=google_drive` and `integration=gmail` respectively — same
-trail as any other connector read, now resolved per user.
+Drive, Gmail and Calendar reads are on **Activity → AI Connector**,
+filtered by source — same trail as any other connector read, now
+resolved per user. Changes the AI made or tried to make are on
+**Activity → MCP Activity**.
 
 ### Org-wide corpus scan (no scanner credential needed)
 
