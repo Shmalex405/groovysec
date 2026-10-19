@@ -18,6 +18,7 @@ const SECTIONS = {
   deployment: "Deployment",
   "whiteout-ai-connector": "Whiteout AI Connector",
   "ai-footprint": "AI Footprint",
+  governance: "Governance",
   integrations: "Data Integrations",
   "sso-providers": "SSO & Identity",
   "soc-destinations": "SOC/SIEM Destinations",

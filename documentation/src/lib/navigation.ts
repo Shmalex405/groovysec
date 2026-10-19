@@ -108,6 +108,7 @@ export const navigation: NavSection[] = [
       { title: 'Audit-Only Mode', href: '/admin-guides/governance/audit-only-mode' },
       { title: 'When Whiteout Is Unavailable', href: '/admin-guides/governance/when-whiteout-is-unavailable' },
       { title: 'Folders in AI Tools', href: '/admin-guides/governance/folders' },
+      { title: 'Account Rules for AI Apps', href: '/admin-guides/governance/account-rules' },
     ],
   },
   {
@@ -119,6 +120,10 @@ export const navigation: NavSection[] = [
       { title: 'Third-Party AI Extensions', href: '/admin-guides/ai-footprint/ai-browser-extensions' },
       { title: 'Web AI Sites', href: '/admin-guides/ai-footprint/web-ai-sites' },
       { title: 'Personal and Work Accounts', href: '/admin-guides/ai-footprint/account-types' },
+      { title: 'Built-In Browser AI', href: '/admin-guides/ai-footprint/built-in-browser-ai' },
+      { title: 'AI Inside Work Apps', href: '/admin-guides/ai-footprint/ai-in-work-apps' },
+      { title: 'AI Apps Connected With Work Accounts', href: '/admin-guides/ai-footprint/connected-ai-apps' },
+      { title: 'Vendor Audit Logs', href: '/admin-guides/ai-footprint/vendor-audit-logs' },
       { title: 'Network Visibility', href: '/admin-guides/ai-footprint/network-visibility' },
       { title: 'Importing Network Logs', href: '/admin-guides/ai-footprint/network-logs' },
     ],

@@ -63,31 +63,40 @@ before recording anything), so a half-completed consent can't be saved.
 > **Re-consent when the permission set grows.** Microsoft records the
 > permissions in force at the moment you consented, so any tenant that
 > consented earlier must re-run this same one-click flow to pick up new
-> ones. Two rounds have added permissions so far: Teams support, and —
-> optionally — vendor-grant revocation (below).
+> ones. Permissions have been added for Teams support, for finding and
+> optionally removing AI apps people connected (below), and for the
+> [Microsoft 365 Copilot audit log](./ai-footprint/vendor-audit-logs.md#microsoft-365-copilot).
 
-### 1b. (Optional) Permissions for revoking AI-vendor grants
+### 1b. Permissions for finding and removing AI apps
 
-Whiteout can find and remove the OAuth grants AI vendors hold against
-your tenant — see
-[Vendor-Native Connector Control](./whiteout-ai-connector/native-connector-control.md).
-That capability needs these additional Graph **application** permissions:
+The same consent lets Whiteout check your tenant once a day for AI apps
+people connected with their work account, and, if you choose, remove
+their access — see
+[AI Apps Connected With Work Accounts](./ai-footprint/connected-ai-apps.md#microsoft-365)
+and [Vendor-Native Connector Control](./whiteout-ai-connector/native-connector-control.md).
+The Graph **application** permissions come in two sets:
 
-| Permission | Purpose |
-|---|---|
-| `Application.Read.All` | Identify AI-vendor applications in your tenant |
-| `DelegatedPermissionGrant.ReadWrite.All` | Remove delegated consent grants |
-| `AppRoleAssignment.ReadWrite.All` | Remove application-permission grants |
-| `User.RevokeSessions.All` | *Optional* — force immediate sign-out so already-issued tokens die with the grant |
+| Set | Permission | Purpose |
+|---|---|---|
+| Detect (read-only) | `Application.Read.All` | Identify AI-vendor applications in your tenant |
+| | `DelegatedPermissionGrant.Read.All` | List the consent people gave to each app |
+| | `User.Read.All` | Match each consent to a person |
+| Revoke | `DelegatedPermissionGrant.ReadWrite.All` | Remove delegated consent grants |
+| | `AppRoleAssignment.ReadWrite.All` | Remove application-permission grants |
+| | `User.RevokeSessions.All` | *Optional* — force immediate sign-out so already-issued tokens die with the grant |
 
-> Evaluate these on their own terms: delegated-grant write can remove
+> Evaluate the revoke set on its own terms: delegated-grant write can remove
 > **any** application's consent in your tenant, not only AI vendors'.
 > Whiteout constrains every action to applications it can identify by
 > verified OAuth ID and previews each one before you confirm — but the
 > permission itself is broad.
 
-Skip this section entirely if you don't want revocation. Blocking
-native connectors and detecting pre-existing connections need **no
+Detecting needs only the read-only set; the revoke set is needed only to
+remove access from Whiteout. Where your Whiteout server has the separate,
+read-only **Whiteout Discovery** app, your tenant can consent to that for
+detecting (and for the Microsoft 365 Copilot audit log) instead, without
+giving this app's write permissions; see
+[AI Apps Connected With Work Accounts](./ai-footprint/connected-ai-apps.md#microsoft-365). Blocking native connectors needs **no
 Microsoft permissions at all.**
 
 ### 2. (SharePoint only) Allowlist the sites to govern

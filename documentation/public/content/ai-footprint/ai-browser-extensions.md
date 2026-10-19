@@ -75,10 +75,12 @@ An extension can have a different ID in each store. A Chrome Web Store extension
 
 After you block an extension, its finding resolves at the next full scan that no longer finds it.
 
+**Keep an extension off sensitive sites instead.** If people may use an AI extension in general but it shouldn't run on your internal apps, the **Browser AI policy** setting can keep chosen extensions off the sites you list, through the MDM profiles Whiteout generates. See [Keep AI extensions off sensitive sites](./ai-footprint/ai-in-work-apps.md#keep-ai-extensions-off-sensitive-sites).
+
 ---
 
 ## What isn't covered
 
 - **What the extension sends.** Whiteout lists the extension and what it can access. It doesn't see what the extension reads or sends.
 - **Safari** extensions, and browsers the profile scan doesn't read. See [Browser coverage](./ai-footprint/browser-coverage.md#how-the-profile-scan-works).
-- **AI panels built into the browser,** such as the Copilot sidebar in Edge, Gemini in Chrome and Leo in Brave. These aren't extensions and aren't covered.
+- **AI panels built into the browser,** such as the Copilot sidebar in Edge, Gemini in Chrome and Leo in Brave. These aren't extensions. AI Footprint lists them separately. See [Built-in browser AI](./ai-footprint/built-in-browser-ai.md).

@@ -85,6 +85,8 @@ Built-in AI (the operating system's own) and embedded AI (inside a signed vendor
 
 The traffic comes from Desktop Guard's network sensor on Windows and from the infrastructure agent. Rows on the **AI tools** tab with this traffic show an **Active** chip. Imported network logs raise their own findings instead. See [Importing network logs](./ai-footprint/network-logs.md).
 
+A browser's own AI assistant, such as Gemini in Chrome or Copilot in Edge, also raises **Shadow AI — active** when there's evidence someone used it. The feature and browser are shown under the finding. See [Built-in browser AI](./ai-footprint/built-in-browser-ai.md#built-in-browser-ai-in-use).
+
 Whiteout judges the traffic by the process that sent it:
 
 | The traffic came from | It counts as governed when |
