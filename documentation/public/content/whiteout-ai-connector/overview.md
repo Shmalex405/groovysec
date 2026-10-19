@@ -31,11 +31,16 @@ everyone.
 ## Changes, not just reads
 
 Assistants can also **create, edit, comment and post** through the
-connector in GitHub, Jira, Confluence, Notion, Linear, Asana, Trello and
-Slack, and **delete, archive or merge** when an admin allows it. Each
-change is made as the person who asked, through their own account. Before
-it reaches the source, Whiteout checks the document's Policy / Available
-/ Hidden state, checks the text against that source's policy set, and
+connector in GitHub, Jira, Confluence, Notion, Linear, Asana, Trello,
+Slack, Google Drive, SharePoint, OneDrive, Box, Dropbox, Gmail, Outlook
+Mail, Google Calendar and Outlook Calendar, and **delete, archive or
+merge** when an admin allows it. Each change is made as the person who
+asked: through their own account, or for Google, through your
+Workspace's domain-wide delegation. Microsoft changes always use the
+person's own Microsoft connection, never zero-click access, and sending
+email or invitations waits for approval by default. Before a change
+reaches the source, Whiteout checks the document's Policy / Available /
+Hidden state, checks the text against that source's policy set, and
 watches for planted instructions. See
 [Write Actions](./whiteout-ai-connector/write-actions.md).
 
