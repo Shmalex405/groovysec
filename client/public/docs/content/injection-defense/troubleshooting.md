@@ -4,7 +4,7 @@
 
 ### Is Injection Defense on by default?
 
-No. It's off for every organisation until an admin switches it on under **Governance → Injection Defense → Settings**. While it's off, nothing is scanned or recorded, and Custom AI App Guard responses are unchanged.
+No. It's off for every organisation until an admin switches it on under **Agents → Injection Defense → Settings**. While it's off, nothing is scanned or recorded, and Custom AI App Guard responses are unchanged.
 
 ### Does it protect employees using ChatGPT, Claude, Gemini or Copilot in the browser or on the desktop?
 

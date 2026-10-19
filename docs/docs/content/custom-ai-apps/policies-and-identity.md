@@ -164,7 +164,7 @@ If your organisation has **Prompt Injection Defense** turned on, custom app traf
 - A detection can turn the decision into `block`, depending on your Injection Defense settings; in monitor mode it's reported only
 - A context document or tool result carrying instructions can be **quarantined**: the response lists which messages and documents to keep away from the model. The SDKs and auto-instrumentation replace quarantined turns with a short notice automatically
 
-The response gains `injection` and `quarantine` fields only when the feature is on. In an [audit-only organisation](#audit-only-organisations) the detector doesn't run: `injection` reports `"status": "off"` and there's no `quarantine` field. Findings appear on the app's **Injection** tab and under **Governance → Injection Defense**. See [Injection Defense](./injection-defense/overview.md) for how detection, blocking and quarantine are configured.
+The response gains `injection` and `quarantine` fields only when the feature is on. In an [audit-only organisation](#audit-only-organisations) the detector doesn't run: `injection` reports `"status": "off"` and there's no `quarantine` field. Findings appear on the app's **Injection** tab and under **Agents → Injection Defense**. See [Injection Defense](./injection-defense/overview.md) for how detection, blocking and quarantine are configured.
 
 ---
 

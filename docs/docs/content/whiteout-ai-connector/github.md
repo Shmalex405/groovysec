@@ -55,12 +55,18 @@ time, per user, against your org connector policy.
 
 | Scope | Why |
 |---|---|
-| `repo` | Read the content (issue bodies, PR descriptions, comments) of the repos you can access, so we can classify it before AI sees it. |
+| `repo` | Read the content (issue bodies, PR descriptions, comments) of the repos you can access, so we can classify it before AI sees it. It also lets the AI make the changes your admin allows (issues, pull requests, branches, files, comments). |
 | `read:org` | Resolve your org and team membership to enumerate the repos available to you. |
 
-We **do not** request write scopes, and we **do not** classify code in
-PR diffs — only PR descriptions, issue bodies, and comments. The deep
-classifier is trained on documents, not source code.
+GitHub's `repo` scope covers both reading and writing, so there's
+nothing extra to grant. What the AI may change is decided in Whiteout:
+by default it can create, edit and comment, while deleting files and
+merging pull requests stay off until an admin turns them on. See
+[Write Actions](./whiteout-ai-connector/write-actions.md).
+
+We **do not** classify code in PR diffs — only PR descriptions, issue
+bodies, and comments. The deep classifier is trained on documents, not
+source code.
 
 ## What to expect after connect
 
@@ -88,5 +94,6 @@ classifier is trained on documents, not source code.
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=github`. Each row
+Reads are on **Activity → AI Connector**; filter the source to GitHub.
+Changes the AI made or tried to make are on **Activity → MCP Activity**. Each row
 is tagged with the requesting user, so per-user activity is visible.

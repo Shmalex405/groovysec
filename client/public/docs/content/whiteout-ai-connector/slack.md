@@ -57,6 +57,11 @@ connector reads.
 
 The bot never reads a channel it hasn't been invited to.
 
+**Posting.** If your admin allows the AI to post in Slack, it posts **as
+the Whiteout bot**, only in channels the bot is a member of, and the bot
+needs Slack's `chat:write` scope. Each message is checked against your
+connector policy before it's sent. See [Write Actions](./whiteout-ai-connector/write-actions.md).
+
 ## What to expect after connect
 
 - **Access = bot membership.** Assistants can surface messages only
@@ -79,4 +84,5 @@ The bot never reads a channel it hasn't been invited to.
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=slack`.
+Reads are on **Activity → AI Connector**; filter the source to Slack.
+Changes the AI made or tried to make are on **Activity → MCP Activity**.

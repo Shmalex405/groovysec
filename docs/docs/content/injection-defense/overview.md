@@ -2,7 +2,7 @@
 
 A prompt injection is text that tries to take control of an AI system. Some attacks are typed directly into the chat. Others arrive hidden in content the AI reads on the user's behalf: a document, an email, a web page, a ticket or a tool result. **Prompt Injection Defense** checks that content before it reaches the model, acts on what it finds, and keeps a tamper-evident record of every request it checks.
 
-Find it under **Governance → Injection Defense**. The page is titled **Prompt Injection Defense**.
+Find it under **Agents → Injection Defense**. The page is titled **Prompt Injection Defense**.
 
 > **Off by default.** Injection Defense is a separate feature that you switch on for your organisation. Until you do, nothing is scanned or recorded. You can still try the detector with **Test the detector**. See [Configuration](./injection-defense/configuration.md).
 
@@ -85,6 +85,7 @@ Injection Defense runs on the surfaces where content passes through the Whiteout
 |---|---|---|
 | **Guard API**, **SDK**, **Auto-instrumented**, **Gateway** (your Custom AI Apps) | Each request's latest user prompt, system prompt, tool messages and retrieved documents. The model's final reply is also checked, as tool content. | The Guard verdict carries the result. **Block** turns the decision into a block. **Quarantine** lists the documents and messages to drop. The Whiteout SDKs (0.3 and later) drop quarantined content automatically. |
 | **AI Connector (MCP)** | Each item returned by the connector's content-reading tools (search, get and read on every connected source), after connector policy has run | **Quarantine** replaces that item's text with a removal notice. **Block** fails the whole tool call. **Warn** and **Record** pass the result through with an annotation. |
+| **AI Connector changes** | The text of every change the AI makes through the connector (pages, issues, comments, messages, files). For sources where changes are allowed, what the AI reads there is also scanned, **even when Injection Defense is off**, to mark a session that read planted instructions. | With Injection Defense **off**, or set to **Record**, the change goes through flagged. Set to **Block** or **Quarantine**, text with planted instructions is refused and a change in a tainted session is held for approval. See [Write Actions](./whiteout-ai-connector/write-actions.md#planted-instructions-prompt-injection). |
 | **IDE / coding agent** | Content a coding agent read (file contents, command output, fetched pages) that the Whiteout VS Code extension flagged locally as high or critical | Detection and audit. The extension shows its own warning; the server verdict does not stop the agent. |
 | **OpenTelemetry** | Model calls reported by apps that send traces to Whiteout | Record only, after the fact. Traces are never blocked. |
 | **Scan API** | Text submitted directly to Whiteout's injection scan endpoint by a signed-in user | The verdict is returned to the caller. |

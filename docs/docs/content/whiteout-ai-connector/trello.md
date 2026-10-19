@@ -52,9 +52,13 @@ time, per user, against your org connector policy.
 ## Scopes / permissions
 
 Trello authenticates with an **API key + token** pair (not standard
-OAuth). The intended per-user flow requests **read-only** access — we
-do not request `write` or `account` scopes, and Whiteout never modifies
-your boards.
+OAuth). The per-user flow requests `read`, plus `write` while your admin
+allows the AI to change Trello (create, update, move and comment on
+cards; closing a card stays off by default). We never request the
+`account` scope. Every change is checked against your connector policy
+first; see [Write Actions](./whiteout-ai-connector/write-actions.md). If you connected before your
+organization allowed changes, you'll see **Grant write access** on
+**Connect your sources**: reconnect once.
 
 ## What to expect after connect
 
@@ -78,5 +82,6 @@ your boards.
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=trello`. Each row
+Reads are on **Activity → AI Connector**; filter the source to Trello.
+Changes the AI made or tried to make are on **Activity → MCP Activity**. Each row
 is tagged with the requesting user, so per-user activity is visible.

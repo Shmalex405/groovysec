@@ -1,6 +1,6 @@
 # The Injection Defense Console
 
-This page walks through every part of **Governance → Injection Defense**: the header, the four tabs, the scan detail drawer and the **Test the detector** dialog. For what each setting *does*, see [Configuration and rollout](./injection-defense/configuration.md). For how to work a detection, see [Investigating detections](./injection-defense/investigating-events.md).
+This page walks through every part of **Agents → Injection Defense**: the header, the four tabs, the scan detail drawer and the **Test the detector** dialog. For what each setting *does*, see [Configuration and rollout](./injection-defense/configuration.md). For how to work a detection, see [Investigating detections](./injection-defense/investigating-events.md).
 
 ## Who can use it
 
