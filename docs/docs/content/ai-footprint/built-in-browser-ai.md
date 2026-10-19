@@ -12,15 +12,17 @@ Desktop Guard reports this as part of its browser profile scan, on macOS and Win
 
 | Feature | Browser | Checked before send | Browser AI policy choices |
 |---|---|---|---|
-| **Copilot in Edge** (the sidebar and the toolbar Copilot button) | Microsoft Edge | **Windows:** yes, by Desktop Guard. **macOS:** detection only. | Allow, Turn off, Allow but block page reading |
+| **Copilot in Edge** (the sidebar, the toolbar Copilot button and the Microsoft 365 Copilot app in an Edge tab) | Microsoft Edge | **Windows:** yes, by Desktop Guard 1.8.119 or later. **macOS:** detection only. | Allow, Turn off, Allow but block page reading |
 | **Gemini in Chrome** | Google Chrome | Not yet: detection only | Allow, Turn off |
 | **Brave Leo** | Brave | No: detection only | Allow, Turn off |
 | **Firefox AI chatbot** (the sidebar chatbot) | Firefox | No: detection only | Allow, Turn off |
 | **Opera Aria** | Opera | No: detection only | None. Whiteout knows of no enterprise policy for Aria. |
 
-**Copilot in Edge on Windows.** Desktop Guard checks what people type and attach in the Copilot pane before it's sent, the same way it checks the Copilot desktop app. A prompt that breaks your policies is blocked or warned about. If Desktop Guard can't read the pane, the prompt goes through as normal and is recorded as not checked.
+**Copilot in Edge on Windows.** Desktop Guard 1.8.119 and later checks what people type and attach in the Copilot pane before it's sent, the same way it checks the Copilot desktop app. A prompt that breaks your policies is blocked or warned about. If Desktop Guard can't read the pane, the prompt goes through as normal and is recorded as not checked.
 
-**Copilot in Edge on macOS** is detection only. Edge on macOS doesn't expose the pane's content to the accessibility interface Desktop Guard reads, so there's nothing for it to check. Use the Browser AI policy to control it there.
+It also checks the **Microsoft 365 Copilot app when Edge opens it in a tab**. Some Edge versions show that app as the New Tab page. Browser extensions can't run on Edge's New Tab page, so Desktop Guard covers it, and blocking **M365 Copilot Chat** under **Integrations → AI Applications** applies there too. Copilot on `copilot.com` in an ordinary tab is checked by the browser extension, so nothing is checked twice.
+
+**Copilot in Edge on macOS** is detection only, including the Microsoft 365 Copilot app on Edge's New Tab page. Edge on macOS doesn't expose that content to the accessibility interface Desktop Guard reads, so there's nothing for it to check. Use the Browser AI policy to control it there.
 
 **Gemini in Chrome** is detection only for now. Checks before send are coming. Gemini in Chrome also isn't offered in some regions, or to some accounts. Where it isn't offered, AI Footprint shows **Not in this browser**.
 

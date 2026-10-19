@@ -20,7 +20,7 @@ Known sites are in Whiteout's catalog.
 - **Microsoft:** Microsoft Copilot (web), Microsoft 365 Copilot (web)
 - **Others:** Perplexity (web), Le Chat (Mistral), Grok (web), DeepSeek (web), You.com, Poe, HuggingChat
 
-**Microsoft Copilot has moved to copilot.com.** `copilot.microsoft.com` now redirects to `copilot.com`. Browser extension 1.16.0 and later checks prompts on `copilot.com` and in the Microsoft 365 Copilot app, and blocking **Microsoft Copilot** under **Integrations → AI Applications** covers `copilot.com` too. Older extension versions don't load on `copilot.com`, so prompts there aren't checked until the extension updates.
+**Microsoft Copilot has moved to copilot.com.** `copilot.microsoft.com` now redirects to `copilot.com`. Browser extension 1.16.0 and later checks prompts on `copilot.com` and in the Microsoft 365 Copilot app, and blocking **Microsoft Copilot** under **Integrations → AI Applications** covers `copilot.com` too. Older extension versions don't load on `copilot.com`, so prompts there aren't checked until the extension updates. When Edge shows the Microsoft 365 Copilot app as its New Tab page, the extension can't run there; on Windows, Desktop Guard 1.8.119 and later checks it instead (see [Built-in browser AI](./built-in-browser-ai.md)).
 
 A governed site never raises a shadow AI finding. Its row shows how many devices and people use it and, where the extension can tell, which [kinds of account](./ai-footprint/account-types.md) they use. If someone uses a governed site from a browser or profile without the extension, that's a [browser coverage](./ai-footprint/browser-coverage.md) gap.
 
