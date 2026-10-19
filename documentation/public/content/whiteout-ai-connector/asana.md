@@ -51,7 +51,11 @@ time, per user, against your org connector policy.
 |---|---|
 | `default` | Read the tasks, stories, and projects you can access, so we can classify them before AI sees them. |
 
-We **do not** request write scopes. Whiteout never modifies your Asana.
+Asana's `default` scope covers both reading and writing, so there's
+nothing extra to grant. What the AI may change (create and update
+tasks, add comments) is decided in Whiteout, and every change is
+checked against your connector policy first. See
+[Write Actions](./whiteout-ai-connector/write-actions.md).
 
 ## What to expect after connect
 
@@ -77,5 +81,6 @@ We **do not** request write scopes. Whiteout never modifies your Asana.
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=asana`. Each row
+Reads are on **Activity → AI Connector**; filter the source to Asana.
+Changes the AI made or tried to make are on **Activity → MCP Activity**. Each row
 is tagged with the requesting user, so per-user activity is visible.

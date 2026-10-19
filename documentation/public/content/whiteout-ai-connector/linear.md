@@ -49,9 +49,13 @@ time, per user, against your org connector policy.
 | Scope | Why |
 |---|---|
 | `read` | Read the issues and comments you can access, so we can classify them before AI sees them. |
+| `write` | Create and update issues and add comments, when your admin allows the AI to change Linear. |
 
-We **do not** request write scopes. Whiteout never modifies your
-Linear workspace.
+Whiteout asks for `write` only while at least one kind of change is
+allowed for Linear. Every change is checked against your connector
+policy first; see [Write Actions](./whiteout-ai-connector/write-actions.md). If you connected before your
+organization allowed changes, you'll see **Grant write access** on
+**Connect your sources**: reconnect once.
 
 ## What to expect after connect
 
@@ -76,5 +80,6 @@ Linear workspace.
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=linear`. Each row
+Reads are on **Activity → AI Connector**; filter the source to Linear.
+Changes the AI made or tried to make are on **Activity → MCP Activity**. Each row
 is tagged with the requesting user, so per-user activity is visible.

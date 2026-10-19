@@ -6,8 +6,8 @@ This page covers what to do when Injection Defense flags something: where detect
 
 | Place | What you see |
 |---|---|
-| **Governance → Injection Defense → Audit log** | Every scan, passed or flagged, from every surface. This is the system of record. |
-| **Governance → Injection Defense → Overview** | Trends: volume, outcomes, categories, surfaces, top rules and apps |
+| **Agents → Injection Defense → Audit log** | Every scan, passed or flagged, from every surface. This is the system of record. |
+| **Agents → Injection Defense → Overview** | Trends: volume, outcomes, categories, surfaces, top rules and apps |
 | **Coverage → Custom AI Apps** | The app list's **Injection** tile, and each app's **Overview**, **Injection** and **Activity** tabs, filtered to that app |
 | **Governance → Prompt Review** | Reached from a scan's **Open in Prompt Review** link, when the scan belongs to a user-aware Custom AI App prompt |
 | **Activity → IDE Activity** | IDE scans that were flagged also appear as an injection warning for the user and AI tool |

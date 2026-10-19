@@ -63,13 +63,17 @@ Confluence uses **two credentials with different jobs**:
 
 ## Scopes / permissions
 
-Per-user connect requests a single read scope:
-
 | Scope | Why |
 |---|---|
 | `read:confluence-content.all` | Read the Confluence content the connecting user can access, for classification and serving. |
+| `write:confluence-content` | Create and update pages and add comments, when your admin allows the AI to change Confluence. |
 
-Read-only — we never request write access.
+Whiteout asks for `write:confluence-content` only while at least one kind
+of change is allowed for Confluence. Hidden and policy-restricted pages
+can't be changed, and the text of every change is checked against your
+connector policy; see [Write Actions](./whiteout-ai-connector/write-actions.md). If you connected before your
+organization allowed changes, you'll see **Grant write access** on
+**Connect your sources**: reconnect once.
 
 ## What to expect after connect
 
@@ -97,4 +101,5 @@ Read-only — we never request write access.
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=confluence`.
+Reads are on **Activity → AI Connector**; filter the source to Confluence.
+Changes the AI made or tried to make are on **Activity → MCP Activity**.

@@ -44,7 +44,7 @@ Click a call to open **Call details**: the decision, who, model, tokens and eval
 
 ### Injection tab
 
-When your organisation has Prompt Injection Defense on, this tab lists every scan of the app's traffic, with the same detail drawer as **Governance → Injection Defense**.
+When your organisation has Prompt Injection Defense on, this tab lists every scan of the app's traffic, with the same detail drawer as **Agents → Injection Defense**.
 
 ### Policy & identity tab
 

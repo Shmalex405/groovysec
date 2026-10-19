@@ -1,6 +1,6 @@
 # Configuration and Rollout
 
-Injection Defense has one set of settings for your whole organisation. They live under **Governance → Injection Defense → Settings**, and every control saves as soon as you change it. This page explains each setting, how settings combine into an action, how suppressions work, and how to roll the feature out without disrupting anyone.
+Injection Defense has one set of settings for your whole organisation. They live under **Agents → Injection Defense → Settings**, and every control saves as soon as you change it. This page explains each setting, how settings combine into an action, how suppressions work, and how to roll the feature out without disrupting anyone.
 
 ## Settings reference
 
@@ -85,7 +85,7 @@ When enforcement is enabled for your organisation, Injection Defense resumes fro
 
 ### In the console
 
-- The **Audit-only mode** banner at the top of **Governance → Injection Defense** reads: *"**Audit-only mode** — Prompt Injection Defense needs policy enforcement, which isn't enabled for your organization. You can review the settings here, but changes are disabled. Contact your account team to enable enforcement. It is off: nothing is scanned or recorded, and your saved settings resume when enforcement is enabled. Past detections stay available under Overview and Audit log."*
+- The **Audit-only mode** banner at the top of **Agents → Injection Defense** reads: *"**Audit-only mode** — Prompt Injection Defense needs policy enforcement, which isn't enabled for your organization. You can review the settings here, but changes are disabled. Contact your account team to enable enforcement. It is off: nothing is scanned or recorded, and your saved settings resume when enforcement is enabled. Past detections stay available under Overview and Audit log."*
 - The header chip reads **Off (audit-only)**.
 - **Test the detector** is disabled. Hovering over it shows *"Audit-only mode — the detector doesn't run"*.
 - The **Settings** tab is greyed out, and every control on it is disabled, including **Add suppression** and **Revoke**.

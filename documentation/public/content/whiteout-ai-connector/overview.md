@@ -28,6 +28,17 @@ reads only what that user is already permitted to see in the source.
 There is no single shared admin credential handing the same data to
 everyone.
 
+## Changes, not just reads
+
+Assistants can also **create, edit, comment and post** through the
+connector in GitHub, Jira, Confluence, Notion, Linear, Asana, Trello and
+Slack, and **delete, archive or merge** when an admin allows it. Each
+change is made as the person who asked, through their own account. Before
+it reaches the source, Whiteout checks the document's Policy / Available
+/ Hidden state, checks the text against that source's policy set, and
+watches for planted instructions. See
+[Write Actions](./whiteout-ai-connector/write-actions.md).
+
 ## Route each source only through Whiteout
 
 Whiteout's guarantee — **every document and email is vetted against

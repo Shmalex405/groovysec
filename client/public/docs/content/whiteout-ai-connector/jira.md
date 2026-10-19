@@ -57,8 +57,13 @@ time, per user, against your org connector policy.
 | Scope | Why |
 |---|---|
 | `read:jira-work` | Read the issues and comments in the projects you can access, so we can classify them before AI sees them. |
+| `write:jira-work` | Create and update issues, transition them and add comments, when your admin allows the AI to change Jira. |
 
-We **do not** request write scopes. Whiteout never modifies your Jira.
+Whiteout asks for `write:jira-work` only while at least one kind of change
+is allowed for Jira. Every change is checked against your connector policy
+first; see [Write Actions](./whiteout-ai-connector/write-actions.md). If you connected before your organization
+allowed changes, you'll see **Grant write access** on **Connect your
+sources**: reconnect once.
 
 ## What to expect after connect
 
@@ -84,5 +89,6 @@ We **do not** request write scopes. Whiteout never modifies your Jira.
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=jira`. Each row
+Reads are on **Activity → AI Connector**; filter the source to Jira.
+Changes the AI made or tried to make are on **Activity → MCP Activity**. Each row
 is tagged with the requesting user, so per-user activity is visible.
