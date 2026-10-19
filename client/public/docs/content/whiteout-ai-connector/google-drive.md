@@ -83,8 +83,66 @@ files; delegation just removes the individual grant step.
 | Scanner (org-wide) | `drive.readonly` | Read the whole corpus once to classify every file before any AI sees it. |
 | Scanner (org-wide) | `drive.metadata.readonly` | Detect new/modified/deleted docs without re-reading content. |
 | Per-user serving | `drive.readonly` | At query time, read only the files that user's own account can access. |
+| Changes (Workspace delegation) | `drive` | Create, change, comment on and trash files as the person who asked, when your admin allows the AI to change Drive. |
 
-We **do not** request write scopes. Whiteout never modifies your Drive.
+Reads use only the read-only scopes. The `drive` scope is needed only
+for changes, and only on your Workspace's domain-wide delegation: a
+personal Google sign-in never makes changes. See
+[What the AI can change](#what-the-ai-can-change).
+
+## What the AI can change
+
+When your admin allows it, the AI can change Drive files as the person
+who asked. Changes go through your organization's Workspace delegation
+as that person, so they show up in Drive's own history under their
+name, not under Whiteout.
+
+| Kind of change | What the AI can do | Default |
+|---|---|---|
+| **Create** | Create a file from text: a Google Doc by default, or a plain text file | Allowed |
+| **Edit** | Replace a Google Doc's or text file's content, rename a file, move a file | Allowed |
+| **Comment & post** | Comment on a file | Allowed |
+| **Delete, archive & merge** | Move a file to the trash | **Off** |
+
+Set these in **Integrations → Whiteout AI Connector → Google Drive →
+What the AI can change**. Every change is checked first: a **Hidden**
+file is refused as not found, a file restricted by policy is refused,
+and the text is checked against Drive's policy set and for planted
+instructions. See [Write Actions](./whiteout-ai-connector/write-actions.md).
+
+### Limits
+
+- Content changes accept Google Docs and text files only: .txt, .md,
+  .csv, .json, .html, .xml, .yaml and .log. Word, Excel, PowerPoint and
+  other binary files can't have their content changed, but can still be
+  renamed or moved.
+- Uploads are capped at 5 MB.
+- File names can't contain `/` or `\`, and can't be `.` or `..`.
+- A file is checked by its own id. The folder a new file is created in
+  isn't checked, and is recorded as *not checked*.
+- After a change, Whiteout re-scans, so the new content gets a fresh
+  classification.
+
+### Before the AI can make changes
+
+Changes in Drive go only through your Google Workspace domain-wide
+delegation. A personal Google sign-in still serves reads, but never
+makes changes. A **Workspace super admin** adds this scope to
+Whiteout's existing delegation entry:
+
+```
+https://www.googleapis.com/auth/drive
+```
+
+In the Google Admin console, open **Security → Access and data control
+→ API controls → Domain-wide delegation**, edit Whiteout's client and
+add the scope to the end of the list. **Keep the scopes already there:
+saving replaces the whole list.**
+
+Until it's added, reads keep working and the AI is told your admin needs
+to add it (`org_grant_missing`). The **What the AI can change** panel
+shows exactly which scopes to add, with a button to copy them. See
+[Google Workspace (Zero-Click)](./whiteout-ai-connector/google-workspace-dwd.md#let-the-ai-make-changes-write-scopes).
 
 ## What to expect after connect
 
@@ -115,7 +173,8 @@ We **do not** request write scopes. Whiteout never modifies your Drive.
 
 ## Audit log
 
-Every Drive read through an AI assistant lands in **Admin → Audit →
-MCP Activity** tagged `integration=google_drive`. Each row shows the
-tool name (e.g. `gdrive_search_files`), the requesting user, the
-blocked-policy list, and which fields were redacted.
+Reads are on **Activity → AI Connector**; filter the source to Google
+Drive. Each row shows the tool name (e.g. `gdrive_search_files`), the
+requesting user, the blocked-policy list, and which fields were
+redacted. Changes the AI made or tried to make are on **Activity → MCP
+Activity**.

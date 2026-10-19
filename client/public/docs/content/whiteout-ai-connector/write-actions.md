@@ -1,9 +1,10 @@
 # Write Actions
 
 The Whiteout AI Connector doesn't only read. AI assistants can also
-**create, edit, comment and post** in eight connected sources, and
+**create, edit, comment and post** in 17 connected sources, and
 **delete, archive or merge** when you allow it. Every change is made
-**as the person who asked**, through their own connected account, and
+**as the person who asked** (see
+[Changes are made as the person](#changes-are-made-as-the-person)), and
 Whiteout checks it before it reaches the source:
 
 - **The document's state.** A document you've set to **Hidden**, or one
@@ -32,24 +33,64 @@ what it decided.
 | **Asana** | Tasks | Tasks | Comments | — |
 | **Trello** | Cards | Cards, moving cards between lists | Comments | Close (archive) a card |
 | **Slack** | — | — | Post a message (as the Whiteout bot) | — |
+| **Google Drive** | A file from text (a Google Doc by default, or a plain text file) | Replace a Google Doc's or text file's content, rename, move | Comments on a file | Move to the trash |
+| **SharePoint** | Upload a text file | Replace a text file's content, rename, move | — | Delete (goes to the recycle bin) |
+| **OneDrive** | Upload a text file | Replace a text file's content, rename, move | — | Delete (goes to the recycle bin) |
+| **Box** | Upload a text file | Replace a text file's content (as a new version), rename, move | Comments on a file | Move to the trash |
+| **Dropbox** | Upload a text file | Replace an existing text file's content, move or rename | — | Delete |
+| **Gmail** | Drafts (new, or a reply draft) | Change a draft | Send an email, reply or reply all | Move a message to the trash (recoverable for 30 days) |
+| **Outlook Mail** | Drafts (new, or a reply draft) | Change a draft (drafts only) | Send an email, reply or reply all | Move a message to Deleted Items |
+| **Google Calendar** | An event with no one else invited | Change an event without notifying anyone | Create or change an event that invites anyone besides the person, or send a change to the people already on it | Delete an event (with "notify", the default, attendees are told) |
+| **Outlook Calendar** | An event with no one else invited | Change an event that has no other attendees | Create or change an event that invites anyone besides the person, or change a meeting that already has other attendees | Cancel a meeting the person organizes (attendees get a cancellation), or delete their own event |
 
-The other connector sources (Google Drive, Gmail, Google Calendar,
-SharePoint, OneDrive, Outlook, Teams, Box, Dropbox, Salesforce, HubSpot,
-Zoom, Intercom and GitLab) stay read-only.
+In Google Drive, SharePoint, OneDrive, Box and Dropbox, the AI can
+change the content of text files only (and of Google Docs in Drive);
+see [Limits today](#limits-today). For Gmail,
+Outlook Mail, Google Calendar and Outlook Calendar, **Comment & post**
+means sending; see
+[Sending email and invitations](#sending-email-and-invitations).
+
+Microsoft Teams, Salesforce, HubSpot, Zoom, Intercom and GitLab stay
+read-only.
 
 The connector marks which of its tools change things and which only
 read, using the standard MCP tool annotations (`readOnlyHint`,
-`destructiveHint`). AI clients that ask before running a tool that
-changes something can use them.
+`destructiveHint`), for every source above. AI clients that ask before
+running a tool that changes something can use them.
+
+## Changes are made as the person
+
+Every change is made as the person who asked. Slack posts are the
+exception: they're made as the Whiteout bot. For the file, mail and
+calendar sources, a change also shows up in the source's own history
+under that person, not under Whiteout:
+
+| Sources | How the change is made |
+|---|---|
+| **Google Drive**, **Gmail**, **Google Calendar** | Only through your organization's Google Workspace domain-wide delegation, acting as the person. A personal Google sign-in still serves reads, but never makes changes. |
+| **SharePoint**, **OneDrive**, **Outlook Mail**, **Outlook Calendar** | Only through the person's own Microsoft connection. Never through your organization's zero-click (app-only) access, because changes made that way would show as made by the app. Zero-click reads keep working. |
+| **Box**, **Dropbox** | Through the person's own connected account. |
+
+The other write sources, apart from Slack, use each person's own
+connected account.
+
+What has to be set up first (write scopes for Google, each person's own
+connection for Microsoft, Box and Dropbox) is in
+[Reconnect for write access](#reconnect-for-write-access).
 
 ## The defaults
 
-| Kind of change | Default |
-|---|---|
-| **Create** | Allowed |
-| **Edit** | Allowed |
-| **Comment & post** | Allowed |
-| **Delete, archive & merge** | **Off** |
+| Kind of change | Most sources | Gmail, Outlook Mail, Google Calendar, Outlook Calendar |
+|---|---|---|
+| **Create** | Allowed | Allowed |
+| **Edit** | Allowed | Allowed |
+| **Comment & post** | Allowed | **Needs approval** |
+| **Delete, archive & merge** | **Off** | **Off** |
+
+For the mail and calendar sources, **Comment & post** is sending an
+email, a reply or an invitation, so it starts at **Needs approval**. A
+draft is a **Create**, so the AI can still prepare email while sending
+waits for a person.
 
 The defaults apply to sources you already expose and to sources you
 expose later. Every allowed change still goes through every check
@@ -59,6 +100,12 @@ below.
 > connector accepted every change its tools could make, with no
 > checks. Deleting GitHub files, merging GitHub pull requests and
 > archiving Notion pages now stay **off** until an admin turns them on.
+>
+> Google Drive, SharePoint, OneDrive, Box, Dropbox and the mail and
+> calendar sources were read-only before. If you already expose them,
+> the defaults above now apply to them, but the AI can't change anything
+> there until write access is in place. See
+> [Reconnect for write access](#reconnect-for-write-access).
 
 ## Choose what the AI can change
 
@@ -94,8 +141,8 @@ change.
 |---|---|---|
 | 1 | **Role** | The person's Whiteout role is **read-only**. |
 | 2 | **Permission** | This kind of change is **Off** for the source. |
-| 3 | **Write access** | The person's connected account wasn't granted write access. See [Reconnect for write access](#reconnect-for-write-access). |
-| 4 | **The document** | The document, or the page it would be created under, is **Hidden** or restricted by policy. |
+| 3 | **Write access** | The account the change would be made with can't make changes yet: the person needs to connect or reconnect, or your Google Workspace delegation doesn't include the write scopes. See [Reconnect for write access](#reconnect-for-write-access). |
+| 4 | **The document** | The document, the page it would be created under, or the email being replied to is **Hidden** or restricted by policy. |
 | 5 | **The text** | The text matches a policy in the source's policy set. |
 | 6 | **Planted instructions** | Injection Defense is on and the text carries planted instructions. See [Planted instructions](#planted-instructions-prompt-injection). |
 | 7 | **Approval and action policies** | The source is set to **Needs approval**, or one of your [Action Policies](#action-policies) holds or blocks the change. |
@@ -115,8 +162,24 @@ classification that governs reads:
 Creating a page under a **Hidden** or restricted Confluence or Notion
 page is refused, so content can't be planted inside a restricted tree.
 
+Replying to an email, or creating a reply draft to one, is refused the
+same way when the original message is **Hidden** or restricted by
+policy: you can't act on what you aren't allowed to see.
+
+Files, messages and events are checked by their own id. Some targets
+aren't checked, and are recorded as *not checked*:
+
+- the folder a new file is created in;
+- drafts;
+- calendars;
+- in Dropbox, a file addressed by a plain path. A file addressed by its
+  Dropbox id (`id:…`) is checked.
+
 After a change to a Confluence or Notion page, Whiteout re-scans that
 page, so its new content is classified within the normal sync cadence.
+After a change in Google Drive, SharePoint or OneDrive, Whiteout
+re-scans too, so the new content gets a fresh classification. In Box and
+Dropbox, a changed file is checked again the next time the AI reads it.
 
 ### The text
 
@@ -132,6 +195,11 @@ through the connector.
 - **Moves with no text**, such as moving a Trello card, skip this check.
 - **Files pushed to GitHub** are checked as text. Binary content is
   recorded as *not checked*.
+- **Files written to Google Drive, SharePoint, OneDrive, Box and
+  Dropbox** are checked as text. These sources accept text content only.
+- **Email** is checked as its subject, body and every recipient address.
+  **Calendar events** are checked as their title, description, location
+  and attendee addresses.
 - **If Whiteout's policy check is unavailable**, the change follows your
   organization's **Compliance fail behaviour** setting. With **Fail
   open** it goes through and is recorded as *not checked*; with **Fail
@@ -214,6 +282,62 @@ made. A change that was **denied** in the last hour is reported as
 denied if the AI tries it again, without asking the approvers a second
 time.
 
+## Sending email and invitations
+
+For Gmail, Outlook Mail, Google Calendar and Outlook Calendar,
+**Comment & post** is sending: something other people receive.
+
+| Counts as sending (Comment & post) | Doesn't count as sending |
+|---|---|
+| Sending an email, a reply or a reply all | Creating a draft (**Create**) or changing one (**Edit**) |
+| An event that invites anyone besides the person making it | An event with no one else invited (**Create**) |
+| Google Calendar: a change sent to the people already on the event ("notify") | Google Calendar: a change made without notifying anyone (**Edit**) |
+| Outlook Calendar: any change to a meeting that already has other attendees (it needs "notify") | Outlook Calendar: a change to an event with no other attendees (**Edit**) |
+
+**Drafts first.** A draft is a **Create**: nobody sees it until someone
+sends it. With the defaults, the AI can prepare email freely while every
+send waits for a person. We recommend this pattern: the AI drafts, and
+the person sends it themselves, or an approver approves the AI's send.
+
+**Bad input is refused first.** Before anything is held for approval,
+Whiteout refuses input a send can't go ahead with: an invalid address,
+a line break in an address or subject, more than 100 recipients, or a
+send with no "to" address. The AI is told what to fix right away, and
+no approval request is created.
+
+**When a send is held.** The AI says it's waiting on approval and gives
+the request code. Approvers decide in **Agents → Approvals**, or from
+the approval notification. Once it's approved, the AI retries the
+identical request and it's sent exactly once. A send that was denied
+isn't asked about again for an hour.
+
+**Sending outside your organization.** A send (an email, a reply or an
+invitation) that reaches any address outside your organization's own
+email domains is tagged as an **External send**, so any
+[Action Policy](#action-policies) for external sends applies too. A
+reply always counts as external, because the people it reaches come
+from the original message, not from the AI's request. **MCP Activity**
+shows each send's recipients: how many people, and which outside
+domains.
+
+Two deletes reach people too, and are tagged as external sends the same
+way: cancelling an Outlook meeting (attendees get a cancellation), and
+deleting a Google Calendar event with "notify" on (the default). They
+stay **Delete** changes, so this matters once you turn Delete on: your
+Action Policies for external sends then apply to them. A Google Calendar
+delete without "notify" reaches no one.
+
+**Calendar invitations.** An event is a send when it invites anyone
+besides the person making it.
+
+- **Google Calendar:** "notify" decides whether Google emails the
+  attendees about a change.
+- **Outlook Calendar:** Outlook always emails attendees when a meeting
+  with attendees is created or changed. So changing a meeting that
+  already has other attendees needs "notify", and that counts as
+  sending. Only the meeting organizer can change or cancel a meeting
+  through the AI; attendees decline in Outlook themselves.
+
 ## What the AI is told when a change isn't made
 
 Every refusal and hold comes back as one structured result, never a raw
@@ -236,6 +360,8 @@ vendor error or stack trace:
 | `role_read_only` | The person's Whiteout account is read-only. |
 | `write_type_off` | This kind of change is turned off for the source. |
 | `reconnect_for_write` | The person needs to reconnect the source to grant write access. |
+| `connect_for_write` | The person reads this Microsoft source through your organization's zero-click access. They need to connect their own Microsoft account before the AI can make changes as them. |
+| `org_grant_missing` | Your Google Workspace domain-wide delegation doesn't include this source's write scopes yet. Reads keep working. |
 | `target_not_found` | Not found (also returned for **Hidden** documents). |
 | `target_restricted` | The document is restricted by policy. |
 | `content_blocked` | The text matched a policy; `policies` lists which. |
@@ -250,7 +376,8 @@ vendor error or stack trace:
 ## Reconnect for write access
 
 Connecting a source has always asked the person's account for read
-access only. Some sources need the person to grant write access too:
+access only. Before the AI can make changes, the account it makes them
+with needs write access too:
 
 | Source | What's needed |
 |---|---|
@@ -260,18 +387,78 @@ access only. Some sources need the person to grant write access too:
 | **GitHub**, **Asana** | Nothing. The existing grant already allows changes. |
 | **Notion** | Nothing. The AI can change only pages that are shared with Whiteout's Notion integration. |
 | **Slack** | The Whiteout bot needs Slack's `chat:write` scope. Messages are posted as the bot, only in channels it's a member of. |
+| **Google Drive**, **Gmail**, **Google Calendar** | Nobody reconnects. A Google Workspace super admin adds the write scopes to Whiteout's domain-wide delegation. See [Google Workspace: add the write scopes](#google-workspace-add-the-write-scopes). |
+| **SharePoint**, **OneDrive**, **Outlook Mail**, **Outlook Calendar** | Your operator adds the delegated write permissions to Whiteout's Entra app, and each person connects their own Microsoft account once. See [Microsoft 365: each person's own connection](#microsoft-365-each-persons-own-connection). |
+| **Box** | Your operator enables **Write all files and folders** (`root_readwrite`) on the Box app. People reconnect once. |
+| **Dropbox** | Your operator enables `files.content.write` on the Dropbox app. People reconnect once. |
 
 - **Who needs to reconnect.** In the **What the AI can change** panel,
   Whiteout shows how many connected people need to reconnect before the
-  AI can make changes as them.
+  AI can make changes as them. For Microsoft sources, it says that
+  people who read zero-click need to connect their own account. For
+  Google sources, it says whether your Workspace delegation allows
+  changes yet.
 - **How they reconnect.** Those people see **Grant write access** next to
-  the source on **Connect your sources**.
-- **If they try first,** the AI tells them to reconnect, with a link,
-  instead of failing at the source.
+  the source on **Connect your sources**. People who read a Microsoft
+  source zero-click see **Connect to make changes**.
+- **If they try first,** the AI tells them to connect or reconnect, with
+  a link, instead of failing at the source.
 
 Whiteout asks for write access only while at least one kind of change
 is Allowed or Needs approval for a source. If every row is Off, connect
-stays read-only.
+stays read-only. Google sources are different: their write access comes
+from your Workspace delegation, not from each person's connect.
+
+### Google Workspace: add the write scopes
+
+Changes in Google Drive, Gmail and Google Calendar go only through your
+organization's Google Workspace domain-wide delegation. A personal
+Google sign-in still serves reads, but never makes changes.
+
+| Source | Scopes to add |
+|---|---|
+| **Google Drive** | `https://www.googleapis.com/auth/drive` |
+| **Gmail** | `https://www.googleapis.com/auth/gmail.compose`, `https://www.googleapis.com/auth/gmail.modify` |
+| **Google Calendar** | `https://www.googleapis.com/auth/calendar.events` |
+
+1. A Workspace super admin opens the Google Admin console: **Security →
+   Access and data control → API controls → Domain-wide delegation**.
+2. They edit Whiteout's client and add the scopes to the end of the
+   list.
+3. **Keep the scopes already there: saving replaces the whole list.**
+
+Until the scopes are added, reads keep working and the AI is told your
+Google Workspace admin needs to add them (`org_grant_missing`). Each
+Google source's **What the AI can change** panel shows exactly which
+scopes to add, with a button to copy them. The full steps are in
+[Google Workspace (Zero-Click)](./whiteout-ai-connector/google-workspace-dwd.md#let-the-ai-make-changes-write-scopes).
+
+### Microsoft 365: each person's own connection
+
+Changes in SharePoint, OneDrive, Outlook Mail and Outlook Calendar use
+each person's own Microsoft connection, never your organization's
+zero-click access, because changes made with app-only access would show
+as made by the app. Zero-click reads keep working.
+
+| Source | Delegated permissions to add to Whiteout's Entra app |
+|---|---|
+| **SharePoint** | `Files.ReadWrite.All`, `Sites.ReadWrite.All` |
+| **OneDrive** | `Files.ReadWrite.All` |
+| **Outlook Mail** | `Mail.ReadWrite`, `Mail.Send` |
+| **Outlook Calendar** | `Calendars.ReadWrite` |
+
+- **Your operator** adds these permissions to Whiteout's Entra app
+  (Whiteout-hosted: ask your account manager).
+- **Each person connects once.** People who read these sources zero-click
+  see **Connect to make changes** on **Connect your sources**. Until
+  they connect, the AI is told to connect first (`connect_for_write`).
+  People who connected before changes were turned on see **Grant write
+  access** and reconnect once.
+- **One Microsoft connection covers all four sources.** The consent
+  screen asks only for the write permissions of the sources your
+  organization has exposed and allows changes in.
+
+See [Microsoft 365 (Zero-Click)](./whiteout-ai-connector/microsoft-365-zero-click.md#changes-need-each-persons-own-connection).
 
 ## Agents
 
@@ -371,15 +558,42 @@ done, and MCP Activity labels those results **Would be refused
 
 ## Limits today
 
+- **Some sources stay read-only.** Microsoft Teams, Salesforce, HubSpot,
+  Zoom, Intercom and GitLab can't be changed through the connector yet.
 - **GitHub targets aren't checked yet.** GitHub content is classified per
   file and issue without its repository, so a GitHub change is recorded
   with its document as *not checked*. Its text is still checked.
 - **Slack channels are usually not checked.** Channels rarely carry a
   classification, so the channel is recorded as *not checked*. The
   message text is still checked.
-- **Read-only sources stay read-only.** Changing documents in Drive,
-  SharePoint or OneDrive, drafting mail, and posting in Teams aren't
-  available yet.
+- **File content is text only.** Content changes accept text files only
+  (.txt, .md, .csv, .json, .html, .xml, .yaml and .log), and Google Docs
+  in Drive. Word, Excel, PowerPoint and other binary files can't have
+  their content changed. They can still be renamed or moved where the
+  source allows it.
+- **Upload size.** Uploads are capped at 4 MB on SharePoint and
+  OneDrive, and 5 MB on Google Drive.
+- **Folders.** On SharePoint, OneDrive and Dropbox, folders can't be
+  changed, moved or deleted, because Whiteout can't check everything
+  inside a folder.
+- **Names.** File and folder names can't contain `/` or `\`, and can't be
+  `.` or `..`.
+- **Dropbox edits** replace only a file that already exists, so an edit
+  can't create a new file.
+- **Email.** Plain-text bodies only, no attachments, up to 100
+  recipients per email, and a body of up to 1 MB.
+- **Addresses.** Recipient and attendee addresses must be plain ASCII
+  email addresses (`Name <pat@example.com>` is fine). Addresses with
+  non-ASCII characters are refused for now.
+- **Existing drafts.** The AI can't send a draft that already exists. It
+  creates the draft and the person sends it from Gmail or Outlook, or
+  the AI sends a new email. In Gmail, a draft that has attachments, or
+  one with only an HTML body, can't be rewritten by the AI. In Outlook,
+  only drafts can be changed.
+- **Calendar events.** Google Calendar event times need a time zone:
+  an offset in the time, or a time zone setting. For an all-day event,
+  the end date is the day after the event ends. Replacing a Google
+  Calendar event's attendee list keeps the remaining guests' RSVPs.
 - **Matched text is refused, not redacted.** The AI is told what matched
   so the person can remove it.
 
