@@ -15,7 +15,7 @@ Microsoft Entra ID integration provides:
 | Feature | Supported |
 |---------|-----------|
 | OIDC Authentication | Yes |
-| SAML Authentication | No (use Generic SAML) |
+| SAML Authentication | No |
 | Group Synchronization | Yes |
 | Just-in-Time Provisioning | Yes |
 | SCIM Provisioning | Yes (see the SCIM setup guide) |

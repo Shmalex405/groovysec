@@ -15,7 +15,7 @@ Google Workspace integration provides:
 | Feature | Supported |
 |---------|-----------|
 | OIDC Authentication | Yes |
-| SAML Authentication | No (use Generic SAML) |
+| SAML Authentication | No |
 | Group Synchronization | Yes |
 | Just-in-Time Provisioning | Yes |
 | Domain Restriction | Yes |
@@ -198,14 +198,6 @@ Restrict login to specific domains:
 2. Configure **Hosted Domain**:
    - Single domain: `company.com`
    - Multiple domains: `company.com,subsidiary.com`
-
-### Organizational Unit Filtering
-
-Limit access by Google Workspace organizational unit:
-
-1. In Google Admin Console, go to **Apps** > **Web and mobile apps**
-2. Add Whiteout AI as a custom SAML app (for OU-based access control)
-3. Configure access by organizational unit
 
 ### Custom Claims
 

@@ -6,7 +6,6 @@ This guide walks you through configuring Okta as your Single Sign-On provider fo
 
 Okta integration provides:
 - **OIDC Authentication**: OpenID Connect-based secure login
-- **SAML Authentication**: SAML 2.0 support for enterprise requirements
 - **Group Sync**: Automatic synchronization of Okta groups
 - **SCIM Provisioning**: Automated user provisioning (Enterprise)
 
@@ -15,10 +14,12 @@ Okta integration provides:
 | Feature | Supported |
 |---------|-----------|
 | OIDC Authentication | Yes |
-| SAML Authentication | Yes |
+| SAML Authentication | Not available. Use OIDC |
 | Group Synchronization | Yes |
 | Just-in-Time Provisioning | Yes |
 | SCIM Provisioning | Yes (Enterprise) |
+
+> **Note:** SAML sign-in is not available in Whiteout AI. Connect Okta with OIDC, as described below.
 
 ## Prerequisites
 
@@ -29,7 +30,7 @@ Before you begin, ensure you have:
 
 ---
 
-## Option A: OIDC Setup (Recommended)
+## OIDC Setup
 
 ### Step 1: Create OIDC Application in Okta
 
@@ -87,93 +88,6 @@ Before you begin, ensure you have:
 
 ---
 
-## Option B: SAML Setup
-
-### Step 1: Create SAML Application in Okta
-
-1. Log in to your Okta Admin Console
-2. Navigate to **Applications** > **Applications**
-3. Click **Create App Integration**
-4. Select:
-   - **Sign-in method**: SAML 2.0
-5. Click **Next**
-
-### Step 2: Configure SAML Settings
-
-**General Settings:**
-
-| Field | Value |
-|-------|-------|
-| **App name** | `Whiteout AI` |
-| **App logo** | Upload (optional) |
-| **App visibility** | Configure as needed |
-
-**SAML Settings:**
-
-| Field | Value |
-|-------|-------|
-| **Single sign-on URL** | `https://your-whiteout-instance.com/api/auth/saml/callback` |
-| **Audience URI (SP Entity ID)** | `https://your-whiteout-instance.com` |
-| **Default RelayState** | Leave blank |
-| **Name ID format** | EmailAddress |
-| **Application username** | Email |
-
-### Step 3: Configure Attribute Statements
-
-Add attribute statements:
-
-| Name | Name format | Value |
-|------|-------------|-------|
-| `email` | Unspecified | `user.email` |
-| `firstName` | Unspecified | `user.firstName` |
-| `lastName` | Unspecified | `user.lastName` |
-
-### Step 4: Configure Group Attribute Statements (Optional)
-
-| Name | Name format | Filter | Value |
-|------|-------------|--------|-------|
-| `groups` | Unspecified | Matches regex | `.*` |
-
-Or filter to specific groups:
-- Filter: `Starts with`
-- Value: `WhiteoutAI-`
-
-### Step 5: Get SAML Metadata
-
-1. After saving, go to **Sign On** tab
-2. Click **View SAML setup instructions**
-3. Note:
-   - **Identity Provider Single Sign-On URL**
-   - **Identity Provider Issuer**
-4. Download **X.509 Certificate**
-
-Or download **IdP metadata** URL directly.
-
-### Step 6: Configure Whiteout AI (SAML)
-
-1. Navigate to **Settings** > **Identity Provider**
-2. Click **Add Identity Provider**
-3. Select **Okta**
-4. Choose **SAML** as the protocol
-5. Enter:
-
-| Field | Value |
-|-------|-------|
-| **Display Name** | `Okta SSO (SAML)` |
-| **IdP SSO URL** | From Step 5 |
-| **IdP Issuer** | From Step 5 |
-| **Certificate** | Upload certificate from Step 5 |
-
-Or use metadata URL:
-
-| Field | Value |
-|-------|-------|
-| **Metadata URL** | Okta metadata URL |
-
-6. Click **Save & Test Connection**
-
----
-
 ## Group Synchronization
 
 ### Enable Group Sync
@@ -196,10 +110,6 @@ Configure groups claim in Okta:
 | **Include in token type** | ID Token |
 | **Value type** | Groups |
 | **Filter** | Matches regex: `.*` |
-
-### For SAML:
-
-Groups are included via the Group Attribute Statement configured earlier.
 
 ### Map Groups to Roles
 
@@ -257,12 +167,6 @@ Groups are included via the Group Attribute Statement configured earlier.
 3. Authenticate with Okta credentials
 4. Verify redirect to Whiteout AI
 
-### Test SAML Sign-In
-
-1. Option A: SP-initiated - Start from Whiteout AI
-2. Option B: IdP-initiated - Click Whiteout AI tile in Okta dashboard
-3. Verify successful authentication
-
 ### Verify Group Membership
 
 1. Trigger a group sync
@@ -279,22 +183,9 @@ Groups are included via the Group Attribute Statement configured earlier.
 - Check Okta domain format (no https://)
 - Ensure app is active in Okta
 
-### "Invalid signature" Error (SAML)
-
-- Re-download certificate from Okta
-- Check certificate hasn't expired
-- Verify correct certificate is uploaded
-
-### "Audience mismatch" (SAML)
-
-- Verify Audience URI matches exactly
-- Check for trailing slashes
-- Ensure SP Entity ID is configured correctly
-
 ### Groups Not Appearing
 
 - **OIDC**: Verify groups claim is configured in authorization server
-- **SAML**: Check group attribute statement is configured
 - Ensure user is assigned to groups in Okta
 
 ### User Not Provisioned
@@ -339,18 +230,6 @@ Groups are included via the Group Attribute Statement configured earlier.
 | `family_name` | Last Name |
 | `name` | Display Name |
 | `groups` | Group Memberships |
-
-### SAML Attributes
-
-| SAML Attribute | Whiteout AI Attribute |
-|----------------|----------------------|
-| `NameID` | Email / User ID |
-| `email` | Email |
-| `firstName` | First Name |
-| `lastName` | Last Name |
-| `groups` | Group Memberships |
-
----
 
 ## Revoking Access
 
