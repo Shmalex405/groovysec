@@ -107,7 +107,8 @@ return here:
 | [JumpCloud](./sso-providers/jumpcloud.md) | |
 | [Auth0](./sso-providers/auth0.md) | Sign-in only, see the note below |
 | [Generic OIDC](./sso-providers/generic-oidc.md) | Sign-in only, see the note below |
-| [Generic SAML](./sso-providers/generic-saml.md) | Listed as **Generic SAML (Beta)**. Sign-in only, see the note below |
+
+SAML sign-in is not available. The admin app may still list **Generic SAML (Beta)**, but it can't complete a sign-in. Use OIDC, which every provider above supports. See [Generic SAML](./sso-providers/generic-saml.md).
 
 ### Two things that decide whether the rest of this works
 
@@ -118,7 +119,7 @@ sign-in permissions produces a connection that logs users in perfectly and
 syncs nobody. And because the steps below map devices to people by email
 address, no users means no devices get governed either.
 
-The provider list marks the last three rows **Sign-in only**. Those have no
+The provider list marks the last two rows **Sign-in only**. Those have no
 directory to enumerate at all, so the directory part of step 3 does not apply
 to them. Add people by SCIM or by invitation instead.
 
