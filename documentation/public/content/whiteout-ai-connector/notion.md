@@ -76,9 +76,12 @@ Notion uses **two credentials with different jobs**:
 
 Notion uses an integration-token model. During **Connect** you grant
 **per-page access** — the connector only sees pages you explicitly
-share with the integration, read-only. We do **not** request write
-capabilities. The Notion OAuth app is fully wired, so per-user connect
-is live today.
+share with the integration. The integration can read, update and insert
+content, so when your admin allows it, the AI can create pages and
+database items and append to pages, but only in pages you've shared.
+Archiving pages stays off until an admin turns it on. See
+[Write Actions](./whiteout-ai-connector/write-actions.md). The Notion OAuth app is fully wired, so per-user
+connect is live today.
 
 ## What to expect after connect
 
@@ -107,4 +110,5 @@ is live today.
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=notion`.
+Reads are on **Activity → AI Connector**; filter the source to Notion.
+Changes the AI made or tried to make are on **Activity → MCP Activity**.
