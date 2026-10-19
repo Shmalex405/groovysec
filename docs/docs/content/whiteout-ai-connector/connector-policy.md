@@ -166,7 +166,22 @@ it can explain *that* something was withheld without leaking *what*.
 
 ## Audit-only mode
 
-If your organization runs Whiteout in [audit-only mode](./governance/audit-only-mode.md), the connector
+In [audit-only mode](./governance/audit-only-mode.md) the connector works
+as a **standard connector**. You connect and expose every source exactly as
+in enforcement mode, and people connect their own accounts the same way.
+What changes is what Whiteout does with each request: it records instead of
+enforcing. The connector card says so, and its **What enforcement adds**
+button shows this comparison:
+
+| | Audit-only | With enforcement |
+|---|---|---|
+| **What the AI reads** | Served in full. Every read is logged with what your policies would have withheld. | Content your policies block is withheld or removed before the AI sees it. |
+| **Changes the AI makes** | Go through. Each is logged with what your settings would have refused or held. See [Write Actions](./whiteout-ai-connector/write-actions.md#audit-only-mode). | Refused, held for approval or allowed, per source and per kind of change. |
+| **Planted instructions** | Not scanned. | Detected in what the AI reads and writes, then flagged, held or refused. |
+| **Document scans** (Confluence, Drive, SharePoint, OneDrive, Notion) | Wait. Documents are served, and the scan starts once enforcement is on. | Run, so every document is classified and listed in the Documents view. |
+| **Policy sets and document overrides** | View only. | Editable. |
+
+The rest of this section gives the detail. In audit-only mode the connector
 never withholds anything. Every read is still vetted against the source's
 policy set, but only on document metadata and patterns: the compliance
 engine doesn't classify content in audit-only mode (see
@@ -251,16 +266,17 @@ in audit-only mode:
   the continuous sync of document stores still sync documents, but
   leave them unclassified. Nothing is stored in their place, so the
   classification isn't marked as done.
-- **Scans stay queued.** Exposing a document store still works and its
+- **Scans stay queued.** Exposing a document store works as usual and its
   documents are served, but the initial scan waits and starts once
-  enforcement is enabled. The scan step of the expose wizard and the
-  source's scan progress are greyed out under a banner that reads
-  *"**Audit-only mode** — Document classification scans need policy
-  enforcement, which isn't enabled for your organization. You can review
-  the settings here, but changes are disabled. Contact your account team
-  to enable enforcement."*, followed by a note that the source is still
-  exposed and served, and that the scan starts once enforcement is
-  enabled.
+  enforcement is enabled. The expose wizard skips the scan step: it checks
+  the source is reachable, explains that the scan starts once enforcement
+  is on, and offers **Expose integration**. On an exposed source, the scan
+  progress is greyed out under a banner that reads *"**Audit-only mode** —
+  Document classification scans need policy enforcement, which isn't
+  enabled for your organization. You can review the settings here, but
+  changes are disabled. Contact your account team to enable
+  enforcement."*, followed by a note that the source is still exposed and
+  served, and that the scan starts once enforcement is enabled.
 - **API.** Testing the scanner endpoint (`POST /connector/test-gpu`),
   attaching one to a scan run (`POST /connector/scan-runs/{id}/attach-gpu`)
   and starting a backfill (`POST /connector/backfill/{id}`) are rejected
