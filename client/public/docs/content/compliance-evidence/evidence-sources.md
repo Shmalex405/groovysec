@@ -9,9 +9,9 @@ To see which controls use each source, see the [Control Catalog](./compliance-ev
 | Whiteout surface | Evidence it produces |
 |------------------|----------------------|
 | **Browser extension** | Runtime enforcement (prompts evaluated and blocked), Accountable Override records, monitoring coverage, tamper events |
-| **Desktop Guard** | Runtime enforcement, Accountable Override records, AI tool inventory and shadow-AI findings (discovery), monitoring coverage, tamper events |
-| **IDE plugins** (VS Code, JetBrains) | Runtime enforcement (IDE events and flags), monitoring coverage, prompt-injection detection (VS Code extension scans) |
-| **Infrastructure agent and SDK** | Runtime enforcement (infrastructure calls), AI tool inventory (discovery), tamper-evident infrastructure log, agent tool-call governance, model output scanning, AI consumption limits, AI app and provider restrictions |
+| **Desktop Guard** | Runtime enforcement, Accountable Override records, AI tool inventory and shadow-AI findings (discovery), monitoring coverage, tamper events, agent tool-call governance (Claude Code and Codex hooks) |
+| **IDE plugins** (VS Code, JetBrains) | Runtime enforcement (IDE events and flags), monitoring coverage, prompt-injection detection (VS Code extension scans), agent tool-call governance (Claude Code and Codex hooks the VS Code extension installs) |
+| **Infrastructure agent and SDK** | Runtime enforcement (infrastructure calls), AI tool inventory (discovery), tamper-evident infrastructure log, agent tool-call governance (infrastructure-agent tool calls are observed only), model output scanning (Guard API and SDK), AI consumption limits, AI app and provider restrictions |
 | **MDM integration** | AI tool inventory and shadow-AI findings (discovery), MDM-managed devices in monitoring coverage |
 | **File scanning** | Runtime enforcement (file scans), Accountable Override records for files |
 | **Identity provider sync and SCIM** | Identity and access lifecycle |
@@ -125,19 +125,27 @@ In [audit-only mode](./compliance-evidence/overview.md#audit-only-discovery-mode
 - **Partial** for a period that spans a mode change, with the number of recorded days it was off, for example *It was off on 12 of 90 recorded days (audit-only mode).*
 
 **Agent tool-call governance**
-Tool calls by AI agents: infrastructure-agent tool calls and how many were blocked, Whiteout AI Connector tool calls by outcome, and infrastructure policy groups that evaluate tool calls.
+Agent tool calls checked before they ran. It counts:
 
-- **Present:** agent or connector tool calls were seen in the period.
-- **Partial:** tool calls were seen, but your organization was in audit-only mode for the whole period, so they were recorded but not evaluated against policy.
-- **Absent:** tool-call governance is configured or the infrastructure agent is deployed, but no tool calls were seen.
-- **Not deployed:** neither the infrastructure agent nor the Whiteout AI Connector is in use.
+- risky Claude Code and Codex actions recorded by Supervised Autonomy, by verdict, including how many were blocked or held for approval;
+- approval requests, by outcome;
+- tool calls stopped by the coding-agent hook;
+- Whiteout AI Connector tool calls, by outcome;
+- how many action rules are enforcing and how many are in shadow mode.
+
+Blocking and approval rules are opt-in. Infrastructure-agent tool calls are counted separately, as observed. The infrastructure agent isn't in the request path, so its tool calls are recorded after they run and are never counted as blocked.
+
+- **Present:** risky agent actions, coding-agent hook blocks or connector tool calls were recorded in the period.
+- **Partial:** either tool calls were recorded only after they ran (by the infrastructure agent, or reported by a client afterwards), or your organization was in audit-only mode for the whole period, so tool calls were recorded but not evaluated against policy.
+- **Absent:** action rules are configured, or Desktop Guard or the IDE extension is deployed, but no agent tool calls were checked.
+- **Not deployed:** none of Desktop Guard, the IDE extension and the Whiteout AI Connector is in use.
 
 **Model output scanning**
-Model responses scanned and flagged for policy violations, on infrastructure-agent and SDK traffic. Flags are recorded; the SDK doesn't block output.
+Model responses that applications send to the Guard API or SDK, scanned and flagged for policy violations. The SDK withholds a failing response by default; an application can opt out and record flags only. Replies in workforce AI tools are captured for the audit trail, not scanned.
 
 - **Present:** at least one response was scanned or flagged in the period.
-- **Absent:** the infrastructure agent is deployed but no responses were scanned.
-- **Not deployed:** neither the infrastructure agent nor the SDK is in use.
+- **Absent:** an infrastructure agent, SDK or Custom AI App is set up, but no responses were scanned.
+- **Not deployed:** no application uses the Guard API or SDK.
 
 **AI app and provider restrictions**
 AI apps blocked for your organization or for groups, and infrastructure policy groups that restrict providers or models. Sample rows: control, target, scope.
@@ -148,7 +156,7 @@ AI apps blocked for your organization or for groups, and infrastructure policy g
 In [audit-only mode](./compliance-evidence/overview.md#audit-only-discovery-mode), restrictions are kept but not applied, so this source reads **Absent** for a fully audit-only period and **Partial** for a period that spans a mode change. The summary counts what's configured and says it isn't enforced, for example *2 AI apps blocked and 1 infrastructure policy group restricting providers or models configured, but not enforced: this organization is in audit-only mode.*
 
 **AI consumption limits**
-Spend-threshold notification rules, per-call token limits on infrastructure policy groups, and spend thresholds crossed in the period. If per-hour rate limits are configured, the evidence notes that they are stored but not yet enforced server-side.
+Spend-threshold notification rules, per-call token limits on infrastructure policy groups, and spend thresholds crossed in the period. Spend thresholds raise an alert when crossed; they don't stop AI use. If per-hour rate limits are configured, the evidence notes that they are stored but not yet enforced server-side.
 
 - **Present:** a spend threshold or token limit is configured.
 - **Absent:** neither is configured.

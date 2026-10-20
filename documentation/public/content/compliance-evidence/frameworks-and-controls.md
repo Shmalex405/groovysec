@@ -16,7 +16,7 @@ The catalog is the same for every customer, and each pack cites the version it u
 | Colorado AI Act (deployer duties) | SB 24-205 (C.R.S. 6-1-1701 et seq.), as amended | AI-relevant subset | 5 | 0 | 2 | 3 |
 | Singapore Model AI Governance Framework for Generative AI | IMDA / AI Verify Foundation (May 2024) | Full framework | 9 | 2 | 4 | 3 |
 | **AI security** | | | | | | |
-| OWASP Top 10 for LLM Applications | 2025 | Full framework | 10 | 4 | 3 | 3 |
+| OWASP Top 10 for LLM Applications | 2025 | Full framework | 10 | 1 | 7 | 2 |
 | **Information security** | | | | | | |
 | ISO/IEC 27001 Annex A (AI-relevant) | ISO/IEC 27001:2022 | AI-relevant subset | 16 | 10 | 5 | 1 |
 | SOC 2 (AI-relevant criteria) | AICPA Trust Services Criteria (2017, revised points of focus 2022) | AI-relevant subset | 8 | 4 | 4 | 0 |
@@ -28,7 +28,7 @@ The catalog is the same for every customer, and each pack cites the version it u
 | **Sector regulation** | | | | | | |
 | NYDFS Cybersecurity Regulation (23 NYCRR 500) | As amended November 2023 | AI-relevant subset | 7 | 2 | 5 | 0 |
 | DORA (Digital Operational Resilience Act) | Regulation (EU) 2022/2554 (applies from 17 Jan 2025) | AI-relevant subset | 6 | 3 | 3 | 0 |
-| **Total** | | | **188** | **69** | **76** | **43** |
+| **Total** | | | **188** | **66** | **80** | **42** |
 
 Some frameworks carry a note, which appears on every pack's scope page:
 
@@ -38,7 +38,7 @@ Some frameworks carry a note, which appears on every pack's scope page:
 - **EU AI Act:** deployer-side articles only. Article 26 applies to high-risk AI systems: Annex III obligations apply from 2 December 2027 after the Digital Omnibus, and Annex I from 2 August 2028. Article 50 transparency applies from August 2026. Re-verify the dates before relying on them.
 - **Colorado AI Act:** deployer duties for high-risk AI systems that make consequential decisions. The effective date was moved to 30 June 2026; re-verify before relying on it.
 - **Singapore:** the framework's nine dimensions. It is voluntary guidance.
-- **OWASP Top 10 for LLM Applications:** for third-party AI tools, Whiteout governs your organization's side of each risk. For your own LLM applications, coverage depends on the infrastructure agent or SDK being in the request path.
+- **OWASP Top 10 for LLM Applications:** for third-party AI tools, Whiteout governs your organization's side of each risk. For your own LLM applications, coverage depends on the application calling the Guard API or SDK. The infrastructure agent observes AI calls but isn't in the request path.
 - **NIST SP 800-53:** base controls only. NIST's AI-specific control overlays are still in development and aren't mapped yet.
 - **HIPAA:** Security Rule safeguards and the Privacy Rule minimum-necessary standard. The proposed 2025 Security Rule amendments aren't mapped.
 - **NYDFS:** read with DFS's 2024 guidance on AI-related cybersecurity risks.
