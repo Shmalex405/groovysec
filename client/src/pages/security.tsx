@@ -27,7 +27,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function Security() {
   usePageMeta(
     "Trust & Security",
-    "How Groovy Security secures its own products: SOC 2 Type II in progress, encryption in transit and at rest, isolated per-customer deployments, audit logging, and a 48-hour critical patch commitment."
+    "How Groovy Security secures its own products: SOC 2 Type I in progress, encryption in transit and at rest, isolated per-customer deployments, audit logging, and a 48-hour critical patch commitment."
   );
 
   const pillars = [
@@ -35,7 +35,7 @@ export default function Security() {
       icon: ShieldCheck,
       title: "Compliance Program",
       items: [
-        "SOC 2 Type II certification in progress",
+        "SOC 2 Type I in progress",
         "Security-first development lifecycle",
         "NVIDIA Inception program member",
         "Documented threat models for our products",
@@ -65,7 +65,7 @@ export default function Security() {
       title: "Data Ownership & Audit",
       items: [
         "Your data stays yours: exportable on request",
-        "Complete audit trails across all products",
+        "Audit trails for policy decisions and admin changes",
         "SIEM/SOC delivery of security events",
         "Sensitive content excluded from system logs",
       ],
@@ -75,7 +75,7 @@ export default function Security() {
       title: "Vulnerability Management",
       items: [
         "Critical patches shipped within 48 hours",
-        "Continuous dependency and supply-chain scanning",
+        "Continuous vulnerability scanning of cloud workloads and container images",
         "Coordinated disclosure welcomed",
       ],
     },
@@ -83,7 +83,7 @@ export default function Security() {
       icon: Mail,
       title: "Report a Concern",
       items: [
-        "Security reports: support@groovysec.com",
+        "Security reports: security@groovysec.com",
         "Acknowledgement target: 2 business days",
         "Good-faith research will never be penalized",
         "Encrypted channels available on request",
@@ -118,7 +118,7 @@ export default function Security() {
             <ScrollReveal delay={0.4}>
               <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-8 text-sm text-[#6E7B8C]">
                 {[
-                  "SOC 2 Type II in progress",
+                  "SOC 2 Type I in progress",
                   "Encryption in transit & at rest",
                   "48-hour critical patch commitment",
                 ].map((item) => (
