@@ -40,7 +40,7 @@ export default function Government() {
 
   const stats = [
     { value: "54", label: "Pre-Built Policies" },
-    { value: ">99%", label: "Benchmark Accuracy" },
+    { value: "96.8%", label: "Corrected Benchmark Accuracy" },
     { value: "8", label: "Policy Domains" },
     { value: "<320ms", label: "Evaluation Latency (P95)" },
   ];
