@@ -80,7 +80,7 @@ export default function Demo() {
               <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-[#6E7B8C]">
                 {[
                   "NVIDIA Inception member",
-                  "SOC 2 Type II in progress",
+                  "SOC 2 Type I in progress",
                   "US & EU presence",
                 ].map((item) => (
                   <span key={item} className="flex items-center">
