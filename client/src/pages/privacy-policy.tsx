@@ -138,8 +138,10 @@ export default function PrivacyPolicy() {
           </ul>
           <p className="text-[#51617A] mt-3">
             Where you choose to interact with AI models through our platform,
-            successful AI prompts may be shared with the AI provider you have
-            selected so that they can offer and improve their services.
+            prompts that pass our compliance checks are sent to the AI provider
+            you have selected so that it can respond. We use these providers'
+            business API services, whose terms do not allow them to use your
+            prompts to train their models.
           </p>
         </section>
 
@@ -271,7 +273,7 @@ export default function PrivacyPolicy() {
           <p className="text-[#51617A]">
             We keep this Privacy Policy under regular review and will post any
             updates on this page. The current version was last updated on{" "}
-            <span className="font-medium">15 September 2025</span>.
+            <span className="font-medium">19 October 2026</span>.
           </p>
         </section>
 
@@ -311,7 +313,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <p className="text-[#6E7B8C] text-sm mt-12 pt-8 border-t border-[#0F1B2D]/10 text-center">
-          Last updated: 15 September 2025
+          Last updated: 19 October 2026
         </p>
       </div>
     </main>
