@@ -152,13 +152,13 @@ IMDA / AI Verify Foundation (May 2024) · catalog `2026.09.26.1` · full framewo
 
 ## OWASP Top 10 for LLM Applications
 
-2025 · catalog `2026.10.23.1` · full framework · 10 controls
+2025 · catalog `2026.10.23.2` · full framework · 10 controls
 
 | Control | Title | Rating | Evidence sources |
 |---------|-------|--------|------------------|
 | LLM01 | Prompt injection | Supports | Prompt-injection detection |
 | LLM02 | Sensitive information disclosure | Evidence | Runtime enforcement, Model output scanning, Enforced AI-use policy |
-| LLM03 | Supply chain | Supports | AI tool inventory, Shadow-AI findings |
+| LLM03 | Supply chain | Evidence | AI tool inventory, Shadow-AI findings |
 | LLM04 | Data and model poisoning | Supports | Engine training consent, Tamper-evident admin audit log, Policy change history, Fine-tuning and training-data activity |
 | LLM05 | Improper output handling | Supports | Agent tool-call governance, Model output scanning |
 | LLM06 | Excessive agency | Supports | Agent tool-call governance, AI connector data access |

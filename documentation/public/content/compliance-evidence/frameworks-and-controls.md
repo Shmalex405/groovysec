@@ -16,7 +16,7 @@ The catalog is the same for every customer, and each pack cites the version it u
 | Colorado AI Act (deployer duties) | SB 24-205 (C.R.S. 6-1-1701 et seq.), as amended | AI-relevant subset | 5 | 0 | 2 | 3 |
 | Singapore Model AI Governance Framework for Generative AI | IMDA / AI Verify Foundation (May 2024) | Full framework | 9 | 2 | 4 | 3 |
 | **AI security** | | | | | | |
-| OWASP Top 10 for LLM Applications | 2025 | Full framework | 10 | 1 | 8 | 1 |
+| OWASP Top 10 for LLM Applications | 2025 | Full framework | 10 | 2 | 7 | 1 |
 | **Information security** | | | | | | |
 | ISO/IEC 27001 Annex A (AI-relevant) | ISO/IEC 27001:2022 | AI-relevant subset | 16 | 10 | 5 | 1 |
 | SOC 2 (AI-relevant criteria) | AICPA Trust Services Criteria (2017, revised points of focus 2022) | AI-relevant subset | 8 | 4 | 4 | 0 |
@@ -28,7 +28,7 @@ The catalog is the same for every customer, and each pack cites the version it u
 | **Sector regulation** | | | | | | |
 | NYDFS Cybersecurity Regulation (23 NYCRR 500) | As amended November 2023 | AI-relevant subset | 7 | 2 | 5 | 0 |
 | DORA (Digital Operational Resilience Act) | Regulation (EU) 2022/2554 (applies from 17 Jan 2025) | AI-relevant subset | 6 | 3 | 3 | 0 |
-| **Total** | | | **188** | **66** | **81** | **41** |
+| **Total** | | | **188** | **67** | **80** | **41** |
 
 Some frameworks carry a note, which appears on every pack's scope page:
 
