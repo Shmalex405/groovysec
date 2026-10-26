@@ -30,14 +30,14 @@ Connect your organization's tools to enable AI governance across your data sourc
 Configure identity providers for secure authentication:
 
 - **Microsoft Entra ID** - OIDC, Groups
-- **Okta** - OIDC, SAML, Groups
+- **Okta** - OIDC, Groups
 - **Google Workspace** - OIDC, Groups
-- **OneLogin** - OIDC, SAML, Groups
-- **Ping Identity** - OIDC, SAML, Groups
-- **JumpCloud** - OIDC, SAML, Groups
+- **OneLogin** - OIDC, Groups
+- **Ping Identity** - OIDC, Groups
+- **JumpCloud** - OIDC, Groups
 - **Auth0** - OIDC
 - **Generic OIDC** - Any OIDC-compliant provider
-- **Generic SAML** - Any SAML 2.0 provider (Beta)
+- **Generic SAML** - Not available. Use OIDC
 
 ### SOC/SIEM Destinations
 
