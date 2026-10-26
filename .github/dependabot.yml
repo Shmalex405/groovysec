@@ -1,0 +1,63 @@
+# Dependabot version updates (WO-304, SOC-112; control VUL-01), same policy as
+# the platform repo: checked weekly on Monday; minor and patch bumps grouped
+# into one PR per entry, majors one per PR; a 7-day cooldown before proposing a
+# new release. Security updates need "Dependabot alerts" and "security updates"
+# on in the repository settings; the security group bundles them.
+# Each Dependabot PR still needs a WO Change ticket key in its title before it
+# merges (pr-guardrails jira-key check). A dependency bump does not change the
+# live site by itself: GitHub Pages serves the committed docs/ build, which only
+# changes when npm run build:docs is re-run and committed.
+
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+    open-pull-requests-limit: 3
+    cooldown:
+      default-days: 7
+    groups:
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: [minor, patch]
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+    open-pull-requests-limit: 3
+    cooldown:
+      default-days: 7
+    groups:
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: [minor, patch]
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
+
+  - package-ecosystem: npm
+    directory: /documentation
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+    open-pull-requests-limit: 3
+    cooldown:
+      default-days: 7
+    groups:
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: [minor, patch]
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
