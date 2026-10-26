@@ -139,9 +139,10 @@ export default function PrivacyPolicy() {
           <p className="text-[#51617A] mt-3">
             Where you choose to interact with AI models through our platform,
             prompts that pass our compliance checks are sent to the AI provider
-            you have selected so that it can respond. We use these providers'
-            business API services, whose terms do not allow them to use your
-            prompts to train their models.
+            you have selected so that it can respond. That provider handles them
+            under its own terms and privacy policy. Groovy Security does not use
+            your prompts or other content to train AI models, and we do not train
+            AI models.
           </p>
         </section>
 
