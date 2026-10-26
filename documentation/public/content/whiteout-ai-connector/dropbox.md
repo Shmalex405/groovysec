@@ -59,15 +59,60 @@ Two concerns are kept separate:
 
 ## Scopes Whiteout requests
 
-Read-only scopes only:
-
 | Scope | Why |
 |---|---|
 | `files.content.read` | At read time, read file content for classification and serving. |
 | `files.metadata.read` | Enumerate the connecting user's files. |
+| `files.content.write` | Upload, change, move, rename and delete files as the person who asked, when your admin allows the AI to change Dropbox. |
 
-No write scopes, and no scanner credential (Dropbox has no org-wide
-corpus scan).
+Whiteout asks for `files.content.write` only while at least one kind of
+change is allowed for Dropbox. There's no scanner credential (Dropbox
+has no org-wide corpus scan). See
+[What the AI can change](#what-the-ai-can-change).
+
+## What the AI can change
+
+When your admin allows it, the AI can change Dropbox files as the
+person who asked, through that person's own Dropbox connection. The
+changes show up in Dropbox's own history under their name, not under
+Whiteout.
+
+| Kind of change | What the AI can do | Default |
+|---|---|---|
+| **Create** | Upload a text file | Allowed |
+| **Edit** | Replace an existing text file's content, move or rename a file | Allowed |
+| **Delete, archive & merge** | Delete a file | **Off** |
+
+Dropbox has no **Comment & post** changes. Set these in **Integrations
+→ Whiteout AI Connector → Dropbox → What the AI can change**. Every
+change is checked first: a **Hidden** file is refused as not found, a
+file restricted by policy is refused, and the text is checked against
+Dropbox's policy set and for planted instructions. See
+[Write Actions](./whiteout-ai-connector/write-actions.md).
+
+### Limits
+
+- Content changes accept text files only: .txt, .md, .csv, .json,
+  .html, .xml, .yaml and .log. Word, Excel, PowerPoint and other binary
+  files can't have their content changed, but can still be moved or
+  renamed.
+- An edit replaces only a file that already exists, so it can't create a
+  new file.
+- Folders can't be changed, moved or deleted, because Whiteout can't
+  check everything inside a folder.
+- File names can't contain `/` or `\`, and can't be `.` or `..`.
+- A file addressed by its Dropbox id (`id:…`) is checked. A file
+  addressed by a plain path is recorded as *not checked*, and so is the
+  folder a new file is created in.
+- A changed file is checked again the next time the AI reads it.
+
+### Before the AI can make changes
+
+1. **Your operator** enables `files.content.write` on the Dropbox app.
+2. **Each person** who connected Dropbox before changes were turned on
+   reconnects once: they see **Grant write access** on **Connect your
+   sources**. If they try first, the AI tells them to reconnect, with a
+   link.
 
 ## What to expect after connect
 
@@ -92,4 +137,5 @@ corpus scan).
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=dropbox`.
+Reads are on **Activity → AI Connector**; filter the source to Dropbox.
+Changes the AI made or tried to make are on **Activity → MCP Activity**.

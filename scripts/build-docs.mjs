@@ -45,7 +45,7 @@ const ROUTES = [
     path: "/whiteout-ai",
     title: `Whiteout AI — Enterprise AI Governance | ${SITE_NAME}`,
     description:
-      "Intercept and govern every AI interaction across browser, desktop, IDE, infrastructure, and cloud. A full 27B-parameter LLM compliance engine with 60+ policies across 9 domains and greater than 99% benchmark accuracy.",
+      "Govern AI use across browser, desktop, IDE, infrastructure, and cloud. A full LLM compliance engine that runs locally, with 54 policies across 8 domains, 96.8% corrected accuracy on a 100,000-prompt public benchmark, and a 99.9% pass rate on everyday prompts.",
   },
   {
     path: "/talks",
@@ -83,7 +83,7 @@ const ROUTES = [
     path: "/whiteout-ai/government",
     title: `Whiteout AI for Government & Public Sector | ${SITE_NAME}`,
     description:
-      "AI governance built for the public sector — 60+ pre-built policies across 9 domains, greater than 99% benchmark accuracy, SSO/MDM/SIEM integration, and audit-ready proof of every AI control.",
+      "AI governance built for the public sector: 54 pre-built policies across 8 domains, 96.8% corrected accuracy on a 100,000-prompt public benchmark with a 99.9% pass rate on everyday prompts, SSO/MDM/SIEM integration, and audit-ready proof of every AI control.",
   },
   {
     path: "/whiteout-ai/academic-integrity",
@@ -95,7 +95,7 @@ const ROUTES = [
     path: "/whiteout-ai/security-whitepaper",
     title: `Whiteout AI Security Whitepaper | ${SITE_NAME}`,
     description:
-      "How Whiteout AI enables safe enterprise adoption of generative AI — 60+ policies across 9 compliance domains, 99.59% validated accuracy on the public compliance benchmark, prompt-injection defense for agentic AI, MCP governance, and security-first architecture.",
+      "How Whiteout AI enables safe enterprise adoption of generative AI: 54 policies across 8 compliance domains, 96.8% corrected accuracy and a 99.9% everyday-prompt pass rate on the public 100,000-prompt benchmark, a full LLM compliance engine run locally, prompt-injection defense for agentic AI, MCP governance, and security-first architecture.",
   },
   {
     path: "/about",
@@ -138,7 +138,7 @@ const ROUTES = [
     path: "/security",
     title: `Trust & Security | ${SITE_NAME}`,
     description:
-      "How Groovy Security secures its own products — SOC 2 Type II in progress, encryption in transit and at rest, isolated per-customer deployments, audit logging, and a 48-hour critical patch commitment.",
+      "How Groovy Security secures its own products — SOC 2 Type I in progress, encryption in transit and at rest, isolated per-customer deployments, audit logging, and a 48-hour critical patch commitment.",
   },
   {
     path: "/terms-of-service",

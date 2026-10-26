@@ -1,0 +1,6 @@
+Contact: mailto:security@groovysec.com
+Contact: mailto:support@groovysec.com
+Expires: 2027-10-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://groovysec.com/.well-known/security.txt
+Policy: https://groovysec.com/security

@@ -151,29 +151,31 @@ export default function PrivacyPolicy() {
             How do we store and protect your data?
           </h2>
           <p className="text-[#51617A] mb-3">
-            We host customer data on Amazon Web Services (AWS) in either{" "}
-            <span className="font-medium">
-              EU-West-1 (Ireland) or US-West-2 (Oregon)
-            </span>{" "}
-            depending on the organization’s primary region.
+            We host customer data on Amazon Web Services (AWS) in{" "}
+            <span className="font-medium">US-West-2 (Oregon)</span>. If we add
+            another hosting region, we will update this policy before any
+            customer data is stored there.
           </p>
           <p className="text-[#51617A] mb-3">
             Each customer organization is provisioned with its own dedicated,
             encrypted S3 bucket, database and compliance engine, protected by a
             unique AWS KMS key. Data is encrypted at rest (AES-256 via KMS) and
-            in transit (TLS 1.2/1.3).
+            in transit between your users and our platform (TLS 1.2 or 1.3).
           </p>
           <p className="text-[#51617A] mb-3">
-            Access is limited using role-based access control (RBAC), strict
-            least-privilege IAM policies, private VPC networking and continuous
-            monitoring through AWS CloudTrail, GuardDuty and internal logging.
+            Access is limited using role-based access control (RBAC) in the
+            product, restricted administrative access to our AWS environment and
+            private VPC networking. We monitor the environment with AWS
+            CloudTrail, Amazon GuardDuty, AWS Security Hub and internal logging.
             Our architecture is designed to support compliance with standards
             such as HIPAA, GDPR and ISO&nbsp;27001.
           </p>
           <p className="text-[#51617A]">
             We retain your personal data only for as long as there is a
-            contractual or legitimate business need. At the end of the retention
-            period, we aim to delete or anonymize personal data within 30 days.
+            contractual or legitimate business need. When that need ends, or when
+            you ask us to delete it (see{" "}
+            <span className="italic">Your data protection rights</span> below), we
+            delete or anonymize it and confirm to you when it is done.
           </p>
         </section>
 
@@ -273,7 +275,7 @@ export default function PrivacyPolicy() {
           <p className="text-[#51617A]">
             We keep this Privacy Policy under regular review and will post any
             updates on this page. The current version was last updated on{" "}
-            <span className="font-medium">19 October 2026</span>.
+            <span className="font-medium">26 October 2026</span>.
           </p>
         </section>
 
@@ -313,7 +315,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <p className="text-[#6E7B8C] text-sm mt-12 pt-8 border-t border-[#0F1B2D]/10 text-center">
-          Last updated: 19 October 2026
+          Last updated: 26 October 2026
         </p>
       </div>
     </main>

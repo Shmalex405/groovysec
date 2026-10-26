@@ -40,7 +40,7 @@ export default function Government() {
 
   const stats = [
     { value: "54", label: "Pre-Built Policies" },
-    { value: ">99%", label: "Benchmark Accuracy" },
+    { value: "96.8%", label: "Corrected Benchmark Accuracy" },
     { value: "8", label: "Policy Domains" },
     { value: "<320ms", label: "Evaluation Latency (P95)" },
   ];
@@ -204,7 +204,7 @@ export default function Government() {
 
                   <div className="text-sm text-[#51617A] flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    SOC 2 Type II in progress • NVIDIA Inception member
+                    SOC 2 Type I in progress • NVIDIA Inception member
                   </div>
                 </ScrollReveal>
               </div>

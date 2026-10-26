@@ -31,11 +31,16 @@ everyone.
 ## Changes, not just reads
 
 Assistants can also **create, edit, comment and post** through the
-connector in GitHub, Jira, Confluence, Notion, Linear, Asana, Trello and
-Slack, and **delete, archive or merge** when an admin allows it. Each
-change is made as the person who asked, through their own account. Before
-it reaches the source, Whiteout checks the document's Policy / Available
-/ Hidden state, checks the text against that source's policy set, and
+connector in GitHub, Jira, Confluence, Notion, Linear, Asana, Trello,
+Slack, Google Drive, SharePoint, OneDrive, Box, Dropbox, Gmail, Outlook
+Mail, Google Calendar and Outlook Calendar, and **delete, archive or
+merge** when an admin allows it. Each change is made as the person who
+asked: through their own account, or for Google, through your
+Workspace's domain-wide delegation. Microsoft changes always use the
+person's own Microsoft connection, never zero-click access, and sending
+email or invitations waits for approval by default. Before a change
+reaches the source, Whiteout checks the document's Policy / Available /
+Hidden state, checks the text against that source's policy set, and
 watches for planted instructions. See
 [Write Actions](./whiteout-ai-connector/write-actions.md).
 
@@ -142,8 +147,8 @@ needs a one-time **operator setup** at the deployment level:
    allowlist — no separate scanner credential needed; the expose wizard
    now tells you which scanner credential, if any, is in place.) In
    [audit-only mode](./whiteout-ai-connector/connector-policy.md#classification-scans-in-audit-only-mode)
-   the source is exposed and served, but the scan step is greyed out and
-   the initial scan waits until enforcement is enabled.
+   the source is exposed and served like any other: the wizard skips the
+   scan step, and the initial scan waits until enforcement is enabled.
 3. **Each user — connect their own account** (per-user sources) — except
    where the provider is zero-click (Google DWD), which needs no
    per-user step.

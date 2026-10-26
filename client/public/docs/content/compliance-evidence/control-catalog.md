@@ -107,7 +107,7 @@ NIST AI 600-1 (July 2024), companion to the AI RMF · catalog `2026.09.26.1` · 
 
 ## EU AI Act — deployer obligations
 
-Regulation (EU) 2024/1689, as amended by the Digital Omnibus on AI · catalog `2026.09.26.2` · AI-relevant subset · 10 controls
+Regulation (EU) 2024/1689, as amended by the Digital Omnibus on AI · catalog `2026.10.20.1` · AI-relevant subset · 10 controls
 
 | Control | Title | Rating | Evidence sources |
 |---------|-------|--------|------------------|
@@ -152,24 +152,24 @@ IMDA / AI Verify Foundation (May 2024) · catalog `2026.09.26.1` · full framewo
 
 ## OWASP Top 10 for LLM Applications
 
-2025 · catalog `2026.09.26.1` · full framework · 10 controls
+2025 · catalog `2026.10.23.2` · full framework · 10 controls
 
 | Control | Title | Rating | Evidence sources |
 |---------|-------|--------|------------------|
 | LLM01 | Prompt injection | Supports | Prompt-injection detection |
 | LLM02 | Sensitive information disclosure | Evidence | Runtime enforcement, Model output scanning, Enforced AI-use policy |
 | LLM03 | Supply chain | Evidence | AI tool inventory, Shadow-AI findings |
-| LLM04 | Data and model poisoning | Customer-owned | None (your record only) |
-| LLM05 | Improper output handling | Supports | Model output scanning |
-| LLM06 | Excessive agency | Evidence | Agent tool-call governance, AI connector data access |
-| LLM07 | System prompt leakage | Customer-owned | None (your record only) |
+| LLM04 | Data and model poisoning | Supports | Engine training consent, Tamper-evident admin audit log, Policy change history, Fine-tuning and training-data activity |
+| LLM05 | Improper output handling | Supports | Agent tool-call governance, Model output scanning |
+| LLM06 | Excessive agency | Supports | Agent tool-call governance, AI connector data access |
+| LLM07 | System prompt leakage | Supports | Enforced AI-use policy, Runtime enforcement, Model output scanning |
 | LLM08 | Vector and embedding weaknesses | Supports | Connected data sources, AI connector data access |
 | LLM09 | Misinformation | Customer-owned | None (your record only) |
-| LLM10 | Unbounded consumption | Evidence | AI consumption limits |
+| LLM10 | Unbounded consumption | Supports | AI consumption limits |
 
 ## ISO/IEC 27001 — Annex A (AI-relevant)
 
-ISO/IEC 27001:2022 · catalog `2026.09.26.1` · AI-relevant subset · 16 controls
+ISO/IEC 27001:2022 · catalog `2026.10.20.1` · AI-relevant subset · 16 controls
 
 | Control | Title | Rating | Evidence sources |
 |---------|-------|--------|------------------|
@@ -186,7 +186,7 @@ ISO/IEC 27001:2022 · catalog `2026.09.26.1` · AI-relevant subset · 16 control
 | A.6.3 | Information security awareness, education and training | Customer-owned | None (your record only) |
 | A.8.2 | Privileged access rights | Evidence | Identity and access lifecycle, Admin audit trail |
 | A.8.12 | Data leakage prevention | Evidence | Runtime enforcement, Model output scanning, Enforced AI-use policy |
-| A.8.15 | Logging | Evidence | Event log history, Tamper-evident infrastructure log, Admin audit trail |
+| A.8.15 | Logging | Evidence | Event log history, Tamper-evident infrastructure log, Admin audit trail, Tamper-evident admin audit log |
 | A.8.16 | Monitoring activities | Evidence | Monitoring coverage, Tamper and protection-state events, Shadow-AI findings |
 | A.8.32 | Change management | Supports | Policy change history |
 
@@ -226,7 +226,7 @@ NIST CSWP 29 (February 2024) · catalog `2026.09.26.1` · AI-relevant subset · 
 
 ## NIST SP 800-53 Rev. 5 (AI-relevant)
 
-SP 800-53 Rev. 5.1 · catalog `2026.09.26.1` · AI-relevant subset · 16 controls
+SP 800-53 Rev. 5.1 · catalog `2026.10.20.2` · AI-relevant subset · 16 controls
 
 | Control | Title | Rating | Evidence sources |
 |---------|-------|--------|------------------|
@@ -237,7 +237,7 @@ SP 800-53 Rev. 5.1 · catalog `2026.09.26.1` · AI-relevant subset · 16 control
 | AT-2 | Literacy training and awareness | Customer-owned | None (your record only) |
 | AU-2 | Event logging | Evidence | Runtime enforcement, Admin audit trail |
 | AU-6 | Audit record review, analysis and reporting | Supports | Flagged-prompt review, SOC/SIEM forwarding |
-| AU-9 | Protection of audit information | Supports | Tamper-evident infrastructure log |
+| AU-9 | Protection of audit information | Supports | Tamper-evident infrastructure log, Tamper-evident admin audit log |
 | AU-11 | Audit record retention | Supports | Event log history |
 | AU-12 | Audit record generation | Evidence | Runtime enforcement, Event log history |
 | CM-8 | System component inventory | Evidence | AI tool inventory |
@@ -249,13 +249,13 @@ SP 800-53 Rev. 5.1 · catalog `2026.09.26.1` · AI-relevant subset · 16 control
 
 ## GDPR (AI use)
 
-Regulation (EU) 2016/679 · catalog `2026.09.26.2` · AI-relevant subset · 9 controls
+Regulation (EU) 2016/679 · catalog `2026.10.20.1` · AI-relevant subset · 9 controls
 
 | Control | Title | Rating | Evidence sources |
 |---------|-------|--------|------------------|
 | Art. 5(1)(c) | Data minimisation | Evidence | Runtime enforcement, Enforced AI-use policy |
 | Art. 5(1)(f) | Integrity and confidentiality | Evidence | Runtime enforcement, Tamper and protection-state events |
-| Art. 25 | Data protection by design and by default | Supports | Enforced AI-use policy |
+| Art. 25 | Data protection by design and by default | Supports | Enforced AI-use policy, Engine training consent |
 | Art. 28 | Use of processors | Supports | AI tool inventory, AI app and provider restrictions |
 | Art. 30 | Records of processing activities | Supports | AI tool inventory, AI System Register, Runtime enforcement |
 | Art. 32 | Security of processing | Evidence | Runtime enforcement, Identity and access lifecycle, Event log history |
@@ -265,7 +265,7 @@ Regulation (EU) 2016/679 · catalog `2026.09.26.2` · AI-relevant subset · 9 co
 
 ## HIPAA Security and Privacy Rules (AI use)
 
-45 CFR Parts 160 and 164 · catalog `2026.09.26.1` · AI-relevant subset · 10 controls
+45 CFR Parts 160 and 164 · catalog `2026.10.20.1` · AI-relevant subset · 10 controls
 
 | Control | Title | Rating | Evidence sources |
 |---------|-------|--------|------------------|
@@ -276,18 +276,18 @@ Regulation (EU) 2016/679 · catalog `2026.09.26.2` · AI-relevant subset · 9 co
 | 164.308(a)(6) | Security incident procedures | Supports | SOC/SIEM forwarding, Tamper and protection-state events |
 | 164.308(b)(1) | Business associate contracts | Supports | AI tool inventory, AI app and provider restrictions |
 | 164.312(a)(1) | Access control | Evidence | Identity and access lifecycle, AI app and provider restrictions |
-| 164.312(b) | Audit controls | Evidence | Event log history, Tamper-evident infrastructure log, Admin audit trail |
+| 164.312(b) | Audit controls | Evidence | Event log history, Tamper-evident infrastructure log, Admin audit trail, Tamper-evident admin audit log |
 | 164.312(e)(1) | Transmission security | Evidence | Runtime enforcement |
 | 164.502(b) | Minimum necessary | Evidence | Runtime enforcement, Enforced AI-use policy |
 
 ## NYDFS Cybersecurity Regulation (23 NYCRR 500)
 
-As amended November 2023 · catalog `2026.09.26.1` · AI-relevant subset · 7 controls
+As amended November 2023 · catalog `2026.10.20.1` · AI-relevant subset · 7 controls
 
 | Control | Title | Rating | Evidence sources |
 |---------|-------|--------|------------------|
 | 500.3 | Cybersecurity policy | Supports | Enforced AI-use policy, Policy change history |
-| 500.6 | Audit trail | Evidence | Event log history, Tamper-evident infrastructure log, Runtime enforcement |
+| 500.6 | Audit trail | Evidence | Event log history, Tamper-evident infrastructure log, Runtime enforcement, Tamper-evident admin audit log |
 | 500.7 | Access privileges and management | Evidence | Identity and access lifecycle, Admin audit trail |
 | 500.11 | Third-party service provider security policy | Supports | AI tool inventory, AI app and provider restrictions |
 | 500.13 | Asset management and data retention | Supports | AI tool inventory, Event log history |

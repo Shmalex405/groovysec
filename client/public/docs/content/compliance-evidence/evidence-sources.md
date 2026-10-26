@@ -1,6 +1,6 @@
 # Evidence Sources
 
-Compliance Evidence collects nothing by hand. Every figure comes from data Whiteout AI already records while governing AI use. This reference lists all **24 evidence sources**: what each one measures, which Whiteout surface produces it, and when it reads **Present**, **Partial**, **Absent** or **Not deployed**. Use it to plan a deployment for an audit, or to explain a status to your assessor.
+Compliance Evidence collects nothing by hand. Every figure comes from data Whiteout AI already records while governing AI use. This reference lists all **27 evidence sources**: what each one measures, which Whiteout surface produces it, and when it reads **Present**, **Partial**, **Absent** or **Not deployed**. Use it to plan a deployment for an audit, or to explain a status to your assessor.
 
 To see which controls use each source, see the [Control Catalog](./compliance-evidence/control-catalog.md). How source statuses combine into a control's status is covered in [Frameworks and Controls](./compliance-evidence/frameworks-and-controls.md#how-a-controls-status-is-worked-out).
 
@@ -8,17 +8,17 @@ To see which controls use each source, see the [Control Catalog](./compliance-ev
 
 | Whiteout surface | Evidence it produces |
 |------------------|----------------------|
-| **Browser extension** | Runtime enforcement (prompts evaluated and blocked), Accountable Override records, monitoring coverage, tamper events |
-| **Desktop Guard** | Runtime enforcement, Accountable Override records, AI tool inventory and shadow-AI findings (discovery), monitoring coverage, tamper events |
-| **IDE plugins** (VS Code, JetBrains) | Runtime enforcement (IDE events and flags), monitoring coverage, prompt-injection detection (VS Code extension scans) |
-| **Infrastructure agent and SDK** | Runtime enforcement (infrastructure calls), AI tool inventory (discovery), tamper-evident infrastructure log, agent tool-call governance, model output scanning, AI consumption limits, AI app and provider restrictions |
+| **Browser extension** | Runtime enforcement (prompts evaluated and blocked), Accountable Override records, monitoring coverage, tamper events, prompt-injection detection (files sent to AI chat tools), model output scanning (captured replies checked) |
+| **Desktop Guard** | Runtime enforcement, Accountable Override records, AI tool inventory and shadow-AI findings (discovery), monitoring coverage, tamper events, agent tool-call governance (Claude Code and Codex hooks), prompt-injection detection (files sent to AI chat tools), model output scanning (captured replies checked) |
+| **IDE plugins** (VS Code, JetBrains) | Runtime enforcement (IDE events and flags), monitoring coverage, prompt-injection detection (VS Code extension scans and files attached in the IDE), agent tool-call governance (Claude Code and Codex hooks the VS Code extension installs), model output scanning (captured replies checked) |
+| **Infrastructure agent and SDK** | Runtime enforcement (infrastructure calls), AI tool inventory (discovery), tamper-evident infrastructure log, agent tool-call governance (infrastructure-agent tool calls are observed only), model output scanning (Guard API and SDK), fine-tuning and training-data activity (SDK), AI consumption limits, AI app and provider restrictions |
 | **MDM integration** | AI tool inventory and shadow-AI findings (discovery), MDM-managed devices in monitoring coverage |
 | **File scanning** | Runtime enforcement (file scans), Accountable Override records for files |
 | **Identity provider sync and SCIM** | Identity and access lifecycle |
 | **Whiteout AI Connector** | AI connector data access, connected data sources, agent tool-call governance |
 | **SOC destinations** | SOC/SIEM forwarding |
-| **Admin console** | Enforced AI-use policy, policy change history, admin audit trail, flagged-prompt review, AI app restrictions, AI System Register, AI consumption limits (spend-threshold notification rules) |
-| **Prompt Injection Defense** | Prompt-injection detection (Guard API and SDK, AI Connector tool results, VS Code extension scans) |
+| **Admin console** | Enforced AI-use policy, policy change history (including second-approver approvals), admin audit trail and the tamper-evident admin audit log, engine training consent, flagged-prompt review, AI app restrictions, AI System Register, AI consumption limits (spend-threshold notification rules) |
+| **Prompt Injection Defense** | Prompt-injection detection (AI Connector tool results and the Guard API and SDK by default; trace ingest and VS Code extension scans when turned on; files sent to AI chat tools) |
 | **Compliance engine health** | Degraded (fail-open) periods |
 
 Evidence sources aren't limited to the frameworks you track: the same data backs every framework. Deploying one more surface can lift controls across several frameworks at once.
@@ -34,17 +34,21 @@ Most sources count what happened **during the period** you're viewing: prompts e
 - **AI consumption limits**
 - **AI System Register**
 - **Event log history** and **Six months of log history**
-- **Tamper-evident infrastructure log** (verified when you look)
+- **Tamper-evident infrastructure log** and **Tamper-evident admin audit log** (verified when you look)
+- **Engine training consent**, for your organization's current choice; changes to it are counted for the period
+- **Model output scanning**, for whether workforce reply checking is on now; checks are counted for the period
 - **Prompt-injection detection**, for whether Prompt Injection Defense is on now; its detections are counted for the period
 
 User counts and roles in **Identity and access lifecycle** are also current; its sync runs are counted for the period. For a pack that covers a past period, current-state sources describe the configuration when the pack was generated. Daily [evidence snapshots](./compliance-evidence/frameworks-and-controls.md#daily-evidence-snapshots) fill in the history for policy, coverage, identity and inventory.
 
-## The 24 evidence sources
+## The 27 evidence sources
 
 ### Inventory and discovery
 
 **AI tool inventory**
 AI tools found on endpoints and workloads during the period: desktop apps, IDE and browser extensions, local model runtimes, CLIs, SDK dependencies, model files and MCP server configurations. Figures: distinct tools, installs, unknown tools (not in Whiteout's catalog), tools with ungoverned installs, and tools by category. Sample rows: tool, category, provider, installs, ungoverned installs, last seen.
+
+It also reports **known vulnerabilities**: discovered tools that report a version are matched against public vulnerability advisories, and the figures give the findings open at any point in the period by severity (critical, high, medium, low), how many are still open or were resolved, the devices affected, and how many installs carried a version to check. The summary adds the finding count when there are any. The inventory can be exported as an **AI bill of materials** in CycloneDX 1.6 format, and the figures show how often it was exported in the period. It also states the **MCP server allowlist** as it stands now: off, shadow (calls to servers that aren't approved are recorded) or enforced (coding agents can only call approved servers, matched on the package or command each server launches, not its name), and how many servers are approved. Server identities aren't included.
 
 - **Present:** at least one AI tool was inventoried in the period.
 - **Absent:** discovery is deployed, but no AI tools were inventoried in the period.
@@ -76,16 +80,21 @@ Your AI-use rules per group: policy library rules enabled, custom rules, and whe
 The figures also include the enforcement mode over the period: `enforcement_mode` (`enforcing`, `audit_only` or `mixed`), `mode_days_observed` and `mode_days_audit_only`, and, in the daily history, the number of snapshot days in audit-only mode.
 
 **Policy change history**
-Every policy change in the admin audit log during the period: number of changes, number of admins who made them, and changes by action. Sample rows: time, action, actor, entity.
+Every policy change in the admin audit log during the period: number of changes, number of admins who made them, and changes by action. Sample rows: time, action, actor, entity. It also says whether policy changes currently need a second administrator's approval before they take effect, and how many changes a second administrator approved in the period.
 
 - **Present:** at least one policy change in the period.
 - **Absent:** no policy changes in the period. A stable policy is often the right answer; explain it in the control's note.
 
 **Admin audit trail**
-Every admin action during the period: count, number of people and actions by area. Sample rows: time, action, actor, entity. The admin audit log is append-only by design but isn't hash-chained, and the evidence says so.
+Every admin action during the period: count, number of people and actions by area. Sample rows: time, action, actor, entity. Sign-in events share the log but aren't counted as admin actions. The admin audit log is append-only and hash-chained per organization; **Tamper-evident admin audit log** reports its verification.
 
 - **Present:** at least one admin action in the period.
 - **Absent:** none.
+
+**Engine training consent**
+Whether your organization lets Whiteout use its captured prompts to train or tune the compliance engine: the current choice, who made it and when, and the changes in the period. It's off by default, and only an administrator can opt in. Every change is in the admin audit log. Sample rows: time, changed by, from, to.
+
+- **Present:** always. The evidence is that the decision is yours, defaults to no, and is on record.
 
 ### Enforcement and oversight
 
@@ -113,11 +122,17 @@ The number of flagged prompts administrators reviewed during the period.
 - **Absent:** none.
 
 **Prompt-injection detection**
-With **Prompt Injection Defense** on, this counts its detections in the period by surface and by action taken. Prompt Injection Defense runs server-side on the Guard API and SDK (including trace ingest), on Whiteout AI Connector tool results and on scans sent by the VS Code extension; it doesn't scan browser-extension, Desktop Guard or JetBrains traffic. Only verdict metadata is kept, never the scanned text. With it off, this counts the prompt-injection attempts detected on IDE and coding-agent surfaces.
+Detections by **Prompt Injection Defense** in the period, by surface and by action taken. It runs server-side:
 
-- **Present:** Prompt Injection Defense is on. Or, with it off, the IDE extension or Desktop Guard is deployed.
-- **Partial:** Prompt Injection Defense is off now but recorded detections during the period.
-- **Not deployed:** Prompt Injection Defense is off and neither the IDE extension nor Desktop Guard is deployed.
+- unless an administrator has turned it off, on Whiteout AI Connector tool results and on the Guard API and SDK input check, where retrieved context and tool results are quarantined and a user's own turn only warns;
+- when an administrator turns it on, also on the Guard API's trace ingest (which records only) and on scans sent by the VS Code extension;
+- on files sent to AI chat tools through the browser extension, Desktop Guard and IDE, whatever that setting: hidden instructions aimed at AI tools are recorded, or blocked if an administrator has chosen to block them.
+
+Prompt text typed into chat tools, and JetBrains traffic, aren't scanned. Only verdict metadata is kept, never the scanned text. With no detections and the feature not switched on, this counts the prompt-injection attempts detected on IDE and coding-agent surfaces.
+
+- **Present:** Prompt Injection Defense is switched on, or it's on by default and recorded detections. Or, with no detections, the IDE extension or Desktop Guard is deployed.
+- **Partial:** detections were recorded in the period, but Prompt Injection Defense is switched off.
+- **Not deployed:** no detections, the feature isn't switched on, and neither the IDE extension nor Desktop Guard is deployed.
 
 In [audit-only mode](./compliance-evidence/overview.md#audit-only-discovery-mode), Prompt Injection Defense is off on every surface, so nothing is scanned and no detections are recorded:
 
@@ -125,19 +140,37 @@ In [audit-only mode](./compliance-evidence/overview.md#audit-only-discovery-mode
 - **Partial** for a period that spans a mode change, with the number of recorded days it was off, for example *It was off on 12 of 90 recorded days (audit-only mode).*
 
 **Agent tool-call governance**
-Tool calls by AI agents: infrastructure-agent tool calls and how many were blocked, Whiteout AI Connector tool calls by outcome, and infrastructure policy groups that evaluate tool calls.
+Agent tool calls checked before they ran. It counts:
 
-- **Present:** agent or connector tool calls were seen in the period.
-- **Partial:** tool calls were seen, but your organization was in audit-only mode for the whole period, so they were recorded but not evaluated against policy.
-- **Absent:** tool-call governance is configured or the infrastructure agent is deployed, but no tool calls were seen.
-- **Not deployed:** neither the infrastructure agent nor the Whiteout AI Connector is in use.
+- risky Claude Code and Codex actions recorded by Supervised Autonomy, by verdict, including how many were blocked or held for approval;
+- approval requests, by outcome;
+- tool calls stopped by the coding-agent hook;
+- Whiteout AI Connector tool calls, by outcome;
+- how many action rules are enforcing and how many are in shadow mode.
+
+Blocking and approval rules are opt-in. Infrastructure-agent tool calls are counted separately, as observed. The infrastructure agent isn't in the request path, so its tool calls are recorded after they run and are never counted as blocked.
+
+- **Present:** risky agent actions, coding-agent hook blocks or connector tool calls were recorded in the period.
+- **Partial:** either tool calls were recorded only after they ran (by the infrastructure agent, or reported by a client afterwards), or your organization was in audit-only mode for the whole period, so tool calls were recorded but not evaluated against policy.
+- **Absent:** action rules are configured, or Desktop Guard or the IDE extension is deployed, but no agent tool calls were checked.
+- **Not deployed:** none of Desktop Guard, the IDE extension and the Whiteout AI Connector is in use.
 
 **Model output scanning**
-Model responses scanned and flagged for policy violations, on infrastructure-agent and SDK traffic. Flags are recorded; the SDK doesn't block output.
+Model responses checked on the way back, from two places:
 
-- **Present:** at least one response was scanned or flagged in the period.
-- **Absent:** the infrastructure agent is deployed but no responses were scanned.
-- **Not deployed:** neither the infrastructure agent nor the SDK is in use.
+- **Your applications.** Responses sent to the Guard API or SDK are scanned and flagged for policy violations. The figures also count responses with unsafe-output findings (script and HTML, SQL, shell commands, links that carry data) and replies flagged for leaking the application's system prompt. The SDK withholds a failing response by default; an application can opt out and record flags only.
+- **Workforce AI tools.** Each new reply captured by the browser extension, Desktop Guard or the IDE is checked against the same policies as its prompt, and flagged for review in Prompt Review and your SIEM. Replies are never blocked, because they've already been shown. Replies the engine couldn't check (unavailable or busy) are counted separately, as neither clean nor flagged. Reply checking is on unless an administrator turns it off, and off in audit-only mode; the evidence says which applies now.
+
+- **Present:** at least one application response or workforce reply was checked in the period.
+- **Absent:** an infrastructure agent, SDK or Custom AI App is set up, or a Whiteout client is deployed with reply checking on, but nothing was checked in the period.
+- **Not deployed:** neither applies.
+
+**Fine-tuning and training-data activity**
+Fine-tuning jobs and training-data uploads from your own applications that use the SDK: jobs, uploads, and how many uploads the training-data check flagged or blocked. The SDK checks the training file's text against the application's policy; recording is on by default, and blocking a flagged upload is opt-in in the application. Sample rows: time, event, seen by, model, job or file reference, outcome. The training data itself is never included.
+
+- **Present:** fine-tuning or training-data activity was recorded in the period.
+- **Absent:** the infrastructure agent or a Custom AI App is set up, but nothing was recorded in the period.
+- **Not deployed:** neither is set up.
 
 **AI app and provider restrictions**
 AI apps blocked for your organization or for groups, and infrastructure policy groups that restrict providers or models. Sample rows: control, target, scope.
@@ -148,7 +181,7 @@ AI apps blocked for your organization or for groups, and infrastructure policy g
 In [audit-only mode](./compliance-evidence/overview.md#audit-only-discovery-mode), restrictions are kept but not applied, so this source reads **Absent** for a fully audit-only period and **Partial** for a period that spans a mode change. The summary counts what's configured and says it isn't enforced, for example *2 AI apps blocked and 1 infrastructure policy group restricting providers or models configured, but not enforced: this organization is in audit-only mode.*
 
 **AI consumption limits**
-Spend-threshold notification rules, per-call token limits on infrastructure policy groups, and spend thresholds crossed in the period. If per-hour rate limits are configured, the evidence notes that they are stored but not yet enforced server-side.
+Spend-threshold notification rules, per-call token limits on infrastructure policy groups, and spend thresholds crossed in the period. Spend thresholds raise an alert when crossed; they don't stop AI use. If per-hour rate limits are configured, the evidence notes that they are stored but not yet enforced server-side.
 
 - **Present:** a spend threshold or token limit is configured.
 - **Absent:** neither is configured.
@@ -185,7 +218,7 @@ Whether events are forwarded to your SOC: destinations configured, enabled and c
 ### Logging
 
 **Event log history**
-How far back your AI-use and admin logs go, overall and per log (browser and desktop prompt activity, IDE activity, infrastructure activity, admin audit log). Whiteout has no configurable log-retention policy, so this shows history depth, not a retention policy.
+How far back your AI-use and admin logs go, overall and per log (browser and desktop prompt activity, IDE activity, infrastructure activity, admin audit log), and your prompt-log retention setting. Browser, desktop and IDE prompt records are kept until an administrator sets a retention period; after that, older records are permanently deleted by a daily purge, and the evidence shows when it last ran. Infrastructure-agent activity and the admin audit log aren't purged.
 
 - **Present:** logs exist.
 - **Absent:** no AI-use or admin logs on record.
@@ -194,7 +227,7 @@ How far back your AI-use and admin logs go, overall and per log (browser and des
 The same measure, tested against six months (183 days), for EU AI Act Article 26(6).
 
 - **Present:** logs go back at least six months.
-- **Partial:** logs go back less than six months so far.
+- **Partial:** logs go back less than six months so far, or a prompt-log retention period under six months is set.
 - **Absent:** no logs.
 
 **Tamper-evident infrastructure log**
@@ -203,6 +236,13 @@ Verifies the hash chain over infrastructure-agent and SDK activity, reporting re
 - **Present:** the chain verified.
 - **Partial:** a break was detected.
 - **Not deployed:** no infrastructure-agent or SDK activity is hash-chained.
+
+**Tamper-evident admin audit log**
+Verifies the hash chain over your admin audit log. Every admin change is chained per organization (SHA-256 over the record and the previous record's hash), and the evidence reports records checked and, if broken, where. The chain is re-verified every 6 hours, and a break raises a Notification Center alert. Admin audit records also stream to your enabled SIEM destinations with their chain hashes, an off-platform copy to check against.
+
+- **Present:** the chain verified.
+- **Partial:** a break was detected.
+- **Absent:** no admin actions are on record yet.
 
 ### Identity and data access
 
