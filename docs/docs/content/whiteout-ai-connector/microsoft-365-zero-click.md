@@ -28,6 +28,10 @@ one-click flow — because the app's permission set grew.)
   you add at least one. Users who connect their own Microsoft account are
   always served with their own token first, preserving full per-user
   permissions inside shared sites.
+- **Zero-click is read-only.** Changes the AI makes in SharePoint,
+  OneDrive, Outlook Mail and Outlook Calendar use each person's own
+  Microsoft connection, never this app-only access. See
+  [Changes need each person's own connection](#changes-need-each-persons-own-connection).
 
 > If you'd rather have each user connect their own Microsoft account
 > instead, use the per-user OAuth flow in the
@@ -121,15 +125,54 @@ connector card as usual. OneDrive and Outlook need no further setup;
 SharePoint's backfill scan runs against your allowlisted sites using the
 same grant — no separate scanner credential to configure.
 
+## Changes need each person's own connection
+
+Zero-click access is app-only. Any change made with it would show as
+made by the Whiteout app, not by the person. So every change the AI
+makes in SharePoint, OneDrive, Outlook Mail and Outlook Calendar uses
+that person's own Microsoft connection, and shows up in Microsoft 365
+under their name. Zero-click reads keep working, and nothing changes
+for people who only read.
+
+### Add the delegated permissions (operator, once)
+
+Your Whiteout operator adds these **delegated** permissions to
+Whiteout's Entra app (Whiteout-hosted: ask your account manager):
+
+| Source | Delegated permissions |
+|---|---|
+| SharePoint | `Files.ReadWrite.All`, `Sites.ReadWrite.All` |
+| OneDrive | `Files.ReadWrite.All` |
+| Outlook Mail | `Mail.ReadWrite`, `Mail.Send` |
+| Outlook Calendar | `Calendars.ReadWrite` |
+
+### Each person connects once
+
+- People who read these sources zero-click see **Connect to make
+  changes** on **Connect your sources**. Until they connect, the AI is
+  told to connect their Microsoft account first (`connect_for_write`),
+  with a link.
+- People who connected their own Microsoft account before changes were
+  turned on see **Grant write access** there, and reconnect once.
+- **One Microsoft connection covers all four sources.** The consent
+  screen asks only for the write permissions of the sources your
+  organization has exposed and allows changes in.
+
+Each source's **What the AI can change** panel shows when people need
+to connect before the AI can make changes as them. What the AI may
+change is set per source; see
+[Write Actions](./whiteout-ai-connector/write-actions.md). Microsoft
+Teams stays read-only.
+
 ## How access is decided
 
-| Source | Zero-click read | Permission model |
-|---|---|---|
-| OneDrive | The caller's own drive | Per-user by construction |
-| Teams chats | The caller's own 1:1/group chats | Per-user by construction |
-| Teams channels | Not served zero-click | Delegated-only — each user's own connected account, exactly their team memberships |
-| Outlook Mail / Calendar | The caller's own mailbox/calendar | Per-user by construction |
-| SharePoint | Allowlisted sites only | Site-level (admin-chosen); users with their own connected account keep full per-user permissions |
+| Source | Zero-click read | Permission model | Changes |
+|---|---|---|---|
+| OneDrive | The caller's own drive | Per-user by construction | Each person's own Microsoft connection |
+| Teams chats | The caller's own 1:1/group chats | Per-user by construction | Read-only |
+| Teams channels | Not served zero-click | Delegated-only — each user's own connected account, exactly their team memberships | Read-only |
+| Outlook Mail / Calendar | The caller's own mailbox/calendar | Per-user by construction | Each person's own Microsoft connection |
+| SharePoint | Allowlisted sites only | Site-level (admin-chosen); users with their own connected account keep full per-user permissions | Each person's own Microsoft connection |
 
 ## Revoking
 

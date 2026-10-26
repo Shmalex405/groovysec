@@ -63,9 +63,50 @@ Two concerns are kept separate:
 | Role | Scope | Why |
 |---|---|---|
 | Per-user serving | `root_readonly` | At read time, read only the files and folders the connecting user can access, for classification and serving. |
+| Changes | `root_readwrite` | Upload, change, rename, move, comment on and trash files as the person who asked, when your admin allows the AI to change Box. |
 
-Read-only — no write or delete scopes, and no scanner credential (Box
-has no org-wide corpus scan).
+Whiteout asks for `root_readwrite` only while at least one kind of
+change is allowed for Box. There's no scanner credential (Box has no
+org-wide corpus scan). See [What the AI can change](#what-the-ai-can-change).
+
+## What the AI can change
+
+When your admin allows it, the AI can change Box files as the person
+who asked, through that person's own Box connection. The changes show
+up in Box's own history under their name, not under Whiteout.
+
+| Kind of change | What the AI can do | Default |
+|---|---|---|
+| **Create** | Upload a text file | Allowed |
+| **Edit** | Replace a text file's content (saved as a new version), rename a file, move a file | Allowed |
+| **Comment & post** | Comment on a file | Allowed |
+| **Delete, archive & merge** | Move a file to the trash | **Off** |
+
+Set these in **Integrations → Whiteout AI Connector → Box → What the AI
+can change**. Every change is checked first: a **Hidden** file is
+refused as not found, a file restricted by policy is refused, and the
+text is checked against Box's policy set and for planted instructions.
+See [Write Actions](./whiteout-ai-connector/write-actions.md).
+
+### Limits
+
+- Content changes accept text files only: .txt, .md, .csv, .json,
+  .html, .xml, .yaml and .log. Word, Excel, PowerPoint and other binary
+  files can't have their content changed, but can still be renamed or
+  moved.
+- File names can't contain `/` or `\`, and can't be `.` or `..`.
+- A file is checked by its own id. The folder a new file is created in
+  isn't checked, and is recorded as *not checked*.
+- A changed file is checked again the next time the AI reads it.
+
+### Before the AI can make changes
+
+1. **Your operator** enables **Write all files and folders**
+   (`root_readwrite`) on the Box app.
+2. **Each person** who connected Box before changes were turned on
+   reconnects once: they see **Grant write access** on **Connect your
+   sources**. If they try first, the AI tells them to reconnect, with a
+   link.
 
 ## What to expect after connect
 
@@ -88,4 +129,5 @@ has no org-wide corpus scan).
 
 ## Audit log
 
-**Admin → Audit → MCP Activity**, filter `integration=box`.
+Reads are on **Activity → AI Connector**; filter the source to Box.
+Changes the AI made or tried to make are on **Activity → MCP Activity**.
