@@ -6,7 +6,6 @@ This guide walks you through configuring OneLogin as your Single Sign-On provide
 
 OneLogin integration provides:
 - **OIDC Authentication**: OpenID Connect-based secure login
-- **SAML Authentication**: SAML 2.0 support for enterprise requirements
 - **Group Sync**: Automatic synchronization of OneLogin groups/roles
 - **SCIM Provisioning**: Automated user lifecycle management
 
@@ -15,21 +14,23 @@ OneLogin integration provides:
 | Feature | Supported |
 |---------|-----------|
 | OIDC Authentication | Yes |
-| SAML Authentication | Yes |
+| SAML Authentication | Not available. Use OIDC |
 | Group Synchronization | Yes |
 | Just-in-Time Provisioning | Yes |
 | SCIM Provisioning | Yes |
+
+> **Note:** SAML sign-in is not available in Whiteout AI. Connect OneLogin with OIDC, as described below.
 
 ## Prerequisites
 
 Before you begin, ensure you have:
 - **OneLogin Super User** or **Administrator** access
 - **Whiteout AI Admin** privileges
-- OneLogin subscription with OIDC/SAML support
+- OneLogin subscription with OIDC support
 
 ---
 
-## Option A: OIDC Setup (Recommended)
+## OIDC Setup
 
 ### Step 1: Create OIDC Application in OneLogin
 
@@ -92,79 +93,6 @@ On the **SSO** tab, note:
 
 ---
 
-## Option B: SAML Setup
-
-### Step 1: Create SAML Application in OneLogin
-
-1. Log in to your OneLogin Admin portal
-2. Navigate to **Applications** > **Applications**
-3. Click **Add App**
-4. Search for "SAML Custom Connector" and select **SAML Custom Connector (Advanced)**
-5. Enter display name: `Whiteout AI`
-6. Click **Save**
-
-### Step 2: Configure SAML Application
-
-Go to the **Configuration** tab:
-
-| Field | Value |
-|-------|-------|
-| **Audience (EntityID)** | `https://your-whiteout-instance.com` |
-| **ACS (Consumer) URL** | `https://your-whiteout-instance.com/api/auth/saml/callback` |
-| **ACS URL Validator** | `^https:\/\/your-whiteout-instance\.com\/api\/auth\/saml\/callback$` |
-| **Single Logout URL** | `https://your-whiteout-instance.com/logout` |
-| **SAML nameID format** | Email |
-| **SAML signature element** | Both |
-
-### Step 3: Configure Parameters
-
-Go to the **Parameters** tab and add:
-
-| Field Name | Value | Include in SAML |
-|------------|-------|-----------------|
-| `email` | Email | Yes |
-| `firstName` | First Name | Yes |
-| `lastName` | Last Name | Yes |
-
-For groups (optional):
-| Field Name | Value | Include in SAML |
-|------------|-------|-----------------|
-| `groups` | User Roles | Yes |
-
-### Step 4: Get SAML Metadata
-
-Go to the **SSO** tab:
-1. Note the **Issuer URL**
-2. Note the **SAML 2.0 Endpoint (HTTP)**
-3. Download **X.509 Certificate** (click "View Details")
-
-Or copy the **Metadata URL** for automatic configuration.
-
-### Step 5: Configure Whiteout AI (SAML)
-
-1. Navigate to **Settings** > **Identity Provider**
-2. Click **Add Identity Provider**
-3. Select **OneLogin**
-4. Choose **SAML** as the protocol
-5. Enter:
-
-| Field | Value |
-|-------|-------|
-| **Display Name** | `OneLogin SSO (SAML)` |
-| **IdP SSO URL** | SAML 2.0 Endpoint from Step 4 |
-| **IdP Issuer** | Issuer URL from Step 4 |
-| **Certificate** | Upload certificate from Step 4 |
-
-Or use metadata:
-
-| Field | Value |
-|-------|-------|
-| **Metadata URL** | OneLogin metadata URL |
-
-6. Click **Save & Test Connection**
-
----
-
 ## Group Synchronization
 
 ### Configure Groups/Roles in OneLogin
@@ -186,10 +114,6 @@ Or use metadata:
 | **Field name** | `groups` |
 | **Value** | User Roles |
 | **Include in Token** | Yes |
-
-### For SAML - Add Groups Attribute
-
-Already configured in Step 3 of SAML setup.
 
 ### Map Groups to Roles in Whiteout AI
 
@@ -250,12 +174,6 @@ Already configured in Step 3 of SAML setup.
 3. Authenticate with OneLogin credentials
 4. Verify redirect to Whiteout AI
 
-### Test SAML Sign-In
-
-1. **SP-initiated**: Start from Whiteout AI login
-2. **IdP-initiated**: Click Whiteout AI from OneLogin portal
-3. Verify successful authentication
-
 ### Verify Groups
 
 1. Trigger a group sync
@@ -272,12 +190,6 @@ Already configured in Step 3 of SAML setup.
 - Check Issuer URL format
 - Ensure app is enabled in OneLogin
 
-### "Invalid signature" Error (SAML)
-
-- Re-download certificate from OneLogin
-- Check certificate hasn't expired
-- Verify correct certificate uploaded
-
 ### "User not found" Error
 
 - Verify user is assigned to the app
@@ -288,7 +200,7 @@ Already configured in Step 3 of SAML setup.
 
 - Verify groups parameter is configured
 - Check user has roles assigned
-- Ensure "Include in Token/SAML" is enabled
+- Ensure "Include in Token" is enabled
 
 ### Provisioning Failures
 
@@ -332,18 +244,6 @@ Already configured in Step 3 of SAML setup.
 | `family_name` | Last Name |
 | `name` | Display Name |
 | `groups` | Group Memberships |
-
-### SAML Attributes
-
-| SAML Attribute | Whiteout AI Attribute |
-|----------------|----------------------|
-| `NameID` | Email / User ID |
-| `email` | Email |
-| `firstName` | First Name |
-| `lastName` | Last Name |
-| `groups` | Group Memberships |
-
----
 
 ## Revoking Access
 

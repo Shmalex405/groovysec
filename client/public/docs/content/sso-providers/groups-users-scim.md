@@ -33,7 +33,7 @@ Once an identity provider is connected (see the per-provider setup guides), Whit
 | [Ping Identity](./sso-providers/ping-identity.md) | Yes | Yes | Yes |
 | [JumpCloud](./sso-providers/jumpcloud.md) | Yes | Yes | Yes |
 | [Auth0](./sso-providers/auth0.md) | Yes | No | No |
-| [Generic OIDC](./sso-providers/generic-oidc.md) / [SAML](./sso-providers/generic-saml.md) | Yes | No | No |
+| [Generic OIDC](./sso-providers/generic-oidc.md) | Yes | No | No |
 
 **Group Sync & Lifecycle** covers everything in this guide: membership sync, rename propagation, deleted-source detection, and auto-import. Providers without it still get SSO login and JIT user provisioning; groups are managed manually.
 

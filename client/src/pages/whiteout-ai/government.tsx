@@ -97,7 +97,7 @@ export default function Government() {
       icon: Users,
       title: "Enterprise Administration",
       items: [
-        "SSO/SAML 2.0: Okta, Azure AD, OneLogin, Ping Identity",
+        "Single sign-on over OIDC: Okta, Microsoft Entra ID, Google Workspace, OneLogin, Ping Identity",
         "MDM integration: Intune, Jamf, Workspace ONE",
         "SIEM/SOC integration: Splunk, Sentinel, Elastic, QRadar, S3",
         "Role-based access control with department-level scoping",

@@ -225,7 +225,7 @@ export default function SecurityWhitepaper() {
       title: "Authentication & Access Control",
       items: [
         "Industry-standard token-based auth with rotation",
-        "SSO/SAML 2.0: Okta, Azure AD, OneLogin, Ping Identity",
+        "Single sign-on over OIDC: Okta, Microsoft Entra ID, Google Workspace, OneLogin, Ping Identity",
         "Device binding for enhanced session security",
         "Role-based access control with organization scoping",
       ],
@@ -418,7 +418,7 @@ const useCases = [
                       </GradientButton>
                     </Link>
                     <a
-                      href="/WHITEOUT_AI_WHITEPAPER.pdf?v=4.4"
+                      href="/WHITEOUT_AI_WHITEPAPER.pdf?v=4.5"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -431,7 +431,7 @@ const useCases = [
 
                   <div className="text-sm text-[#51617A] flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    Whiteout AI by Groovy Security, Version 4.4 | September 2026
+                    Whiteout AI by Groovy Security, Version 4.5 | October 2026
                   </div>
                 </ScrollReveal>
               </div>
