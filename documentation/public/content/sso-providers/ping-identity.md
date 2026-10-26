@@ -6,7 +6,6 @@ This guide walks you through configuring Ping Identity (PingOne or PingFederate)
 
 Ping Identity integration provides:
 - **OIDC Authentication**: OpenID Connect-based secure login
-- **SAML Authentication**: SAML 2.0 support for enterprise requirements
 - **Group Sync**: Automatic synchronization of Ping Identity groups
 - **SCIM Provisioning**: Automated user provisioning
 
@@ -15,10 +14,12 @@ Ping Identity integration provides:
 | Feature | Supported |
 |---------|-----------|
 | OIDC Authentication | Yes |
-| SAML Authentication | Yes |
+| SAML Authentication | Not available. Use OIDC |
 | Group Synchronization | Yes |
 | Just-in-Time Provisioning | Yes |
 | SCIM Provisioning | Yes |
+
+> **Note:** SAML sign-in is not available in Whiteout AI. Connect Ping Identity with OIDC, as described below.
 
 ## Prerequisites
 
@@ -31,7 +32,7 @@ Before you begin, ensure you have:
 
 ## PingOne Setup
 
-### Option A: OIDC Setup (Recommended)
+### OIDC Setup
 
 #### Step 1: Create OIDC Application
 
@@ -103,75 +104,6 @@ Enable the following scopes:
 
 ---
 
-### Option B: SAML Setup
-
-#### Step 1: Create SAML Application
-
-1. Log in to PingOne Admin Console
-2. Navigate to **Applications** > **Applications**
-3. Click **+** to add new application
-4. Select **Web App**
-5. Choose **SAML** as the connection type
-6. Click **Configure**
-
-#### Step 2: Configure SAML Settings
-
-**Application Settings:**
-
-| Field | Value |
-|-------|-------|
-| **Application Name** | `Whiteout AI` |
-| **Description** | `AI Governance Platform SAML SSO` |
-
-**SAML Configuration:**
-
-| Field | Value |
-|-------|-------|
-| **ACS URL** | `https://your-whiteout-instance.com/api/auth/saml/callback` |
-| **Entity ID** | `https://your-whiteout-instance.com` |
-| **SLO Endpoint** | `https://your-whiteout-instance.com/logout` |
-| **Subject NameID Format** | Email Address |
-| **Signing** | Sign Assertion |
-
-#### Step 3: Configure Attribute Mapping
-
-Add attribute mappings:
-
-| PingOne Attribute | SAML Attribute Name |
-|-------------------|---------------------|
-| User ID | `sub` |
-| Email | `email` |
-| Given Name | `firstName` |
-| Family Name | `lastName` |
-| Group Names | `groups` |
-
-#### Step 4: Get SAML Metadata
-
-1. Go to **Configuration** tab
-2. Download **IdP Metadata XML**
-3. Or note:
-   - **Issuer ID**
-   - **Single Sign-On Service URL**
-   - **X.509 Certificate**
-
-#### Step 5: Configure Whiteout AI (SAML)
-
-1. Navigate to **Settings** > **Identity Provider**
-2. Click **Add Identity Provider**
-3. Select **Ping Identity**
-4. Choose **SAML**
-5. Upload metadata XML or enter manually:
-
-| Field | Value |
-|-------|-------|
-| **IdP SSO URL** | From Step 4 |
-| **IdP Issuer** | From Step 4 |
-| **Certificate** | From Step 4 |
-
-6. Click **Save & Test Connection**
-
----
-
 ## PingFederate Setup
 
 ### OIDC Setup for PingFederate
@@ -210,51 +142,13 @@ Add attribute mappings:
 
 ---
 
-### SAML Setup for PingFederate
-
-#### Step 1: Create SP Connection
-
-1. Navigate to **IdP Configuration** > **SP Connections**
-2. Click **Create New**
-3. Configure connection type:
-   - **Connection Type**: Browser SSO Profiles
-   - **Protocol**: SAML 2.0
-
-#### Step 2: Configure Browser SSO
-
-| Field | Value |
-|-------|-------|
-| **Assertion Consumer Service URL** | `https://your-whiteout-instance.com/api/auth/saml/callback` |
-| **Entity ID** | `https://your-whiteout-instance.com` |
-| **Binding** | POST |
-
-#### Step 3: Configure Attribute Contract
-
-Add attributes:
-- `SAML_SUBJECT` (NameID)
-- `email`
-- `firstName`
-- `lastName`
-- `groups`
-
-#### Step 4: Export Metadata
-
-1. Go to **Protocol Settings** > **Export Metadata**
-2. Download metadata file
-
-#### Step 5: Configure in Whiteout AI
-
-Use the exported metadata or manual configuration.
-
----
-
 ## Group Synchronization
 
 ### Enable Group Sync in PingOne
 
 1. In your Whiteout AI application, go to **Attribute Mappings**
 2. Add Group Names attribute
-3. Map to SAML/OIDC response
+3. Map to the OIDC ID token
 
 ### Configure Groups
 
@@ -332,17 +226,11 @@ Use the exported metadata or manual configuration.
 - Check redirect URI matches exactly
 - Ensure application is enabled
 
-### "Invalid signature" Error
-
-- Re-download certificate
-- Check certificate expiration
-- Verify signing configuration
-
 ### Groups Not Syncing
 
 - Verify group attribute is mapped
 - Check user has group memberships
-- Ensure groups are included in token/assertion
+- Ensure groups are included in the ID token
 
 ### Connection Timeout
 
@@ -386,18 +274,6 @@ Use the exported metadata or manual configuration.
 | `family_name` | Last Name |
 | `name` | Display Name |
 | `groups` | Group Memberships |
-
-### SAML Attributes
-
-| SAML Attribute | Whiteout AI Attribute |
-|----------------|----------------------|
-| `NameID` | User ID / Email |
-| `email` | Email |
-| `firstName` | First Name |
-| `lastName` | Last Name |
-| `groups` | Group Memberships |
-
----
 
 ## Revoking Access
 

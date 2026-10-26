@@ -40,14 +40,14 @@ Configure identity providers to enable secure authentication for your organizati
 | Provider | Protocols Supported | Guide |
 |----------|---------------------|-------|
 | [Microsoft Entra ID](./sso-providers/microsoft-entra-id.md) | OIDC, Groups | [Setup Guide](./sso-providers/microsoft-entra-id.md) |
-| [Okta](./sso-providers/okta.md) | OIDC, SAML, Groups | [Setup Guide](./sso-providers/okta.md) |
+| [Okta](./sso-providers/okta.md) | OIDC, Groups | [Setup Guide](./sso-providers/okta.md) |
 | [Google Workspace](./sso-providers/google-workspace.md) | OIDC, Groups | [Setup Guide](./sso-providers/google-workspace.md) |
-| [OneLogin](./sso-providers/onelogin.md) | OIDC, SAML, Groups | [Setup Guide](./sso-providers/onelogin.md) |
-| [Ping Identity](./sso-providers/ping-identity.md) | OIDC, SAML, Groups | [Setup Guide](./sso-providers/ping-identity.md) |
-| [JumpCloud](./sso-providers/jumpcloud.md) | OIDC, SAML, Groups | [Setup Guide](./sso-providers/jumpcloud.md) |
+| [OneLogin](./sso-providers/onelogin.md) | OIDC, Groups | [Setup Guide](./sso-providers/onelogin.md) |
+| [Ping Identity](./sso-providers/ping-identity.md) | OIDC, Groups | [Setup Guide](./sso-providers/ping-identity.md) |
+| [JumpCloud](./sso-providers/jumpcloud.md) | OIDC, Groups | [Setup Guide](./sso-providers/jumpcloud.md) |
 | [Auth0](./sso-providers/auth0.md) | OIDC | [Setup Guide](./sso-providers/auth0.md) |
 | [Generic OIDC](./sso-providers/generic-oidc.md) | OIDC | [Setup Guide](./sso-providers/generic-oidc.md) |
-| [Generic SAML](./sso-providers/generic-saml.md) | SAML 2.0 (Beta) | [Setup Guide](./sso-providers/generic-saml.md) |
+| [Generic SAML](./sso-providers/generic-saml.md) | Not available. Use OIDC | [Details](./sso-providers/generic-saml.md) |
 | [Groups, Users & SCIM](./sso-providers/groups-users-scim.md) | SCIM, JIT, Group Sync | [Setup Guide](./sso-providers/groups-users-scim.md) |
 
 ### SOC/SIEM Destinations

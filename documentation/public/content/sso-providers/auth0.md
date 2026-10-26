@@ -15,7 +15,7 @@ Auth0 integration provides:
 | Feature | Supported |
 |---------|-----------|
 | OIDC Authentication | Yes |
-| SAML Authentication | No (use Generic SAML) |
+| SAML Authentication | No |
 | Group Synchronization | Via Rules/Actions |
 | Just-in-Time Provisioning | Yes |
 | Social Login | Yes |

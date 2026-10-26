@@ -99,7 +99,7 @@ export const navigation: NavSection[] = [
       { title: 'JumpCloud', href: '/admin-guides/sso-providers/jumpcloud' },
       { title: 'Auth0', href: '/admin-guides/sso-providers/auth0' },
       { title: 'Generic OIDC', href: '/admin-guides/sso-providers/generic-oidc' },
-      { title: 'Generic SAML', href: '/admin-guides/sso-providers/generic-saml' },
+      { title: 'Generic SAML (not available)', href: '/admin-guides/sso-providers/generic-saml' },
       { title: 'Groups, Users & SCIM', href: '/admin-guides/sso-providers/groups-users-scim' },
     ],
   },

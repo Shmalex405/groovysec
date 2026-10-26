@@ -6,7 +6,6 @@ This guide walks you through configuring JumpCloud as your Single Sign-On provid
 
 JumpCloud integration provides:
 - **OIDC Authentication**: OpenID Connect-based secure login
-- **SAML Authentication**: SAML 2.0 support
 - **Group Sync**: Automatic synchronization of JumpCloud groups
 - **SCIM Provisioning**: Automated user lifecycle management
 
@@ -15,10 +14,12 @@ JumpCloud integration provides:
 | Feature | Supported |
 |---------|-----------|
 | OIDC Authentication | Yes |
-| SAML Authentication | Yes |
+| SAML Authentication | Not available. Use OIDC |
 | Group Synchronization | Yes |
 | Just-in-Time Provisioning | Yes |
 | SCIM Provisioning | Yes |
+
+> **Note:** SAML sign-in is not available in Whiteout AI. Connect JumpCloud with OIDC, as described below.
 
 ## Prerequisites
 
@@ -29,7 +30,7 @@ Before you begin, ensure you have:
 
 ---
 
-## Option A: OIDC Setup (Recommended)
+## OIDC Setup
 
 ### Step 1: Create OIDC Application in JumpCloud
 
@@ -105,85 +106,6 @@ After saving, note:
 
 ---
 
-## Option B: SAML Setup
-
-### Step 1: Create SAML Application in JumpCloud
-
-1. Log in to JumpCloud Admin Console
-2. Navigate to **SSO Applications**
-3. Click **+ Add New Application**
-4. Select **Custom SAML App**
-5. Click **Configure**
-
-### Step 2: Configure SAML Settings
-
-**General Info:**
-
-| Field | Value |
-|-------|-------|
-| **Display Label** | `Whiteout AI` |
-| **Description** | `AI Governance Platform SAML` |
-
-**SP Configuration:**
-
-| Field | Value |
-|-------|-------|
-| **IdP Entity ID** | Leave default (JumpCloud generates) |
-| **SP Entity ID** | `https://your-whiteout-instance.com` |
-| **ACS URL** | `https://your-whiteout-instance.com/api/auth/saml/callback` |
-| **SAMLSubject NameID** | email |
-| **SAMLSubject NameID Format** | emailAddress |
-| **Signature Algorithm** | RSA-SHA256 |
-
-### Step 3: Configure Attribute Statements
-
-Add attributes:
-
-| Name | JumpCloud Attribute |
-|------|---------------------|
-| `email` | Email |
-| `firstName` | First Name |
-| `lastName` | Last Name |
-
-For groups:
-| Name | JumpCloud Attribute |
-|------|---------------------|
-| `groups` | Groups |
-
-### Step 4: Download SAML Metadata
-
-1. Save the application
-2. Click **Export Metadata**
-3. Download the XML file
-
-Or note manually:
-- **IdP SSO URL**
-- **IdP Entity ID**
-- **Certificate** (download X.509)
-
-### Step 5: Activate and Assign
-
-1. Toggle application to **Active**
-2. Assign user groups
-
-### Step 6: Configure Whiteout AI (SAML)
-
-1. Navigate to **Settings** > **Identity Provider**
-2. Click **Add Identity Provider**
-3. Select **JumpCloud**
-4. Choose **SAML**
-5. Upload metadata XML or enter manually:
-
-| Field | Value |
-|-------|-------|
-| **IdP SSO URL** | From Step 4 |
-| **IdP Entity ID** | From Step 4 |
-| **Certificate** | From Step 4 |
-
-6. Click **Save & Test Connection**
-
----
-
 ## Group Synchronization
 
 ### Create Groups in JumpCloud
@@ -202,13 +124,8 @@ Or note manually:
 
 ### Configure Groups Attribute
 
-For OIDC:
 1. In attribute mapping, ensure `groups` claim is included
 2. Groups will be sent as an array in the ID token
-
-For SAML:
-1. Add `groups` attribute statement
-2. Map to JumpCloud Groups attribute
 
 ### Map Groups in Whiteout AI
 
@@ -303,12 +220,6 @@ curl -X GET "https://console.jumpcloud.com/api/v2/usergroups" \
 3. Authenticate with JumpCloud credentials
 4. Verify redirect to Whiteout AI
 
-### Test SAML Sign-In
-
-1. **SP-initiated**: Start from Whiteout AI
-2. **IdP-initiated**: Click from JumpCloud User Portal
-3. Verify successful authentication
-
 ### Verify Groups
 
 1. Trigger group sync
@@ -330,12 +241,6 @@ curl -X GET "https://console.jumpcloud.com/api/v2/usergroups" \
 - Verify Client ID and Secret
 - Check Issuer URL format
 - Ensure application is active
-
-### "Invalid signature" Error (SAML)
-
-- Re-download certificate
-- Check certificate expiration
-- Verify signing algorithm matches
 
 ### User Not Provisioned
 
@@ -391,18 +296,6 @@ curl -X GET "https://console.jumpcloud.com/api/v2/usergroups" \
 | `family_name` | Last Name |
 | `preferred_username` | Username |
 | `groups` | Group Memberships |
-
-### SAML Attributes
-
-| SAML Attribute | Whiteout AI |
-|----------------|-------------|
-| `NameID` | User ID / Email |
-| `email` | Email |
-| `firstName` | First Name |
-| `lastName` | Last Name |
-| `groups` | Group Memberships |
-
----
 
 ## Revoking Access
 
