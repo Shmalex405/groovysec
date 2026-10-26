@@ -221,7 +221,7 @@ export function EnterpriseIdentity() {
     {
       icon: KeyRound,
       title: "SSO Across 9 Providers",
-      description: "Okta, Microsoft Entra, Google Workspace, Auth0, Ping, OneLogin, JumpCloud, and generic OIDC/SAML, with user and group sync.",
+      description: "Okta, Microsoft Entra, Google Workspace, Auth0, Ping, OneLogin, JumpCloud, and generic OIDC, with user and group sync.",
     },
     {
       icon: Smartphone,

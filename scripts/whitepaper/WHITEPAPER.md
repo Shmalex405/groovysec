@@ -60,7 +60,7 @@ Lightweight enforcement runs at every endpoint for instant local checks — prov
 
 ### Data residency by design
 
-The authoritative judge is a **self-hosted model served on your own infrastructure** (an OpenAI-compatible inference server, schema-constrained JSON output, temperature 0 for reproducible verdicts). Customers in healthcare, finance, legal, and government can check whether content is safe to send to external AI **without sending that content to external AI**. A vendor-LLM fallback exists for organizations that opt in — it is never required.
+The authoritative judge is a **self-hosted model served on your own infrastructure** (an OpenAI-compatible inference server, schema-constrained JSON output, temperature 0 for reproducible verdicts). Customers in healthcare, finance, legal, and government can check whether content is safe to send to external AI **without sending that content to external AI**. There is no vendor-LLM fallback: compliance checks are never sent to an external AI provider.
 
 ### Direction-aware policy
 
@@ -346,7 +346,7 @@ Administrators review every classification in a Documents view — with per-docu
 
 ## Identity, Access & Device Trust
 
-- **9 identity providers** — Microsoft Entra ID, Okta, Google Workspace, OneLogin, Ping Identity, JumpCloud, Auth0, Generic OIDC, and Generic SAML 2.0 — with guided setup and connection testing.
+- **8 identity providers over OIDC** — Microsoft Entra ID, Okta, Google Workspace, OneLogin, Ping Identity, JumpCloud, Auth0, and Generic OIDC — with guided setup and connection testing.
 - **Directory sync done right** — just-in-time provisioning, group-membership mapping, auto-deprovisioning, full group lifecycle (renames propagate; deleted IdP groups pause their mapping visibly instead of failing silently), and **selective onboarding** so a pilot can govern fifty people before it governs five thousand.
 - **SCIM 2.0** — standards-compliant real-time provisioning, plus a read-only **SCIM verifier** that detects missed pushes — a silent skipped deprovision is a security incident, not a sync hiccup.
 - **Role-based access control** — admin / user / **read-only auditor**, enforced server-side (auditors are admitted only on safe read methods — a real boundary, not grayed-out buttons). Admin authority is scoped to the organization; there is deliberately no cross-tenant superadmin.
