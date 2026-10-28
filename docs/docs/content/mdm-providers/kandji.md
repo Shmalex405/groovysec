@@ -18,9 +18,10 @@ The Kandji integration allows Whiteout AI to:
 > Whiteout does **not** push apps or profiles into Kandji, and does not mirror
 > Kandji Blueprints. Deploying Desktop Guard and the browser extension is done from your
 > Kandji console using its own app and profile deployment, exactly as you
-> would deploy any other software. Per-device zero-touch enrollment profiles —
-> the ones Whiteout generates for Intune and Jamf — are not generated for
-> Kandji yet; enroll from Whiteout's **Enrollment** page instead.
+> would deploy any other software. Whiteout does generate a zero-touch payload for
+> Kandji that you upload yourself: per-device enrollment profiles, the browser
+> extension profiles and Codex protection. It hasn't been verified against a
+> live Kandji tenant yet, so try it on one device first.
 
 ## Prerequisites
 
@@ -90,19 +91,40 @@ Download the macOS `.dmg` from **Coverage → Enrollment → Install** in the ad
 
 ### 2. Force-install the browser extension
 
-Whiteout generates the browser force-install and private-browsing payloads as
-standard Apple configuration profiles (`.mobileconfig`). Download them from
-**Integrations → MDM → Generate Deployment Payload** on an Intune or Jamf
-integration, then upload the macOS entries to Kandji as custom profiles.
-They are plain Apple profiles and are not Intune- or Jamf-specific.
+Download this integration's payload: under **Integrations → Mobile Device
+Management (MDM)**, click the download icon on the Kandji row, then
+**Generate & Download**. Each block in the file is a standard Apple profile.
+Upload the browser force-install and private-browsing blocks in
+**Library → Add New → Custom Profile** and assign them Blueprint-wide.
 
 Without them Desktop Guard runs but the browser extension never installs,
 which is a silent failure — the dashboard looks healthy.
 
 ### 3. Enroll users
 
-Mint enrollment tokens from **Enrollment** in the Whiteout admin UI and deliver
-them with your Desktop Guard deployment. Kandji-specific per-device token profiles are not generated yet.
+The same download carries one enrollment profile per device, with that
+device's token filled in. Kandji scopes by Blueprint rather than by device, so assign each enrollment profile to its own device.
+
+You can also mint tokens from **Enrollment** in the admin app and deliver them
+with your Desktop Guard deployment.
+
+### 4. Codex protection
+
+Codex runs Whiteout's checks for every user, with no prompt, only when a
+configuration profile forces its `com.openai.codex` preference. The
+configuration payload you download for this integration (the download icon
+under **Integrations → Mobile Device Management (MDM)**) has a section labelled
+**Codex protection**: a plist for the `com.openai.codex` domain with one key,
+`requirements_toml_base64`.
+
+Add it in **Library → Add New → Custom Profile** and assign it to the
+Blueprints that cover your Macs with Desktop Guard. It is the same on every
+Mac. If you'd rather upload a ready-made `.mobileconfig`, ask your Whiteout
+contact for `whiteout-codex-hooks.mobileconfig`, which carries the same setting.
+
+If you already deploy a `com.openai.codex` profile of your own, add Whiteout's
+block to it instead of adding a second profile. Details are in
+[Protecting Codex](./deployment/codex.md).
 
 ---
 

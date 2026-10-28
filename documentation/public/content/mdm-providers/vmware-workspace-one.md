@@ -18,9 +18,10 @@ The Workspace ONE integration allows Whiteout AI to:
 > Whiteout does **not** push apps or profiles into Workspace ONE, and does not mirror
 > organization groups or Smart Groups. Deploying Desktop Guard and the browser extension is done from your
 > Workspace ONE console using its own app and profile deployment, exactly as you
-> would deploy any other software. Per-device zero-touch enrollment profiles —
-> the ones Whiteout generates for Intune and Jamf — are not generated for
-> Workspace ONE yet; enroll from Whiteout's **Enrollment** page instead.
+> would deploy any other software. Whiteout does generate a zero-touch payload for
+> Workspace ONE that you upload yourself: per-device enrollment profiles, the browser
+> extension profiles and Codex protection. It hasn't been verified against a
+> live Workspace ONE tenant yet, so try it on one device first.
 
 ## Prerequisites
 
@@ -82,20 +83,45 @@ Download it from **Coverage → Enrollment → Install** in the admin app.
 
 ### 2. Force-install the browser extension
 
-Whiteout generates the browser force-install and private-browsing payloads as
-standard Apple configuration profiles (`.mobileconfig`). Download them from
-**Integrations → MDM → Generate Deployment Payload** on an Intune or Jamf
-integration, then upload the macOS entries to Workspace ONE as custom profiles.
-They are plain Apple profiles and are not Intune- or Jamf-specific.
+Download this integration's payload: under **Integrations → Mobile Device
+Management (MDM)**, click the download icon on the Workspace ONE row, then
+**Generate & Download**. Each block in the file is a standard Apple profile.
+Upload the browser force-install and private-browsing blocks in
+**Devices → Profiles & Resources → Profiles → Add → Apple macOS → Custom Settings** and assign them to the Smart Group that covers these Macs.
 
 Without them Desktop Guard runs but the browser extension never installs,
 which is a silent failure — the dashboard looks healthy.
 
 ### 3. Enroll users
 
-Mint enrollment tokens from **Enrollment** in the Whiteout admin UI and deliver
-them with your Desktop Guard deployment. **On Windows, read the anchor note below before relying on
-hardware-bound tokens.**
+The same download carries one enrollment profile per device, with that
+device's token filled in. Assign each enrollment profile to its own device. This is for Macs only: on Windows, Workspace ONE reports its own device ID instead of the Windows machine ID, so enroll Windows devices with tokens from the **Enrollment** page (see the anchor note below).
+
+You can also mint tokens from **Enrollment** in the admin app and deliver them
+with your Desktop Guard deployment.
+
+### 4. Codex protection
+
+Codex runs Whiteout's checks for every user, with no prompt, only when they
+come from a source an administrator controls: a configuration profile on
+macOS, and Codex's machine requirements file on Windows.
+
+**Macs.** The configuration payload you download for this integration (the
+download icon under **Integrations → Mobile Device Management (MDM)**) has a
+section labelled **Codex protection**: a plist for the `com.openai.codex`
+domain with one key, `requirements_toml_base64`. Add it in **Devices →
+Profiles & Resources → Profiles → Add → Apple macOS → Custom Settings** and
+assign it to your Macs with Desktop Guard. It is the same on every Mac. If
+you'd rather work from a ready-made `.mobileconfig`, ask your Whiteout contact
+for `whiteout-codex-hooks.mobileconfig`, which carries the same setting.
+
+**Windows.** The payload covers Macs only. Run `Install-WhiteoutCodexHooks.ps1`
+as SYSTEM on your PCs (ask your Whiteout contact for the script), or have an
+administrator choose **Turn On Codex Protection…** in Desktop Guard on each PC.
+
+If you already deploy a `com.openai.codex` profile of your own, add Whiteout's
+block to it instead of adding a second profile. Details are in
+[Protecting Codex](./deployment/codex.md).
 
 ---
 
