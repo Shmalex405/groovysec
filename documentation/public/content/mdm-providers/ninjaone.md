@@ -190,6 +190,15 @@ Desktop Guard signs in silently as the mapped user, and the browser extension an
 >
 > Either way, a device with nobody logged in shows as configured before the app appears. That's expected.
 
+### Codex protection
+
+The deploy scripts include a Codex protection step, on by default. It makes Codex run Whiteout's checks for every user, with no prompt:
+
+- **Windows**: the script adds Whiteout's block to Codex's machine requirements file and keeps anything else in it.
+- **macOS**: the script writes Codex's `com.openai.codex` preference to `/Library/Managed Preferences`. It never writes over a value that isn't Whiteout's. On such a Mac, `whiteoutDeviceStatus` shows an error naming `codex-foreign-profile`.
+
+Deploy scripts downloaded before this step was added don't include it. Download the deploy script again (Step 4) and replace it in NinjaOne. The rollback script doesn't undo this step. Details are in [Protecting Codex](./deployment/codex.md).
+
 ---
 
 ## Verification

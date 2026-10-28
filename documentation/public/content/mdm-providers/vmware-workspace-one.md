@@ -97,6 +97,29 @@ Mint enrollment tokens from **Enrollment** in the Whiteout admin UI and deliver
 them with your Desktop Guard deployment. **On Windows, read the anchor note below before relying on
 hardware-bound tokens.**
 
+### 4. Codex protection
+
+Codex runs Whiteout's checks for every user, with no prompt, only when they
+come from a source an administrator controls: a configuration profile on
+macOS, and Codex's machine requirements file on Windows.
+
+**Macs.** The configuration payload you download for this integration (the
+download icon under **Integrations → Mobile Device Management (MDM)**) has a
+section labelled **Codex protection**: a plist for the `com.openai.codex`
+domain with one key, `requirements_toml_base64`. Add it in **Devices →
+Profiles & Resources → Profiles → Add → Apple macOS → Custom Settings** and
+assign it to your Macs with Desktop Guard. It is the same on every Mac. If
+you'd rather work from a ready-made `.mobileconfig`, ask your Whiteout contact
+for `whiteout-codex-hooks.mobileconfig`, which carries the same setting.
+
+**Windows.** The payload covers Macs only. Run `Install-WhiteoutCodexHooks.ps1`
+as SYSTEM on your PCs (ask your Whiteout contact for the script), or have an
+administrator choose **Turn On Codex Protection…** in Desktop Guard on each PC.
+
+If you already deploy a `com.openai.codex` profile of your own, add Whiteout's
+block to it instead of adding a second profile. Details are in
+[Protecting Codex](./deployment/codex.md).
+
 ---
 
 ## Verification

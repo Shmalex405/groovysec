@@ -155,6 +155,16 @@ Without these profiles, Desktop Guard will enroll silently and the browsers will
 
 > **Automating this for a large fleet.** A per-device credential means one configuration profile scoped to one Smart Group per device, which is impractical by hand beyond a pilot. Whiteout ships a fanout tool that creates the profiles and their Smart Groups through the Jamf API. It needs write privileges the integration itself does not: create and update Smart Computer Groups, and create and update macOS Configuration Profiles. Ask your Whiteout contact for it — it is not required for a pilot of a few Macs.
 
+### Step 9: Codex protection
+
+Codex runs Whiteout's checks for every user, with no prompt, only when a configuration profile forces its `com.openai.codex` preference. The file you generate in Step 6 has a section for this labelled **Codex protection**: a plist for the `com.openai.codex` domain with one key, `requirements_toml_base64`.
+
+1. Jamf Pro > **Computers** > **Configuration Profiles** > **New**
+2. Add an **Application & Custom Settings** payload, with the preference domain `com.openai.codex` and the plist from that section
+3. Set **Scope** to all Macs with Desktop Guard. The setting is the same on every Mac, so one profile covers the fleet. The fanout tool doesn't create this profile
+
+If you already deploy a `com.openai.codex` profile of your own, add Whiteout's block to it instead of adding a second profile. How to do that, and how to check a Mac, is in [Protecting Codex](./deployment/codex.md).
+
 ---
 
 ## Verification

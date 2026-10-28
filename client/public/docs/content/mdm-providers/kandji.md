@@ -104,6 +104,24 @@ which is a silent failure — the dashboard looks healthy.
 Mint enrollment tokens from **Enrollment** in the Whiteout admin UI and deliver
 them with your Desktop Guard deployment. Kandji-specific per-device token profiles are not generated yet.
 
+### 4. Codex protection
+
+Codex runs Whiteout's checks for every user, with no prompt, only when a
+configuration profile forces its `com.openai.codex` preference. The
+configuration payload you download for this integration (the download icon
+under **Integrations → Mobile Device Management (MDM)**) has a section labelled
+**Codex protection**: a plist for the `com.openai.codex` domain with one key,
+`requirements_toml_base64`.
+
+Add it in **Library → Add New → Custom Profile** and assign it to the
+Blueprints that cover your Macs with Desktop Guard. It is the same on every
+Mac. If you'd rather upload a ready-made `.mobileconfig`, ask your Whiteout
+contact for `whiteout-codex-hooks.mobileconfig`, which carries the same setting.
+
+If you already deploy a `com.openai.codex` profile of your own, add Whiteout's
+block to it instead of adding a second profile. Details are in
+[Protecting Codex](./deployment/codex.md).
+
 ---
 
 ## Verification

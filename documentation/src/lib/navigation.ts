@@ -26,6 +26,7 @@ export const navigation: NavSection[] = [
       { title: 'Zero-Touch MDM', href: '/admin-guides/deployment/zero-touch-mdm' },
       { title: 'Installing Without MDM or SSO', href: '/admin-guides/deployment/install-without-mdm' },
       { title: 'Windows MSI', href: '/admin-guides/deployment/windows-msi' },
+      { title: 'Protecting Codex', href: '/admin-guides/deployment/codex' },
     ],
   },
   {

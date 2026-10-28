@@ -299,7 +299,8 @@ Once Desktop Guard is signed in, it installs Whiteout's defender hooks for
 **Claude Code** and **Codex** by itself: straight away on macOS, and within
 about 5 minutes on Windows. It also puts them back if they're removed or
 changed. That covers these agents wherever they run, including from a terminal
-or a JetBrains IDE.
+or a JetBrains IDE. Codex needs one more step before it runs Whiteout's hooks;
+see [Protecting Codex](./deployment/codex.md).
 
 For **Cursor**, install the Whiteout extension in Cursor (from Open VSX, as
 above) and run **Whiteout: Install Cursor Defender Hooks** from the Command
