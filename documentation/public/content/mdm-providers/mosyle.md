@@ -18,9 +18,10 @@ The Mosyle integration allows Whiteout AI to:
 > Whiteout does **not** push apps or profiles into Mosyle, and does not mirror
 > Mosyle device groups or tags. Deploying Desktop Guard and the browser extension is done from your
 > Mosyle console using its own app and profile deployment, exactly as you
-> would deploy any other software. Per-device zero-touch enrollment profiles —
-> the ones Whiteout generates for Intune and Jamf — are not generated for
-> Mosyle yet; enroll from Whiteout's **Enrollment** page instead.
+> would deploy any other software. Whiteout does generate a zero-touch payload for
+> Mosyle that you upload yourself: per-device enrollment profiles, the browser
+> extension profiles and Codex protection. It hasn't been verified against a
+> live Mosyle tenant yet, so try it on one device first.
 
 ## Prerequisites
 
@@ -81,19 +82,22 @@ Download the macOS `.dmg` from **Coverage → Enrollment → Install** in the ad
 
 ### 2. Force-install the browser extension
 
-Whiteout generates the browser force-install and private-browsing payloads as
-standard Apple configuration profiles (`.mobileconfig`). Download them from
-**Integrations → MDM → Generate Deployment Payload** on an Intune or Jamf
-integration, then upload the macOS entries to Mosyle as custom profiles.
-They are plain Apple profiles and are not Intune- or Jamf-specific.
+Download this integration's payload: under **Integrations → Mobile Device
+Management (MDM)**, click the download icon on the Mosyle row, then
+**Generate & Download**. Each block in the file is a standard Apple profile.
+Upload the browser force-install and private-browsing blocks in
+**Management → Profiles → Custom Profile** and assign them to the device group that covers these Macs.
 
 Without them Desktop Guard runs but the browser extension never installs,
 which is a silent failure — the dashboard looks healthy.
 
 ### 3. Enroll users
 
-Mint enrollment tokens from **Enrollment** in the Whiteout admin UI and deliver
-them with your Desktop Guard deployment. Mosyle-specific per-device token profiles are not generated yet.
+The same download carries one enrollment profile per device, with that
+device's token filled in. Mosyle scopes by device group, so assign each enrollment profile to its own device.
+
+You can also mint tokens from **Enrollment** in the admin app and deliver them
+with your Desktop Guard deployment.
 
 ### 4. Codex protection
 

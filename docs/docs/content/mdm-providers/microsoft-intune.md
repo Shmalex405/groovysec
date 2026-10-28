@@ -165,7 +165,7 @@ Once connected, Whiteout can author AI app and domain blocking policies and push
 
 Codex runs Whiteout's checks for every user, with no prompt, only when they come from a source an administrator controls: a configuration profile on macOS, and Codex's machine requirements file on Windows. You can deploy both in one of two ways:
 
-- **From the admin app.** On the **Coverage** page, the **Codex** card has a **Deploy with Intune** button. It creates a macOS custom configuration profile and a Windows platform script in your tenant, assigned to all devices or to the groups you choose. Nothing changes in Intune until you confirm the dialog. The Codex card appears once at least one device reports Codex.
+- **From the admin app.** On **Coverage → Enrollment**, the **Codex** card has a **Deploy with Intune** button. It creates a macOS custom configuration profile and a Windows platform script in your tenant, assigned to all devices or to the groups you choose. Nothing changes in Intune until you confirm the dialog. The Codex card appears once at least one device reports Codex.
 - **By hand.** The payload from Step 6 has a `codexProtection` section with the same two items: `codexProtection.macos.mobileconfig`, uploaded as a macOS **Custom** profile on the device channel, and `codexProtection.windows.scriptContent`, added as a Windows platform script that runs as system in 64-bit PowerShell.
 
 Details, including what to do if you already manage Codex, are in [Protecting Codex](./deployment/codex.md).

@@ -42,7 +42,7 @@ Choosing it asks for an administrator password on a Mac, or Windows administrato
 
 When no machine source carries Whiteout's hooks, Desktop Guard (or the VS Code extension) registers them for each user in `~/.codex/hooks.json`. Codex runs those only once the user trusts them. When Codex starts, it lists the hooks it doesn't trust yet and offers **Review**, **Trust all and continue** and **Continue without trusting**.
 
-**Trust all and continue** turns on Whiteout's checks for that user until the hooks change. **Continue without trusting** leaves Codex running with nothing checked, and the device shows **Needs approval** on the Coverage page.
+**Trust all and continue** turns on Whiteout's checks for that user until the hooks change. **Continue without trusting** leaves Codex running with nothing checked, and the device shows **Needs approval** on the Enrollment page.
 
 ---
 
@@ -54,7 +54,7 @@ Codex protection is one setting, the same on every device. It carries no per-dev
 
 If Intune is connected, Whiteout can create the two Intune items for you. Nothing changes in your tenant until you confirm.
 
-1. In the admin app, open the **Coverage** page. The **Codex** card appears there once at least one device reports Codex
+1. In the admin app, open **Coverage → Enrollment**. The **Codex** card appears there once at least one device reports Codex
 2. On the Codex card, click **Deploy with Intune**
 3. Review the two items the dialog names:
    - **macOS**: a custom configuration profile, "Whiteout AI — Codex protection (macOS)", delivered on the device channel. It sets the `com.openai.codex` preference that carries Whiteout's hook block
@@ -149,13 +149,13 @@ timeout = 30
 # <<< whiteout-defender (managed by Whiteout Desktop Guard) <<<
 ```
 
-The Codex card on the Coverage page warns when a device has a Codex configuration from your MDM without Whiteout's checks. While any Mac reports one, the Intune push won't send the macOS profile. The NinjaOne macOS step never writes over your value.
+The Codex card on the Enrollment page warns when a device has a Codex configuration from your MDM without Whiteout's checks. While any Mac reports one, the Intune push won't send the macOS profile. The NinjaOne macOS step never writes over your value.
 
 **Windows.** `Install-WhiteoutCodexHooks.ps1` adds Whiteout's block to your existing requirements file and keeps everything else. You only need to add the block by hand if the script refuses your file, as described in [Microsoft Intune, by hand](#microsoft-intune-by-hand).
 
 ## Don't combine MDM and Turn On Codex Protection on the same Mac
 
-If someone chose **Turn On Codex Protection…** on a Mac before your MDM profile arrived, the Mac has Whiteout's block in two places: the profile and `/etc/codex/requirements.toml`. Codex then runs both copies, so every Codex prompt is checked twice and logged twice. The Coverage page's Codex card and the device page warn that the checks are "in two places".
+If someone chose **Turn On Codex Protection…** on a Mac before your MDM profile arrived, the Mac has Whiteout's block in two places: the profile and `/etc/codex/requirements.toml`. Codex then runs both copies, so every Codex prompt is checked twice and logged twice. The Enrollment page's Codex card and the device page warn that the checks are "in two places".
 
 To fix it, remove Whiteout's block (from the `# >>>` marker line to the `# <<<` marker line) from `/etc/codex/requirements.toml` on that Mac, or leave that Mac out of the profile's scope. Once a profile carries the checks, Desktop Guard no longer offers the menu option.
 
@@ -189,7 +189,7 @@ If you set `RequirementsPath`, check that file instead.
 
 Codex status needs **Desktop Guard 1.8.134 or later**, or the **Whiteout VS Code extension 1.28.5 or later**. A user whose Whiteout apps are older shows **Update Desktop Guard**.
 
-### Coverage page
+### Enrollment page
 
 The **Codex** card at the top of the page appears once at least one device reports Codex. It shows:
 
@@ -214,7 +214,7 @@ At the same time, the user table gains a **Codex** column. Each user gets one st
 
 **Needs approval**, **Not set up**, **Off by setting** and **Checks silent** count against the user's overall coverage. The user shows as **Needs attention**, with **Codex without Whiteout** as the reason. A device that hasn't reported Codex status, reports **Unknown**, or hasn't reported for a week never counts against coverage.
 
-On the **IDE extension** tab, the **Codex without Whiteout** filter lists those users. Reminder emails you send from the Coverage page tell each user what to do on which device. The CSV export includes the Codex columns.
+On the **IDE extension** tab, the **Codex without Whiteout** filter lists those users. Reminder emails you send from the Enrollment page tell each user what to do on which device. The CSV export includes the Codex columns.
 
 ### Device page
 
@@ -235,7 +235,7 @@ Whiteout raises two notifications for Codex, in **Alerts & Audit → Notificatio
 | **Codex used without Whiteout's checks** | Medium | A device reported **Needs approval**, **Not set up** or **Off by setting** on two heartbeats in a row, and Codex was used on it in the last 24 hours. The alert names the user, the device and the fix. It repeats at most weekly for each device and user. |
 | **Codex checks silent** | High | Whiteout's checks should run on a device (managed or user-trusted, unchanged for 24 hours), the device reported 3 or more Codex turns in the last 24 hours, and no Codex prompt from it was checked in the same 24 hours. It doesn't fire while the device reports checks unavailable during a Whiteout outage. It repeats at most weekly for each device. |
 
-Neither fires for **Unknown**. There is no "restored" notification: the device's status turns green on the Coverage page instead.
+Neither fires for **Unknown**. There is no "restored" notification: the device's status turns green on the Enrollment page instead.
 
 ---
 

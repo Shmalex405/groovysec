@@ -115,7 +115,7 @@ Whiteout validates the credentials against Jamf before saving, so a failure here
 
 You receive a property list (`.plist`) with each device's enrollment credential already filled in.
 
-> **This file covers Desktop Guard only.** Unlike the Intune payload, the Jamf download does not currently include the browser extension profiles — you create those by hand in Step 8. Skipping Step 8 leaves Desktop Guard enrolled and the browsers with no Whiteout coverage.
+> **The file also carries the browser extension profiles and Codex protection,** each as its own labelled block after the Desktop Guard entries. Step 8 explains the browser profiles so you can check them, and Step 9 covers Codex. Skipping the browser profiles leaves Desktop Guard enrolled and the browsers with no Whiteout coverage.
 
 > If you have generated credentials for this integration before, the dialog warns that unredeemed ones already exist. Tick **Replace existing live tokens** to revoke them and issue fresh — use this when rotating before a re-rollout, not on a routine retry.
 
@@ -130,7 +130,7 @@ You receive a property list (`.plist`) with each device's enrollment credential 
 
 ### Step 8: Create the browser extension profiles
 
-These force-install the Whiteout extension. Create one Application & Custom Settings profile per browser, each scoped to the same group of Macs, using these preference domains and keys. Ask your Whiteout contact for the current extension identifiers rather than copying them from an older runbook — the Chrome and Edge stores issue separate identifiers, and an Edge profile carrying the Chrome one installs nothing.
+These force-install the Whiteout extension. The download from Step 6 carries them as ready-made blocks with the current extension identifiers: upload each one as an Application & Custom Settings profile, scoped to the same group of Macs. The table shows what each sets, so you can check them. If you build one by hand, take the identifiers from the download, not an older runbook — the Chrome and Edge stores issue separate identifiers, and an Edge profile carrying the Chrome one installs nothing.
 
 | Browser | Preference domain | Key |
 |---------|-------------------|-----|
