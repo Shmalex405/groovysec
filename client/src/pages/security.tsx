@@ -27,7 +27,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function Security() {
   usePageMeta(
     "Trust & Security",
-    "How Groovy Security secures its own products: SOC 2 Type I in progress, encryption in transit and at rest, isolated per-customer deployments, audit logging, and a 48-hour critical patch commitment."
+    "How Groovy Security secures its own products: SOC 2 in progress, encryption in transit and at rest, isolated per-customer deployments, audit logging, and a 48-hour critical patch commitment."
   );
 
   const pillars = [
@@ -35,7 +35,7 @@ export default function Security() {
       icon: ShieldCheck,
       title: "Compliance Program",
       items: [
-        "SOC 2 Type I in progress",
+        "SOC 2 in progress",
         "Security-first development lifecycle",
         "NVIDIA Inception program member",
         "Documented threat models for our products",
@@ -118,7 +118,7 @@ export default function Security() {
             <ScrollReveal delay={0.4}>
               <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-8 text-sm text-[#6E7B8C]">
                 {[
-                  "SOC 2 Type I in progress",
+                  "SOC 2 in progress",
                   "Encryption in transit & at rest",
                   "48-hour critical patch commitment",
                 ].map((item) => (
