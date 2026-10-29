@@ -138,7 +138,7 @@ const ROUTES = [
     path: "/security",
     title: `Trust & Security | ${SITE_NAME}`,
     description:
-      "How Groovy Security secures its own products — SOC 2 Type I in progress, encryption in transit and at rest, isolated per-customer deployments, audit logging, and a 48-hour critical patch commitment.",
+      "How Groovy Security secures its own products — SOC 2 in progress, encryption in transit and at rest, isolated per-customer deployments, audit logging, and a 48-hour critical patch commitment.",
   },
   {
     path: "/terms-of-service",

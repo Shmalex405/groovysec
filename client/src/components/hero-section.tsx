@@ -114,7 +114,7 @@ export function HeroSection() {
               </div>
 
               <div className="text-sm text-[#6E7B8C] flex items-center">
-                SOC 2 Type I in progress
+                SOC 2 in progress
               </div>
               <div className="text-sm text-[#6E7B8C] flex items-center mt-1.5">
                 Deploy fully inside your own AWS account. We never touch your data

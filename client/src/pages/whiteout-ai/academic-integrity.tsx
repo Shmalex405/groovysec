@@ -209,7 +209,7 @@ export default function AcademicIntegrity() {
 
                   <div className="text-sm text-[#51617A] flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    Built for FERPA · SOC 2 Type I in progress · NVIDIA Inception
+                    Built for FERPA · SOC 2 in progress · NVIDIA Inception
                     member
                   </div>
                 </ScrollReveal>
