@@ -111,6 +111,7 @@ export const navigation: NavSection[] = [
       { title: 'When Whiteout Is Unavailable', href: '/admin-guides/governance/when-whiteout-is-unavailable' },
       { title: 'Folders in AI Tools', href: '/admin-guides/governance/folders' },
       { title: 'Account Rules for AI Apps', href: '/admin-guides/governance/account-rules' },
+      { title: 'Redacted Quick Send', href: '/admin-guides/governance/redacted-quick-send' },
     ],
   },
   {
