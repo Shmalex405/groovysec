@@ -102,7 +102,7 @@ If a declared model host receives traffic in the last 24 hours and the app sent 
 - Raises a **custom app bypass** finding in the AI Footprint, listing the top sources, hosts and flows. It's high severity, and critical after 3 days
 - Marks the app **Degraded**, and shows the details on the **AI Footprint** card of the app's Overview: *<host> was called from N sources (N flows) with no Guard or SDK events in the last 24 hours*, with a **View finding** button
 
-The finding resolves when the app's calls resume, or when the app is paused or archived. You can mute it in the AI Footprint like any other finding.
+The finding resolves when the app's calls resume, or when the app is paused or archived. You can mute or snooze it in **AI Footprint → Review** like any other finding.
 
 ### What's tracked
 
@@ -118,7 +118,7 @@ The **AI Footprint** card lists the app's hosts in three groups:
 
 ### Register as custom app
 
-In the AI Footprint, an unrecognised finding or an unclaimed internal model host can be turned into a custom app with **Register as custom app** (in the finding drawer) or **Register app** (on the egress row). The wizard opens pre-filled with the host, process and app bundle, and once registered Whiteout recognises that exact traffic as the app. Custom AI App entries in the Footprint's catalog are managed from the app itself, so they can't be edited or deleted there.
+In the AI Footprint, an unrecognised finding or an unclaimed internal model host can be turned into a custom app with **Register as custom app** (in the finding drawer) or **Register app** (on its row under **Inventory → Network**). The wizard opens pre-filled with the host, process and app bundle, and once registered Whiteout recognises that exact traffic as the app. Custom AI App entries in the Footprint's catalog are managed from the app itself, so they can't be edited or deleted there.
 
 ---
 

@@ -48,7 +48,7 @@ This finding means the vendor's own audit log shows someone using its AI, and **
 
 1. **Look at where it happened.** The finding names the product, such as Copilot in Teams.
 2. **Cover the person's devices.** Install Desktop Guard and the browser extension on the devices they use, ideally through MDM. See [Browser coverage](./ai-footprint/browser-coverage.md).
-3. **If the use is sanctioned** from a place Whiteout can't cover, allowlist the tool under **Manage → Allowlisted tools**.
+3. **If the use is sanctioned** from a place Whiteout can't cover, allowlist the tool under **Controls → Exceptions → Allowlisted tools**.
 4. **Acknowledge the finding** with a note.
 
 There's one finding per person and vendor. It resolves by itself when there have been no such interactions for 7 days, or when you disconnect that vendor's log.

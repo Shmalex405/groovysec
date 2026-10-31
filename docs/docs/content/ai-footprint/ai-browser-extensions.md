@@ -51,7 +51,7 @@ A catalogued AI extension on a device raises **Shadow AI — installed** because
 
 **What to do:**
 
-1. **If it's sanctioned,** allowlist it under **Manage → Allowlisted tools**. For a catalogued extension, use the catalog key shown in the finding's **Tool** column, for example `grammarly_extension`.
+1. **If it's sanctioned,** allowlist it under **Controls → Exceptions → Allowlisted tools**. For a catalogued extension, use the catalog key shown in the finding's **Tool** column, for example `grammarly_extension`.
 2. **If it isn't approved,** remove it from the profile, and keep it out with your browser's extension policy (below).
 3. **If it's unknown and you know what it is,** choose **Add to catalog**.
 

@@ -21,7 +21,7 @@ You can open the wizard from three places:
 
 - **Coverage → Custom AI Apps → Register an app**
 - **Integrations → Custom AI Apps card → Register an app**
-- **Coverage → AI Footprint**, from an unrecognised finding (**Register as custom app** in the finding drawer) or from an internal model host in the egress list (**Register app**)
+- **Coverage → AI Footprint**, from an unrecognised finding (**Register as custom app** in the finding drawer) or from an internal model host under **Inventory → Network** (**Register app**)
 
 When you start from the AI Footprint, the wizard opens with an information banner, **Pre-filled from the AI Footprint**, and fills in the app name and the model host, process or app bundle Whiteout observed. Once the app is registered, Whiteout recognises that traffic as this app and flags calls that skip coverage.
 

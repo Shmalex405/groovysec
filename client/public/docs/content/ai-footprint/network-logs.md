@@ -8,12 +8,12 @@ Your DNS and proxy logs see AI use that your endpoints can't show you: people wh
 
 ## Import
 
-1. Go to **Coverage → AI Footprint** and choose **Import network logs**. If the **Network visibility** card lists a gateway (under **Show what to do**), its button (for example **Import Zscaler logs**) opens the same dialog with the format already chosen.
+1. Go to **Coverage → AI Footprint** and choose **Settings → Import network logs**, or open **Inventory → Network** and choose **Import network logs**. If the **Network visibility** card lists a gateway (under **Show what to do**), its button (for example **Import Zscaler logs**) opens the same dialog with the format already chosen.
 2. Choose the **Log format**.
 3. Choose **Choose file** and pick the log.
 4. Choose **Import**.
 
-When the import finishes, the dialog shows **Rows read**, **AI rows kept**, **AI sites**, **Users matched**, **Unmatched identities** and **Findings opened**, plus the AI tools it found. Choose **View findings** to go to the **Findings** tab. The AI rows appear on the **Network activity** tab, with the observer **Cisco Umbrella DNS log**, **Zscaler web log** or **Network log (CSV)**.
+When the import finishes, the dialog shows **Rows read**, **AI rows kept**, **AI sites**, **Users matched**, **Unmatched identities** and **Findings opened**, plus the AI tools it found. Choose **View findings** to go to **Review**. The AI rows appear in **Inventory → Network**, with the observer **Cisco Umbrella DNS log**, **Zscaler web log** or **Network log (CSV)**.
 
 Only admins can import. Read-only viewers can't.
 
@@ -38,7 +38,7 @@ For **Generic CSV**, Whiteout recognizes common header names, such as `timestamp
 
 ### Import recent logs, regularly
 
-Findings are based on AI traffic from the **last 7 days** in your imported logs. Older rows are kept as evidence on the **Network activity** tab but don't open findings. A finding resolves by itself once that person or identity has no AI traffic in the last 7 days of imported logs, so import new logs regularly, for example daily or weekly, to keep findings current.
+Findings are based on AI traffic from the **last 7 days** in your imported logs. Older rows are kept as evidence in **Inventory → Network** but don't open findings. A finding resolves by itself once that person or identity has no AI traffic in the last 7 days of imported logs, so import new logs regularly, for example daily or weekly, to keep findings current.
 
 ---
 
@@ -83,7 +83,7 @@ What happens next depends on the match:
 
 | Identity | Result |
 |---|---|
-| Matched, and the person has a live Whiteout surface on any device | Evidence only, on the **Network activity** tab. No finding. |
+| Matched, and the person has a live Whiteout surface on any device | Evidence only, in **Inventory → Network**. No finding. |
 | Matched, with no live Whiteout surface on any device | **AI use with no Whiteout on any device** |
 | Not matched to any user | **AI use by someone we can't match to a user** |
 
@@ -101,7 +101,7 @@ Common causes: the person was never set up, Whiteout was removed or stopped runn
 
 1. Check the person under **Coverage → Enrollment**.
 2. Deploy the browser extension (an MDM force-install is best) and Desktop Guard for them. See [Zero-Touch MDM](./deployment/zero-touch-mdm.md) or [Installing without MDM or SSO](./deployment/install-without-mdm.md).
-3. If their use of the service is sanctioned, allowlist the service (its host, for example `chatgpt.com`, or its provider) or the person's email under **Manage → Allowlisted tools**.
+3. If their use of the service is sanctioned, allowlist the service (its host, for example `chatgpt.com`, or its provider) or the person's email under **Controls → Exceptions → Allowlisted tools**.
 
 The finding resolves by itself once a Whiteout surface is live for the person, or once their imported traffic is more than 7 days old.
 
@@ -124,14 +124,14 @@ It's often one of these:
 
 1. Find out who or what it is. The identity and the AI tools are in the finding.
 2. **If it's a person,** invite them and get them enrolled. If their log identity is a username that doesn't match their email address, export the log with an email or UPN column if your gateway can, or make sure the address appears as an alternate email from your identity provider.
-3. **If it's a sanctioned system,** add `net:<identity>` (or the identity itself) to **Manage → Allowlisted tools**.
+3. **If it's a sanctioned system,** add `net:<identity>` (or the identity itself) to **Controls → Exceptions → Allowlisted tools**.
 
 The finding resolves by itself once that identity has no AI traffic in the last 7 days of imported logs.
 
-To stop all findings from imported logs, mute **Imported network logs** under **Manage → Muted categories**. The rows stay on the **Network activity** tab.
+To stop all findings from imported logs, mute **Imported network logs** under **Controls → Exceptions → Muted categories**. The rows stay in **Inventory → Network**.
 
 ---
 
 ## Notifications
 
-New findings from an import raise the **Shadow AI detected** notification. A first import can open many **unknown actor** findings at once, so each pass notifies for at most 20 new findings. The rest are still on the **Findings** tab.
+New findings from an import raise the **Shadow AI detected** notification. A first import can open many **unknown actor** findings at once, so each pass notifies for at most 20 new findings. The rest are still in **Review**.

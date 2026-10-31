@@ -84,7 +84,7 @@ Copilot in Edge used on a Windows device where Desktop Guard checks it doesn't r
 1. **If the feature isn't approved,** turn it off with the [Browser AI policy](#turn-features-off-with-your-mdm).
 2. **If people may use it but shouldn't share pages with it,** choose **Allow but block page reading** (Copilot in Edge).
 3. **For Copilot in Edge on Windows,** make sure Desktop Guard is installed and running on the device.
-4. **If its use is sanctioned,** allowlist it under **Manage → Allowlisted tools**, using its catalog key: `gemini_in_chrome`, `edge_copilot_sidebar`, `brave_leo`, `opera_aria` or `firefox_ai_chatbot`.
+4. **If its use is sanctioned,** allowlist it under **Controls → Exceptions → Allowlisted tools**, using its catalog key: `gemini_in_chrome`, `edge_copilot_sidebar`, `brave_leo`, `opera_aria` or `firefox_ai_chatbot`.
 5. **Acknowledge the finding** with a note.
 
 The finding resolves by itself when the feature is turned off, when you allowlist it, or when there's been no sign of use for 7 days.

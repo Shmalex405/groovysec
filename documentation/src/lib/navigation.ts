@@ -117,6 +117,7 @@ export const navigation: NavSection[] = [
     title: 'AI Footprint',
     items: [
       { title: 'Overview', href: '/admin-guides/ai-footprint/overview' },
+      { title: 'Review and Triage', href: '/admin-guides/ai-footprint/review-and-triage' },
       { title: 'Shadow AI Findings', href: '/admin-guides/ai-footprint/shadow-ai' },
       { title: 'Browser Coverage', href: '/admin-guides/ai-footprint/browser-coverage' },
       { title: 'Third-Party AI Extensions', href: '/admin-guides/ai-footprint/ai-browser-extensions' },

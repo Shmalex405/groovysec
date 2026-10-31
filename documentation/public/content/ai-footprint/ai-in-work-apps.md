@@ -68,7 +68,7 @@ AI writing extensions such as Grammarly, Sider, Monica and HARPA AI read what pe
 
 You have three options:
 
-1. **Allow them**, and allowlist them under **Manage** so they stop raising findings.
+1. **Allow them**, and allowlist them under **Controls → Exceptions** so they stop raising findings.
 2. **Block them** with your browser's extension policy. See [Block AI extensions with your MDM](./ai-footprint/ai-browser-extensions.md#block-ai-extensions-with-your-mdm).
 3. **Keep them off your sensitive sites** and let people use them everywhere else, with the setting below.
 
