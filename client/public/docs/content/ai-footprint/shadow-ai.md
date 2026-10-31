@@ -131,8 +131,8 @@ Once an unknown tool does raise a finding, the finding is **high** severity, bec
 | Action | Effect | Use it when |
 |---|---|---|
 | **Acknowledge** (in the finding's drawer, or for many findings in **Review**) | Marks the finding as reviewed, with your note. It moves to **Acknowledged**. | You've looked at it and accept it for now. |
-| **Mute** (**Review**) | The findings you select move to **Muted** and stay there until someone reopens them. | You don't want them in the queue, but don't want to sanction the tool either. |
-| **Snooze** (**Review**) | The findings you select leave the queue until a date, then reopen if the tool is still there. | You'll come back to it later, for example after a rollout. |
+| **Mute** (in the finding's drawer, or for many findings in **Review**) | The finding moves to **Muted** and stays there until someone reopens it. | You don't want them in the queue, but don't want to sanction the tool either. |
+| **Snooze** (in the finding's drawer, or for many findings in **Review**) | The finding leaves the queue until a date, up to a year ahead, then reopens if the tool is still there. | You'll come back to it later, for example after a rollout. |
 | **Allowlist** (**Controls → Exceptions → Allowlisted tools**, or **Allowlist** in **Inventory**) | The tool never raises a finding, and its open findings resolve. It stays in the inventory. | Its use is sanctioned, but Whiteout doesn't govern it. |
 | **Mute a category** (**Controls → Exceptions → Muted categories**) | No findings for a whole category. Items stay in the inventory. | A whole class of tool isn't a concern for you. |
 | **Add to catalog** | Names and classifies the tool everywhere. | You know what an unknown tool is. |

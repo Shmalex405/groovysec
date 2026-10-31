@@ -51,7 +51,7 @@ This finding means the vendor's own audit log shows someone using its AI, and **
 3. **If the use is sanctioned** from a place Whiteout can't cover, allowlist the tool under **Controls → Exceptions → Allowlisted tools**.
 4. **Acknowledge the finding** with a note.
 
-There's one finding per person and vendor. It resolves by itself when there have been no such interactions for 7 days, or when you disconnect that vendor's log.
+There's one finding per person and vendor. An open or snoozed finding resolves by itself when there have been no such interactions for 7 days, or when you disconnect that vendor's log.
 
 ---
 
@@ -124,7 +124,7 @@ If a pull fails, for example because consent was withdrawn, a permission was rem
 
 To fix it, follow the reason on the card, then choose **Reconnect**.
 
-**Disconnect** stops the pulls and removes Whiteout's credential for that vendor. The vendor's rows leave AI Footprint, and its findings resolve. Records already stored stay in AI Activity until they're 180 days old.
+**Disconnect** stops the pulls and removes Whiteout's credential for that vendor. The vendor's rows leave AI Footprint, and its open and snoozed findings resolve. Acknowledged and muted findings stay as they are. Records already stored stay in AI Activity until they're 180 days old.
 
 ---
 

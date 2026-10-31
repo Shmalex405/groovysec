@@ -130,7 +130,7 @@ Tick the tools in the table, choose **Allowlist** in the bar that appears, and t
 
 ## Review
 
-**Review** is the queue of everything that needs a decision: findings and known vulnerabilities, most severe first. You can filter it, save the views you use, and acknowledge, mute, snooze or reopen many findings at once. See [Review and triage](./ai-footprint/review-and-triage.md).
+**Review** is the queue of everything that needs a decision: findings and known vulnerabilities, most severe first. You can filter it, save the views you use, and acknowledge, mute, snooze or reopen findings one at a time from their drawer, or many at once. See [Review and triage](./ai-footprint/review-and-triage.md).
 
 For what each kind of finding means and what to do about it, see [Shadow AI findings](./ai-footprint/shadow-ai.md).
 
@@ -151,7 +151,7 @@ What AI Footprint never raises a finding for.
 
 Choose **Save exceptions** to apply your changes, or **Discard changes**.
 
-Muting a category is not the same as muting a finding. A muted category stops findings for that whole category. **Mute** in Review acts only on the findings you select. See [Mute a finding or mute a category](./ai-footprint/review-and-triage.md#mute-a-finding-or-mute-a-category).
+Muting a category is not the same as muting a finding. A muted category stops findings for that whole category. **Mute** in Review acts only on the findings you choose. See [Mute a finding or mute a category](./ai-footprint/review-and-triage.md#mute-a-finding-or-mute-a-category).
 
 ### MCP allowlist
 

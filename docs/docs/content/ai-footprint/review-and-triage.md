@@ -1,6 +1,6 @@
 # Review and Triage
 
-**Review**, in **Coverage → AI Footprint**, is the queue of everything that needs a decision: [shadow AI findings](./ai-footprint/shadow-ai.md) and the other finding types below, plus known vulnerabilities in the AI tools on your devices. This page explains how to filter the queue, save the views you use, and act on many findings at once.
+**Review**, in **Coverage → AI Footprint**, is the queue of everything that needs a decision: [shadow AI findings](./ai-footprint/shadow-ai.md) and the other finding types below, plus known vulnerabilities in the AI tools on your devices. This page explains how to filter the queue, save the views you use, and act on findings one at a time or many at once.
 
 > **Nothing here changes a device.** **Acknowledge**, **Mute**, **Snooze** and **Reopen** change a finding's status in Whiteout. They don't block, remove or change anything on a device.
 
@@ -46,7 +46,7 @@ Choose **Filters** for the rest:
 | **Seen by** | Where findings came from: **Devices (Desktop Guard)**, **Browser extension**, **Imported network logs**, **Vendor audit logs**, **Servers and workloads**, **AI connectors and sign-ins** or **Other** |
 | **Browser** | The browser a finding came from |
 | **Catalog** | **Only AI the catalog doesn't know** |
-| **Dates** | **First seen** and **Last seen**, each with **From** and **To** |
+| **Dates** | **First seen** and **Last seen**, each with **From** and **To**. Days are in your local time. |
 
 **Seen by** and **Browser** list only the values your findings have. Each filter you set shows as a chip next to **Filters**. Remove one there, or choose **Clear all**.
 
@@ -79,43 +79,42 @@ The three built-in views and views other admins shared can't be changed. Read-on
 
 ---
 
-## Act on one finding
+## Acknowledge, mute, snooze and reopen
 
-Choose **Review** on a row to open its drawer: a plain-language reason, the evidence, a **Recommended action**, and a link to the guide for that kind of finding. In an open finding's drawer you can also:
-
-- **Acknowledge finding**, with a note, for example *Sanctioned for the data team, tracked in JIRA-1234*
-- **Add to catalog**, to name and classify an unknown tool. See [Add to catalog](./ai-footprint/overview.md#add-to-catalog).
-- **View process details and IOCs**, for a running AI process
-- **Register as custom app**, for an unknown installed tool, when Custom AI Apps is on for your organization
-
-**Mute**, **Snooze** and **Reopen** are in the bulk bar. To use them on one finding, select its row.
-
----
-
-## Act on many findings
-
-Select rows with their checkboxes. The checkbox in the header selects every row on the page that an action applies to. Your selection stays when you move between pages, and clears when you change the filters or the sort.
-
-A bar with the actions appears above the queue:
+Act on one finding from its drawer, or on several at once with the bulk bar. Either way, a merged (**×N**) row acts on every finding in it.
 
 | Action | Applies to | What happens |
 |---|---|---|
 | **Acknowledge** | Open findings | They move to **Acknowledged**, with your note. Use it when you've reviewed them and accept them. |
 | **Mute** | Open findings | They move to **Muted** and stay there until someone reopens them. Use it for findings you don't want in the queue but don't want to sanction either. |
 | **Snooze** | Open findings | They move to **Snoozed** until the date you pick, then go back to **Open** if the tool is still there. Use it to come back later, for example after a rollout. |
-| **Reopen** | Acknowledged, muted and snoozed findings | They go back to **Open**, and the earlier note and snooze date are cleared. |
+| **Reopen** | Acknowledged, muted and snoozed findings | They go back to **Open**. The acknowledgement or mute, its note and the snooze date are cleared. The admin audit log keeps the history. |
 
-If only some of the selected rows qualify for an action, its button says how many, for example **Reopen 3**. Resolved findings and known vulnerabilities can't be selected.
+- **Notes.** **Acknowledge** asks why it's OK. If you leave the note empty, it's *Acknowledged from AI Footprint*. **Mute** and **Snooze** take an optional note. **Reopen** takes no note.
+- **Snooze date.** It starts at a week from today. Pick any day from tomorrow to a year from today. The findings reopen at the start of that day, in your local time.
+- **Audit.** Every action is recorded in the admin audit log, with who did it and the note.
 
-Each action asks you to confirm, with a note:
+### One finding
 
-- **Acknowledge** asks why it's OK. If you leave it empty, the note is *Acknowledged from AI Footprint*.
-- **Snooze** asks for a date. It starts at a week from today, and can be up to a year ahead. The findings reopen at the start of that day.
-- **Mute** and **Reopen** take an optional note.
+Choose **Review** on a row to open its drawer: a plain-language reason, the evidence, a **Recommended action**, and a link to the guide for that kind of finding. The drawer shows only the actions that fit the finding's status:
 
-When it's done, a message says how many findings changed and how many were skipped, for example because they were already muted. If some fail, those rows stay selected so you can try again.
+- **Open:** **Acknowledge finding**, **Mute** and **Snooze…**, with one **Note** box that's kept with whichever you choose, for example *Sanctioned for the data team, tracked in JIRA-1234*. **Snooze…** asks for the date first.
+- **Acknowledged**, **Muted** or **Snoozed:** the drawer says when it was set aside and shows the note, for example *Muted on …* or *Snoozed until …*, and offers **Reopen finding**.
+- **Resolved:** nothing to do. It reopens by itself if the evidence comes back.
 
-Bulk actions are recorded in the admin audit log, with who did it, how many findings changed and the note.
+An open finding's drawer can also offer:
+
+- **Add to catalog**, to name and classify an unknown tool. See [Add to catalog](./ai-footprint/overview.md#add-to-catalog).
+- **View process details and IOCs**, for a running AI process
+- **Register as custom app**, for an unknown installed tool, when Custom AI Apps is on for your organization
+
+### Many findings
+
+Select rows with their checkboxes. The checkbox in the header selects every row on the page that an action applies to. Your selection stays when you move between pages, and clears when you change the filters or the sort.
+
+A bar with **Acknowledge**, **Mute**, **Snooze** and **Reopen** appears above the queue. If only some of the selected rows qualify for an action, its button says how many, for example **Reopen 3**. Resolved findings and known vulnerabilities can't be selected. Each action asks you to confirm, with the note and date described above.
+
+When it's done, a message says how many findings changed and how many were skipped, for example because they were already muted. If some fail, those rows stay selected and the message offers **Retry**.
 
 ---
 
@@ -129,13 +128,13 @@ Bulk actions are recorded in the admin audit log, with who did it, how many find
 | **Snoozed** | Set aside until a date | It goes back to **Open** on that date if the tool is still there. If the tool goes away first, it resolves. |
 | **Resolved** | Closed by Whiteout: the tool is gone, governed or allowlisted | It reopens if the evidence comes back. |
 
-One exception: when you disconnect a [vendor audit log](./ai-footprint/vendor-audit-logs.md), that vendor's findings resolve, whatever their status.
+Disconnecting a [vendor audit log](./ai-footprint/vendor-audit-logs.md) also resolves that vendor's open and snoozed findings. Its acknowledged and muted findings stay as they are.
 
 Muting, snoozing and reopening don't raise notifications. A snoozed finding that goes back to **Open** doesn't raise a new notification or SOC/SIEM event.
 
 ### Mute a finding or mute a category
 
-- **Mute** in Review acts on the findings you select. A new finding for the same tool on another device still opens.
+- **Mute** in Review acts on the finding or findings you choose. A new finding for the same tool on another device still opens.
 - **Muted categories**, under **Controls → Exceptions**, stop findings for a whole category everywhere.
 - To stop findings for one tool everywhere, allowlist it under **Controls → Exceptions**, or select it in **Inventory** and choose **Allowlist**.
 
@@ -189,4 +188,4 @@ New findings raise the **Shadow AI detected** notification in **Alerts & Audit �
 
 ## Versions
 
-Review needs admin app 2.98.0 or later. **Mute**, **Snooze**, **Reopen** and views shared with other admins also need the platform update released alongside it. Until your deployment has that update, the bulk bar offers **Acknowledge** only, and the views you save are kept on your computer. The strip then says **Saved on this computer until the next platform update**.
+Review needs admin app 2.98.0 or later. **Mute**, **Snooze**, **Reopen** and views shared with other admins also need the platform update released alongside it. Until your deployment has that update, the drawer and the bulk bar offer **Acknowledge** only, and the views you save are kept on your computer. The strip then says **Saved on this computer until the next platform update**.
