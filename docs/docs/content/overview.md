@@ -102,7 +102,8 @@ Find the AI on your devices and network, including AI no Whiteout surface govern
 
 | Guide | Description |
 |-------|-------------|
-| [Overview](./ai-footprint/overview.md) | What AI Footprint shows, its tabs, and how to manage findings |
+| [Overview](./ai-footprint/overview.md) | What AI Footprint shows, and its Inventory, Review and Controls areas |
+| [Review and Triage](./ai-footprint/review-and-triage.md) | Filter findings, save views, and acknowledge, mute, snooze or reopen many at once |
 | [Shadow AI Findings](./ai-footprint/shadow-ai.md) | Installed, running and active shadow AI: severity and what to do |
 | [Browser Coverage](./ai-footprint/browser-coverage.md) | Browser profiles without Whiteout, and how to force-install the extension |
 | [Third-Party AI Extensions](./ai-footprint/ai-browser-extensions.md) | AI extensions such as Grammarly and Sider, and how to block them |

@@ -72,7 +72,7 @@ The finding is **Shadow AI — active**, shown as *Google Chrome · no Whiteout 
 
 1. Install the extension in that browser. An MDM force-install covers every profile.
 2. If the extension is installed but signed out or turned off, have the person sign in or turn it on.
-3. If this use is sanctioned, allowlist the provider (for example `openai`) under **Manage**.
+3. If this use is sanctioned, allowlist the provider (for example `openai`) under **Controls → Exceptions**.
 
 > The extension can't tell Brave, Arc, Vivaldi, Opera and Chromium apart from Chrome. When it runs in any of them, it counts as running in all of them. The profile scan is the precise check for those browsers.
 

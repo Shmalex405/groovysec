@@ -113,7 +113,7 @@ If the organization-wide rule doesn't list workspaces, the finding came from a g
 - **Governance → Prompt Review** shows the rule's outcome under the account on each prompt: **Blocked by the account rule**, **Account warning shown**, **Sent anyway after an account warning**, **Account rule: would block (monitor)** or **Account rule: not checked**. It's in the CSV export too.
 - **SOC/SIEM events** include the outcome.
 - **Admin audit log** records every change to an account rule.
-- **Coverage → AI Footprint → Findings** raises the two findings below.
+- **Coverage → AI Footprint → Review** lists the two findings below.
 
 ---
 

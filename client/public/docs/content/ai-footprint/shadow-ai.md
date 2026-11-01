@@ -2,7 +2,7 @@
 
 A shadow AI finding means AI is installed, running or sending traffic on a device where no Whiteout surface governs it. Anything sent through that AI skips your policies. This page explains each kind of finding, how serious it is, and what to do about it.
 
-Findings are on the **Findings** tab of **Coverage → AI Footprint**. The **Installed**, **Running** and **Active** filters match the sections below.
+Findings are in **Review**, in **Coverage → AI Footprint**. The **Installed**, **Running** and **Active** filters there match the sections below. To filter the queue, save views and act on many findings at once, see [Review and triage](./ai-footprint/review-and-triage.md).
 
 > **A finding never blocks anything.** Whiteout reports the AI. What happens next is your decision: bring it under Whiteout, sanction it, or remove it.
 
@@ -10,8 +10,8 @@ Findings are on the **Findings** tab of **Coverage → AI Footprint**. The **Ins
 
 ## How findings work
 
-- **One finding per tool, per device.** Seeing the same tool again updates **Days** and **Last seen** rather than opening a new finding. Findings that look identical (same type, same person or device, same tool) are shown as one row with a **×N** chip, and acknowledging that row resolves all of them.
-- **Status.** A finding is **open** until you **acknowledge** it (you've reviewed it, with a note) or it **resolves** by itself. It resolves when the tool is no longer found, when a Whiteout surface starts governing it, or when you allowlist it.
+- **One finding per tool, per device.** Seeing the same tool again updates **Days** and **Last seen** rather than opening a new finding. Findings that look identical (same type, same person or device, same tool) are shown as one row with a **×N** chip, and acting on that row acts on all of them.
+- **Status.** A finding is **open** until you **acknowledge** it (you've reviewed it, with a note), **mute** or **snooze** it, or it **resolves** by itself. It resolves when the tool is no longer found, when a Whiteout surface starts governing it, or when you allowlist it. See [Statuses](./ai-footprint/review-and-triage.md#statuses).
 - **Alerts.** A new finding raises the **Shadow AI detected** notification in **Alerts & Audit → Notifications** and is sent to your SOC/SIEM destinations. A finding that flaps open and closed doesn't alert again unless it had been resolved for at least 24 hours.
 - **Review.** Choose **Review** on a finding to see a plain-language reason, the evidence, and a **Recommended action**.
 
@@ -75,7 +75,7 @@ Two related findings come from the same sensor:
 3. **If it isn't approved,** remove it from the device.
 4. **For impersonation,** treat the device as potentially compromised: isolate it, collect the binary (its SHA-256 is in the evidence) and investigate.
 
-Built-in AI (the operating system's own) and embedded AI (inside a signed vendor app) never raise these findings. To stop the sensor's findings altogether, turn off **Report running AI processes** or **Flag unexplained heavy compute** under **Manage**.
+Built-in AI (the operating system's own) and embedded AI (inside a signed vendor app) never raise these findings. To stop the sensor's findings altogether, turn off **Report running AI processes** or **Flag unexplained heavy compute** under **Settings**.
 
 ---
 
@@ -83,7 +83,7 @@ Built-in AI (the operating system's own) and embedded AI (inside a signed vendor
 
 **Shadow AI — active** means a device or workload sent traffic to an AI provider, and no Whiteout surface that covers that traffic is live there. It's the strongest signal: data is actually leaving.
 
-The traffic comes from Desktop Guard's network sensor on Windows and from the infrastructure agent. Rows on the **AI tools** tab with this traffic show an **Active** chip. Imported network logs raise their own findings instead. See [Importing network logs](./ai-footprint/network-logs.md).
+The traffic comes from Desktop Guard's network sensor on Windows and from the infrastructure agent. Tools in **Inventory** with this traffic show an **Active** chip. Imported network logs raise their own findings instead. See [Importing network logs](./ai-footprint/network-logs.md).
 
 A browser's own AI assistant, such as Gemini in Chrome or Copilot in Edge, also raises **Shadow AI — active** when there's evidence someone used it. The feature and browser are shown under the finding. See [Built-in browser AI](./ai-footprint/built-in-browser-ai.md#built-in-browser-ai-in-use).
 
@@ -130,9 +130,11 @@ Once an unknown tool does raise a finding, the finding is **high** severity, bec
 
 | Action | Effect | Use it when |
 |---|---|---|
-| **Acknowledge finding** | Marks the finding as reviewed, with your note. It moves to **Acknowledged**. | You've looked at it and accept it for now. |
-| **Allowlist** (**Manage → Allowlisted tools**) | The tool never raises a finding, and its open findings resolve. It stays in the inventory. | Its use is sanctioned, but Whiteout doesn't govern it. |
-| **Mute a category** (**Manage → Muted categories**) | No findings for a whole category. Items stay in the inventory. | A whole class of tool isn't a concern for you. |
+| **Acknowledge** (in the finding's drawer, or for many findings in **Review**) | Marks the finding as reviewed, with your note. It moves to **Acknowledged**. | You've looked at it and accept it for now. |
+| **Mute** (in the finding's drawer, or for many findings in **Review**) | The finding moves to **Muted** and stays there until someone reopens it. | You don't want them in the queue, but don't want to sanction the tool either. |
+| **Snooze** (in the finding's drawer, or for many findings in **Review**) | The finding leaves the queue until a date, up to a year ahead, then reopens if the tool is still there. | You'll come back to it later, for example after a rollout. |
+| **Allowlist** (**Controls → Exceptions → Allowlisted tools**, or **Allowlist** in **Inventory**) | The tool never raises a finding, and its open findings resolve. It stays in the inventory. | Its use is sanctioned, but Whiteout doesn't govern it. |
+| **Mute a category** (**Controls → Exceptions → Muted categories**) | No findings for a whole category. Items stay in the inventory. | A whole class of tool isn't a concern for you. |
 | **Add to catalog** | Names and classifies the tool everywhere. | You know what an unknown tool is. |
 
 What you can add to the allowlist:

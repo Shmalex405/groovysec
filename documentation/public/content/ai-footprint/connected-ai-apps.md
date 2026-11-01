@@ -53,7 +53,7 @@ It isn't raised when:
 
 1. **Check what it can reach.** The finding lists the app, the person, the identity provider and the access it was given.
 2. **If the app isn't approved,** remove its access: choose **View apps** on the identity provider's row, or remove it in your Google Workspace or Microsoft 365 admin console. Let the person know, so they don't simply reconnect it.
-3. **If it's approved,** allowlist it under **Coverage → AI Footprint → Manage → Allowlisted tools**, with the catalog key the finding shows.
+3. **If it's approved,** allowlist it under **Coverage → AI Footprint → Controls → Exceptions → Allowlisted tools**, with the catalog key the finding shows.
 4. **Acknowledge the finding** with a note.
 
 The finding resolves by itself once a daily check no longer finds the access, or when you allowlist the app. Like other AI Footprint findings, a new one raises the **Shadow AI detected** notification and goes to your SOC/SIEM destinations.
