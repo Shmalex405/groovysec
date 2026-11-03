@@ -40,7 +40,7 @@ A single weak signal about an unknown tool stays in the inventory without raisin
 
 A tool is **governed** on a device when a Whiteout surface that covers it is live on that same device. For example, the ChatGPT desktop app is governed where Desktop Guard is running. ChatGPT in a browser is governed where the Whiteout browser extension is running in that browser. Coverage is judged per device: Desktop Guard on someone's laptop doesn't govern the AI on their other computer.
 
-A tool with no covering surface live on the device is **ungoverned**. The **Not governed** column counts those devices.
+A tool with no covering surface live on the device is **ungoverned**. The **Coverage** column counts those devices. To have Whiteout cover a tool it doesn't cover yet, see [Get coverage](./ai-footprint/get-coverage.md).
 
 ---
 
@@ -57,7 +57,7 @@ Below the tiles, AI Footprint has three areas:
 |---|---|---|
 | **Inventory** | What AI do we have? | Every AI tool found, with the evidence behind it, by tool, person or device. Also the processes, network traffic and MCP servers behind those tools. |
 | **Review** | What needs a decision? | Findings and known vulnerabilities in one queue, with saved views and bulk actions. See [Review and triage](./ai-footprint/review-and-triage.md). |
-| **Controls** | What have we set? | **Exceptions** (muted categories and allowlisted tools), the **MCP allowlist**, and your organization's **Catalog**. |
+| **Controls** | What have we set? | **Exceptions** (muted categories and allowlisted tools), the **MCP allowlist**, your organization's **Catalog**, and **Coverage profiles**. |
 
 The group or person you pick in Inventory or Review applies to both. Links from notifications, SOC alerts and other pages still open the right area. If you used the older tabs, see [Where things moved](./ai-footprint/overview.md#where-things-moved).
 
@@ -88,7 +88,7 @@ The **Tools**, **People** and **Devices** switch picks what each row is:
 |---|---|
 | **Tool** | The name and a **Known** or **Unknown** chip. **Active** means the tool sent traffic from an ungoverned source. A vulnerability chip means some devices run a version with a published advisory: select it to see the advisories in Review. Under the name are the provider and category, and, on [Web AI](./ai-footprint/web-ai-sites.md) rows, which [kinds of account](./ai-footprint/account-types.md) people used. |
 | **Devices** | How many devices have the tool. Select the number to see every device and user it was found on, with the signals behind it and recent prompt activity where Whiteout records it. |
-| **Not governed** | Devices where no Whiteout surface covers the tool. Select the number to see which. Built-in AI shows **Built-in**, work apps show **Work app**, and built-in browser AI that's switched off shows **Off**. |
+| **Coverage** | Devices where no Whiteout surface covers the tool. Select the number to see which. Built-in AI shows **Built-in**, work apps show **Work app**, and built-in browser AI that's switched off shows **Off**. Next to the number is the tool's coverage state, or **Get coverage** on a tool Whiteout can cover. See [Get coverage](./ai-footprint/get-coverage.md). Admin app 2.98.0 calls this column **Not governed**. |
 | **Evidence** | Where the tool was seen. See the chips below. |
 | **Last active** | When the AI process sensor last saw it running, and on how many devices it's running now |
 | **Last seen** | When any source last reported it |
@@ -138,7 +138,7 @@ For what each kind of finding means and what to do about it, see [Shadow AI find
 
 ## Controls
 
-**Controls** lists its sections on the left: **Exceptions**, **MCP allowlist** and **Catalog**.
+**Controls** lists its sections on the left: **Exceptions**, **MCP allowlist**, **Catalog** and **Coverage profiles**.
 
 ### Exceptions
 
@@ -172,6 +172,10 @@ The same section holds the **Desktop MCP gateway**. It routes the local MCP serv
 ### Catalog
 
 Your organization's own catalog entries, added with [Add to catalog](./ai-footprint/overview.md#add-to-catalog): **Name**, **Category**, **Provider**, **Risk** and **Governance**. **Remove** deletes an entry. Entries for [Custom AI Apps](./custom-ai-apps/overview.md) are managed from the app itself.
+
+### Coverage profiles
+
+Every coverage request in your organization, from **Get coverage**: its status, Groovy Security's official build, when it last changed, and whether you set it up here or Groovy Security builds it. See [Get coverage](./ai-footprint/get-coverage.md).
 
 ---
 
@@ -237,7 +241,7 @@ AI Footprint used to have seven tabs and a **Manage** dialog. Here is where each
 | **Manage**: AI process sensor | **Settings** |
 | **Import network logs** | **Settings**, or **Inventory → Network** |
 | Help icon and **What AI Footprint does not see** | **Help** |
-| **Not governed** tile | The **Governance** filter and the **Not governed** column |
+| **Not governed** tile | The **Governance** filter and the **Coverage** column |
 | **Unknown AI running** tile | The **Running** chip and the **Processes** view |
 | **Open findings** tile | **Needs review** |
 
@@ -288,6 +292,7 @@ Most of AI Footprint works with any current Desktop Guard. The newest parts need
 |---|---|
 | Inventory, Review and Controls; the evidence chips; saved views; bulk **Acknowledge** and **Allowlist** | Admin app 2.98.0 or later |
 | **Mute**, **Snooze** and **Reopen**; the **People** and **Devices** views; views shared with other admins | Admin app 2.98.0 or later, with the platform update released alongside it. Until your deployment has that update, the app hides them and keeps the views you save on your computer. |
+| The **Coverage** column, **Get coverage** and **Coverage profiles** | Admin app 2.98.1 or later. **Set it up on this computer** needs admin app 2.98.2 and Desktop Guard 1.8.138 or browser extension 1.18.0. See [Get coverage](./ai-footprint/get-coverage.md#versions). |
 | Third-party AI extensions, per-browser findings, network visibility | Desktop Guard 1.8.106 or later (macOS and Windows) |
 | Browser profile scan | Desktop Guard 1.8.51 or later |
 | AI-site visits and account types | Browser extension 1.14.0 or later |

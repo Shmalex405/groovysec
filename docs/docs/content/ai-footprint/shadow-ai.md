@@ -51,7 +51,8 @@ Whiteout sets each finding's severity from the facts in it. The first matching r
 2. **If its use is sanctioned,** allowlist it.
 3. **If it isn't approved,** remove it from the device, or block it with your MDM.
 4. **If it's unknown and you know what it is,** choose **Add to catalog** to name it.
-5. **Acknowledge the finding** with a note, for example *Sanctioned for the data team, tracked in JIRA-1234*.
+5. **If Whiteout doesn't cover the tool yet and you want its prompts checked,** choose **Get coverage** on its Inventory row. See [Get coverage](./ai-footprint/get-coverage.md).
+6. **Acknowledge the finding** with a note, for example *Sanctioned for the data team, tracked in JIRA-1234*.
 
 The finding resolves by itself after the next full scan once the tool is gone or governed.
 
