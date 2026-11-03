@@ -79,6 +79,30 @@
     <loc>https://groovysec.com/docs/admin-guides/ai-footprint/connected-ai-apps</loc>
   </url>
   <url>
+    <loc>https://groovysec.com/docs/admin-guides/ai-footprint/get-coverage</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/ai-footprint/hard-layer-browser-policy</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/ai-footprint/hard-layer-defender-indicators</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/ai-footprint/hard-layer-entra-app-signin</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/ai-footprint/hard-layer-intune-app-control</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/ai-footprint/hard-layer-jamf-restricted-software</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/ai-footprint/hard-layer-vscode-extensions</loc>
+  </url>
+  <url>
+    <loc>https://groovysec.com/docs/admin-guides/ai-footprint/hard-layer</loc>
+  </url>
+  <url>
     <loc>https://groovysec.com/docs/admin-guides/ai-footprint/network-logs</loc>
   </url>
   <url>
