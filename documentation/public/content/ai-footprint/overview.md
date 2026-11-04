@@ -4,7 +4,7 @@ AI Footprint shows the AI on your organization's devices and workloads: what is 
 
 Open it in the admin app under **Coverage → AI Footprint**.
 
-> **Finding AI doesn't block it.** AI Footprint finds AI and reports it. Policy checks and blocking stay with Desktop Guard, the browser extension and the IDE extensions. A finding is a prompt for you to look, not an action Whiteout has taken. The one setting on this page that can block anything is the [MCP allowlist](./ai-footprint/overview.md#mcp-allowlist), and only when you set it to **Enforce**.
+> **Finding AI doesn't block it.** AI Footprint finds AI and reports it. A finding is a prompt for you to look, not an action Whiteout has taken. Something is blocked only when you decide it: a **Block** or **Quarantine** decision on a tool (in its drawer, or under **Controls** → **Decisions**), which Desktop Guard, the browser extension and the coding-agent hooks enforce; or the [MCP allowlist](./ai-footprint/overview.md#mcp-allowlist) set to **Enforce**. To stop a tool from running at all, use the files under [Controls → Hard layer](./ai-footprint/hard-layer.md) in your MDM.
 
 AI Footprint is on for every organization. There is nothing to turn on.
 
