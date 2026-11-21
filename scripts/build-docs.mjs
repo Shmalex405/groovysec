@@ -143,7 +143,7 @@ const ROUTES = [
   {
     path: "/terms-of-service",
     title: `Terms of Service | ${SITE_NAME}`,
-    description: "Terms of Service for Groovy Security's website, products, and Secure AI Skills.",
+    description: "Terms of Service for Groovy Security's website, products, and services.",
   },
   {
     path: "/privacy-policy",

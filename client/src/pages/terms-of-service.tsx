@@ -7,7 +7,7 @@ import { usePageMeta } from "@/lib/use-page-meta";
 export default function TermsOfService() {
   usePageMeta(
     "Terms of Service",
-    "Terms of Service for Groovy Security's website, products, and Secure AI Skills."
+    "Terms of Service for Groovy Security's website, products, and services."
   );
   return (
     <PageTransition>
@@ -19,13 +19,63 @@ export default function TermsOfService() {
 
       <div className="max-w-4xl mx-auto">
         <p className="text-[#51617A] mb-6">
-          Welcome to Groovy Security. By accessing or using our website and
-          services (the “Service”), you agree to be bound by these Terms of
-          Service. If you do not agree with these terms, you may not use the
-          Service.
+          Welcome to Groovy Security. These Terms of Service are between you
+          and Groovy Security, Inc. (“Groovy Security”, “we”). By accessing or
+          using our website, products and services (the “Service”), you agree
+          to be bound by these Terms of Service. If you do not agree with these
+          terms, you may not use the Service.
         </p>
 
         <section className="space-y-8 text-left">
+          <div>
+            <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
+              Customer Agreements
+            </h2>
+            <p className="text-[#51617A]">
+              If your organization has a signed agreement or order with Groovy
+              Security, that agreement governs your organization’s use of the
+              product it covers, and it takes priority over these Terms wherever
+              the two differ. These Terms apply to our website and to any use of
+              the Service that a signed agreement does not cover.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
+              Whiteout AI Plans &amp; Hosting
+            </h2>
+            <p className="text-[#51617A] mb-3">
+              Whiteout AI is offered on the Standard and Plus plans, as a
+              Groovy-Hosted deployment, and as a Client-Hosted deployment that
+              runs in your own AWS account. The plan, number of users, fees and
+              term that apply to your organization are the ones in your order.
+            </p>
+            <p className="text-[#51617A]">
+              On plans that we host, your organization’s data is stored in the
+              region agreed in your order: the United States (Oregon,
+              us-west-2) or the European Union (Stockholm, Sweden, eu-north-1).
+              With a Client-Hosted deployment, it is stored in your AWS account,
+              in the region you choose.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
+              Privacy
+            </h2>
+            <p className="text-[#51617A]">
+              Our{" "}
+              <a
+                href="/privacy-policy"
+                className="text-[#1A5FB4] underline hover:text-[#164F96]"
+              >
+                Privacy Policy
+              </a>{" "}
+              explains how we collect, use and protect personal data, and where
+              customer data is stored.
+            </p>
+          </div>
+
           <div>
             <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
               Use of the Service
@@ -166,7 +216,7 @@ export default function TermsOfService() {
         </section>
 
         <p className="text-[#6E7B8C] text-sm mt-12 pt-8 border-t border-[#0F1B2D]/10 text-center">
-          Last updated: November 2025
+          Last updated: 21 November 2026
         </p>
       </div>
     </main>

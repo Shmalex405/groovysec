@@ -17,13 +17,35 @@ export default function PrivacyPolicy() {
       <div className="max-w-4xl mx-auto text-center mb-12 border-b border-[#0F1B2D]/10 pb-10">
         <h1 className="text-4xl font-bold text-[#0F1B2D]">Privacy Policy</h1>
         <p className="text-[#51617A] text-sm mt-2">
-          This Privacy Policy explains how Groovy Security collects, uses, and
-          protects your personal data when you interact with our website and
-          services.
+          This Privacy Policy explains how Groovy Security, Inc. (“Groovy
+          Security”, “we”) collects, uses, and protects your personal data
+          when you interact with our website and services.
         </p>
       </div>
 
       <div className="max-w-4xl mx-auto space-y-8 text-left">
+        {/* Scope */}
+        <section>
+          <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
+            Who this policy covers
+          </h2>
+          <p className="text-[#51617A] mb-3">
+            This policy covers the personal data we are responsible for:
+            visitors to groovysec.com, people who contact us or ask for a
+            demo, and the administrators and billing contacts of our
+            customers.
+          </p>
+          <p className="text-[#51617A]">
+            When an organization uses Whiteout AI, the prompts, files and
+            activity records of its users belong to that organization. We
+            process that data on the organization’s behalf, under our
+            agreement with it, and the organization decides how it is used
+            and how long it is kept. If your employer uses Whiteout AI and you
+            have a question about that data, please ask your employer first.
+            We will help them respond.
+          </p>
+        </section>
+
         {/* What data do we collect */}
         <section>
           <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
@@ -44,6 +66,10 @@ export default function PrivacyPolicy() {
             <li>
               Job title, where you choose to give it. This is optional and the form
               works without it.
+            </li>
+            <li>
+              Company name and size, and what you tell us about how your
+              organization uses AI, when you ask for a demo or contact us.
             </li>
             {/* TEMP: Maestro unpublished 2026-09-02 — the download form is off, so
                 this describes collection that no longer happens. Restore with the
@@ -151,17 +177,39 @@ export default function PrivacyPolicy() {
           <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
             How do we store and protect your data?
           </h2>
+          <p className="text-[#51617A] mb-2">
+            We host customer data on Amazon Web Services (AWS). Each customer
+            organization’s data is stored in one region, agreed when the
+            organization is set up and written in its order:
+          </p>
+          <ul className="list-disc list-inside text-[#51617A] space-y-1 mb-3">
+            <li>
+              <span className="font-medium">United States:</span> US West
+              (Oregon), <span className="font-medium">us-west-2</span>.
+            </li>
+            <li>
+              <span className="font-medium">European Union:</span> Europe
+              (Stockholm, Sweden),{" "}
+              <span className="font-medium">eu-north-1</span>.
+            </li>
+            <li>
+              <span className="font-medium">Your own AWS account:</span> with a
+              Client-Hosted deployment, Whiteout AI runs in your AWS account,
+              in the region you choose, and your data stays there.
+            </li>
+          </ul>
           <p className="text-[#51617A] mb-3">
-            We host customer data on Amazon Web Services (AWS) in{" "}
-            <span className="font-medium">US-West-2 (Oregon)</span>. If we add
-            another hosting region, we will update this policy before any
-            customer data is stored there.
+            We do not move a customer’s data to another region unless the
+            customer agrees. If we add a hosting region, we will update this
+            policy before any customer data is stored there.
           </p>
           <p className="text-[#51617A] mb-3">
-            Each customer organization is provisioned with its own dedicated,
-            encrypted S3 bucket, database and compliance engine, protected by a
-            unique AWS KMS key. Data is encrypted at rest (AES-256 via KMS) and
-            in transit between your users and our platform (TLS 1.2 or 1.3).
+            On every plan, each customer organization has its own database and
+            its own AWS KMS encryption key. On the Standard and Plus plans the
+            servers and checking engine are shared between organizations. With
+            a Groovy-Hosted deployment they are yours alone. Data is encrypted
+            at rest (AES-256 via KMS) and in transit between your users and our
+            platform (TLS 1.2 or 1.3).
           </p>
           <p className="text-[#51617A] mb-3">
             Access is limited using role-based access control (RBAC) in the
@@ -177,6 +225,58 @@ export default function PrivacyPolicy() {
             you ask us to delete it (see{" "}
             <span className="italic">Your data protection rights</span> below), we
             delete or anonymize it and confirm to you when it is done.
+          </p>
+          <p className="text-[#51617A] mt-3">
+            Customer organizations set how long their AI activity records are
+            kept in Whiteout AI. When a customer’s agreement ends, we return or
+            delete that customer’s data as the agreement sets out.
+          </p>
+        </section>
+
+        {/* Sharing */}
+        <section>
+          <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
+            Who do we share data with?
+          </h2>
+          <p className="text-[#51617A] mb-3">
+            We do not sell personal data, and we do not share it with third
+            parties for their own marketing.
+          </p>
+          <p className="text-[#51617A] mb-3">
+            We use a small number of service providers to run our website and
+            services, such as Amazon Web Services for hosting and a provider
+            that delivers our email. They may handle personal data only to
+            provide that service to us. The providers that handle a customer’s
+            data are listed in that customer’s data processing agreement.
+          </p>
+          <p className="text-[#51617A]">
+            We may also disclose personal data where the law requires us to.
+          </p>
+        </section>
+
+        {/* Transfers */}
+        <section>
+          <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
+            International transfers
+          </h2>
+          <p className="text-[#51617A] mb-3">
+            Groovy Security has offices in the United States (Utah) and the
+            European Union (Dublin, Ireland). If you contact us or ask for a
+            demo, the details you give us may be processed in the United
+            States and/or in Ireland.
+          </p>
+          <p className="text-[#51617A] mb-3">
+            If you need your data to stay in one region, tell us. On request,
+            we will keep your data in the United States or in the European
+            Union, and it will not leave that region.
+          </p>
+          <p className="text-[#51617A]">
+            Customer data stays in the hosting region described above. Where
+            European or UK data protection law applies and a transfer needs a
+            safeguard, we rely on the European Commission’s Standard
+            Contractual Clauses and the UK International Data Transfer
+            Addendum, which we include in our data processing agreement where
+            they apply.
           </p>
         </section>
 
@@ -244,15 +344,29 @@ export default function PrivacyPolicy() {
             understand usage patterns and improve the site.
           </p>
           <p className="text-[#51617A] mb-3">
-            We use a mix of functional cookies (for things like language or
-            region preferences) and, where applicable, analytics or advertising
-            cookies that help us understand how visitors interact with our
-            content.
+            Our website uses functional cookies and browser storage, for
+            things like remembering a preference. It does not currently use
+            advertising cookies or third-party analytics, and it loads its
+            fonts from Google Fonts. If that changes, we will update this
+            policy first.
           </p>
           <p className="text-[#51617A]">
             You can configure your browser to refuse cookies or to notify you
             when cookies are being set. Some features of the site may not work
             properly if cookies are disabled.
+          </p>
+        </section>
+
+        {/* Children */}
+        <section>
+          <h2 className="text-2xl font-semibold text-[#0F1B2D] mb-2">
+            Children
+          </h2>
+          <p className="text-[#51617A]">
+            Our website and services are made for businesses. We do not
+            knowingly collect personal data from children. If you believe a
+            child has given us personal data, please contact us and we will
+            delete it.
           </p>
         </section>
 
@@ -276,7 +390,7 @@ export default function PrivacyPolicy() {
           <p className="text-[#51617A]">
             We keep this Privacy Policy under regular review and will post any
             updates on this page. The current version was last updated on{" "}
-            <span className="font-medium">26 October 2026</span>.
+            <span className="font-medium">21 November 2026</span>.
           </p>
         </section>
 
@@ -316,7 +430,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <p className="text-[#6E7B8C] text-sm mt-12 pt-8 border-t border-[#0F1B2D]/10 text-center">
-          Last updated: 26 October 2026
+          Last updated: 21 November 2026
         </p>
       </div>
     </main>
