@@ -48,7 +48,7 @@ Before you begin, ensure you have:
 | Deployment | Region | Notes |
 |------------|--------|-------|
 | US Production (default) | `us-west-2` | Oregon |
-| EU Production | `eu-west-1` | Ireland |
+| EU Production | `eu-north-1` | Stockholm |
 
 Your KMS key **must be in the same region** as your Whiteout deployment.
 
@@ -75,7 +75,7 @@ whiteout_account_id = "123456789012"
 org_slug            = "your-org-slug"
 
 # Must match your Whiteout deployment region
-region = "us-west-2"  # or "eu-west-1" for EU
+region = "us-west-2"  # or "eu-north-1" for EU
 ```
 
 ```bash
@@ -113,7 +113,7 @@ Create a **symmetric** KMS key in your AWS account in the **same region** as you
 
 ```bash
 # Set your region (must match your Whiteout deployment)
-export REGION=us-west-2  # or eu-west-1 for EU
+export REGION=us-west-2  # or eu-north-1 for EU
 
 # Create the key
 aws kms create-key \
@@ -138,7 +138,7 @@ Contact your Whiteout account manager to obtain:
 
 - **Whiteout's AWS account ID** (e.g., `123456789012`)
 - **Your organization slug** (e.g., `acme-corp`)
-- **Deployment region** (e.g., `us-west-2` or `eu-west-1`)
+- **Deployment region** (e.g., `us-west-2` or `eu-north-1`)
 
 #### Key Policy Template
 

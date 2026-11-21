@@ -77,7 +77,7 @@ tags = {
 | `deletion_window_in_days` | No | Key deletion waiting period (default: `30`) |
 | `tags` | No | Additional resource tags |
 
-The `region` must match your Whiteout deployment region — `us-west-2` for US Production, `eu-west-1` for EU Production.
+The `region` must match your Whiteout deployment region — `us-west-2` for US Production, `eu-north-1` for EU Production.
 
 ## Outputs
 
