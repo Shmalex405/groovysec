@@ -263,7 +263,12 @@ export default function PrivacyPolicy() {
             Groovy Security has offices in the United States (Utah) and the
             European Union (Dublin, Ireland). If you contact us or ask for a
             demo, the details you give us may be processed in the United
-            States and in Ireland.
+            States and/or in Ireland.
+          </p>
+          <p className="text-[#51617A] mb-3">
+            If you need your data to stay in one region, tell us. On request,
+            we will keep your data in the United States or in the European
+            Union, and it will not leave that region.
           </p>
           <p className="text-[#51617A]">
             Customer data stays in the hosting region described above. Where
