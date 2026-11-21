@@ -260,9 +260,10 @@ export default function PrivacyPolicy() {
             International transfers
           </h2>
           <p className="text-[#51617A] mb-3">
-            Groovy Security is based in the United States. If you contact us or
-            ask for a demo from another country, the details you give us are
-            processed in the United States.
+            Groovy Security has offices in the United States (Utah) and the
+            European Union (Dublin, Ireland). If you contact us or ask for a
+            demo, the details you give us may be processed in the United
+            States and in Ireland.
           </p>
           <p className="text-[#51617A]">
             Customer data stays in the hosting region described above. Where
