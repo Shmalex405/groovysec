@@ -36,6 +36,8 @@ Your organization's email domains are the domain set up for your organization in
 
 **Groups.** A group's own rule replaces the organization-wide one for that group, the same way a group's allow or block does. If the app is blocked for a group, the block wins and the account rule doesn't apply.
 
+**Policy exceptions.** An account rule still applies to an app that has a policy exception, including one set to **Audit only**. See [Policy Exceptions for AI Apps](./governance/policy-exceptions.md).
+
 **Audit-only organizations.** Nothing is blocked or warned. Prompts that a rule would have stopped are recorded as **would block**. See [Audit-only mode](./governance/audit-only-mode.md).
 
 ---
