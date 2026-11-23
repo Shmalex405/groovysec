@@ -121,7 +121,7 @@ Prompts sent to an app with an exception are recorded like any other. What chang
 | **Dashboard** | A separate **Audit only** figure, shown once there are such prompts. The block rate is worked out from checked prompts only. |
 | **Activity → AI Activity**, **People** | Audit-only prompts are their own count. They aren't included in **Allowed**. |
 | **Alerts & Audit → Reports** | Audit-only prompts are their own count, not part of **Allowed**. The **AI app policy exceptions** section lists the exceptions in effect (app, who it applies to, mode, what isn't applied, reason, who set it and when) and the changes made in the period. |
-| **Governance → Compliance Evidence** | An **AI app policy exceptions** evidence item, with the same list and change history. While an app is set to **Audit only**, the item reads **Partial**, and the controls that rely on it show as partially evidenced. Selected-policies exceptions are listed without changing the status. |
+| **Governance → Compliance Evidence** | An **AI app policy exceptions** evidence item, with the same list and change history. If an app is set to **Audit only** now, or was at any point in the evidence period, the item reads **Partial**, and the controls that rely on it show as partially evidenced. Selected-policies exceptions are listed without changing the status. |
 | **Alerts & Audit → Audit Log** | Every exception that's added, changed or removed, with the before and after, who made the change, and the reason. |
 | **Alerts & Audit → Notifications** | One notification when an exception is added or widened. |
 | **SOC/SIEM events** | An event for each exception change. Prompt events say which exception applied. |
