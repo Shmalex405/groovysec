@@ -45,7 +45,7 @@ An exception changes policy checks only. These still apply to the app, whichever
 
 A selected-policies exception doesn't ask for a reason.
 
-Once saved, the app's card shows a **Custom policies** or **Audit only** chip. A blocked app shows no chip.
+Once saved, the app's card shows the same label as the exceptions table, for example **6 policies don't apply** or **Audit only**. A blocked app shows no chip.
 
 **Cards that hold several apps.** On a combined card, such as OpenAI, Microsoft 365 Copilot or Google Workspace Gemini, the setting applies to every app on the card. To treat one of them differently, use **Set one app by itself** at the bottom of the section. If the apps differ, the section shows **Mixed**.
 
