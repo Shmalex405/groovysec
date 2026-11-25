@@ -353,7 +353,7 @@ It needs policy enforcement, so it doesn't run in audit-only mode, whatever its 
 Settings that need the compliance engine or only exist to block are view only in audit-only mode, like the Policies page. The page shows an **Audit-only mode** banner, and the server rejects changes with HTTP 403. Settings that don't enforce anything, such as names, data capture, alerting and identity settings, stay editable. See [Settings locked in audit-only mode](#settings-locked-in-audit-only-mode). If something is still being blocked, see [Enforcement that audit-only mode doesn't switch off](#enforcement-that-audit-only-mode-doesnt-switch-off).
 
 **Can I put some groups in audit-only mode and enforce others?**
-No. The mode applies to the whole organization.
+No. The mode applies to the whole organization. On full enforcement, you can stop policy checks for a single AI app, or leave selected policies out for it, with a [policy exception](./governance/policy-exceptions.md).
 
 **Are prompts still stored in audit-only mode?**
 Yes. Prompts and files are logged exactly as they are with enforcement on, and appear in Prompt Review, the activity dashboards and your SOC destinations.
@@ -394,4 +394,5 @@ No. The browser extension, Desktop Guard, IDE plugins, SDKs and infrastructure a
 - [Self-Hosted AWS Deployment](./deployment/self-hosted-aws.md): licensing and deployment for self-hosted organizations.
 - [Zero-Touch MDM Deployment](./deployment/zero-touch-mdm.md): roll out Whiteout AI across your fleet to get complete discovery coverage.
 - [Injection Defense](./injection-defense/configuration.md#audit-only-mode): why Injection Defense is off in audit-only mode.
+- [Policy Exceptions for AI Apps](./governance/policy-exceptions.md): on full enforcement, set one AI app to audit only or leave selected policies out for it. The **Policies** page shows which apps have exceptions.
 - [Compliance Evidence](./compliance-evidence/overview.md): map your AI-governance data to audit frameworks.
